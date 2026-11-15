@@ -860,13 +860,17 @@
     for(var i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; }
     return AVATAR_COLORS[h % AVATAR_COLORS.length];
   }
-  // Chris is the house #1 — the Tom role, recast. The bundled photo is
-  // only a stand-in for before the directory loads: the "Chris" in a Top 8
-  // is Chris's real published profile, and its photo (and page) come from
-  // the shared directory like everyone else's.
+  // Chris Dyer is the house #1 — the Tom role, recast. The bundled photo is
+  // only a stand-in for before the directory loads: the "Chris Dyer" in a Top 8
+  // is Chris Dyer's real published profile, and its photo (and page) come from
+  // the shared directory like everyone else's. The old short name "Chris"
+  // still counts as the same person, so crews and listings saved before
+  // the rename keep resolving to him instead of showing him as his own friend.
   var CHRIS_PHOTO = "assets/chris.jpg";
+  var HOUSE_NAME = "Chris Dyer";
   function isChrisName(name){
-    return String(name || "").trim().toLowerCase() === "chris";
+    var k = String(name || "").trim().toLowerCase();
+    return k === "chris dyer" || k === "chris";
   }
   // A photo the person actually uploaded (a data URL from the photo
   // picker) — as opposed to the bundled stand-in path, which is what the
@@ -874,10 +878,10 @@
   function isUploadedPhoto(photo){
     return !!photo && photo !== CHRIS_PHOTO;
   }
-  // The canonical Chris: the real published profile behind the house #1.
-  // The directory holds a pile of stale "Chris" listings from when Chris
+  // The canonical Chris Dyer: the real published profile behind the house #1.
+  // The directory holds a pile of stale "Chris" listings from when Chris Dyer
   // was the default profile; those carry the bundled photo path (or no
-  // photo at all), while Chris's real profile carries the photo he
+  // photo at all), while Chris Dyer's real profile carries the photo he
   // uploaded himself. So an uploaded photo outranks the bundled stand-in
   // no matter which was updated last; recency only breaks ties within a
   // tier. Returns {uid, profile} or null.
@@ -897,23 +901,30 @@
   }
   // The directory profile behind a crew name. Several profiles can share
   // a name, so the match is: your own published profile first, then a
-  // profile with a photo, then the most recently updated one. "Chris" is
+  // profile with a photo, then the most recently updated one. "Chris Dyer" is
   // the exception — he always resolves to the canonical house profile
-  // above, never to the viewer's own same-named listing. Returns
+  // above, never to the viewer's own same-named listing. The legacy
+  // short name "Chris" resolves the same way. Returns
   // {uid, profile} or null.
   function directoryMatch(name){
     var key = String(name || "").trim().toLowerCase();
     if(!key) return null;
-    if(key === "chris"){
+    if(isChrisName(key)){
       var hc = houseChris();
       if(hc) return hc;
+      // No house profile published right now — fall through to the
+      // normal name match below so the name can still resolve.
     }
     var best = null, bestUid = null;
     var uids = Object.keys(allProfiles);
     for(var i=0;i<uids.length;i++){
       var p = allProfiles[uids[i]];
-      if(!p || !p.name || String(p.name).trim().toLowerCase() !== key) continue;
-      if(uids[i] === fbUid && key !== "chris") return { uid: uids[i], profile: p };
+      if(!p || !p.name) continue;
+      var pkey = String(p.name).trim().toLowerCase();
+      // "Chris" and "Chris Dyer" are the same house person.
+      var matches = isChrisName(key) ? isChrisName(pkey) : (pkey === key);
+      if(!matches) continue;
+      if(uids[i] === fbUid && !isChrisName(key)) return { uid: uids[i], profile: p };
       if(!best ||
          (!!p.photo && !best.photo) ||
          (!!p.photo === !!best.photo && (p.updatedAt || 0) > (best.updatedAt || 0))){
@@ -926,8 +937,8 @@
   // shared directory (allProfiles, filled by Firebase below). Crew entries
   // stay plain names, so photos resolve live — when a friend publishes or
   // changes their photo, it shows up in every Top 8 that lists them. The
-  // bundled Chris photo is only the fallback for before the directory
-  // connects (or if Chris's profile is ever unpublished).
+  // bundled Chris Dyer photo is only the fallback for before the directory
+  // connects (or if Chris Dyer's profile is ever unpublished).
   function friendPhoto(name){
     if(isChrisName(name)){
       var hc = houseChris();
@@ -938,18 +949,18 @@
     if(m && m.profile.photo) return m.profile.photo;
     return "";
   }
-  // Chris's standing rule: his real profile is #1 in everyone's Top 8.
-  // Returns a copy of a crew with "Chris" moved to (or inserted at) the
-  // #1 slot.
+  // Chris Dyer's standing rule: his real profile is #1 in everyone's Top 8.
+  // Returns a copy of a crew with "Chris Dyer" moved to (or inserted at) the
+  // #1 slot. Any old "Chris" entries are folded into that one slot.
   function withChrisFirst(crew){
     var rest = (Array.isArray(crew) ? crew : []).filter(function(n){
       return !isChrisName(n);
     });
-    return ["Chris"].concat(rest);
+    return [HOUSE_NAME].concat(rest);
   }
-  // The crew a profile page actually displays. Everyone leads with Chris
-  // at #1 — except Chris himself: on his own page there is no separate
-  // default Chris taking the #1 slot, so his Top 8 is his real friends,
+  // The crew a profile page actually displays. Everyone leads with Chris Dyer
+  // at #1 — except Chris Dyer himself: on his own page there is no separate
+  // default Chris Dyer taking the #1 slot, so his Top 8 is his real friends,
   // starting with his actual #1.
   function crewForDisplay(p){
     var crew = Array.isArray(p && p.crew) ? p.crew.slice() : [];
@@ -968,15 +979,15 @@
   /* ---------------- Local state (this browser's copy) ---------------- */
   function defaultState(){
     // Blank start: the main profile is the visitor's own to set up — no
-    // name, no photo. Chris is everyone's first friend at #1 in the Top 8
+    // name, no photo. Chris Dyer is everyone's first friend at #1 in the Top 8
     // (the old Tom spot, recast); his photo appears in that friend slot
-    // only, never as the main profile photo. The main photo becomes Chris's
-    // only on a profile Chris himself set up under his own name.
+    // only, never as the main profile photo. The main photo becomes Chris Dyer's
+    // only on a profile Chris Dyer himself set up under his own name.
     return {
       name: "", mood: "", about: "", meet: "",
       photo: "", songId: "", songLabel: "",
       customHtml: "", customCss: "", theme: "classic", bg: "",
-      crew: ["Chris"]
+      crew: [HOUSE_NAME]
     };
   }
   function blankState(){
@@ -1125,10 +1136,10 @@
   }
   var own = loadOwn();
   // Enforce the house rule on this browser's own crew. For everyone else,
-  // Chris sits at #1 (moved there if he was elsewhere, added if he'd been
-  // removed). For Chris himself, any "Chris" entry is himself — it comes
-  // out, so his own page never shows the default Chris as his #1. The
-  // next auto-publish carries the fixed order to the shared directory, so
+  // Chris Dyer sits at #1 (moved there if he was elsewhere, added if he'd been
+  // removed). For Chris Dyer himself, any "Chris Dyer" (or old "Chris") entry
+  // is himself — it comes out, so his own page never shows himself as his #1.
+  // The next auto-publish carries the fixed order to the shared directory, so
   // visitors see it on this profile's page too.
   function enforceOwnCrew(){
     var fixed = crewForDisplay(own);
@@ -1188,8 +1199,8 @@
       photo: own.photo || "", songId: own.songId || "", songLabel: own.songLabel || "",
       customHtml: own.customHtml || "", customCss: own.customCss || "", theme: own.theme || "classic", bg: own.bg || "",
       // Publish the enforced crew, so the shared copy itself honors the
-      // house rule: Chris at #1 for everyone, and no self-entry on
-      // Chris's own listing.
+      // house rule: Chris Dyer at #1 for everyone, and no self-entry on
+      // Chris Dyer's own listing.
       crew: crewForDisplay(own).slice(0, 24),
       updatedAt: (window.firebase && firebase.database) ? firebase.database.ServerValue.TIMESTAMP : Date.now()
     };
@@ -1243,7 +1254,7 @@
 
   /* Open a directory profile as the viewed page (your own card just goes
      home). Shared by the directory cards and the Top 8 slots, so the
-     "Chris" at #1 opens Chris's real profile, not a placeholder. */
+     "Chris Dyer" at #1 opens Chris Dyer's real profile, not a placeholder. */
   function visitProfile(uid){
     if(uid === fbUid){ showOwn(); window.scrollTo(0,0); return; }
     var p = allProfiles[uid];
@@ -1557,9 +1568,9 @@
       area.innerHTML = '<span class="song-none">' + (isOwn ? "No song yet. Every profile needs a song — add one in Edit." : "No profile song. Bold choice.") + "</span>";
     }
 
-    // Top 8 — Chris's real profile is #1 on every profile (the house
+    // Top 8 — Chris Dyer's real profile is #1 on every profile (the house
     // rule), so the displayed crew always leads with him — except on
-    // Chris's own page, where there is no Chris slot at all and his
+    // Chris Dyer's own page, where there is no Chris Dyer slot at all and his
     // friends start at #1.
     var grid = $("top8Grid"); grid.innerHTML = "";
     var crew = crewForDisplay(p);
@@ -1817,7 +1828,7 @@
     if(isChrisName(own.name)){
       var note = document.createElement("p");
       note.className = "deck-note";
-      note.innerHTML = "<b>House rule:</b> you're Chris — your real profile is automatically #1 on everyone else's Top 8, so you don't take a slot on your own page. Your Top 8 here is for your friends.";
+      note.innerHTML = "<b>House rule:</b> you're Chris Dyer — your real profile is automatically #1 on everyone else's Top 8, so you don't take a slot on your own page. Your Top 8 here is for your friends.";
       list.insertBefore(note, list.firstChild);
     }
     renderPicker();
@@ -1939,8 +1950,8 @@
   });
   // Tapping a Top 8 slot visits that friend's real profile. The name is
   // resolved against the directory at tap time, so it works even when the
-  // directory finished loading after the page rendered — and the Chris at
-  // #1 opens Chris's actual profile.
+  // directory finished loading after the page rendered — and the Chris Dyer at
+  // #1 opens Chris Dyer's actual profile.
   $("top8Grid").addEventListener("click", function(e){
     var slot = e.target && e.target.closest ? e.target.closest(".slot") : null;
     if(!slot || slot.classList.contains("empty")) return;
@@ -1964,7 +1975,7 @@
 
   $("inName").addEventListener("input", function(){
     own.name = this.value;
-    // Becoming (or stopping being) Chris changes the house rule for your
+    // Becoming (or stopping being) Chris Dyer changes the house rule for your
     // own crew — re-run it and redraw the crew editor to match.
     enforceOwnCrew();
     saveOwn(); renderEditPhoto(); renderCrewEditor(); setPubStatus();
