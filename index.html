@@ -773,7 +773,7 @@
           <div class="obox" style="margin-bottom:6px;">
             <h3>Spud Arcade — Games</h3>
             <div class="body" style="white-space:normal;">
-              <p style="margin-top:0;">The Spud games from the resort app, now living here — and shared. <b>Tate-lo is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time. <b>SuperSpud Runner</b> and <b>Spud Kart</b> are live too: create a race room and your opponent's kart runs on your track in real time, and Runner duels stream your rival's score and distance live while you both run — plus shared leaderboards and friend challenges on top.</p>
+              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate-lo is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and Tate-lo also has its newest forms, <b>Spudball</b> and the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. <b>Spud Kart — Resort Grand Prix</b> brings three tracks, four racers, coins and items. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, race rooms, shared leaderboards and friend challenges run through it all.</p>
               <div class="playas">
                 <label for="gameName" style="font-weight:bold; color:var(--blue);">Playing as:</label>
                 <input type="text" id="gameName" maxlength="24" placeholder="Your game name (your profile name works)" />
@@ -788,15 +788,33 @@
                 </div>
                 <div class="game-card">
                   <span class="game-tag live">LIVE DUELS · LEADERBOARD · CHALLENGES</span>
-                  <h4>SuperSpud Runner</h4>
-                  <p>SuperSpud on the run: jump the forks, duck the peelers, grab the toppings. Duel a friend live — their score streams in beside yours — and post your best to the shared board.</p>
+                  <h4>SuperSpud Runner — Maxed Out</h4>
+                  <p>The most recent Runner: SpudMan — gold armor, red gauntlets, sour cream on top — on the run through four worlds. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups.</p>
                   <button class="btn primary" type="button" data-goto="runnerPanel">Play Runner</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag live">LIVE RACING · BASEMENT SERVER · LEADERBOARD</span>
-                  <h4>Spud Kart</h4>
-                  <p>Two laps of the Spudway. Race a friend live — their kart is right there on your track — run a solo time trial for the shared board, or race on the basement server, where the PC runs the race and karts really collide.</p>
+                  <h4>Spud Kart — Resort Grand Prix</h4>
+                  <p>The most recent Kart: three tracks (Resort Grand Prix, Prism Spud Skyway, Twilight Mash Mile), four racers, Spud Coins, item boxes, ramps and butter slicks — plus live race rooms and the basement server, where the PC runs the race and karts really collide.</p>
                   <button class="btn primary" type="button" data-goto="kartPanel">Race Kart</button>
+                </div>
+                <div class="game-card">
+                  <span class="game-tag">SOLO VS BOTS · ARENA</span>
+                  <h4>Tate-lo — Spudball</h4>
+                  <p>Tate-lo's newest arena form: top-down sour-cream blaster duels in a garden arena. One hit splats — unless a Butter Shield eats it. Out-splat three bot Spudtans, each with a style of its own.</p>
+                  <button class="btn primary" type="button" data-goto="ballPanel">Play Spudball</button>
+                </div>
+                <div class="game-card">
+                  <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
+                  <h4>Tate-lo 3D — WebGL</h4>
+                  <p>The WebGL Tate-lo: first-person Spudball in a real 3D garden arena — stone walls, crates for cover, gold and red Spudtans trading sour-cream shots. Splat five before they splat you.</p>
+                  <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
+                </div>
+                <div class="game-card">
+                  <span class="game-tag">WEBGL 3D · ESCAPE RUN</span>
+                  <h4>Spud Escape 3D — WebGL</h4>
+                  <p>The WebGL escape run: SpudMan drives the Tater Buggy out of a collapsing structure on a countdown — launch ramps over gaps, boost pads, checkpoint arches for more time, and the extraction pad at the end.</p>
+                  <button class="btn primary" type="button" data-goto="escapePanel">Play Escape 3D</button>
                 </div>
               </div>
 
@@ -835,16 +853,16 @@
               </div>
 
               <div class="game-panel" id="runnerPanel">
-                <h4>SuperSpud Runner</h4>
+                <h4>SuperSpud Runner — Maxed Out · SpudMan &amp; the Double Jump</h4>
                 <div class="gbody">
-                  <div class="scoreline"><span>Score <b id="runScore">0</b></span><span>Distance <b id="runDist">0 m</b></span><span>Best <b id="runBest">—</b></span><span id="runMsg" style="font-weight:bold; color:var(--orange);"></span></div>
-                  <canvas class="game-canvas" id="runCanvas" width="640" height="260"></canvas>
+                  <div class="scoreline"><span>Score <b id="runScore">0</b></span><span>Distance <b id="runDist">0 m</b></span><span>World <b id="runWorld">Sunset Rooftops</b></span><span>Best <b id="runBest">—</b></span><span id="runFx" style="font-weight:bold; color:var(--green);"></span><span id="runMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <canvas class="game-canvas" id="runCanvas" width="1024" height="460"></canvas>
                   <div class="touchrow">
-                    <button class="btn" id="runDuck" type="button">▼ Duck</button>
+                    <button class="btn" id="runDuck" type="button">▼ Duck / Slide</button>
                     <button class="btn orange" id="runStart" type="button">Start Run</button>
-                    <button class="btn" id="runJump" type="button">Jump ▲</button>
+                    <button class="btn" id="runJump" type="button">Jump ▲ — tap again mid-air to double-jump</button>
                   </div>
-                  <p class="game-sub">Jump forks and slicks, duck under the Hover Peeler, grab toppings for points. Tap Jump again mid-air to double-jump. Keyboard: Space / ↑ jump, ↓ duck.</p>
+                  <p class="game-sub">That's <b>SpudMan</b> — the loaded-potato hero in gold armor and red gauntlets, sour cream and chives on top, fork in hand. <b>Jump</b> clears forks, knives, mashers, butter slicks and rolling pins; press Jump <b>again mid-air to double-jump</b> the wide hazard pairs (it comes back every time you land). <b>Duck</b> slides under the Hover Peeler — jumping into it ends the run. Seven toppings (chili +30 and sour cream +25 ride high — jump for them), three power-ups (Spud Magnet, Sour Cream Shield, Double-Loaded ×2), a +50 bonus every 250 m, and a new world every 400 m: Sunset Rooftops → Starlight Spud City → Buttercup Meadow → Sour Cream Snowcaps. Keyboard: Space / ↑ jump, ↓ / S slide.</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Live duel — race a friend at the same time</p>
                     <p class="game-status" id="runLiveStatus">Open a duel room or join one — both runners start together and scores stream live.</p>
@@ -865,17 +883,31 @@
               </div>
 
               <div class="game-panel" id="kartPanel">
-                <h4>Spud Kart</h4>
+                <h4>Spud Kart — Resort Grand Prix</h4>
                 <div class="gbody">
-                  <div class="scoreline"><span>Lap <b id="kartLap">– / 2</b></span><span>Time <b id="kartTime">0.0 s</b></span><span>Best <b id="kartBest">—</b></span><span id="kartMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <div class="scoreline"><span>Lap <b id="kartLap">– / 3</b></span><span>Position <b id="kartPos">—</b></span><span>Time <b id="kartTime">0.0 s</b></span><span>Coins <b id="kartCoins">0</b></span><span>Item <b id="kartItemSlot">none — hit a ? box</b></span><span>Best <b id="kartBest">—</b></span><span id="kartMsg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <canvas class="game-canvas" id="kartCanvas" width="640" height="360"></canvas>
                   <div class="touchrow">
                     <button class="btn" id="kartLeft" type="button">◀</button>
+                    <button class="btn" id="kartItemBtn" type="button" disabled>Use Item</button>
                     <button class="btn orange" id="kartStart" type="button">Start Race</button>
                     <button class="btn" id="kartGas" type="button">Gas ▲</button>
                     <button class="btn" id="kartRight" type="button">▶</button>
                   </div>
-                  <p class="game-sub">Hold Gas to roll, steer with ◀ ▶. The kart slows on the grass — stay on the tarmac. Keyboard: ↑ gas, ← → steer. Two clean laps sets your time.</p>
+                  <div class="chal-row" style="margin-top:8px;">
+                    <select id="kartTrack" aria-label="Choose a track">
+                      <option value="resort">🌅 Resort Grand Prix — sunset coast</option>
+                      <option value="skyway">🌈 Prism Spud Skyway — no guardrail</option>
+                      <option value="mash">🌙 Twilight Mash Mile — tight &amp; twisty</option>
+                    </select>
+                    <select id="kartDriver" aria-label="Choose your racer">
+                      <option value="0">🥔 Super Spud · balanced</option>
+                      <option value="1">🚀 Russet Rocket · quick launch</option>
+                      <option value="2">💛 Yukon Goldie · top speed</option>
+                      <option value="3">💜 Purple Majesty · tight steering</option>
+                    </select>
+                  </div>
+                  <p class="game-sub">Hold Gas to roll, steer with ◀ ▶. Three laps against three rival spuds in solo — bumping slows you both. Gold <b>Spud Coins</b> each nudge your top speed up (to +12%); <b>? boxes</b> hand out a Boost, a Shield, a Butter Trap or Superstar invincibility — tap <b>Use Item</b> (or Space) to fire it, and tap it mid-air off a <b>ramp</b> to trick for a landing boost. Butter slicks spin you out unless you're shielded or starred. On the Skyway there's <b>no guardrail</b>: slide off the edge and you get fished back, a few seconds poorer. Grass slows you on the other tracks. Keyboard: ↑ gas, ← → steer, Space item/trick. Live races and basement-server races run on the Resort layout, 2 laps on the server (it calls its own finish).</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Live race — head-to-head on the same track</p>
                     <p class="game-status" id="kartLiveStatus">Create a race room or join one — when a rival joins, the countdown starts and their kart appears on your track, synced live.</p>
@@ -911,6 +943,59 @@
                     <select id="kartFriend" aria-label="Friend to challenge at Spud Kart"></select>
                     <button class="btn primary" id="kartChallenge" type="button">Challenge to Beat My Time</button>
                   </div>
+                </div>
+              </div>
+
+              <div class="game-panel" id="ballPanel">
+                <h4>Tate-lo — Spudball (top-down arena)</h4>
+                <div class="gbody">
+                  <div class="scoreline"><span>You <b id="ballYou">0</b> splats</span><span>Bots <b id="ballBots">0</b></span><span>First to <b>5</b></span><span id="ballMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <canvas class="game-canvas" id="ballCanvas" width="900" height="600"></canvas>
+                  <div class="touchrow">
+                    <button class="btn" id="ballLeft" type="button">◀</button>
+                    <button class="btn" id="ballUp" type="button">▲</button>
+                    <button class="btn" id="ballDown" type="button">▼</button>
+                    <button class="btn" id="ballRight" type="button">▶</button>
+                  </div>
+                  <div class="touchrow">
+                    <button class="btn orange" id="ballStart" type="button">Start Match</button>
+                    <button class="btn" id="ballFire" type="button">Fire Sour Cream</button>
+                  </div>
+                  <p class="game-sub">Move with the pads (or WASD / arrow keys), aim with your movement, and fire sour cream (or Space). One hit splats — a glowing <b>Butter Shield</b> pickup eats one hit. The bots have styles: Sharpspuds hold range and snipe, Mash Rushers charge you, Peel Dodgers won't sit still. First to 5 splats takes the match.</p>
+                </div>
+              </div>
+
+              <div class="game-panel" id="ball3dPanel">
+                <h4>Tate-lo 3D — WebGL (first-person Spudball)</h4>
+                <div class="gbody">
+                  <div class="scoreline"><span>Splats <b id="b3Splats">0 / 5</b></span><span>Times splatted <b id="b3Down">0</b></span><span>Time <b id="b3Time">0.0 s</b></span><span id="b3Msg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <div id="b3Mount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                  <div class="touchrow">
+                    <button class="btn" id="b3Left" type="button">◀ Turn</button>
+                    <button class="btn" id="b3Fwd" type="button">▲ Forward</button>
+                    <button class="btn" id="b3Right" type="button">Turn ▶</button>
+                  </div>
+                  <div class="touchrow">
+                    <button class="btn orange" id="b3Start" type="button">Start 3D Match</button>
+                    <button class="btn" id="b3Fire" type="button">Fire Sour Cream</button>
+                  </div>
+                  <p class="game-sub">Real WebGL (three.js): a first-person garden arena — ivy stone walls, crates for cover, warm fog. Gold and red Spudtans hunt you and fire back; one hit splats either way, and a splat respawns the spud across the arena. First to 5 splats wins. Keyboard: ↑ / W forward, ← → / A D turn, Space fire. Drag on the view also turns.</p>
+                </div>
+              </div>
+
+              <div class="game-panel" id="escapePanel">
+                <h4>Spud Escape 3D — WebGL (the escape run)</h4>
+                <div class="gbody">
+                  <div class="scoreline"><span>Time left <b id="escTime">45.0 s</b></span><span>Level <b id="escLevel">1 / 3</b></span><span>Speed <b id="escSpeed">0</b></span><span id="escMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <div id="escMount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                  <div class="touchrow">
+                    <button class="btn" id="escLeft" type="button">◀</button>
+                    <button class="btn" id="escBrake" type="button">Brake</button>
+                    <button class="btn orange" id="escStart" type="button">Start Escape</button>
+                    <button class="btn" id="escGas" type="button">Gas ▲</button>
+                    <button class="btn" id="escRight" type="button">▶</button>
+                  </div>
+                  <p class="game-sub">Real WebGL (three.js): SpudMan at the wheel of the Tater Buggy, a collapsing structure, and a countdown that does not care about your feelings. Steer with ◀ ▶ (or A / D), hold Gas to roll. Orange <b>ramps</b> launch you over the gaps — fall and you lose 3 seconds getting fished back. Gold <b>boost pads</b> surge you forward, and every <b>checkpoint arch</b> adds +6 seconds. Cross all three levels and land on the glowing <b>extraction pad</b> before the clock dies.</p>
                 </div>
               </div>
 
@@ -2355,6 +2440,7 @@
   initFirebase();
 })();
 </script>
+<script src="assets/three.min.js"></script>
 <script>
 /* ================= Spud Arcade — shared live multiplayer =================
    Same Firebase project as the profiles (top8/), anonymous auth shared with
@@ -2769,143 +2855,596 @@
     }
   });
 
-  /* ---------------- SuperSpud Runner ---------------- */
+  /* ---------------- SuperSpud Runner — Maxed Out ----------------
+     The most recent Runner, ported from the resort app: SpudMan himself
+     (the loaded-potato hero in gold armor and red gauntlets, sour cream
+     and chives on top, fork in hand — assets/superspud-run.png and
+     superspud-jump.png, with a drawn armored-spud fallback until they
+     load), the DOUBLE JUMP (one mid-air second jump, earned back on
+     landing, with kick rings so the spent jump reads), four worlds
+     rotating every 400 m, six hazards unlocking as the run deepens,
+     hazard pairs late, seven toppings at their real point values
+     (chili +30 and sour cream +25 ride high), three power-ups (Spud
+     Magnet 8 s, Sour Cream Shield eats one hit, Double-Loaded ×2 for
+     10 s), +50 milestones every 250 m, and the slide (Duck) that slams
+     him down under the Hover Peeler. Score = metres + bonus, exactly
+     like the original. */
   var rc = $("runCanvas"), rctx = rc.getContext("2d");
-  var RW = 640, RH = 260, GROUND = RH - 42;
+  var RW = 1024, RH = 460, GROUND = 406;
+  var POINTS = { cream: 25, bacon: 15, cheese: 10, chive: 10, butter: 20, broccoli: 15, chili: 30 };
+  var TOPPINGS = ["cream", "bacon", "cheese", "chive", "butter", "broccoli", "chili"];
+  var WORLDS = [
+    { name: "Sunset Rooftops", sky: ["#2b1846", "#83325e", "#e2603f", "#f9b14a"], celestial: "sun",
+      far: "rgba(66,34,82,0.65)", near: "#241233", ground: "#33203c", groundTop: "#4a2c50",
+      rim: "#ffb84d", cloud: "rgba(255,178,148,0.5)", decor: "clouds" },
+    { name: "Starlight Spud City", sky: ["#060a24", "#14204d", "#2c3a6e", "#4a4a86"], celestial: "moon",
+      far: "rgba(24,32,72,0.8)", near: "#0a0f2c", ground: "#131a38", groundTop: "#1e2a52",
+      rim: "#9fd8ff", cloud: "rgba(120,140,220,0.28)", decor: "stars" },
+    { name: "Buttercup Meadow", sky: ["#7ec8e8", "#a8dcf0", "#d8f2d8", "#fdf3b8"], celestial: "sun",
+      far: "rgba(94,148,84,0.55)", near: "#3d6b35", ground: "#4a7a3a", groundTop: "#5d9448",
+      rim: "#ffe98a", cloud: "rgba(255,255,255,0.75)", decor: "clouds" },
+    { name: "Sour Cream Snowcaps", sky: ["#2c3e5e", "#5e7a9e", "#a8c4dc", "#eef6fb"], celestial: "moon",
+      far: "rgba(120,148,180,0.6)", near: "#48607e", ground: "#dfeaf2", groundTop: "#f4fafd",
+      rim: "#ffffff", cloud: "rgba(255,255,255,0.5)", decor: "snow" }
+  ];
+  var DIMS = {
+    fork: { w: 20, h: 66 }, knife: { w: 16, h: 78 }, masher: { w: 58, h: 44 },
+    butterSlick: { w: 62, h: 12 }, peeler: { w: 46, h: 26 }, rollingPin: { w: 56, h: 40 },
+    cream: { w: 46, h: 34 }, bacon: { w: 30, h: 46 }, cheese: { w: 42, h: 22 },
+    chive: { w: 42, h: 24 }, butter: { w: 40, h: 26 }, broccoli: { w: 36, h: 38 },
+    chili: { w: 44, h: 30 },
+    magnet: { w: 40, h: 40 }, shield: { w: 40, h: 44 }, mult: { w: 40, h: 40 }
+  };
+  var OVER_TITLES = { fork: "Forked!", knife: "Sliced!", masher: "Mashed!", butterSlick: "Slipped on butter!", peeler: "Peeled!", rollingPin: "Rolled flat!" };
+  var runImgRun = new Image(), runImgJump = new Image(), runImgOk = false;
+  runImgRun.onload = function(){ runImgOk = true; if(!run || run.over) drawRun(); };
+  runImgRun.src = "assets/superspud-run.png";
+  runImgJump.src = "assets/superspud-jump.png";
   var run = null, runRaf = null, runLast = 0;
   var keys = { jumpHeld: false, duckHeld: false };
+  function runSpeed(){ return run ? Math.min(980, 335 + run.distPx * 0.088) : 335; }
+  function runDistM(){ return run ? Math.floor(run.distPx / 10) : 0; }
+  function runScoreNow(){ return run ? Math.floor(run.distPx / 10) + run.bonus : 0; }
   function resetRun(){
-    run = { t: 0, dist: 0, score: 0, speed: 250, x: 90, y: GROUND, vy: 0, jumps: 0,
-            duck: false, obs: [], tops: [], spawnIn: 500, over: false, startedAt: Date.now() };
+    run = { t: 0, distPx: 0, bonus: 0, x: 78, y: 0, vy: 0, jumps: 0, slideT: 0, squash: 0,
+            ents: [], rings: [], floats: [], dust: [], spawnIn: 520, lastObsEnd: -1e9, lastGroupEnd: -1e9,
+            magnetT: 0, multT: 0, shieldOn: false, invulnT: 0, powerCd: 6,
+            milestones: 0, nextMilestone: 250, worldIdx: 0, banner: null,
+            counts: {}, over: false, startedAt: Date.now(), phase: 0 };
+    TOPPINGS.forEach(function(k){ run.counts[k] = 0; });
   }
-  function drawPotato(x, y, duck){
-    var w = duck ? 46 : 36, h = duck ? 22 : 34;
+  function hazardClearGap(){ return runSpeed() * 0.42 + 190; }
+  function toppingClearGap(){ return runSpeed() * 0.20 + 130; }
+  function obstaclePool(m){
+    var pool = ["fork", "fork", "knife"];
+    if(m >= 120) pool.push("butterSlick");
+    if(m >= 220) pool.push("masher");
+    if(m >= 340) pool.push("knife", "masher");
+    if(m >= 460) pool.push("peeler");
+    if(m >= 620) pool.push("rollingPin", "peeler");
+    if(m >= 900) pool.push("rollingPin", "butterSlick");
+    return pool;
+  }
+  function isHighValue(k){ return k === "chili" || k === "cream"; }
+  function pushEnt(kind, x, cyOff){
+    var d = DIMS[kind];
+    run.ents.push({ kind: kind, x: x, w: d.w, h: d.h, cy: cyOff, seed: Math.random() * 6.28, rot: 0, taken: false });
+    return x + d.w;
+  }
+  function groundCy(kind){ return DIMS[kind].h / 2; }
+  function spawnRun(){
+    var m = runDistM(), roll = Math.random();
+    var groupEnd = null, groupHazard = false, wasPeeler = false;
+    run.powerCd -= 1;
+    if(run.powerCd <= 0 && roll < 0.075){
+      var pk = ["magnet", "shield", "mult"][Math.floor(Math.random() * 3)];
+      if(pk === "shield" && run.shieldOn) pk = "mult";
+      groupEnd = pushEnt(pk, RW + 30, Math.random() < 0.5 ? 74 : 22);
+      run.powerCd = 9 + Math.random() * 7;
+    }else if(roll < 0.47){
+      var pool = obstaclePool(m);
+      var ok = pool[Math.floor(Math.random() * pool.length)];
+      // A peeler too soon after the last hazard is a death trap — serve
+      // a topping instead and let the gap grow (the original's rule).
+      var gap = (run.distPx + RW + 30) - run.lastObsEnd;
+      if(ok === "peeler" && gap < runSpeed() * 0.74 + 240) ok = null;
+      if(ok === null){
+        var tk0 = TOPPINGS[Math.floor(Math.random() * TOPPINGS.length)];
+        groupEnd = pushEnt(tk0, RW + 30, isHighValue(tk0) ? (Math.random() < 0.45 ? 212 : 150) : (Math.random() < 0.35 ? 56 : 24));
+      }else{
+        var ox = RW + 30;
+        var need = -Infinity;
+        if(ok === "peeler"){
+          if(isFinite(run.lastGroupEnd)) need = run.lastGroupEnd + toppingClearGap();
+        }else{
+          if(run.lastObsEnd > -1e8){
+            var n1 = run.lastObsEnd + hazardClearGap();
+            if(ok === "rollingPin") n1 += 90;
+            need = Math.max(need, n1);
+          }
+          if(isFinite(run.lastGroupEnd)) need = Math.max(need, run.lastGroupEnd + toppingClearGap());
+        }
+        if(run.distPx + ox < need) ox += need - (run.distPx + ox);
+        groupEnd = pushEnt(ok, ox, ok === "peeler" ? 109 : groundCy(ok));
+        run.lastObsEnd = run.distPx + groupEnd;
+        groupHazard = true; wasPeeler = ok === "peeler";
+        // Late runs throw pairs one (double) jump can span. Peelers never pair.
+        if(ok !== "peeler" && m >= 500 && Math.random() < 0.24){
+          var ok2 = pool[Math.floor(Math.random() * pool.length)];
+          if(ok2 !== "peeler"){
+            var ox2 = ox + DIMS[ok].w + 150 + Math.random() * 46;
+            groupEnd = pushEnt(ok2, ox2, groundCy(ok2));
+            run.lastObsEnd = run.distPx + groupEnd;
+          }
+        }
+      }
+    }else if(roll < 0.60){
+      var ak = TOPPINGS[Math.floor(Math.random() * TOPPINGS.length)];
+      var aOff = isHighValue(ak) ? 150 : 56;
+      for(var a = 0; a < 3; a++) groupEnd = pushEnt(ak, RW + 30 + a * 54, aOff);
+    }else{
+      var tk = TOPPINGS[Math.floor(Math.random() * TOPPINGS.length)];
+      groupEnd = pushEnt(tk, RW + 30, isHighValue(tk) ? (Math.random() < 0.45 ? 212 : 150) : (Math.random() < 0.35 ? 56 : 24));
+    }
+    if(groupEnd !== null) run.lastGroupEnd = run.distPx + groupEnd;
+    var shrink = Math.max(0.60, 1 - m / 2800);
+    run.spawnIn = (300 + Math.random() * 320) * shrink;
+    if(groupEnd !== null){
+      var floorGap = wasPeeler ? 460 : (groupHazard ? hazardClearGap() : 130);
+      run.spawnIn = Math.max(run.spawnIn, (groupEnd - (RW + 30)) + floorGap);
+    }
+  }
+  function drawSpudMan(x, groundY, sliding, airborne){
+    // x = hitbox left, groundY = canvas y of his feet.
+    var drawH = sliding ? 74 : 128, drawW = drawH; // sprites are square
+    var cx = x + 46;
+    if(runImgOk){
+      var img = airborne ? (runImgJump.complete && runImgJump.naturalWidth ? runImgJump : runImgRun) : runImgRun;
+      rctx.save();
+      rctx.translate(cx, groundY);
+      var sq = run ? run.squash : 0;
+      rctx.scale(1 - sq * 0.10, 1 + sq * 0.10);
+      if(!airborne && !sliding && run && !run.over){
+        rctx.translate(0, -Math.abs(Math.sin(run.phase * 10)) * 3); // running bob
+      }
+      rctx.drawImage(img, -drawW / 2, -drawH, drawW, drawH);
+      rctx.restore();
+    }else{
+      // Fallback SpudMan, drawn: white cape fluttering behind, potato
+      // torso in a gold chestplate, red gauntlets and boots, a sour-cream
+      // dollop with chives on top, fork in the front hand.
+      rctx.save();
+      rctx.translate(cx, groundY);
+      var flut = Math.sin((run ? run.phase : 0) * 9) * 5;
+      rctx.fillStyle = "#f4f1e8";
+      rctx.beginPath();
+      rctx.moveTo(-16, -104);
+      rctx.quadraticCurveTo(-58 - flut, -84, -52 - flut, -46);
+      rctx.quadraticCurveTo(-34, -58, -14, -52);
+      rctx.closePath(); rctx.fill();
+      var legSwing = (airborne || sliding) ? 0 : Math.sin((run ? run.phase : 0) * 10) * 10;
+      rctx.fillStyle = "#a83c2a";
+      rctx.fillRect(-16 + legSwing * 0.4, -34, 11, 30); rctx.fillRect(-19 + legSwing * 0.4, -6, 17, 7);
+      rctx.fillRect(6 - legSwing * 0.4, -34, 11, 30); rctx.fillRect(3 - legSwing * 0.4, -6, 17, 7);
+      rctx.fillStyle = "#b5793b";
+      rctx.beginPath(); rctx.ellipse(0, -72, 27, 34, 0, 0, Math.PI * 2); rctx.fill();
+      rctx.fillStyle = "#96602a";
+      [[-10, -84], [9, -62], [-4, -48]].forEach(function(s){
+        rctx.beginPath(); rctx.ellipse(s[0], s[1], 3, 2, 0, 0, Math.PI * 2); rctx.fill();
+      });
+      rctx.fillStyle = "#e8a91c";
+      rctx.beginPath();
+      rctx.moveTo(-24, -96); rctx.lineTo(24, -96); rctx.lineTo(17, -58); rctx.lineTo(0, -50); rctx.lineTo(-17, -58);
+      rctx.closePath(); rctx.fill();
+      rctx.strokeStyle = "#b57f0a"; rctx.lineWidth = 2; rctx.stroke();
+      rctx.fillStyle = "#a83c2a";
+      rctx.beginPath(); rctx.ellipse(-30, -78, 8, 13, 0.5, 0, Math.PI * 2); rctx.fill();
+      rctx.beginPath(); rctx.ellipse(31, -84, 8, 13, -0.4, 0, Math.PI * 2); rctx.fill();
+      rctx.strokeStyle = "#d9d9d9"; rctx.lineWidth = 3;
+      rctx.beginPath(); rctx.moveTo(38, -88); rctx.lineTo(52, -104); rctx.stroke();
+      rctx.lineWidth = 2;
+      [-5, 0, 5].forEach(function(o){
+        rctx.beginPath(); rctx.moveTo(52 + o, -104); rctx.lineTo(52 + o, -114); rctx.stroke();
+      });
+      rctx.fillStyle = "#fff";
+      rctx.beginPath();
+      rctx.moveTo(-13, -104);
+      rctx.quadraticCurveTo(-12, -122, 0, -124);
+      rctx.quadraticCurveTo(13, -121, 12, -104);
+      rctx.quadraticCurveTo(0, -98, -13, -104);
+      rctx.fill();
+      rctx.fillStyle = "#3e9b4f";
+      [[-5, -114], [4, -117], [0, -108], [7, -110], [-8, -110]].forEach(function(c){
+        rctx.fillRect(c[0], c[1], 3, 2);
+      });
+      rctx.restore();
+    }
+    if(run && run.shieldOn){
+      rctx.save();
+      rctx.strokeStyle = "rgba(255,250,220,0.9)"; rctx.lineWidth = 3;
+      rctx.fillStyle = "rgba(255,246,200,0.16)";
+      rctx.beginPath(); rctx.ellipse(cx, groundY - 62, 62, 68, 0, 0, Math.PI * 2); rctx.fill(); rctx.stroke();
+      rctx.restore();
+    }
+    if(run && run.invulnT > 0 && Math.floor(run.t * 14) % 2 === 0){
+      rctx.save();
+      rctx.fillStyle = "rgba(255,255,255,0.25)";
+      rctx.beginPath(); rctx.ellipse(cx, groundY - 62, 58, 64, 0, 0, Math.PI * 2); rctx.fill();
+      rctx.restore();
+    }
+  }
+  function drawEnt(e){
+    var cx = e.x + e.w / 2, cy = GROUND - e.cy, top = cy - e.h / 2;
+    var isFood = !!POINTS[e.kind], isPow = e.kind === "magnet" || e.kind === "shield" || e.kind === "mult";
     rctx.save();
-    rctx.fillStyle = "#b5793b";
-    rctx.beginPath(); rctx.ellipse(x, y - h/2, w/2, h/2, 0, 0, Math.PI*2); rctx.fill();
-    rctx.fillStyle = "#96602a";
-    rctx.beginPath(); rctx.ellipse(x-8, y-h/2-3, 3, 2, 0, 0, Math.PI*2); rctx.fill();
-    rctx.beginPath(); rctx.ellipse(x+7, y-h/2+4, 2.5, 2, 0, 0, Math.PI*2); rctx.fill();
-    rctx.fillStyle = "#fff";
-    rctx.beginPath(); rctx.ellipse(x+10, y-h/2-4, 4.5, 5, 0, 0, Math.PI*2); rctx.fill();
-    rctx.fillStyle = "#222";
-    rctx.beginPath(); rctx.ellipse(x+11, y-h/2-4, 2.2, 2.6, 0, 0, Math.PI*2); rctx.fill();
+    if(isFood || isPow){
+      rctx.strokeStyle = "rgba(255,217,77,0.75)"; rctx.lineWidth = 2;
+      rctx.beginPath(); rctx.ellipse(cx, cy, e.w / 2 + 7, e.h / 2 + 7, 0, 0, Math.PI * 2); rctx.stroke();
+    }else{
+      rctx.strokeStyle = "rgba(255,60,40,0.55)"; rctx.lineWidth = 2;
+      rctx.beginPath(); rctx.ellipse(cx, cy, e.w / 2 + 6, e.h / 2 + 6, 0, 0, Math.PI * 2); rctx.stroke();
+    }
+    switch(e.kind){
+      case "fork":
+        rctx.fillStyle = "#d9d9d9"; rctx.fillRect(cx - 2.5, top + 14, 5, e.h - 14);
+        rctx.fillRect(e.x, top, e.w, 4);
+        [0, 7, 14].forEach(function(o){ rctx.fillRect(e.x + o, top, 3, 14); });
+        break;
+      case "knife":
+        rctx.fillStyle = "#e8e8e8";
+        rctx.beginPath(); rctx.moveTo(cx, top); rctx.lineTo(cx + 8, top + 34); rctx.lineTo(cx + 8, top + 52); rctx.lineTo(cx - 4, top + 52); rctx.lineTo(cx - 4, top + 20); rctx.closePath(); rctx.fill();
+        rctx.fillStyle = "#7a4a2b"; rctx.fillRect(cx - 3, top + 52, 7, e.h - 52);
+        break;
+      case "masher":
+        rctx.fillStyle = "#8a8a8a"; rctx.fillRect(cx - 3, top, 6, 16);
+        rctx.fillStyle = "#c0c0c0"; rctx.fillRect(e.x, top + 16, e.w, e.h - 16);
+        rctx.strokeStyle = "#7a7a7a"; rctx.lineWidth = 2;
+        for(var gx = e.x + 8; gx < e.x + e.w - 4; gx += 10){ rctx.beginPath(); rctx.moveTo(gx, top + 18); rctx.lineTo(gx, top + e.h - 2); rctx.stroke(); }
+        for(var gy = top + 24; gy < top + e.h - 2; gy += 9){ rctx.beginPath(); rctx.moveTo(e.x + 2, gy); rctx.lineTo(e.x + e.w - 2, gy); rctx.stroke(); }
+        break;
+      case "butterSlick":
+        rctx.fillStyle = "#ffe66d"; rctx.beginPath(); rctx.ellipse(cx, GROUND - 3, e.w / 2, 6, 0, 0, Math.PI * 2); rctx.fill();
+        rctx.fillStyle = "#fff3a0"; rctx.beginPath(); rctx.ellipse(cx - 8, GROUND - 5, 12, 3, 0, 0, Math.PI * 2); rctx.fill();
+        break;
+      case "peeler":
+        rctx.fillStyle = "#c0c0c0";
+        rctx.beginPath(); rctx.ellipse(cx, cy, e.w / 2, 11, 0, 0, Math.PI * 2); rctx.fill();
+        rctx.fillStyle = "#8a8a8a"; rctx.fillRect(cx - 3, top - 8, 6, 12);
+        rctx.fillStyle = "#e63946"; rctx.beginPath(); rctx.arc(cx, cy, 3.5, 0, Math.PI * 2); rctx.fill();
+        break;
+      case "rollingPin":
+        rctx.save(); rctx.translate(cx, cy); rctx.rotate(e.rot);
+        rctx.fillStyle = "#c98d54"; rctx.fillRect(-e.w / 2, -13, e.w, 26);
+        rctx.fillStyle = "#a06a38"; rctx.fillRect(-e.w / 2 - 8, -4, 8, 8); rctx.fillRect(e.w / 2, -4, 8, 8);
+        rctx.strokeStyle = "#96602a"; rctx.lineWidth = 2;
+        rctx.beginPath(); rctx.moveTo(-e.w / 2, 0); rctx.lineTo(e.w / 2, 0); rctx.stroke();
+        rctx.restore();
+        break;
+      case "cream":
+        rctx.fillStyle = "#fff";
+        rctx.beginPath();
+        rctx.moveTo(cx - 20, cy + 14); rctx.quadraticCurveTo(cx - 20, cy - 6, cx - 8, cy - 8);
+        rctx.quadraticCurveTo(cx - 8, cy - 22, cx + 2, cy - 20);
+        rctx.quadraticCurveTo(cx + 16, cy - 16, cx + 18, cy + 2);
+        rctx.quadraticCurveTo(cx + 19, cy + 14, cx, cy + 14); rctx.closePath(); rctx.fill();
+        rctx.fillStyle = "#3e9b4f"; [[-6, -8], [5, -12], [1, -2]].forEach(function(c){ rctx.fillRect(cx + c[0], cy + c[1], 3, 2); });
+        break;
+      case "bacon":
+        rctx.strokeStyle = "#c0392b"; rctx.lineWidth = 9;
+        rctx.beginPath(); rctx.moveTo(cx - 5, top);
+        rctx.quadraticCurveTo(cx + 7, cy - 8, cx - 5, cy);
+        rctx.quadraticCurveTo(cx - 15, cy + 8, cx - 4, cy + e.h / 2); rctx.stroke();
+        rctx.strokeStyle = "#f0a08a"; rctx.lineWidth = 3;
+        rctx.beginPath(); rctx.moveTo(cx - 5, top + 2);
+        rctx.quadraticCurveTo(cx + 5, cy - 8, cx - 6, cy); rctx.stroke();
+        break;
+      case "cheese":
+        rctx.fillStyle = "#f5a623";
+        rctx.beginPath(); rctx.moveTo(cx - e.w / 2, cy + 9); rctx.lineTo(cx + e.w / 2, cy + 9); rctx.lineTo(cx + e.w / 2, cy - 9); rctx.closePath(); rctx.fill();
+        rctx.fillStyle = "#d98c0a"; [[-8, 4], [6, 2], [13, -3]].forEach(function(hd){ rctx.beginPath(); rctx.arc(cx + hd[0], cy + hd[1], 2.6, 0, Math.PI * 2); rctx.fill(); });
+        break;
+      case "chive":
+        rctx.fillStyle = "#2e7d3b";
+        for(var ci = 0; ci < 7; ci++){
+          var a2 = e.seed + ci * 0.9;
+          rctx.fillRect(cx + Math.cos(a2) * 13 - 1.5, cy + Math.sin(a2) * 6 - 4, 3, 9);
+        }
+        rctx.fillStyle = "#57b25e"; rctx.fillRect(cx - 2, cy - 6, 3, 11);
+        break;
+      case "butter":
+        rctx.fillStyle = "#ffd94d"; rctx.fillRect(cx - 17, cy - 8, 34, 17);
+        rctx.fillStyle = "#ffe98a"; rctx.fillRect(cx - 13, cy - 12, 24, 6);
+        break;
+      case "broccoli":
+        rctx.fillStyle = "#7a9a4d"; rctx.fillRect(cx - 4, cy + 2, 8, 14);
+        rctx.fillStyle = "#2e7d3b";
+        [[0, -10, 13], [-11, -4, 9], [11, -4, 9]].forEach(function(b){
+          rctx.beginPath(); rctx.arc(cx + b[0], cy + b[1], b[2], 0, Math.PI * 2); rctx.fill();
+        });
+        break;
+      case "chili":
+        rctx.strokeStyle = "#d92626"; rctx.lineWidth = 10; rctx.lineCap = "round";
+        rctx.beginPath(); rctx.moveTo(cx - 14, cy - 8);
+        rctx.quadraticCurveTo(cx + 4, cy + 16, cx + 17, cy - 2); rctx.stroke();
+        rctx.strokeStyle = "#2e7d3b"; rctx.lineWidth = 4;
+        rctx.beginPath(); rctx.moveTo(cx - 14, cy - 8); rctx.lineTo(cx - 18, cy - 14); rctx.stroke();
+        break;
+      case "magnet":
+        rctx.strokeStyle = "#d92626"; rctx.lineWidth = 10;
+        rctx.beginPath(); rctx.arc(cx, cy + 2, 13, Math.PI, 0); rctx.stroke();
+        rctx.fillStyle = "#d92626"; rctx.fillRect(cx - 18, cy + 2, 10, 14); rctx.fillRect(cx + 8, cy + 2, 10, 14);
+        rctx.fillStyle = "#e8e8e8"; rctx.fillRect(cx - 18, cy + 2, 10, 5); rctx.fillRect(cx + 8, cy + 2, 10, 5);
+        break;
+      case "shield":
+        rctx.fillStyle = "#fff6da";
+        rctx.beginPath();
+        rctx.moveTo(cx, top + 2); rctx.quadraticCurveTo(cx + 17, top + 8, cx + 15, top + 22);
+        rctx.quadraticCurveTo(cx + 13, top + 36, cx, top + e.h - 2);
+        rctx.quadraticCurveTo(cx - 13, top + 36, cx - 15, top + 22);
+        rctx.quadraticCurveTo(cx - 17, top + 8, cx, top + 2); rctx.fill();
+        rctx.strokeStyle = "#e8a91c"; rctx.lineWidth = 2.5; rctx.stroke();
+        break;
+      case "mult":
+        rctx.fillStyle = "#e8a91c"; rctx.beginPath(); rctx.arc(cx, cy, 19, 0, Math.PI * 2); rctx.fill();
+        rctx.strokeStyle = "#b57f0a"; rctx.lineWidth = 2; rctx.stroke();
+        rctx.fillStyle = "#fff"; rctx.font = "bold 17px Verdana"; rctx.textAlign = "center";
+        rctx.fillText("×2", cx, cy + 6); rctx.textAlign = "left";
+        break;
+    }
     rctx.restore();
-    return { w: w, h: h };
   }
   function drawRun(){
+    var w = WORLDS[run ? run.worldIdx : 0];
     var grd = rctx.createLinearGradient(0, 0, 0, RH);
-    grd.addColorStop(0, "#f7b267"); grd.addColorStop(0.7, "#f4845f"); grd.addColorStop(1, "#c65d3d");
+    grd.addColorStop(0, w.sky[0]); grd.addColorStop(0.45, w.sky[1]); grd.addColorStop(0.75, w.sky[2]); grd.addColorStop(1, w.sky[3]);
     rctx.fillStyle = grd; rctx.fillRect(0, 0, RW, RH);
-    rctx.fillStyle = "rgba(255,255,255,.75)";
-    rctx.beginPath(); rctx.arc(RW-90, 46, 24, 0, Math.PI*2); rctx.fill();
-    rctx.fillStyle = "#7a4a2b"; rctx.fillRect(0, GROUND, RW, RH-GROUND);
-    rctx.fillStyle = "#96684a"; rctx.fillRect(0, GROUND, RW, 4);
-    if(!run) { drawPotato(90, GROUND, false); return; }
-    run.tops.forEach(function(t){
-      rctx.fillStyle = t.color;
-      rctx.beginPath(); rctx.arc(t.x, t.y, 10, 0, Math.PI*2); rctx.fill();
-      rctx.strokeStyle = "#ffd94d"; rctx.lineWidth = 2; rctx.stroke();
-    });
-    run.obs.forEach(function(o){
-      if(o.type === "fork"){
-        rctx.fillStyle = "#d9d9d9"; rctx.fillRect(o.x, GROUND-o.h, 5, o.h);
-        rctx.fillRect(o.x-6, GROUND-o.h, 17, 4);
-        rctx.fillRect(o.x-6, GROUND-o.h, 3, 12); rctx.fillRect(o.x+1, GROUND-o.h, 3, 12); rctx.fillRect(o.x+8, GROUND-o.h, 3, 12);
-      }else if(o.type === "slick"){
-        rctx.fillStyle = "#ffe66d"; rctx.beginPath(); rctx.ellipse(o.x+o.w/2, GROUND+3, o.w/2, 5, 0, 0, Math.PI*2); rctx.fill();
-      }else{ // peeler — floats at jump height; stay down
-        rctx.fillStyle = "#c0c0c0";
-        rctx.beginPath(); rctx.ellipse(o.x+o.w/2, o.y, o.w/2, 11, 0, 0, Math.PI*2); rctx.fill();
-        rctx.fillStyle = "#8a8a8a"; rctx.fillRect(o.x+o.w/2-3, o.y-20, 6, 12);
-      }
-    });
-    drawPotato(run.x, run.y, run.duck && run.y >= GROUND);
-  }
-  var TOP_COLORS = ["#fff3b0", "#e63946", "#ffd94d", "#f4a261", "#8ac926", "#ff8fab", "#fefae0"];
-  function spawnRun(){
-    var r = Math.random();
-    if(r < 0.62){
-      var types = ["fork", "slick", "peeler"];
-      var type = run.dist > 300 ? types[Math.floor(Math.random()*3)] : types[Math.floor(Math.random()*2)];
-      if(type === "fork") run.obs.push({ type: type, x: RW+20, w: 17, h: 40+Math.random()*14 });
-      else if(type === "slick") run.obs.push({ type: type, x: RW+20, w: 52, h: 8 });
-      else run.obs.push({ type: type, x: RW+20, w: 56, h: 22, y: GROUND-64 });
-      run.spawnIn = 340 + Math.random()*380 + run.speed*0.35;
+    var t = run ? run.t : 0, scroll = run ? run.distPx : 0;
+    // Celestial body
+    if(w.celestial === "sun"){
+      rctx.fillStyle = "rgba(255,236,170,0.95)";
+      rctx.beginPath(); rctx.arc(RW - 150, 74, 30, 0, Math.PI * 2); rctx.fill();
+      rctx.fillStyle = "rgba(255,214,120,0.35)";
+      rctx.beginPath(); rctx.arc(RW - 150, 74, 46, 0, Math.PI * 2); rctx.fill();
     }else{
-      var high = Math.random() < 0.45;
-      run.tops.push({ x: RW+20, y: high ? GROUND-86 : GROUND-24, color: TOP_COLORS[Math.floor(Math.random()*TOP_COLORS.length)], pts: 15 });
-      run.spawnIn = 260 + Math.random()*260;
+      rctx.fillStyle = "rgba(240,244,255,0.95)";
+      rctx.beginPath(); rctx.arc(RW - 150, 70, 24, 0, Math.PI * 2); rctx.fill();
+      rctx.fillStyle = w.sky[1];
+      rctx.beginPath(); rctx.arc(RW - 140, 62, 20, 0, Math.PI * 2); rctx.fill();
     }
+    // Decor: stars / snow / clouds
+    var i;
+    if(w.decor === "stars"){
+      rctx.fillStyle = "rgba(255,255,255,0.85)";
+      for(i = 0; i < 46; i++){
+        var sx = (i * 173.3) % RW, sy = (i * 97.7) % 190;
+        if(Math.sin(t * 2 + i) > -0.3) rctx.fillRect(sx, sy, 2, 2);
+      }
+    }else if(w.decor === "snow"){
+      rctx.fillStyle = "rgba(255,255,255,0.8)";
+      for(i = 0; i < 36; i++){
+        var fx = ((i * 211.3 - scroll * 0.4 + t * 12) % RW + RW) % RW;
+        var fy = (i * 67.7 + t * 26) % GROUND;
+        rctx.beginPath(); rctx.arc(fx, fy, 2, 0, Math.PI * 2); rctx.fill();
+      }
+    }else{
+      rctx.fillStyle = w.cloud;
+      for(i = 0; i < 6; i++){
+        var clx = ((i * 260 - scroll * 0.18) % (RW + 240) + RW + 240) % (RW + 240) - 120;
+        var cly = 44 + (i * 53) % 110;
+        rctx.beginPath();
+        rctx.ellipse(clx, cly, 44, 13, 0, 0, Math.PI * 2);
+        rctx.ellipse(clx + 30, cly + 4, 30, 10, 0, 0, Math.PI * 2);
+        rctx.fill();
+      }
+    }
+    // Skyline silhouettes, two parallax layers (deterministic rooftops)
+    function skyline(off, color, base, hMin, hVar, wdt){
+      rctx.fillStyle = color;
+      var startIdx = Math.floor(off / wdt);
+      for(var bi = startIdx; bi < startIdx + RW / wdt + 2; bi++){
+        var bh = hMin + ((bi * 37) % 10) / 10 * hVar;
+        var bx = bi * wdt - off;
+        rctx.fillRect(bx, base - bh, wdt - 6, bh);
+        rctx.fillRect(bx + 6, base - bh - 7, wdt - 20, 7); // rooftop lip / chimney block
+      }
+    }
+    skyline(scroll * 0.3, w.far, GROUND, 60, 90, 92);
+    skyline(scroll * 0.6, w.near, GROUND, 26, 54, 64);
+    // Ground
+    rctx.fillStyle = w.ground; rctx.fillRect(0, GROUND, RW, RH - GROUND);
+    rctx.fillStyle = w.groundTop; rctx.fillRect(0, GROUND, RW, 6);
+    rctx.strokeStyle = w.rim; rctx.lineWidth = 2;
+    rctx.beginPath(); rctx.moveTo(0, GROUND + 1); rctx.lineTo(RW, GROUND + 1); rctx.stroke();
+    rctx.fillStyle = "rgba(0,0,0,0.18)";
+    var dashOff = scroll % 46;
+    for(i = 0; i < RW / 46 + 1; i++) rctx.fillRect(i * 46 - dashOff, GROUND + 26, 24, 4);
+    if(!run){ drawSpudMan(78, GROUND, false, false); return; }
+    // Magnet aura
+    if(run.magnetT > 0){
+      rctx.save();
+      rctx.strokeStyle = "rgba(255,217,77," + (0.25 + 0.15 * Math.sin(run.t * 6)) + ")";
+      rctx.lineWidth = 2;
+      rctx.beginPath(); rctx.arc(run.x + 46, GROUND - run.y - 55, 185, 0, Math.PI * 2); rctx.stroke();
+      rctx.restore();
+    }
+    run.ents.forEach(drawEnt);
+    // Double-jump kick rings
+    run.rings.forEach(function(rg){
+      rctx.save();
+      rctx.strokeStyle = "rgba(255,255,255," + Math.max(0, 0.8 - rg.life * 1.6) + ")";
+      rctx.lineWidth = 3;
+      rctx.beginPath(); rctx.ellipse(rg.x, rg.y, rg.r, rg.r * 0.42, 0, 0, Math.PI * 2); rctx.stroke();
+      rctx.restore();
+    });
+    // Dust
+    run.dust.forEach(function(d){
+      rctx.fillStyle = "rgba(230,210,180," + Math.max(0, 0.55 - d.life) + ")";
+      rctx.beginPath(); rctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); rctx.fill();
+    });
+    var sliding = run.slideT > 0 && run.y <= 0.01;
+    drawSpudMan(run.x, GROUND - run.y, sliding, run.y > 0.01);
+    // Floating score text
+    run.floats.forEach(function(f){
+      rctx.save();
+      rctx.font = "bold 17px Verdana"; rctx.textAlign = "center";
+      rctx.fillStyle = "rgba(255,244,200," + Math.max(0, 1 - f.life / 1.1) + ")";
+      rctx.fillText(f.text, f.x, f.y - f.life * 34);
+      rctx.restore();
+    });
+    // World / milestone banner
+    if(run.banner){
+      var bl = run.banner.life, ba = bl < 0.25 ? bl / 0.25 : (bl > 1.9 ? Math.max(0, (2.3 - bl) / 0.4) : 1);
+      rctx.save();
+      rctx.globalAlpha = Math.max(0, Math.min(1, ba));
+      rctx.fillStyle = "rgba(20,16,40,0.55)"; rctx.fillRect(RW / 2 - 190, 96, 380, 62);
+      rctx.font = "bold 25px Verdana"; rctx.textAlign = "center"; rctx.fillStyle = "#ffe9a8";
+      rctx.fillText(run.banner.title, RW / 2, 128);
+      rctx.font = "13px Verdana"; rctx.fillStyle = "#fff";
+      rctx.fillText(run.banner.sub, RW / 2, 149);
+      rctx.restore();
+    }
+    // Jump pips: two dots, spent ones hollow — the double jump, readable at a glance
+    rctx.save();
+    rctx.font = "bold 11px Verdana"; rctx.fillStyle = "rgba(255,255,255,0.9)";
+    rctx.fillText("JUMPS", 16, 26);
+    for(i = 0; i < 2; i++){
+      rctx.beginPath(); rctx.arc(66 + i * 20, 22, 6, 0, Math.PI * 2);
+      if(run.jumps <= i){ rctx.fillStyle = "#ffd94d"; rctx.fill(); }
+      else { rctx.strokeStyle = "rgba(255,255,255,0.7)"; rctx.lineWidth = 2; rctx.stroke(); }
+    }
+    rctx.restore();
   }
   function runStep(ts){
     if(!run || run.over) return;
-    var dt = Math.min(0.033, (ts - runLast)/1000 || 0.016);
+    var dt = Math.min(0.033, (ts - runLast) / 1000 || 0.016);
     runLast = ts;
-    run.speed = 250 + Math.min(260, run.dist * 0.55);
-    run.dist += run.speed * dt / 10;
-    run.score = Math.floor(run.dist) + (run.topsPts || 0);
-    // vertical
-    run.duck = keys.duckHeld;
-    if(run.y < GROUND || run.vy < 0){
-      run.vy += 1900 * dt;
+    run.t += dt; run.phase += dt;
+    var spd = runSpeed();
+    run.distPx += spd * dt;
+    // Milestones: +50 every 250 m
+    var dm = runDistM();
+    if(dm >= run.nextMilestone){
+      run.bonus += 50; run.milestones++;
+      run.floats.push({ x: run.x + 130, y: GROUND - 190, text: "+50 · " + run.nextMilestone + " m!", life: 0 });
+      run.nextMilestone += 250;
+    }
+    // Worlds rotate every 400 m
+    var wi = Math.floor(dm / 400) % WORLDS.length;
+    if(wi !== run.worldIdx){
+      run.worldIdx = wi;
+      run.banner = { title: WORLDS[wi].name, sub: "World " + (wi + 1) + " of 4 — keep running, SpudMan", life: 0 };
+      $("runWorld").textContent = WORLDS[wi].name;
+    }
+    if(run.banner){ run.banner.life += dt; if(run.banner.life > 2.3) run.banner = null; }
+    // Power-up timers
+    if(run.magnetT > 0) run.magnetT = Math.max(0, run.magnetT - dt);
+    if(run.multT > 0) run.multT = Math.max(0, run.multT - dt);
+    if(run.invulnT > 0) run.invulnT = Math.max(0, run.invulnT - dt);
+    // Vertical: y is height above the ground, vy up-positive.
+    if(keys.duckHeld && run.y > 0.01) run.vy = Math.min(run.vy, -1500); // slide-slam
+    if(run.y > 0.01 || run.vy > 0){
+      run.vy -= 1550 * dt;
       run.y += run.vy * dt;
-      if(run.y >= GROUND){ run.y = GROUND; run.vy = 0; run.jumps = 0; }
+      if(run.y <= 0){
+        run.y = 0; run.vy = 0; run.jumps = 0; run.squash = 0.7;
+        for(var ld = 0; ld < 4; ld++) run.dust.push({ x: run.x + 20 + Math.random() * 52, y: GROUND + 2, r: 2.5 + Math.random() * 3, life: 0 });
+      }
     }
-    run.spawnIn -= run.speed * dt;
+    if(keys.duckHeld && run.y <= 0.01) run.slideT = 0.62;
+    else if(run.slideT > 0) run.slideT = Math.max(0, run.slideT - dt);
+    run.squash *= Math.pow(0.0015, dt); // fast decay toward 0
+    if(Math.abs(run.squash) < 0.01) run.squash = 0;
+    // Spawning
+    run.spawnIn -= spd * dt;
     if(run.spawnIn <= 0) spawnRun();
-    var pw = run.duck && run.y >= GROUND ? 46 : 36, ph = run.duck && run.y >= GROUND ? 22 : 34;
-    var pbox = { x: run.x - pw/2, y: run.y - ph, w: pw, h: ph };
-    run.obs = run.obs.filter(function(o){ return o.x + (o.w||20) > -30; });
-    run.tops = run.tops.filter(function(t){ return t.x > -20; });
-    var i, o;
-    for(i=0;i<run.obs.length;i++){
-      o = run.obs[i];
-      o.x -= run.speed * dt;
-      var obox = o.type === "peeler"
-        ? { x: o.x, y: o.y-11, w: o.w, h: 22 }
-        : o.type === "slick"
-          ? { x: o.x, y: GROUND-4, w: o.w, h: 8 }
-          : { x: o.x-6, y: GROUND-o.h, w: 17, h: o.h };
-      if(pbox.x < obox.x+obox.w && pbox.x+pbox.w > obox.x && pbox.y < obox.y+obox.h && pbox.y+pbox.h > obox.y){
-        return endRun();
+    // Run dust at his boots
+    if(run.y <= 0.01 && !run.over){
+      if(Math.random() < dt * 14) run.dust.push({ x: run.x + 8, y: GROUND + 2, r: 2 + Math.random() * 2.5, life: 0 });
+    }
+    run.dust.forEach(function(d){ d.life += dt * 1.4; d.x -= spd * dt * 0.35; });
+    run.dust = run.dust.filter(function(d){ return d.life < 0.6; });
+    run.rings.forEach(function(rg){ rg.life += dt; rg.r += dt * 130; });
+    run.rings = run.rings.filter(function(rg){ return rg.life < 0.5; });
+    run.floats.forEach(function(f){ f.life += dt; });
+    run.floats = run.floats.filter(function(f){ return f.life < 1.15; });
+    // Player hitbox
+    var sliding = run.slideT > 0 && run.y <= 0.01;
+    var ph = sliding ? 48 : 96;
+    var pbox = { x: run.x + 16, y: GROUND - run.y - ph, w: 60, h: ph };
+    var pcx = run.x + 46, pcy = GROUND - run.y - 52;
+    // Entities
+    for(var i = 0; i < run.ents.length; i++){
+      var e = run.ents[i];
+      e.x -= spd * dt;
+      if(e.kind === "rollingPin") e.rot += dt * 7;
+      var isFood = !!POINTS[e.kind], isPow = e.kind === "magnet" || e.kind === "shield" || e.kind === "mult";
+      if((isFood || isPow) && run.magnetT > 0){
+        var ecx = e.x + e.w / 2, ecy = GROUND - e.cy;
+        var mdx = pcx - ecx, mdy = pcy - ecy;
+        var md = Math.sqrt(mdx * mdx + mdy * mdy);
+        if(md < 190 && md > 4){
+          e.x += (mdx / md) * dt * 330;   // pull the center toward SpudMan
+          e.cy -= (mdy / md) * dt * 330;  // (canvas y is GROUND - cy)
+        }
+      }
+      if(e.x + e.w < -40){ run.ents.splice(i, 1); i--; continue; }
+      var ebox = { x: e.x, y: GROUND - e.cy - e.h / 2, w: e.w, h: e.h };
+      var hit = pbox.x < ebox.x + ebox.w && pbox.x + pbox.w > ebox.x && pbox.y < ebox.y + ebox.h && pbox.y + pbox.h > ebox.y;
+      if(!hit) continue;
+      if(isFood){
+        var pts = POINTS[e.kind] * (run.multT > 0 ? 2 : 1);
+        run.bonus += pts; run.counts[e.kind]++;
+        run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "+" + pts, life: 0 });
+        run.ents.splice(i, 1); i--;
+      }else if(isPow){
+        if(e.kind === "magnet"){ run.magnetT = 8; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "SPUD MAGNET!", life: 0 }); }
+        else if(e.kind === "shield"){ run.shieldOn = true; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "SHIELD UP!", life: 0 }); }
+        else { run.multT = 10; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "DOUBLE-LOADED ×2!", life: 0 }); }
+        run.ents.splice(i, 1); i--;
+      }else{
+        if(run.invulnT > 0) continue;
+        if(run.shieldOn){
+          run.shieldOn = false; run.invulnT = 1.2;
+          run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 10, text: "SHIELD ATE IT!", life: 0 });
+          run.ents.splice(i, 1); i--;
+        }else{
+          return endRun(e.kind);
+        }
       }
     }
-    for(i=0;i<run.tops.length;i++){
-      var t = run.tops[i];
-      t.x -= run.speed * dt;
-      var dx = t.x - run.x, dy = t.y - (run.y - ph/2);
-      if(dx*dx + dy*dy < 30*30){
-        run.topsPts = (run.topsPts || 0) + t.pts;
-        run.tops.splice(i, 1); i--;
-      }
-    }
-    $("runScore").textContent = Math.floor(run.dist) + (run.topsPts || 0);
-    $("runDist").textContent = Math.floor(run.dist) + " m";
+    // HUD
+    var sc = runScoreNow();
+    $("runScore").textContent = sc;
+    $("runDist").textContent = dm + " m";
+    var fx = [];
+    if(run.shieldOn) fx.push("🛡 Shield READY");
+    if(run.magnetT > 0) fx.push("🧲 Magnet " + Math.ceil(run.magnetT) + "s");
+    if(run.multT > 0) fx.push("×2 for " + Math.ceil(run.multT) + "s");
+    $("runFx").textContent = fx.join(" · ");
     // Live duel: stream my run to the room (~7×/sec).
     if(liveRunId && liveRunRef && uid && ts - runPubLast > 140){
       runPubLast = ts;
       liveRunRef.child("players/" + uid).update({
-        name: gameName(), score: Math.floor(run.dist) + (run.topsPts || 0),
-        dist: Math.floor(run.dist), over: false, final: null
+        name: gameName(), score: sc, dist: dm, over: false, final: null
       }).catch(function(){});
     }
     drawRun();
     runRaf = requestAnimationFrame(runStep);
   }
-  function endRun(){
+  function endRun(killer){
     if(!run) return;
     run.over = true;
     if(runRaf) cancelAnimationFrame(runRaf);
     drawRun();
-    var finalScore = Math.floor(run.dist) + (run.topsPts || 0);
+    var finalScore = runScoreNow(), dm = runDistM();
     if(liveRunId && liveRunRef && uid){
       liveRunRef.child("players/" + uid).update({
-        name: gameName(), score: finalScore, dist: Math.floor(run.dist),
-        over: true, final: finalScore
+        name: gameName(), score: finalScore, dist: dm, over: true, final: finalScore
       }).catch(function(){});
     }
-    $("runMsg").textContent = "Forked! Score " + finalScore;
+    var haul = TOPPINGS.filter(function(k){ return run.counts[k]; }).map(function(k){ return run.counts[k] + " " + k; }).join(", ");
+    $("runMsg").textContent = (OVER_TITLES[killer] || "Forked!") + " Score " + finalScore + " · " + dm + " m · " + WORLDS[run.worldIdx].name +
+      (haul ? " · Loaded with: " + haul : " · No toppings — a plain spud run");
     $("runStart").textContent = "Run Again";
     submitScore("runner", finalScore);
     settleChallenges("runner", finalScore);
@@ -2913,12 +3452,31 @@
   }
   function doJump(){
     if(!run || run.over) return;
-    if(run.y >= GROUND){ run.vy = -760; run.y = GROUND - 1; run.jumps = 1; }
-    else if(run.jumps < 2){ run.vy = -680; run.jumps = 2; }
+    run.slideT = 0; // jumping cancels a slide
+    if(run.y <= 0.01 && run.jumps === 0){
+      run.jumps = 1;
+      run.vy = 950;
+      run.y = 0.5;
+    }else if(run.y > 0.01 && run.jumps === 1){
+      // DOUBLE JUMP: one mid-air second jump, earned back on landing.
+      run.jumps = 2;
+      run.vy = 890;
+      run.squash = -0.8; // stretch tall
+      run.rings.push({ x: run.x + 46, y: GROUND - run.y - 2, r: 10, life: 0 });
+      for(var dp = 0; dp < 5; dp++) run.dust.push({ x: run.x + 22 + Math.random() * 48, y: GROUND - run.y + 2, r: 2.5 + Math.random() * 3, life: 0 });
+      run.floats.push({ x: run.x + 46, y: GROUND - run.y - 130, text: "DOUBLE JUMP!", life: 0 });
+    }
+  }
+  function doSlide(){
+    if(!run || run.over) return;
+    if(run.y > 0.01) run.vy = Math.min(run.vy, -1500); // slam down, slide on touchdown
+    run.slideT = 0.62;
   }
   function startRun(){
     resetRun();
     $("runMsg").textContent = "";
+    $("runFx").textContent = "";
+    $("runWorld").textContent = WORLDS[0].name;
     $("runStart").textContent = "Restart";
     runLast = performance.now();
     if(runRaf) cancelAnimationFrame(runRaf);
@@ -2931,62 +3489,220 @@
     ["pointerup","pointerleave","pointercancel"].forEach(function(ev){ el.addEventListener(ev, function(){ if(up) up(); }); });
   }
   holdBtn($("runJump"), doJump, null);
-  holdBtn($("runDuck"), function(){ keys.duckHeld = true; }, function(){ keys.duckHeld = false; });
+  holdBtn($("runDuck"), function(){ keys.duckHeld = true; doSlide(); }, function(){ keys.duckHeld = false; });
 
   /* ---------------- Spud Kart (time trial) ---------------- */
   var kc = $("kartCanvas"), kctx = kc.getContext("2d");
   var KW = 640, KH = 360, KCX = 320, KCY = 180, KRX = 228, KRY = 118;
+  /* Spud Kart — Resort Grand Prix (most recent build): three tracks and
+     four racers from the resort app. Track geometry rides in KRX/KRY, so
+     the Firebase live race and the basement server — whose physics use
+     these exact numbers — always run the Resort layout; the picker only
+     changes solo races. */
+  var TRACKS = {
+    resort: { name: "Resort Grand Prix", rx: 228, ry: 118, bg: "#3e7d3a", road: "#4a4a4a", edge: "#f5f0e1", skyway: false, grassMax: 72 },
+    skyway: { name: "Prism Spud Skyway", rx: 238, ry: 126, bg: "#241233", road: "#5a4a8a", edge: "#ffd94d", skyway: true, grassMax: 72 },
+    mash:   { name: "Twilight Mash Mile", rx: 204, ry: 99, bg: "#1c2440", road: "#3a3f55", edge: "#9fd8ff", skyway: false, grassMax: 56 }
+  };
+  var DRIVERS = [
+    { name: "Super Spud", accel: 1.0, top: 1.0, steer: 1.0 },
+    { name: "Russet Rocket", accel: 1.35, top: 0.97, steer: 1.0 },
+    { name: "Yukon Goldie", accel: 0.92, top: 1.10, steer: 0.95 },
+    { name: "Purple Majesty", accel: 1.0, top: 0.98, steer: 1.30 }
+  ];
+  var TRK = TRACKS.resort, DRV = DRIVERS[0], kartTrackKey = "resort";
+  function kartLaps(){ return bsRoomId ? 2 : 3; }
+  function ellipsePointF(a, f){ return { x: KCX + KRX * f * Math.cos(a), y: KCY + KRY * f * Math.sin(a) }; }
+  function applyTrackDriver(){
+    kartTrackKey = liveKartId ? "resort" : (($("kartTrack") || {}).value || "resort");
+    if(!TRACKS[kartTrackKey]) kartTrackKey = "resort";
+    TRK = TRACKS[kartTrackKey];
+    KRX = TRK.rx; KRY = TRK.ry;
+    DRV = DRIVERS[parseInt(($("kartDriver") || {}).value || "0", 10) || 0] || DRIVERS[0];
+  }
+  var ITEM_NAMES = { boost: "Boost", shield: "Shield", trap: "Butter Trap", star: "Superstar" };
+  function updateItemUI(){
+    var slot = $("kartItemSlot"), btn = $("kartItemBtn");
+    if(slot) slot.textContent = kart && kart.item ? ITEM_NAMES[kart.item] : "none — hit a ? box";
+    if(btn) btn.disabled = !kart || kart.over || (!kart.item && !(kart.airT > 0 && kart.trickArmed));
+  }
+  function useItem(){
+    if(!kart || kart.over || bsRoomId) return;
+    if(kart.airT > 0 && kart.trickArmed){
+      kart.trickArmed = false;
+      kart.boostT = Math.max(kart.boostT, 1.3);
+      $("kartMsg").textContent = "Trick! Landing boost!";
+      updateItemUI();
+      return;
+    }
+    if(!kart.item) return;
+    var it = kart.item; kart.item = null;
+    if(it === "boost"){ kart.boostT = 1.4; $("kartMsg").textContent = "Boost!"; }
+    else if(it === "shield"){ kart.shieldT = 8; $("kartMsg").textContent = "Shield up — 8 s!"; }
+    else if(it === "star"){ kart.starT = 5; $("kartMsg").textContent = "SUPERSTAR — invincible for 5 s!"; }
+    else if(it === "trap"){
+      kart.slicks.push({ ang: 0, f: 1, x: kart.x - Math.cos(kart.h) * 28, y: kart.y - Math.sin(kart.h) * 28, melt: 0, mine: true });
+      $("kartMsg").textContent = "Butter trap dropped behind you!";
+    }
+    updateItemUI();
+  }
   var kart = null, kartRaf = null, kartLast = 0;
   var kkeys = { gas: false, left: false, right: false };
   function ellipsePoint(a){ return { x: KCX + KRX*Math.cos(a), y: KCY + KRY*Math.sin(a) }; }
   function resetKart(){
-    var p = ellipsePoint(Math.PI/2);
-    kart = { x: p.x, y: p.y, h: Math.PI, speed: 0, prevAng: Math.PI/2, total: 0,
-             startedAt: null, elapsed: 0, over: false, finished: false };
+    var p = ellipsePoint(Math.PI / 2);
+    kart = { x: p.x, y: p.y, h: Math.PI, speed: 0, prevAng: Math.PI / 2, total: 0,
+             startedAt: null, elapsed: 0, over: false, finished: false,
+             coins: 0, item: null, shieldT: 0, starT: 0, boostT: 0, spinT: 0,
+             airT: 0, trickArmed: false, falling: 0, bumpCd: 0,
+             coinsList: [], boxes: [], slicks: [], bots: [], ramps: [] };
+    var ci;
+    for(ci = 0; ci < 12; ci++) kart.coinsList.push({ ang: ci * Math.PI / 6 + 0.3, f: 1.0, taken: 0 });
+    [0.8, 2.4, 4.0, 5.5].forEach(function(a){ kart.boxes.push({ ang: a, f: 1.0, taken: 0 }); });
+    [2.2, 3.6, 5.2].forEach(function(a, ix){
+      var s = { ang: a, f: ix % 2 ? 0.92 : 1.08, x: 0, y: 0, melt: 0, mine: false };
+      var pt = ellipsePointF(s.ang, s.f); s.x = pt.x; s.y = pt.y;
+      kart.slicks.push(s);
+    });
+    kart.ramps = [{ ang: 2.9, f: 1.0 }, { ang: 5.6, f: 1.0 }];
   }
-  function drawKart(){
-    kctx.fillStyle = "#3e7d3a"; kctx.fillRect(0, 0, KW, KH);
-    kctx.strokeStyle = "#4a4a4a"; kctx.lineWidth = 68; kctx.lineCap = "round";
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI*2); kctx.stroke();
-    kctx.strokeStyle = "#f5f0e1"; kctx.lineWidth = 3; kctx.setLineDash([14, 12]);
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI*2); kctx.stroke();
-    kctx.setLineDash([]);
-    var s = ellipsePoint(Math.PI/2);
-    kctx.strokeStyle = "#fff"; kctx.lineWidth = 5;
-    kctx.beginPath(); kctx.moveTo(s.x-16, s.y); kctx.lineTo(s.x+16, s.y); kctx.stroke();
-    if(!kart) return;
+  function spawnBotsIfSolo(){
+    if(!kart || liveKartId || bsRoomId) return;
+    var defs = [
+      { name: "Mash Rusher", color: "#2456c8", speed: 158 },
+      { name: "Peel Dodger", color: "#2e8b3a", speed: 170 },
+      { name: "Sharpspud", color: "#8b30c9", speed: 182 }
+    ];
+    kart.bots = defs.map(function(b, ix){
+      var a0 = Math.PI / 2 + 0.24 + ix * 0.15;
+      var pt = ellipsePointF(a0, ix % 2 ? 1.07 : 0.93);
+      return { name: b.name, color: b.color, speed: b.speed, ang: a0, total: 0,
+               f: ix % 2 ? 1.07 : 0.93, dip: 0, x: pt.x, y: pt.y, h: Math.PI };
+    });
+  }
+
+  function drawKartShape(x, y, h, bodyColor, skinColor, scale){
     kctx.save();
-    kctx.translate(kart.x, kart.y); kctx.rotate(kart.h);
-    kctx.fillStyle = "#c1272d"; kctx.fillRect(-14, -9, 28, 18);
+    kctx.translate(x, y); kctx.rotate(h); kctx.scale(scale || 1, scale || 1);
+    kctx.fillStyle = bodyColor; kctx.fillRect(-14, -9, 28, 18);
     kctx.fillStyle = "#222"; kctx.fillRect(-13, -13, 8, 5); kctx.fillRect(5, -13, 8, 5);
     kctx.fillRect(-13, 8, 8, 5); kctx.fillRect(5, 8, 8, 5);
-    kctx.fillStyle = "#b5793b";
-    kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI*2); kctx.fill();
+    kctx.fillStyle = skinColor;
+    kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI * 2); kctx.fill();
     kctx.restore();
+  }
+  function drawKart(){
+    var i, pt;
+    if(TRK.skyway){
+      var grd = kctx.createLinearGradient(0, 0, 0, KH);
+      grd.addColorStop(0, "#3a1c5e"); grd.addColorStop(0.6, "#7a4a9e"); grd.addColorStop(1, "#e2603f");
+      kctx.fillStyle = grd; kctx.fillRect(0, 0, KW, KH);
+      kctx.fillStyle = "rgba(255,255,255,0.8)";
+      for(i = 0; i < 30; i++) kctx.fillRect((i * 197.3) % KW, (i * 89.7) % 130, 2, 2);
+      kctx.strokeStyle = "rgba(255,143,171,0.55)"; kctx.lineWidth = 76;
+      kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
+    }else{
+      kctx.fillStyle = TRK.bg; kctx.fillRect(0, 0, KW, KH);
+      kctx.fillStyle = "rgba(0,0,0,0.10)";
+      for(i = 0; i < 14; i++){
+        kctx.beginPath(); kctx.ellipse((i * 149.7) % KW, (i * 83.3) % KH, 22, 12, 0, 0, Math.PI * 2); kctx.fill();
+      }
+      if(kartTrackKey === "mash"){
+        kctx.fillStyle = "rgba(240,244,255,0.9)";
+        kctx.beginPath(); kctx.arc(KW - 60, 42, 17, 0, Math.PI * 2); kctx.fill();
+      }
+    }
+    kctx.strokeStyle = TRK.road; kctx.lineWidth = 68; kctx.lineCap = "round";
+    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
+    kctx.strokeStyle = TRK.edge; kctx.lineWidth = 3; kctx.setLineDash([14, 12]);
+    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
+    kctx.setLineDash([]);
+    var s = ellipsePoint(Math.PI / 2);
+    kctx.strokeStyle = "#fff"; kctx.lineWidth = 5;
+    kctx.beginPath(); kctx.moveTo(s.x - 16, s.y); kctx.lineTo(s.x + 16, s.y); kctx.stroke();
+    if(!kart) return;
+    // Ramps
+    kart.ramps.forEach(function(r){
+      pt = ellipsePointF(r.ang, r.f);
+      kctx.save(); kctx.translate(pt.x, pt.y);
+      kctx.rotate(Math.atan2(KRY * Math.cos(r.ang), -KRX * Math.sin(r.ang)));
+      kctx.fillStyle = "#e8762a"; kctx.fillRect(-17, -11, 34, 22);
+      kctx.fillStyle = "#fff";
+      kctx.beginPath(); kctx.moveTo(-6, -6); kctx.lineTo(6, 0); kctx.lineTo(-6, 6); kctx.closePath(); kctx.fill();
+      kctx.restore();
+    });
+    // Coins
+    kart.coinsList.forEach(function(c){
+      if(c.taken > 0) return;
+      pt = ellipsePointF(c.ang, c.f);
+      kctx.fillStyle = "#ffd94d"; kctx.beginPath(); kctx.arc(pt.x, pt.y, 8, 0, Math.PI * 2); kctx.fill();
+      kctx.strokeStyle = "#b57f0a"; kctx.lineWidth = 2; kctx.stroke();
+      kctx.fillStyle = "#b57f0a"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
+      kctx.fillText("S", pt.x, pt.y + 3.5); kctx.textAlign = "left";
+    });
+    // Item boxes
+    kart.boxes.forEach(function(b){
+      if(b.taken > 0) return;
+      pt = ellipsePointF(b.ang, b.f);
+      kctx.save(); kctx.translate(pt.x, pt.y);
+      kctx.fillStyle = "#ff4fa3"; kctx.fillRect(-10, -10, 20, 20);
+      kctx.strokeStyle = "#fff"; kctx.lineWidth = 2; kctx.strokeRect(-10, -10, 20, 20);
+      kctx.fillStyle = "#fff"; kctx.font = "bold 15px Verdana"; kctx.textAlign = "center";
+      kctx.fillText("?", 0, 6); kctx.textAlign = "left";
+      kctx.restore();
+    });
+    // Butter slicks
+    kart.slicks.forEach(function(sl){
+      if(sl.melt > 0) return;
+      kctx.fillStyle = "#ffe66d";
+      kctx.beginPath(); kctx.ellipse(sl.x, sl.y, 15, 6, 0, 0, Math.PI * 2); kctx.fill();
+    });
+    // Bots
+    kart.bots.forEach(function(b){
+      drawKartShape(b.x, b.y, b.h, b.color, "#e8c39e", 1);
+      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
+      kctx.fillText(b.name, b.x, b.y - 18); kctx.textAlign = "left";
+    });
     // Live race: the opponent's kart, streamed from their phone.
     if(kartOpp && typeof kartOpp.x === "number"){
-      kctx.save();
-      kctx.translate(kartOpp.x, kartOpp.y); kctx.rotate(kartOpp.h || 0);
-      kctx.fillStyle = "#2456c8"; kctx.fillRect(-14, -9, 28, 18);
-      kctx.fillStyle = "#222"; kctx.fillRect(-13, -13, 8, 5); kctx.fillRect(5, -13, 8, 5);
-      kctx.fillRect(-13, 8, 8, 5); kctx.fillRect(5, 8, 8, 5);
-      kctx.fillStyle = "#e8c39e";
-      kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI*2); kctx.fill();
-      kctx.restore();
-      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana";
-      kctx.textAlign = "center";
-      kctx.fillText(kartOpp.name || "Rival", kartOpp.x, kartOpp.y - 18);
+      drawKartShape(kartOpp.x, kartOpp.y, kartOpp.h || 0, "#2456c8", "#e8c39e", 1);
+      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
+      kctx.fillText(kartOpp.name || "Rival", kartOpp.x, kartOpp.y - 18); kctx.textAlign = "left";
+    }
+    // Player
+    if(kart.falling > 0){
+      kctx.fillStyle = "#fff"; kctx.font = "bold 16px Verdana"; kctx.textAlign = "center";
+      kctx.fillText("Off the Skyway — fished back…", KCX, KCY);
       kctx.textAlign = "left";
+      return;
+    }
+    var airScale = kart.airT > 0 ? 1.25 : 1;
+    if(kart.airT > 0){
+      kctx.fillStyle = "rgba(0,0,0,0.3)";
+      kctx.beginPath(); kctx.ellipse(kart.x, kart.y + 10, 17, 6, 0, 0, Math.PI * 2); kctx.fill();
+    }
+    drawKartShape(kart.x, kart.y, kart.h + (kart.spinT > 0 ? kart.spinT * 9 : 0), "#c1272d", "#b5793b", airScale);
+    if(kart.shieldT > 0){
+      kctx.strokeStyle = "rgba(255,217,77,0.9)"; kctx.lineWidth = 2.5;
+      kctx.beginPath(); kctx.arc(kart.x, kart.y, 24, 0, Math.PI * 2); kctx.stroke();
+    }
+    if(kart.starT > 0){
+      kctx.fillStyle = "#ffd94d";
+      for(i = 0; i < 4; i++){
+        var sa = kart.elapsed / 160 + i * Math.PI / 2;
+        kctx.beginPath(); kctx.arc(kart.x + Math.cos(sa) * 22, kart.y + Math.sin(sa) * 22, 3, 0, Math.PI * 2); kctx.fill();
+      }
     }
   }
+
   function kartStep(ts){
     if(!kart || kart.over) return;
-    var dt = Math.min(0.033, (ts - kartLast)/1000 || 0.016);
+    var dt = Math.min(0.033, (ts - kartLast) / 1000 || 0.016);
     kartLast = ts;
     // Live race countdown: both karts sit on the grid until startAt.
     if(liveKartRoom && liveKartRoom.status === "countdown"){
       if(Date.now() < (liveKartRoom.startAt || 0)){
-        $("kartMsg").textContent = "Live race starts in " + Math.max(1, Math.ceil(((liveKartRoom.startAt || 0) - Date.now())/1000)) + "…";
+        $("kartMsg").textContent = "Live race starts in " + Math.max(1, Math.ceil(((liveKartRoom.startAt || 0) - Date.now()) / 1000)) + "…";
         drawKart();
         kartRaf = requestAnimationFrame(kartStep);
         return;
@@ -3003,42 +3719,154 @@
       kartPubLast = ts;
       liveKartRef.child("players/" + uid).update({
         name: gameName(), x: Math.round(kart.x), y: Math.round(kart.y),
-        h: Math.round(kart.h * 100)/100, total: Math.round(kart.total * 1000)/1000,
+        h: Math.round(kart.h * 100) / 100, total: Math.round(kart.total * 1000) / 1000,
         finished: kart.finishedMs || null
       }).catch(function(){});
     }
-    var dxn = (kart.x-KCX)/KRX, dyn = (kart.y-KCY)/KRY;
-    var norm = Math.sqrt(dxn*dxn + dyn*dyn);
-    var onRoad = norm > 0.70 && norm < 1.30;
-    var maxSpeed = onRoad ? 205 : 72;
-    if(kkeys.gas){
-      if(!kart.startedAt) kart.startedAt = ts;
-      kart.speed = Math.min(maxSpeed, kart.speed + 150*dt);
-    }else{
-      kart.speed = Math.max(0, kart.speed - 110*dt);
+    // Fished back onto the Skyway after a fall.
+    if(kart.falling > 0){
+      kart.falling -= dt;
+      if(kart.falling <= 0){
+        var rp = ellipsePoint(kart.prevAng);
+        kart.x = rp.x; kart.y = rp.y; kart.speed = 0;
+        kart.h = Math.atan2(KRY * Math.cos(kart.prevAng), -KRX * Math.sin(kart.prevAng));
+        $("kartMsg").textContent = "Back on the road — go!";
+      }
+      drawKart();
+      kartRaf = requestAnimationFrame(kartStep);
+      return;
     }
-    if(!onRoad && kart.speed > maxSpeed) kart.speed = Math.max(maxSpeed, kart.speed - 260*dt);
-    if(kart.speed > 4){
+    // Timers
+    if(kart.shieldT > 0) kart.shieldT = Math.max(0, kart.shieldT - dt);
+    if(kart.starT > 0) kart.starT = Math.max(0, kart.starT - dt);
+    if(kart.boostT > 0) kart.boostT = Math.max(0, kart.boostT - dt);
+    if(kart.bumpCd > 0) kart.bumpCd = Math.max(0, kart.bumpCd - dt);
+    var wasAir = kart.airT > 0;
+    if(kart.airT > 0) kart.airT = Math.max(0, kart.airT - dt);
+    if(wasAir && kart.airT <= 0) updateItemUI();
+    kart.coinsList.forEach(function(c){ if(c.taken > 0) c.taken = Math.max(0, c.taken - dt); });
+    kart.boxes.forEach(function(b){ if(b.taken > 0) b.taken = Math.max(0, b.taken - dt); });
+    kart.slicks.forEach(function(sl){ if(sl.melt > 0) sl.melt = Math.max(0, sl.melt - dt); });
+    // Surface
+    var dxn = (kart.x - KCX) / KRX, dyn = (kart.y - KCY) / KRY;
+    var norm = Math.sqrt(dxn * dxn + dyn * dyn);
+    var onRoad = (norm > 0.70 && norm < 1.30) || kart.airT > 0;
+    if(TRK.skyway && kart.airT <= 0 && !(norm > 0.70 && norm < 1.30) && kart.speed > 30 && kart.startedAt){
+      kart.falling = 1.1; kart.speed = 0;
+      $("kartMsg").textContent = "Off the Skyway!";
+      drawKart();
+      kartRaf = requestAnimationFrame(kartStep);
+      return;
+    }
+    var coinBonus = Math.min(0.12, kart.coins * 0.01);
+    var maxSpeed = onRoad ? 205 * DRV.top * (1 + coinBonus) : TRK.grassMax;
+    if(kart.boostT > 0) maxSpeed += 135;
+    if(kart.starT > 0) maxSpeed = Math.max(maxSpeed, 255);
+    if(kart.spinT > 0){
+      kart.spinT = Math.max(0, kart.spinT - dt);
+      kart.speed = Math.max(0, kart.speed - 320 * dt);
+    }else if(kkeys.gas){
+      if(!kart.startedAt) kart.startedAt = ts;
+      kart.speed = Math.min(maxSpeed, kart.speed + (kart.boostT > 0 ? 330 : 150 * DRV.accel) * dt);
+    }else{
+      kart.speed = Math.max(0, kart.speed - 110 * dt);
+    }
+    if(!onRoad && kart.speed > maxSpeed) kart.speed = Math.max(maxSpeed, kart.speed - 260 * dt);
+    if(kart.speed > 4 && kart.spinT <= 0){
       var steer = (kkeys.left ? -1 : 0) + (kkeys.right ? 1 : 0);
-      kart.h += steer * 2.0 * dt;
+      kart.h += steer * 2.0 * DRV.steer * dt;
     }
     kart.x += Math.cos(kart.h) * kart.speed * dt;
     kart.y += Math.sin(kart.h) * kart.speed * dt;
-    kart.x = Math.max(14, Math.min(KW-14, kart.x));
-    kart.y = Math.max(14, Math.min(KH-14, kart.y));
-    var ang = Math.atan2((kart.y-KCY)/KRY, (kart.x-KCX)/KRX);
+    kart.x = Math.max(14, Math.min(KW - 14, kart.x));
+    kart.y = Math.max(14, Math.min(KH - 14, kart.y));
+    var ang = Math.atan2((kart.y - KCY) / KRY, (kart.x - KCX) / KRX);
     var d = ang - kart.prevAng;
-    while(d > Math.PI) d -= Math.PI*2;
-    while(d < -Math.PI) d += Math.PI*2;
+    while(d > Math.PI) d -= Math.PI * 2;
+    while(d < -Math.PI) d += Math.PI * 2;
     if(d > 0 && kart.speed > 20) kart.total += d;
     kart.prevAng = ang;
     if(kart.startedAt) kart.elapsed = ts - kart.startedAt;
-    $("kartLap").textContent = Math.min(2, Math.floor(kart.total/(Math.PI*2)) + 1) + " / 2";
-    $("kartTime").textContent = (kart.elapsed/1000).toFixed(1) + " s";
+    // Ramps: launch!
+    if(kart.airT <= 0 && kart.speed > 110){
+      for(var ri = 0; ri < kart.ramps.length; ri++){
+        var rpt = ellipsePointF(kart.ramps[ri].ang, kart.ramps[ri].f);
+        var rdx = kart.x - rpt.x, rdy = kart.y - rpt.y;
+        if(rdx * rdx + rdy * rdy < 32 * 32){
+          kart.airT = 0.75; kart.trickArmed = true;
+          $("kartMsg").textContent = "Airborne! Tap Item / Space to trick!";
+          updateItemUI();
+          break;
+        }
+      }
+    }
+    // Coins, boxes, slicks
+    var i2, cpt, ddx, ddy;
+    for(i2 = 0; i2 < kart.coinsList.length; i2++){
+      var cn = kart.coinsList[i2];
+      if(cn.taken > 0) continue;
+      cpt = ellipsePointF(cn.ang, cn.f);
+      ddx = kart.x - cpt.x; ddy = kart.y - cpt.y;
+      if(ddx * ddx + ddy * ddy < 24 * 24){
+        cn.taken = 8; kart.coins++;
+        $("kartCoins").textContent = kart.coins;
+      }
+    }
+    for(i2 = 0; i2 < kart.boxes.length; i2++){
+      var bx = kart.boxes[i2];
+      if(bx.taken > 0) continue;
+      cpt = ellipsePointF(bx.ang, bx.f);
+      ddx = kart.x - cpt.x; ddy = kart.y - cpt.y;
+      if(ddx * ddx + ddy * ddy < 24 * 24){
+        bx.taken = 8;
+        if(!kart.item){
+          kart.item = ["boost", "shield", "trap", "star"][Math.floor(Math.random() * 4)];
+          $("kartMsg").textContent = "Item: " + ITEM_NAMES[kart.item] + " — tap Use Item!";
+          updateItemUI();
+        }
+      }
+    }
+    if(kart.airT <= 0){
+      for(i2 = 0; i2 < kart.slicks.length; i2++){
+        var sl = kart.slicks[i2];
+        if(sl.melt > 0) continue;
+        ddx = kart.x - sl.x; ddy = kart.y - sl.y;
+        if(ddx * ddx + ddy * ddy < 19 * 19){
+          if(kart.shieldT > 0){ kart.shieldT = 0; sl.melt = 5; $("kartMsg").textContent = "Shield ate the butter!"; updateItemUI(); }
+          else if(kart.starT > 0){ sl.melt = 5; }
+          else { kart.spinT = 0.8; sl.melt = 5; $("kartMsg").textContent = "Butter! Spun out!"; }
+        }
+      }
+    }
+    // Bots (solo): follow the racing line, dip when bumped.
+    var pos = 1;
+    kart.bots.forEach(function(b){
+      if(b.dip > 0) b.dip = Math.max(0, b.dip - dt);
+      var dang = (b.speed * (b.dip > 0 ? 0.45 : 1)) * dt / 185;
+      if(kart.startedAt){ b.ang += dang; b.total += dang; }
+      var bp = ellipsePointF(b.ang, b.f);
+      b.x = bp.x; b.y = bp.y;
+      b.h = Math.atan2(KRY * Math.cos(b.ang), -KRX * Math.sin(b.ang));
+      if(b.total > kart.total) pos++;
+      var bdx = kart.x - b.x, bdy = kart.y - b.y;
+      if(bdx * bdx + bdy * bdy < 27 * 27 && kart.bumpCd <= 0 && kart.airT <= 0){
+        if(kart.starT <= 0) kart.speed *= 0.6;
+        b.dip = 0.6; kart.bumpCd = 0.8;
+        $("kartMsg").textContent = "Bump!";
+      }
+    });
+    if(liveKartId && kartOpp && typeof kartOpp.total === "number" && kartOpp.total > kart.total) pos++;
+    var ord = ["1st", "2nd", "3rd", "4th"][pos - 1] || (pos + "th");
+    $("kartPos").textContent = kart.startedAt ? ord : "—";
+    kart.finalPos = pos;
+    var laps = kartLaps();
+    $("kartLap").textContent = Math.min(laps, Math.floor(kart.total / (Math.PI * 2)) + 1) + " / " + laps;
+    $("kartTime").textContent = (kart.elapsed / 1000).toFixed(1) + " s";
     drawKart();
-    if(kart.total >= Math.PI*4){ finishKart(); return; }
+    if(kart.total >= Math.PI * 2 * laps){ finishKart(); return; }
     kartRaf = requestAnimationFrame(kartStep);
   }
+
   function finishKart(){
     if(!kart) return;
     kart.over = true; kart.finished = true;
@@ -3048,44 +3876,70 @@
     if(liveKartId && liveKartRef && uid){
       liveKartRef.child("players/" + uid).update({ finished: ms, name: gameName() }).catch(function(){});
     }
-    $("kartMsg").textContent = "Finished! " + (ms/1000).toFixed(1) + " s";
+    var ord = ["1st", "2nd", "3rd", "4th"][(kart.finalPos || 1) - 1] || "1st";
+    $("kartMsg").textContent = kart.bots.length
+      ? "Finished " + ord + "! " + (ms / 1000).toFixed(1) + " s · " + kart.coins + " coins"
+      : "Finished! " + (ms / 1000).toFixed(1) + " s";
+    $("kartPos").textContent = ord;
     $("kartStart").textContent = "Race Again";
     submitScore("kart", ms);
     settleChallenges("kart", ms);
-    if(myKartBest == null || ms < myKartBest) $("kartBest").textContent = (ms/1000).toFixed(1) + " s";
+    if(myKartBest == null || ms < myKartBest) $("kartBest").textContent = (ms / 1000).toFixed(1) + " s";
     drawKart();
   }
+
   function startKart(){
     if(bsRoomId){ gtoast("You're in a basement-server race — the server starts this one."); return; }
+    applyTrackDriver();
     resetKart();
+    spawnBotsIfSolo();
     $("kartMsg").textContent = "";
-    $("kartLap").textContent = "1 / 2";
+    $("kartLap").textContent = "1 / " + kartLaps();
     $("kartTime").textContent = "0.0 s";
+    $("kartCoins").textContent = "0";
+    $("kartPos").textContent = "—";
+    updateItemUI();
     $("kartStart").textContent = "Restart";
     kartLast = performance.now();
     if(kartRaf) cancelAnimationFrame(kartRaf);
     kartRaf = requestAnimationFrame(kartStep);
     drawKart();
   }
+
   $("kartStart").addEventListener("click", startKart);
   holdBtn($("kartGas"), function(){ kkeys.gas = true; }, function(){ kkeys.gas = false; });
   holdBtn($("kartLeft"), function(){ kkeys.left = true; }, function(){ kkeys.left = false; });
   holdBtn($("kartRight"), function(){ kkeys.right = true; }, function(){ kkeys.right = false; });
+  $("kartItemBtn").addEventListener("click", useItem);
+  $("kartTrack").addEventListener("change", function(){
+    if(bsRoomId){ this.value = "resort"; return; }
+    if(kart && !kart.over && kart.startedAt) return; // mid-race: applies next race
+    applyTrackDriver(); resetKart(); drawKart();
+  });
+  $("kartDriver").addEventListener("change", function(){
+    if(kart && !kart.over && kart.startedAt) return;
+    applyTrackDriver();
+  });
 
   document.addEventListener("keydown", function(e){
     var tag = (document.activeElement && document.activeElement.tagName) || "";
     if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-    if(e.key === " " || e.key === "ArrowUp"){
+    if(e.key === "ArrowUp"){
+      if(kart && !kart.over){ e.preventDefault(); kkeys.gas = true; }
+    }
+    if(e.key === " "){
       if(run && !run.over){ e.preventDefault(); doJump(); }
-      else if(kart && !kart.over){ kkeys.gas = true; }
+      else if(kart && !kart.over){ e.preventDefault(); useItem(); }
     }
     if(e.key === "ArrowDown" && run && !run.over){ e.preventDefault(); keys.duckHeld = true; }
+    if((e.key === "s" || e.key === "S") && run && !run.over && !(ball && ball.started && !ball.over)){ keys.duckHeld = true; }
     if(e.key === "ArrowLeft" && kart && !kart.over) kkeys.left = true;
     if(e.key === "ArrowRight" && kart && !kart.over) kkeys.right = true;
   });
   document.addEventListener("keyup", function(e){
     if(e.key === "ArrowDown") keys.duckHeld = false;
-    if(e.key === " " || e.key === "ArrowUp") kkeys.gas = false;
+    if(e.key === "s" || e.key === "S") keys.duckHeld = false;
+    if(e.key === "ArrowUp") kkeys.gas = false;
     if(e.key === "ArrowLeft") kkeys.left = false;
     if(e.key === "ArrowRight") kkeys.right = false;
   });
@@ -3324,6 +4178,8 @@
     if(addr.replace(/^wss?:\/\//i, "").indexOf(":") === -1) addr += ":8787";
     if(liveKartId){ gtoast("Leave the Firebase live race first — one race at a time."); return; }
     bsDisconnect(true);
+    kartTrackKey = "resort"; TRK = TRACKS.resort; KRX = TRK.rx; KRY = TRK.ry;
+    var trkSel = $("kartTrack"); if(trkSel) trkSel.value = "resort";
     bsSetStatus("Connecting to " + addr + " …");
     var ws;
     try{ ws = new WebSocket(addr); }
@@ -3516,6 +4372,252 @@
   });
   window.addEventListener("beforeunload", function(){ if(bsWs){ try{ bsWs.close(); }catch(e){} } });
 
+  /* ---------------- Tate-lo — Spudball (top-down arena, solo vs bots) ----------------
+     Tate-lo's newest arena form from the resort app, shrunk to fit the
+     Arcade: a sunlit garden arena, sour-cream blasters, one hit splats
+     (a Butter Shield pickup eats one), and three bot Spudtans with
+     styles — Sharpspuds hold range and snipe, Mash Rushers charge,
+     Peel Dodgers strafe. First to 5 splats. */
+  var bc = $("ballCanvas"), bctx = bc.getContext("2d");
+  var BW = 900, BH = 600;
+  var HEDGES = [
+    { x: 180, y: 130, w: 130, h: 34 }, { x: 590, y: 130, w: 130, h: 34 },
+    { x: 180, y: 436, w: 130, h: 34 }, { x: 590, y: 436, w: 130, h: 34 },
+    { x: 433, y: 250, w: 34, h: 100 }, { x: 90, y: 283, w: 90, h: 34 }, { x: 720, y: 283, w: 90, h: 34 }
+  ];
+  var ball = null, ballRaf = null, ballLast = 0;
+  var bkeys = { left: false, right: false, up: false, down: false };
+  function ballReset(){
+    ball = { over: false, started: false, youScore: 0, botScore: 0, shots: [], shieldPickup: null, shieldT: 6,
+             player: { x: 450, y: 520, r: 20, face: -Math.PI / 2, shield: false, respawn: 0, fireCd: 0 },
+             bots: [
+               { name: "Sharpspud", style: "sniper", color: "#2456c8", x: 160, y: 110, r: 20, face: Math.PI / 2, fireCd: 1.4, respawn: 0, strafe: 1 },
+               { name: "Mash Rusher", style: "rusher", color: "#c1272d", x: 740, y: 110, r: 20, face: Math.PI / 2, fireCd: 1.0, respawn: 0, strafe: 1 },
+               { name: "Peel Dodger", style: "dodger", color: "#8b30c9", x: 450, y: 90, r: 20, face: Math.PI / 2, fireCd: 1.2, respawn: 0, strafe: -1 }
+             ] };
+  }
+  function ballBlocked(x, y, r){
+    if(x < r || x > BW - r || y < r || y > BH - r) return true;
+    for(var i = 0; i < HEDGES.length; i++){
+      var h = HEDGES[i];
+      if(x + r > h.x && x - r < h.x + h.w && y + r > h.y && y - r < h.y + h.h) return true;
+    }
+    return false;
+  }
+  function ballMove(e, dx, dy){
+    if(!ballBlocked(e.x + dx, e.y, e.r)) e.x += dx;
+    if(!ballBlocked(e.x, e.y + dy, e.r)) e.y += dy;
+  }
+  function ballFire(e, fromBot){
+    var s = fromBot ? 370 : 470;
+    ball.shots.push({ x: e.x + Math.cos(e.face) * 24, y: e.y + Math.sin(e.face) * 24,
+                      vx: Math.cos(e.face) * s, vy: Math.sin(e.face) * s, bot: !!fromBot });
+  }
+  function ballDrawSpud(e, color, isPlayer){
+    bctx.save();
+    bctx.translate(e.x, e.y);
+    if(e.respawn > 0){ bctx.globalAlpha = 0.25 + 0.2 * Math.sin(performance.now() / 90); }
+    bctx.fillStyle = "#b5793b";
+    bctx.beginPath(); bctx.ellipse(0, 0, e.r, e.r * 0.88, 0, 0, Math.PI * 2); bctx.fill();
+    bctx.fillStyle = color;
+    bctx.beginPath(); bctx.ellipse(0, -e.r * 0.55, e.r * 0.72, e.r * 0.42, 0, Math.PI, Math.PI * 2); bctx.fill();
+    bctx.fillStyle = "#fff";
+    bctx.beginPath(); bctx.ellipse(0, -e.r * 0.78, 7, 5, 0, 0, Math.PI * 2); bctx.fill();
+    bctx.strokeStyle = "#5a4632"; bctx.lineWidth = 5; bctx.lineCap = "round";
+    bctx.beginPath(); bctx.moveTo(0, 0);
+    bctx.lineTo(Math.cos(e.face) * 30, Math.sin(e.face) * 30); bctx.stroke();
+    if(e.shield){
+      bctx.strokeStyle = "rgba(255,217,77,0.9)"; bctx.lineWidth = 2.5;
+      bctx.beginPath(); bctx.arc(0, 0, e.r + 7, 0, Math.PI * 2); bctx.stroke();
+    }
+    bctx.restore();
+    bctx.fillStyle = "#fff"; bctx.font = "bold 11px Verdana"; bctx.textAlign = "center";
+    bctx.fillText(isPlayer ? "You" : e.name, e.x, e.y - e.r - 12);
+    bctx.textAlign = "left";
+  }
+  function drawBall(){
+    bctx.fillStyle = "#4a7a3a"; bctx.fillRect(0, 0, BW, BH);
+    bctx.fillStyle = "#5d9448";
+    for(var i = 0; i < 22; i++) bctx.fillRect((i * 263.3) % BW, (i * 151.7) % BH, 26, 7);
+    bctx.fillStyle = "#9a6a44";
+    bctx.fillRect(BW / 2 - 30, 0, 60, BH); bctx.fillRect(0, BH / 2 - 30, BW, 60);
+    bctx.fillStyle = "#2e5d2a";
+    HEDGES.forEach(function(h){ bctx.fillRect(h.x, h.y, h.w, h.h); });
+    bctx.fillStyle = "#3d6b35";
+    HEDGES.forEach(function(h){ bctx.fillRect(h.x + 4, h.y + 4, h.w - 8, 6); });
+    if(!ball){ return; }
+    if(ball.shieldPickup){
+      var p = ball.shieldPickup;
+      bctx.fillStyle = "#ffd94d";
+      bctx.beginPath(); bctx.arc(p.x, p.y, 13, 0, Math.PI * 2); bctx.fill();
+      bctx.fillStyle = "#7a4a00"; bctx.font = "bold 13px Verdana"; bctx.textAlign = "center";
+      bctx.fillText("S", p.x, p.y + 4.5); bctx.textAlign = "left";
+    }
+    ball.shots.forEach(function(s){
+      bctx.fillStyle = s.bot ? "#ffb3a0" : "#fff6da";
+      bctx.beginPath(); bctx.arc(s.x, s.y, 6, 0, Math.PI * 2); bctx.fill();
+      bctx.strokeStyle = "rgba(255,255,255,0.5)"; bctx.lineWidth = 2; bctx.stroke();
+    });
+    ball.bots.forEach(function(b){ ballDrawSpud(b, b.color, false); });
+    ballDrawSpud(ball.player, "#e8a91c", true);
+  }
+  function ballSplat(target, byBot){
+    if(target.shield){
+      target.shield = false;
+      $("ballMsg").textContent = byBot ? "Your Butter Shield ate that hit!" : "Shield down — that spud was protected!";
+      return;
+    }
+    if(byBot){
+      ball.botScore++;
+      target.respawn = 1.2;
+      target.x = 450; target.y = 520;
+      $("ballMsg").textContent = "Splatted! The bots have " + ball.botScore + " — first to 5.";
+    }else{
+      ball.youScore++;
+      target.respawn = 1.2;
+      var corners = [[90, 90], [810, 90], [90, 510], [810, 510]];
+      var c = corners[Math.floor(Math.random() * 4)];
+      target.x = c[0]; target.y = c[1];
+      $("ballMsg").textContent = "SPLAT! You have " + ball.youScore + " — first to 5.";
+    }
+    $("ballYou").textContent = ball.youScore;
+    $("ballBots").textContent = ball.botScore;
+    if(ball.youScore >= 5 || ball.botScore >= 5){
+      ball.over = true;
+      $("ballMsg").textContent = ball.youScore >= 5
+        ? "🏆 You take the Tate-lo Spudball match, " + ball.youScore + "–" + ball.botScore + "!"
+        : "The bots take it, " + ball.botScore + "–" + ball.youScore + ". Rematch?";
+      $("ballStart").textContent = "Play Again";
+    }
+  }
+  function ballStep(ts){
+    if(!ball || ball.over || !ball.started) return;
+    var dt = Math.min(0.033, (ts - ballLast) / 1000 || 0.016);
+    ballLast = ts;
+    var p = ball.player, i, b, dx, dy, dist;
+    if(p.respawn > 0) p.respawn = Math.max(0, p.respawn - dt);
+    if(p.fireCd > 0) p.fireCd = Math.max(0, p.fireCd - dt);
+    // Player movement
+    dx = (bkeys.right ? 1 : 0) - (bkeys.left ? 1 : 0);
+    dy = (bkeys.down ? 1 : 0) - (bkeys.up ? 1 : 0);
+    if((dx || dy) && p.respawn <= 0){
+      var len = Math.sqrt(dx * dx + dy * dy);
+      p.face = Math.atan2(dy, dx);
+      ballMove(p, dx / len * 235 * dt, dy / len * 235 * dt);
+    }
+    // Bots
+    ball.bots.forEach(function(b){
+      if(b.respawn > 0){ b.respawn = Math.max(0, b.respawn - dt); return; }
+      if(b.fireCd > 0) b.fireCd = Math.max(0, b.fireCd - dt);
+      dx = p.x - b.x; dy = p.y - b.y;
+      dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      b.face = Math.atan2(dy, dx);
+      var mx = 0, my = 0, spd = 120;
+      if(b.style === "rusher"){ mx = dx / dist; my = dy / dist; spd = 168; }
+      else if(b.style === "sniper"){
+        if(dist > 290){ mx = dx / dist; my = dy / dist; }
+        else if(dist < 210){ mx = -dx / dist; my = -dy / dist; }
+        else { mx = -dy / dist * b.strafe; my = dx / dist * b.strafe; }
+        spd = 118;
+      }else{ // dodger: orbit fast, direction flips now and then
+        if(Math.random() < dt * 0.5) b.strafe *= -1;
+        mx = -dy / dist * b.strafe + dx / dist * 0.35;
+        my = dx / dist * b.strafe + dy / dist * 0.35;
+        spd = 158;
+      }
+      var ml = Math.sqrt(mx * mx + my * my) || 1;
+      if(p.respawn <= 0) ballMove(b, mx / ml * spd * dt, my / ml * spd * dt);
+      if(b.fireCd <= 0 && dist < 360 && p.respawn <= 0){
+        ballFire(b, true);
+        b.fireCd = b.style === "sniper" ? 1.7 : b.style === "rusher" ? 1.05 : 1.3;
+      }
+    });
+    // Shield pickup lifecycle
+    ball.shieldT -= dt;
+    if(!ball.shieldPickup && ball.shieldT <= 0){
+      ball.shieldPickup = { x: 120 + Math.random() * (BW - 240), y: 110 + Math.random() * (BH - 220) };
+      if(ballBlocked(ball.shieldPickup.x, ball.shieldPickup.y, 18)) ball.shieldPickup = null;
+    }
+    if(ball.shieldPickup){
+      var all = [p].concat(ball.bots);
+      for(i = 0; i < all.length; i++){
+        var e = all[i];
+        if(e.respawn > 0 || e.shield) continue;
+        var sx = e.x - ball.shieldPickup.x, sy = e.y - ball.shieldPickup.y;
+        if(sx * sx + sy * sy < 30 * 30){
+          e.shield = true; ball.shieldPickup = null; ball.shieldT = 9;
+          if(e === p) $("ballMsg").textContent = "Butter Shield up — it eats one hit!";
+          break;
+        }
+      }
+    }
+    // Shots
+    for(i = ball.shots.length - 1; i >= 0; i--){
+      var s = ball.shots[i];
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      var dead = s.x < 0 || s.x > BW || s.y < 0 || s.y > BH || ballBlocked(s.x, s.y, 4);
+      if(!dead){
+        if(s.bot){
+          if(p.respawn <= 0){
+            var hx = s.x - p.x, hy = s.y - p.y;
+            if(hx * hx + hy * hy < (p.r + 5) * (p.r + 5)){ ballSplat(p, true); dead = true; }
+          }
+        }else{
+          for(var bi = 0; bi < ball.bots.length; bi++){
+            var bb = ball.bots[bi];
+            if(bb.respawn > 0) continue;
+            var bx2 = s.x - bb.x, by2 = s.y - bb.y;
+            if(bx2 * bx2 + by2 * by2 < (bb.r + 5) * (bb.r + 5)){ ballSplat(bb, false); dead = true; break; }
+          }
+        }
+      }
+      if(dead) ball.shots.splice(i, 1);
+    }
+    drawBall();
+    if(!ball.over) ballRaf = requestAnimationFrame(ballStep);
+  }
+  function ballDoFire(){
+    if(!ball || ball.over || !ball.started || ball.player.respawn > 0 || ball.player.fireCd > 0) return;
+    ballFire(ball.player, false);
+    ball.player.fireCd = 0.28;
+  }
+  function startBall(){
+    ballReset();
+    ball.started = true;
+    $("ballYou").textContent = "0"; $("ballBots").textContent = "0";
+    $("ballMsg").textContent = "Match on — first to 5 splats!";
+    $("ballStart").textContent = "Restart Match";
+    ballLast = performance.now();
+    if(ballRaf) cancelAnimationFrame(ballRaf);
+    ballRaf = requestAnimationFrame(ballStep);
+    drawBall();
+  }
+  $("ballStart").addEventListener("click", startBall);
+  holdBtn($("ballFire"), ballDoFire, null);
+  holdBtn($("ballLeft"), function(){ bkeys.left = true; }, function(){ bkeys.left = false; });
+  holdBtn($("ballRight"), function(){ bkeys.right = true; }, function(){ bkeys.right = false; });
+  holdBtn($("ballUp"), function(){ bkeys.up = true; }, function(){ bkeys.up = false; });
+  holdBtn($("ballDown"), function(){ bkeys.down = true; }, function(){ bkeys.down = false; });
+  document.addEventListener("keydown", function(e){
+    if(!ball || !ball.started || ball.over) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || "";
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if(run && !run.over) return; // the Runner owns WASD/Space while a run is live
+    var k = e.key.toLowerCase();
+    if(k === "w") bkeys.up = true;
+    else if(k === "s") bkeys.down = true;
+    else if(k === "a") bkeys.left = true;
+    else if(k === "d") bkeys.right = true;
+    else if(e.key === " "){ e.preventDefault(); ballDoFire(); }
+  });
+  document.addEventListener("keyup", function(e){
+    var k = e.key.toLowerCase();
+    if(k === "w") bkeys.up = false;
+    else if(k === "s") bkeys.down = false;
+    else if(k === "a") bkeys.left = false;
+    else if(k === "d") bkeys.right = false;
+  });
+
   /* ---------------- Arcade nav ---------------- */
   document.querySelectorAll("[data-goto]").forEach(function(b){
     b.addEventListener("click", function(){
@@ -3527,7 +4629,611 @@
 
   resetRun(); run.over = true; drawRun();
   resetKart(); drawKart();
+  ballReset(); drawBall();
   setConn();
+})();
+</script>
+<script>
+/* ================= WebGL games — Tate-lo 3D & Spud Escape 3D =================
+   The most recent WebGL builds from the resort app, ported to the Arcade
+   with three.js (local copy, assets/three.min.js). Tate-lo 3D is the
+   first-person Spudball arena; Spud Escape 3D is the Tater Buggy escape
+   run. Both render one idle frame on load so the arena is never a black
+   box, and only animate while a match/run is live. */
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+  function holdBtn(el, down, up){
+    if(!el) return;
+    el.addEventListener("pointerdown", function(e){ e.preventDefault(); down(); });
+    ["pointerup", "pointerleave", "pointercancel"].forEach(function(ev){ el.addEventListener(ev, function(){ if(up) up(); }); });
+  }
+  if(!window.THREE){
+    var f1 = $("b3Msg"); if(f1) f1.textContent = "WebGL didn't load in this browser — the 2D games above still play.";
+    var f2 = $("escMsg"); if(f2) f2.textContent = "WebGL didn't load in this browser — the 2D games above still play.";
+    return;
+  }
+  function std(color, rough){
+    return new THREE.MeshStandardMaterial({ color: color, roughness: rough == null ? 0.85 : rough, metalness: 0.02 });
+  }
+  function makeSpud(bodyColor, capColor, scale){
+    var g = new THREE.Group();
+    var body = new THREE.Mesh(new THREE.SphereGeometry(0.62, 20, 16), std(bodyColor, 0.7));
+    body.scale.set(1, 0.9, 0.94);
+    body.position.y = 0.62;
+    g.add(body);
+    var cream = new THREE.Mesh(new THREE.SphereGeometry(0.30, 14, 10), std(0xfff6da, 0.5));
+    cream.scale.set(1, 0.55, 1);
+    cream.position.y = 1.22;
+    g.add(cream);
+    var cap = new THREE.Mesh(new THREE.SphereGeometry(0.34, 14, 10), std(capColor, 0.6));
+    cap.scale.set(1, 0.42, 1);
+    cap.position.y = 1.06;
+    g.add(cap);
+    var gun = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.62), std(0x5a4632, 0.6));
+    gun.position.set(0.34, 0.72, 0.42);
+    g.add(gun);
+    var shadow = new THREE.Mesh(new THREE.CircleGeometry(0.62, 20),
+      new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.22, depthWrite: false }));
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = 0.02;
+    g.add(shadow);
+    g.scale.setScalar(scale || 1);
+    return g;
+  }
+  function lights(scene, skyColor, groundColor, sunColor){
+    scene.add(new THREE.HemisphereLight(skyColor, groundColor, 0.95));
+    var sun = new THREE.DirectionalLight(sunColor, 1.15);
+    sun.position.set(14, 22, 8);
+    scene.add(sun);
+    var fill = new THREE.DirectionalLight(0xbfd4ff, 0.3);
+    fill.position.set(-10, 8, -12);
+    scene.add(fill);
+  }
+
+  /* ---------------- Tate-lo 3D — first-person Spudball (WebGL) ---------------- */
+  var b3 = { ok: false, running: false, over: false, splats: 0, down: 0, time: 0,
+             px: 0, pz: 14, head: Math.PI, invuln: 0, fireCd: 0,
+             keys: { fwd: false, left: false, right: false }, enemies: [], shots: [], crates: [] };
+  var b3Mount = $("b3Mount"), b3Renderer = null, b3Scene = null, b3Cam = null, b3Last = 0, b3Raf = 0;
+  function b3SetMsg(t){ var el = $("b3Msg"); if(el) el.textContent = t; }
+  function b3SpawnPoint(far){
+    for(var tries = 0; tries < 12; tries++){
+      var x = (Math.random() * 2 - 1) * 15, z = (Math.random() * 2 - 1) * 15;
+      var dx = x - b3.px, dz = z - b3.pz;
+      if(far && dx * dx + dz * dz < 120) continue;
+      return { x: x, z: z };
+    }
+    return { x: 0, z: -12 };
+  }
+  function b3Init(){
+    if(b3Renderer) return true;
+    try{
+      b3Renderer = new THREE.WebGLRenderer({ antialias: true });
+    }catch(e){ b3SetMsg("WebGL isn't available in this browser."); return false; }
+    b3Renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    b3Mount.appendChild(b3Renderer.domElement);
+    b3Scene = new THREE.Scene();
+    b3Scene.background = new THREE.Color(0xe8b06a);
+    b3Scene.fog = new THREE.Fog(0xe8b06a, 26, 60);
+    b3Cam = new THREE.PerspectiveCamera(68, 1.6, 0.1, 120);
+    lights(b3Scene, 0xffe0b0, 0x4a7a3a, 0xffd9a0);
+    // Ground: grass with a brick cross path
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(44, 44), std(0x4a7a3a, 0.95));
+    ground.rotation.x = -Math.PI / 2;
+    b3Scene.add(ground);
+    var pathMat = std(0x9a6a44, 0.95);
+    var p1 = new THREE.Mesh(new THREE.PlaneGeometry(4, 44), pathMat);
+    p1.rotation.x = -Math.PI / 2; p1.position.y = 0.01; b3Scene.add(p1);
+    var p2 = new THREE.Mesh(new THREE.PlaneGeometry(44, 4), pathMat);
+    p2.rotation.x = -Math.PI / 2; p2.position.y = 0.012; b3Scene.add(p2);
+    // Perimeter stone walls with ivy
+    var stone = std(0x8a8578, 0.95), ivy = std(0x2e5d2a, 0.95);
+    function wall(x, z, w, d){
+      var m = new THREE.Mesh(new THREE.BoxGeometry(w, 3.2, d), stone);
+      m.position.set(x, 1.6, z); b3Scene.add(m);
+      for(var i = 0; i < 3; i++){
+        var iv = new THREE.Mesh(new THREE.BoxGeometry(w > d ? 2.2 : 0.3, 1.1, w > d ? 0.3 : 2.2), ivy);
+        iv.position.set(x + (w > d ? (i - 1) * w / 3.4 : 0), 2.2 - (i % 2) * 0.5, z + (w > d ? 0 : (i - 1) * w / 3.4));
+        b3Scene.add(iv);
+      }
+    }
+    wall(0, -19, 40, 1.6); wall(0, 19, 40, 1.6); wall(-19, 0, 1.6, 40); wall(19, 0, 1.6, 40);
+    // Crates for cover
+    var crateMat = std(0x9a6a44, 0.9);
+    [[-8, -6], [8, -6], [-8, 6], [8, 6], [0, -12], [-13, 0], [13, 0], [0, 10]].forEach(function(c){
+      var s = 1.6 + (Math.abs(c[0] + c[1]) % 3) * 0.35;
+      var m = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), crateMat);
+      m.position.set(c[0], s / 2, c[1]);
+      m.rotation.y = (c[0] * 7 + c[1]) % 0.9;
+      b3Scene.add(m);
+      b3.crates.push({ x: c[0], z: c[1], r: s * 0.78 });
+    });
+    // Enemy Spudtans: gold vs red, like the arena original
+    var cols = [0xc1272d, 0xc1272d, 0x2456c8, 0x8b30c9];
+    for(var i = 0; i < 4; i++){
+      var mesh = makeSpud(0xb5793b, cols[i], 1.15);
+      var sp = b3SpawnPoint(true);
+      mesh.position.set(sp.x, 0, sp.z);
+      b3Scene.add(mesh);
+      b3.enemies.push({ mesh: mesh, x: sp.x, z: sp.z, head: Math.random() * 6.28, fireCd: 1.5 + Math.random() * 1.5, respawn: 0, wanderT: 0 });
+    }
+    b3.ok = true;
+    b3Resize();
+    b3Frame(); // one idle frame so the arena is visible before Start
+    return true;
+  }
+  function b3Resize(){
+    if(!b3Renderer) return;
+    var w = b3Mount.clientWidth || 640, h = b3Mount.clientHeight || 400;
+    b3Renderer.setSize(w, h);
+    b3Cam.aspect = w / h;
+    b3Cam.updateProjectionMatrix();
+  }
+  window.addEventListener("resize", function(){ b3Resize(); escResize(); });
+  function b3Blocked(x, z){
+    if(Math.abs(x) > 17.6 || Math.abs(z) > 17.6) return true;
+    for(var i = 0; i < b3.crates.length; i++){
+      var c = b3.crates[i], dx = x - c.x, dz = z - c.z;
+      if(dx * dx + dz * dz < (c.r + 0.55) * (c.r + 0.55)) return true;
+    }
+    return false;
+  }
+  function b3Fire(fromEnemy, ex, ez, dirx, dirz){
+    var m = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8),
+      new THREE.MeshBasicMaterial({ color: fromEnemy ? 0xffb3a0 : 0xfff6da }));
+    m.position.set(ex, 1.05, ez);
+    b3Scene.add(m);
+    b3.shots.push({ mesh: m, x: ex, z: ez, vx: dirx * (fromEnemy ? 15 : 32), vz: dirz * (fromEnemy ? 15 : 32), enemy: fromEnemy, life: 2.4 });
+  }
+  function b3PlayerFire(){
+    if(!b3.running || b3.over || b3.fireCd > 0) return;
+    b3.fireCd = 0.26;
+    var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
+    b3Fire(false, b3.px + fx * 0.8, b3.pz + fz * 0.8, fx, fz);
+  }
+  function b3SplatPlayer(){
+    if(b3.invuln > 0 || b3.over) return;
+    b3.down++;
+    $("b3Down").textContent = b3.down;
+    b3.px = 0; b3.pz = 14; b3.head = Math.PI; b3.invuln = 1.6;
+    if(b3.down >= 5){
+      b3.over = true;
+      b3SetMsg("The Spudtans take Tate-lo 3D, " + b3.down + "–" + b3.splats + ". Rematch?");
+      $("b3Start").textContent = "Play Again";
+    }else{
+      b3SetMsg("Splatted! Back at the gate — " + b3.down + " of 5.");
+    }
+  }
+  function b3Step(dt){
+    b3.time += dt;
+    $("b3Time").textContent = b3.time.toFixed(1) + " s";
+    if(b3.fireCd > 0) b3.fireCd -= dt;
+    if(b3.invuln > 0) b3.invuln -= dt;
+    var turn = (b3.keys.left ? 1 : 0) - (b3.keys.right ? 1 : 0);
+    b3.head += turn * 2.3 * dt;
+    if(b3.keys.fwd){
+      var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
+      var nx = b3.px + fx * 6.4 * dt, nz = b3.pz + fz * 6.4 * dt;
+      if(!b3Blocked(nx, b3.pz)) b3.px = nx;
+      if(!b3Blocked(b3.px, nz)) b3.pz = nz;
+    }
+    // Enemies: wander, close in, fire back
+    b3.enemies.forEach(function(e){
+      if(e.respawn > 0){ e.respawn -= dt; e.mesh.visible = e.respawn <= 0; return; }
+      var dx = b3.px - e.x, dz = b3.pz - e.z;
+      var dist = Math.sqrt(dx * dx + dz * dz) || 1;
+      e.wanderT -= dt;
+      if(e.wanderT <= 0){ e.wanderT = 1 + Math.random() * 1.6; e.head = Math.atan2(dx, dz) + (Math.random() - 0.5) * 1.4; }
+      if(dist > 6){
+        var mx = Math.sin(e.head) * 2.3 * dt, mz = Math.cos(e.head) * 2.3 * dt;
+        if(!b3Blocked(e.x + mx, e.z)) e.x += mx;
+        if(!b3Blocked(e.x, e.z + mz)) e.z += mz;
+      }
+      e.mesh.position.set(e.x, 0, e.z);
+      e.mesh.rotation.y = Math.atan2(dx, dz);
+      e.fireCd -= dt;
+      if(e.fireCd <= 0 && dist < 19){
+        e.fireCd = 1.7 + Math.random() * 1.2;
+        b3Fire(true, e.x, e.z, dx / dist, dz / dist);
+      }
+    });
+    // Shots
+    for(var i = b3.shots.length - 1; i >= 0; i--){
+      var s = b3.shots[i];
+      s.x += s.vx * dt; s.z += s.vz * dt; s.life -= dt;
+      s.mesh.position.set(s.x, 1.05, s.z);
+      var dead = s.life <= 0 || Math.abs(s.x) > 18.4 || Math.abs(s.z) > 18.4;
+      if(!dead){
+        for(var ci = 0; ci < b3.crates.length; ci++){
+          var c = b3.crates[ci], cdx = s.x - c.x, cdz = s.z - c.z;
+          if(cdx * cdx + cdz * cdz < c.r * c.r){ dead = true; break; }
+        }
+      }
+      if(!dead && s.enemy){
+        var hx = s.x - b3.px, hz = s.z - b3.pz;
+        if(hx * hx + hz * hz < 1.0){ b3SplatPlayer(); dead = true; }
+      }
+      if(!dead && !s.enemy){
+        for(var ei = 0; ei < b3.enemies.length; ei++){
+          var en = b3.enemies[ei];
+          if(en.respawn > 0) continue;
+          var ex2 = s.x - en.x, ez2 = s.z - en.z;
+          if(ex2 * ex2 + ez2 * ez2 < 1.25){
+            en.respawn = 1.4; en.mesh.visible = false;
+            var sp = b3SpawnPoint(true);
+            en.x = sp.x; en.z = sp.z;
+            b3.splats++;
+            $("b3Splats").textContent = b3.splats + " / 5";
+            if(b3.splats >= 5){
+              b3.over = true;
+              b3SetMsg("🏆 You win Tate-lo 3D, " + b3.splats + "–" + b3.down + " in " + b3.time.toFixed(1) + " s!");
+              $("b3Start").textContent = "Play Again";
+            }else{
+              b3SetMsg("SPLAT! " + b3.splats + " of 5 — keep hunting.");
+            }
+            dead = true; break;
+          }
+        }
+      }
+      if(dead){ b3Scene.remove(s.mesh); b3.shots.splice(i, 1); }
+    }
+  }
+  function b3Frame(){
+    if(!b3.ok) return;
+    var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
+    b3Cam.position.set(b3.px, 1.62, b3.pz);
+    b3Cam.lookAt(b3.px + fx, 1.35, b3.pz + fz);
+    b3Renderer.render(b3Scene, b3Cam);
+  }
+  function b3Loop(ts){
+    if(!b3.running) return;
+    try{
+      var dt = Math.min(0.05, ((ts - b3Last) / 1000) || 0.016);
+      b3Last = ts;
+      if(!b3.over) b3Step(dt);
+      b3Frame();
+    }catch(err){}
+    b3Raf = requestAnimationFrame(b3Loop);
+  }
+  function b3Start(){
+    if(!b3Init()) return;
+    b3Resize();
+    b3.splats = 0; b3.down = 0; b3.time = 0; b3.over = false;
+    b3.px = 0; b3.pz = 14; b3.head = Math.PI; b3.invuln = 0;
+    b3.shots.forEach(function(s){ b3Scene.remove(s.mesh); });
+    b3.shots = [];
+    b3.enemies.forEach(function(e){
+      var sp = b3SpawnPoint(true);
+      e.x = sp.x; e.z = sp.z; e.respawn = 0; e.mesh.visible = true;
+      e.mesh.position.set(e.x, 0, e.z);
+      e.fireCd = 1.5 + Math.random() * 1.5;
+    });
+    $("b3Splats").textContent = "0 / 5";
+    $("b3Down").textContent = "0";
+    $("b3Time").textContent = "0.0 s";
+    b3SetMsg("Match on — splat 5 Spudtans before they splat you 5 times!");
+    $("b3Start").textContent = "Restart Match";
+    b3.running = true;
+    b3Last = performance.now();
+    if(b3Raf) cancelAnimationFrame(b3Raf);
+    b3Raf = requestAnimationFrame(b3Loop);
+  }
+  $("b3Start").addEventListener("click", b3Start);
+  holdBtn($("b3Fire"), b3PlayerFire, null);
+  holdBtn($("b3Fwd"), function(){ b3.keys.fwd = true; }, function(){ b3.keys.fwd = false; });
+  holdBtn($("b3Left"), function(){ b3.keys.left = true; }, function(){ b3.keys.left = false; });
+  holdBtn($("b3Right"), function(){ b3.keys.right = true; }, function(){ b3.keys.right = false; });
+  if(b3Mount){
+    var dragX = null;
+    b3Mount.addEventListener("pointerdown", function(e){ dragX = e.clientX; });
+    b3Mount.addEventListener("pointermove", function(e){
+      if(dragX == null || !b3.running) return;
+      b3.head -= (e.clientX - dragX) * 0.006;
+      dragX = e.clientX;
+      if(!b3.running) b3Frame();
+    });
+    ["pointerup", "pointerleave", "pointercancel"].forEach(function(ev){
+      b3Mount.addEventListener(ev, function(){ dragX = null; });
+    });
+  }
+  document.addEventListener("keydown", function(e){
+    if(!b3.running || b3.over) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || "";
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W"){ b3.keys.fwd = true; }
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A"){ b3.keys.left = true; }
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D"){ b3.keys.right = true; }
+    else if(e.key === " "){ e.preventDefault(); b3PlayerFire(); }
+  });
+  document.addEventListener("keyup", function(e){
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") b3.keys.fwd = false;
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") b3.keys.left = false;
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") b3.keys.right = false;
+  });
+
+  /* ---------------- Spud Escape 3D — the WebGL escape run ---------------- */
+  var esc = { ok: false, running: false, over: false, won: false,
+              x: 0, y: 0, z: 0, vy: 0, speed: 0, timeLeft: 45, boostT: 0, air: false,
+              keys: { gas: false, brake: false, left: false, right: false },
+              checkpoints: [], pads: [], lastCpZ: 4 };
+  var escMount = $("escMount"), escRenderer = null, escScene = null, escCam = null, escBuggy = null, escWall = null, escLast = 0, escRaf = 0;
+  var ESC_END = -292, ESC_GAPS = [[-95, -103], [-195, -203]];
+  function escSetMsg(t){ var el = $("escMsg"); if(el) el.textContent = t; }
+  function escInGap(z){
+    for(var i = 0; i < ESC_GAPS.length; i++){
+      if(z <= ESC_GAPS[i][0] && z >= ESC_GAPS[i][1]) return true;
+    }
+    return false;
+  }
+  function escInit(){
+    if(escRenderer) return true;
+    try{
+      escRenderer = new THREE.WebGLRenderer({ antialias: true });
+    }catch(e){ escSetMsg("WebGL isn't available in this browser."); return false; }
+    escRenderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    escMount.appendChild(escRenderer.domElement);
+    escScene = new THREE.Scene();
+    escScene.background = new THREE.Color(0x2b1846);
+    escScene.fog = new THREE.Fog(0x2b1846, 30, 95);
+    escCam = new THREE.PerspectiveCamera(64, 1.6, 0.1, 200);
+    lights(escScene, 0xcfb0ff, 0x1c2440, 0xffd9a0);
+    // Road: three level slabs with gaps between (ramps sit at each gap)
+    var roadMat = std(0x3a3f55, 0.9), edgeMat = new THREE.MeshBasicMaterial({ color: 0xffd94d });
+    [[6, -95], [-103, -195], [-203, -300]].forEach(function(seg){
+      var len = seg[0] - seg[1];
+      var m = new THREE.Mesh(new THREE.BoxGeometry(10, 0.6, len), roadMat);
+      m.position.set(0, -0.3, seg[1] + len / 2);
+      escScene.add(m);
+      [-5.15, 5.15].forEach(function(x){
+        var e = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.25, len), edgeMat);
+        e.position.set(x, 0.05, seg[1] + len / 2);
+        escScene.add(e);
+      });
+    });
+    // The void floor far below + structure silhouettes along the course
+    var floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 420), std(0x171126, 1));
+    floor.rotation.x = -Math.PI / 2; floor.position.set(0, -14, -150);
+    escScene.add(floor);
+    var silMat = std(0x241233, 1);
+    for(var i = 0; i < 26; i++){
+      var h = 6 + ((i * 37) % 11);
+      [-1, 1].forEach(function(side){
+        var b = new THREE.Mesh(new THREE.BoxGeometry(4, h, 4), silMat);
+        b.position.set(side * (10 + (i % 3) * 3), h / 2 - 2, -i * 12 - 6);
+        escScene.add(b);
+      });
+    }
+    // Ramps at the gaps
+    var rampMat = std(0xe8762a, 0.7);
+    ESC_GAPS.forEach(function(g){
+      var r = new THREE.Mesh(new THREE.BoxGeometry(9, 0.5, 6), rampMat);
+      r.position.set(0, 0.55, g[0] + 2.6);
+      r.rotation.x = 0.30;
+      escScene.add(r);
+    });
+    // Checkpoint arches (+6 s each)
+    var archMat = std(0xe8a91c, 0.5);
+    [-50, -145, -245].forEach(function(cz){
+      var grp = new THREE.Group();
+      [-5, 5].forEach(function(x){
+        var post = new THREE.Mesh(new THREE.BoxGeometry(0.5, 5.4, 0.5), archMat);
+        post.position.set(x, 2.7, 0);
+        grp.add(post);
+      });
+      var top = new THREE.Mesh(new THREE.BoxGeometry(10.5, 0.5, 0.5), archMat);
+      top.position.set(0, 5.4, 0);
+      grp.add(top);
+      grp.position.z = cz;
+      escScene.add(grp);
+      esc.checkpoints.push({ z: cz, hit: false });
+    });
+    // Boost pads
+    var padMat = new THREE.MeshBasicMaterial({ color: 0xff7f24 });
+    [[-30, -1.8], [-120, 1.8], [-230, 0]].forEach(function(p){
+      var m = new THREE.Mesh(new THREE.PlaneGeometry(3, 4), padMat);
+      m.rotation.x = -Math.PI / 2;
+      m.position.set(p[1], 0.02, p[0]);
+      escScene.add(m);
+      esc.pads.push({ z: p[0], x: p[1], hit: false });
+    });
+    // Extraction pad
+    var pad = new THREE.Mesh(new THREE.CircleGeometry(4.4, 28),
+      new THREE.MeshBasicMaterial({ color: 0x39d353, transparent: true, opacity: 0.75 }));
+    pad.rotation.x = -Math.PI / 2;
+    pad.position.set(0, 0.03, -295);
+    escScene.add(pad);
+    // Collapse wall behind
+    escWall = new THREE.Mesh(new THREE.BoxGeometry(15, 9, 0.8),
+      new THREE.MeshBasicMaterial({ color: 0xff3b30, transparent: true, opacity: 0.4 }));
+    escWall.position.set(0, 4, 13);
+    escScene.add(escWall);
+    // The Tater Buggy with SpudMan at the wheel
+    escBuggy = new THREE.Group();
+    var bodyMat = std(0xb5651d, 0.55);
+    var body = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.55, 2.7), bodyMat);
+    body.position.y = 0.62;
+    escBuggy.add(body);
+    var nose = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.4, 0.8), bodyMat);
+    nose.position.set(0, 0.5, -1.65);
+    escBuggy.add(nose);
+    var wheelMat = std(0x1c1c1c, 0.9);
+    [[-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]].forEach(function(w){
+      var wh = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.3, 14), wheelMat);
+      wh.rotation.z = Math.PI / 2;
+      wh.position.set(w[0], 0.42, w[1]);
+      escBuggy.add(wh);
+    });
+    var cageMat = std(0x333333, 0.5);
+    [[-0.85, -0.4], [0.85, -0.4], [-0.85, 0.7], [0.85, 0.7]].forEach(function(c){
+      var post = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.85, 0.09), cageMat);
+      post.position.set(c[0], 1.3, c[1]);
+      escBuggy.add(post);
+    });
+    var cageTop = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.09, 1.2), cageMat);
+    cageTop.position.set(0, 1.74, 0.15);
+    escBuggy.add(cageTop);
+    var driver = makeSpud(0xb5793b, 0xe8a91c, 0.92);
+    driver.position.set(0, 0.78, 0.35);
+    escBuggy.add(driver);
+    var cape = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 1.3),
+      new THREE.MeshStandardMaterial({ color: 0xf4f1e8, roughness: 0.9, side: THREE.DoubleSide }));
+    cape.position.set(0, 1.15, 1.05);
+    cape.rotation.x = 0.5;
+    escBuggy.add(cape);
+    escScene.add(escBuggy);
+    esc.ok = true;
+    escResize();
+    escFrame(); // idle frame
+    return true;
+  }
+  function escResize(){
+    if(!escRenderer) return;
+    var w = escMount.clientWidth || 640, h = escMount.clientHeight || 400;
+    escRenderer.setSize(w, h);
+    escCam.aspect = w / h;
+    escCam.updateProjectionMatrix();
+  }
+  function escFrame(){
+    if(!esc.ok) return;
+    escBuggy.position.set(esc.x, esc.y, esc.z);
+    escBuggy.rotation.y = 0;
+    escWall.position.z = esc.z + 13;
+    escWall.material.opacity = esc.timeLeft < 10 && esc.running ? 0.45 + 0.25 * Math.sin(performance.now() / 120) : 0.35;
+    var tx = esc.x * 0.55;
+    escCam.position.set(tx, 5.4 + esc.y * 0.4, esc.z + 10.5);
+    escCam.lookAt(esc.x, 1.1 + esc.y * 0.5, esc.z - 9);
+    escRenderer.render(escScene, escCam);
+  }
+  function escStep(dt){
+    esc.timeLeft -= dt;
+    if(esc.timeLeft <= 0){
+      esc.timeLeft = 0;
+      esc.over = true;
+      escSetMsg("Time! The collapse wall got the buggy — " + Math.round(-esc.z) + " m in. Try again?");
+      $("escStart").textContent = "Try Again";
+    }
+    $("escTime").textContent = esc.timeLeft.toFixed(1) + " s";
+    // Speed
+    var maxSpd = esc.boostT > 0 ? 34 : 22;
+    if(esc.boostT > 0) esc.boostT -= dt;
+    if(esc.keys.gas) esc.speed = Math.min(maxSpd, esc.speed + 16 * dt);
+    else if(esc.keys.brake) esc.speed = Math.max(0, esc.speed - 30 * dt);
+    else esc.speed = Math.max(0, esc.speed - 4.5 * dt);
+    if(esc.boostT <= 0 && esc.speed > 22) esc.speed = Math.max(22, esc.speed - 20 * dt);
+    $("escSpeed").textContent = Math.round(esc.speed * 3.6);
+    // Steering
+    var steer = (esc.keys.right ? 1 : 0) - (esc.keys.left ? 1 : 0);
+    esc.x += steer * 8.5 * dt * Math.min(1, esc.speed / 8 + 0.25);
+    esc.x = Math.max(-4.4, Math.min(4.4, esc.x));
+    var prevZ = esc.z;
+    esc.z -= esc.speed * dt;
+    // Ramps: crossing the ramp zone at speed launches the buggy
+    if(!esc.air){
+      for(var gi = 0; gi < ESC_GAPS.length; gi++){
+        var rampZ = ESC_GAPS[gi][0] + 3.4;
+        if(prevZ > rampZ && esc.z <= rampZ && esc.speed > 8){
+          esc.air = true;
+          esc.vy = 8.2;
+        }
+      }
+    }
+    // Vertical
+    if(esc.air || escInGap(esc.z)){
+      esc.vy -= 19 * dt;
+      esc.y += esc.vy * dt;
+      if(escInGap(esc.z)){
+        if(esc.y < -5){
+          // Fell into the gap — fished back to the last checkpoint
+          esc.z = esc.lastCpZ; esc.x = 0; esc.y = 0; esc.vy = 0; esc.air = false; esc.speed = 0;
+          esc.timeLeft = Math.max(0, esc.timeLeft - 3);
+          escSetMsg("Down the gap! Fished back to the checkpoint — 3 s gone.");
+        }
+      }else if(esc.y <= 0){
+        esc.y = 0; esc.vy = 0; esc.air = false;
+      }
+    }else{
+      esc.y = 0; esc.vy = 0;
+    }
+    // Checkpoints
+    esc.checkpoints.forEach(function(c){
+      if(!c.hit && prevZ > c.z && esc.z <= c.z){
+        c.hit = true;
+        esc.lastCpZ = c.z + 3;
+        esc.timeLeft += 6;
+        escSetMsg("Checkpoint! +6 s — the collapse is still coming.");
+      }
+    });
+    // Boost pads
+    esc.pads.forEach(function(p){
+      if(p.hit) return;
+      if(Math.abs(esc.z - p.z) < 2.2 && Math.abs(esc.x - p.x) < 1.7 && esc.y <= 0.1){
+        p.hit = true;
+        esc.boostT = 1.6;
+        escSetMsg("Boost pad! Surge!");
+        setTimeout(function(){ p.hit = false; }, 4000);
+      }
+    });
+    var lvl = esc.z <= -203 ? 3 : esc.z <= -103 ? 2 : 1;
+    $("escLevel").textContent = lvl + " / 3";
+    if(esc.z <= ESC_END && !esc.over){
+      esc.over = true; esc.won = true;
+      escSetMsg("🏆 EXTRACTION! SpudMan is out with " + esc.timeLeft.toFixed(1) + " s to spare.");
+      $("escStart").textContent = "Run It Again";
+    }
+  }
+  function escLoop(ts){
+    if(!esc.running) return;
+    try{
+      var dt = Math.min(0.05, ((ts - escLast) / 1000) || 0.016);
+      escLast = ts;
+      if(!esc.over) escStep(dt);
+      escFrame();
+    }catch(err){}
+    escRaf = requestAnimationFrame(escLoop);
+  }
+  function escStart(){
+    if(!escInit()) return;
+    escResize();
+    esc.x = 0; esc.y = 0; esc.z = 4; esc.vy = 0; esc.speed = 0;
+    esc.timeLeft = 45; esc.boostT = 0; esc.air = false;
+    esc.over = false; esc.won = false; esc.lastCpZ = 4;
+    esc.checkpoints.forEach(function(c){ c.hit = false; });
+    esc.pads.forEach(function(p){ p.hit = false; });
+    $("escTime").textContent = "45.0 s";
+    $("escLevel").textContent = "1 / 3";
+    $("escSpeed").textContent = "0";
+    escSetMsg("GO — hold Gas, hit the ramps over the gaps, and beat the collapse to the extraction pad!");
+    $("escStart").textContent = "Restart Escape";
+    esc.running = true;
+    escLast = performance.now();
+    if(escRaf) cancelAnimationFrame(escRaf);
+    escRaf = requestAnimationFrame(escLoop);
+  }
+  $("escStart").addEventListener("click", escStart);
+  holdBtn($("escGas"), function(){ esc.keys.gas = true; }, function(){ esc.keys.gas = false; });
+  holdBtn($("escBrake"), function(){ esc.keys.brake = true; }, function(){ esc.keys.brake = false; });
+  holdBtn($("escLeft"), function(){ esc.keys.left = true; }, function(){ esc.keys.left = false; });
+  holdBtn($("escRight"), function(){ esc.keys.right = true; }, function(){ esc.keys.right = false; });
+  document.addEventListener("keydown", function(e){
+    if(!esc.running || esc.over) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || "";
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") esc.keys.gas = true;
+    else if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") esc.keys.brake = true;
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") esc.keys.left = true;
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") esc.keys.right = true;
+  });
+  document.addEventListener("keyup", function(e){
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") esc.keys.gas = false;
+    else if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") esc.keys.brake = false;
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") esc.keys.left = false;
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") esc.keys.right = false;
+  });
+
+  // Idle frames so both WebGL panels show their arenas before Start.
+  try{ b3Init(); }catch(e){}
+  try{ escInit(); }catch(e){}
 })();
 </script>
 </body>
