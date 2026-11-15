@@ -595,6 +595,7 @@
       .scoreline b{ color:var(--blue); }
       .chal-row{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px; }
       .chal-row select{ flex:1; min-width:140px; font-size:13px; padding:7px; font-family:inherit; }
+      .chal-row input[type="text"]{ flex:1; min-width:180px; font-size:13px; padding:7px; font-family:inherit; }
       .playas{ display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin-bottom:10px; font-size:11px; }
       .playas input{ flex:1; min-width:160px; }
     </style>
@@ -778,9 +779,9 @@
                   <button class="btn primary" type="button" data-goto="runnerPanel">Play Runner</button>
                 </div>
                 <div class="game-card">
-                  <span class="game-tag live">LIVE RACING · LEADERBOARD · CHALLENGES</span>
+                  <span class="game-tag live">LIVE RACING · BASEMENT SERVER · LEADERBOARD</span>
                   <h4>Spud Kart</h4>
-                  <p>Two laps of the Spudway. Race a friend live — their kart is right there on your track — or run a solo time trial for the shared board and challenges.</p>
+                  <p>Two laps of the Spudway. Race a friend live — their kart is right there on your track — run a solo time trial for the shared board, or race on the basement server, where the PC runs the race and karts really collide.</p>
                   <button class="btn primary" type="button" data-goto="kartPanel">Race Kart</button>
                 </div>
               </div>
@@ -868,6 +869,26 @@
                     <button class="btn danger" id="kartLiveLeave" type="button" hidden>Leave Race</button>
                     <ul class="lobby-list" id="kartRaceList"></ul>
                     <p class="lb-empty" id="kartRaceEmpty">No race rooms waiting right now.</p>
+                  </div>
+                  <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
+                    <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Basement server — real collisions</p>
+                    <p class="game-status" id="bsStatus">Not connected. On the basement server the PC runs the race itself: phones send only gas &amp; steering, the server moves every kart and decides the bumps — so karts actually collide, and finish times come from the server, not the phones.</p>
+                    <div class="chal-row" style="margin-top:0;">
+                      <input type="text" id="bsAddr" placeholder="ws://100.x.x.x:8787 — the PC's Tailscale address" autocomplete="off" autocapitalize="off" spellcheck="false" />
+                      <button class="btn primary" id="bsConnect" type="button">Connect</button>
+                      <button class="btn danger" id="bsDisconnect" type="button" hidden>Disconnect</button>
+                    </div>
+                    <div id="bsLobby" hidden>
+                      <div class="touchrow" style="justify-content:flex-start;">
+                        <button class="btn orange" id="bsCreate" type="button">Create Server Race</button>
+                        <button class="btn primary" id="bsStart" type="button" hidden>Start Race</button>
+                        <button class="btn danger" id="bsLeave" type="button" hidden>Leave Race</button>
+                      </div>
+                      <ul class="lobby-list" id="bsRoomList"></ul>
+                      <p class="lb-empty" id="bsRoomEmpty">No server races waiting right now.</p>
+                      <p class="game-sub" id="bsRoomInfo"></p>
+                    </div>
+                    <p class="game-sub"><b>Set it up once:</b> <a href="assets/spud-kart-server.js" download>download the server file</a>, put it on the basement PC, install Node.js (free at nodejs.org), and run <b>node spud-kart-server.js</b> — then leave the PC on while you race. The server window prints the addresses to type above: the 192.168 one works on the same Wi-Fi; friends in other houses install Tailscale, join the same tailnet, and use the PC's 100.x Tailscale address. Up to 4 karts per race. If a browser refuses the ws:// connection from this https page, allow insecure content for this site in its site settings.</p>
                   </div>
                   <p class="game-sub" style="font-weight:bold; color:var(--blue);">Shared leaderboard — fastest times</p>
                   <ol class="lb-list" id="kartLb"></ol>
@@ -2949,6 +2970,7 @@
     drawKart();
   }
   function startKart(){
+    if(bsRoomId){ gtoast("You're in a basement-server race — the server starts this one."); return; }
     resetKart();
     $("kartMsg").textContent = "";
     $("kartLap").textContent = "1 / 2";
@@ -3165,6 +3187,248 @@
   $("runLiveCreate").addEventListener("click", function(){ createRace("runner"); });
   $("kartLiveLeave").addEventListener("click", function(){ leaveRace("kart"); });
   $("runLiveLeave").addEventListener("click", function(){ leaveRace("runner"); });
+
+  /* ---------------- Basement server Kart — server-authoritative ----------------
+     The basement PC runs assets/spud-kart-server.js (download link in the
+     panel). Phones send only inputs over a WebSocket; the server steps
+     every kart at 30 Hz, resolves kart-to-kart collisions, and broadcasts
+     official snapshots at 20 Hz, which this renders with interpolation.
+     Nothing here touches Firebase; the two live modes are independent. */
+  var bsWs = null, bsMyId = null, bsRoomId = null, bsIsHost = false;
+  var bsSnapPrev = null, bsSnapPrevAt = 0, bsSnap = null, bsSnapAt = 0;
+  var bsRaf = null, bsInputTimer = null, bsLastInput = "", bsLastBump = 0, bsBumpMsgAt = 0;
+
+  function bsSetStatus(t){ var el = $("bsStatus"); if(el) el.textContent = t; }
+  function bsSend(o){ if(bsWs && bsWs.readyState === 1){ try{ bsWs.send(JSON.stringify(o)); }catch(e){} } }
+
+  function bsRenderRooms(rooms){
+    var list = $("bsRoomList"), empty = $("bsRoomEmpty");
+    if(!list) return;
+    list.innerHTML = "";
+    var show = (rooms || []).filter(function(r){ return r && r.id !== bsRoomId; });
+    empty.style.display = show.length ? "none" : "block";
+    show.forEach(function(r){
+      var li = document.createElement("li"), b = document.createElement("button");
+      li.innerHTML = "<span><b>" + esc(r.hostName || "A Spud") + "</b> is hosting a server race (" + (r.count || 1) + "/4 karts).</span>";
+      b.type = "button"; b.className = "btn primary"; b.textContent = "Join race";
+      b.addEventListener("click", function(){ bsSend({ t: "join", room: r.id }); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+  }
+  function bsUpdateRoomInfo(){
+    var info = $("bsRoomInfo");
+    if(!bsSnap || !bsRoomId){ info.textContent = ""; return; }
+    var names = Object.keys(bsSnap.players || {}).map(function(k){ return bsSnap.players[k].name || "A Spud"; });
+    info.textContent = "In this race: " + names.join(", ") +
+      (bsSnap.status === "waiting" ? (bsIsHost ? " — you're the host: hit Start Race when everyone's in." : " — waiting for the host to start.") : "");
+  }
+  function bsEnterRoomUI(){
+    $("bsCreate").hidden = !!bsRoomId;
+    $("bsLeave").hidden = !bsRoomId;
+    $("bsStart").hidden = !(bsRoomId && bsIsHost && bsSnap && bsSnap.status === "waiting");
+    bsRenderRooms(bsLastRooms);
+    bsUpdateRoomInfo();
+  }
+  var bsLastRooms = [];
+
+  function bsConnect(){
+    var addr = ($("bsAddr").value || "").trim();
+    if(!/^wss?:\/\//i.test(addr)) addr = "ws://" + addr;
+    if(addr.replace(/^wss?:\/\//i, "").indexOf(":") === -1) addr += ":8787";
+    if(liveKartId){ gtoast("Leave the Firebase live race first — one race at a time."); return; }
+    bsDisconnect(true);
+    bsSetStatus("Connecting to " + addr + " …");
+    var ws;
+    try{ ws = new WebSocket(addr); }
+    catch(e){ bsSetStatus("That address doesn't look right — it should look like ws://100.x.x.x:8787."); return; }
+    bsWs = ws;
+    var opened = false;
+    ws.onopen = function(){
+      opened = true;
+      bsSend({ t: "hello", name: gameName() });
+      $("bsConnect").hidden = true; $("bsDisconnect").hidden = false;
+      $("bsLobby").hidden = false;
+      bsSetStatus("Connected to the basement server. Create a race or join one below.");
+    };
+    ws.onmessage = function(ev){
+      var m; try{ m = JSON.parse(ev.data); }catch(e){ return; }
+      if(!m || !m.t) return;
+      if(m.t === "welcome"){ bsMyId = m.id; }
+      else if(m.t === "rooms"){ bsLastRooms = m.rooms || []; if(!bsRoomId) bsRenderRooms(bsLastRooms); }
+      else if(m.t === "joined"){
+        bsRoomId = m.room; bsIsHost = false; bsSnap = null; bsSnapPrev = null;
+        if(kartRaf) cancelAnimationFrame(kartRaf);
+        if(kart) kart.over = true;
+        bsEnterRoomUI();
+        bsStartLoop();
+        bsSetStatus("You're in the race — waiting for the start.");
+      }
+      else if(m.t === "state"){ bsOnState(m); }
+      else if(m.t === "left"){ bsClearRoom(); bsSetStatus("You left the race."); }
+      else if(m.t === "error"){ gtoast(m.msg || "The server said no."); }
+    };
+    ws.onerror = function(){
+      if(!opened) bsSetStatus("Couldn't reach the server at " + addr + " — check it's running on the PC (node spud-kart-server.js), the address is right, and Tailscale is connected on both ends.");
+    };
+    ws.onclose = function(){
+      if(bsWs === ws){
+        bsWs = null; bsClearRoom();
+        $("bsConnect").hidden = false; $("bsDisconnect").hidden = true; $("bsLobby").hidden = true;
+        bsSetStatus("Disconnected from the basement server.");
+      }
+    };
+  }
+  function bsDisconnect(silent){
+    bsClearRoom();
+    if(bsWs){ var w = bsWs; bsWs = null; try{ w.close(); }catch(e){} }
+    $("bsConnect").hidden = false; $("bsDisconnect").hidden = true; $("bsLobby").hidden = true;
+    if(!silent) bsSetStatus("Disconnected from the basement server.");
+  }
+  function bsClearRoom(){
+    bsRoomId = null; bsIsHost = false; bsSnap = null; bsSnapPrev = null; bsLastBump = 0;
+    if(bsRaf) cancelAnimationFrame(bsRaf); bsRaf = null;
+    if(bsInputTimer) clearInterval(bsInputTimer); bsInputTimer = null;
+    bsLastInput = "";
+    $("bsStart").hidden = true; $("bsLeave").hidden = true; $("bsCreate").hidden = false;
+    $("bsRoomInfo").textContent = "";
+    resetKart(); kart.over = true; drawKart();
+  }
+  function bsOnState(m){
+    if(!bsRoomId || m.room !== bsRoomId) return;
+    bsSnapPrev = bsSnap; bsSnapPrevAt = bsSnapAt;
+    bsSnap = m; bsSnapAt = performance.now();
+    bsIsHost = m.hostId === bsMyId;
+    var me = m.players && bsMyId ? m.players[bsMyId] : null;
+    if(m.status === "waiting"){
+      bsSetStatus(bsIsHost ? "Your server race is open — racers join from the list below. Hit Start Race when everyone's in." : "In the race — waiting for the host to start it.");
+    }else if(m.status === "countdown"){
+      bsSetStatus("Server race vs " + bsOppNames(m) + " — starting in " + Math.max(1, Math.ceil(((m.startAt || 0) - Date.now())/1000)) + "s. Hold Gas!");
+      $("kartMsg").textContent = "Starts in " + Math.max(1, Math.ceil(((m.startAt || 0) - Date.now())/1000)) + "…";
+    }else if(m.status === "racing"){
+      if(me && me.bumpAt && me.bumpAt !== bsLastBump){
+        bsLastBump = me.bumpAt; bsBumpMsgAt = Date.now();
+        $("kartMsg").textContent = "BUMP! The server felt that one.";
+      }else if(Date.now() - bsBumpMsgAt > 1200 && $("kartMsg").textContent.indexOf("BUMP") === 0){
+        $("kartMsg").textContent = "";
+      }
+      if(me && me.finished) bsSetStatus("You finished in " + (me.finishMs/1000).toFixed(1) + " s (server time) — waiting for the others…");
+      else bsSetStatus("LIVE on the basement server vs " + bsOppNames(m) + " — positions & collisions decided by the PC.");
+    }else if(m.status === "done"){
+      var rows = Object.keys(m.players || {}).map(function(k){
+        var p = m.players[k]; return { name: p.name || "A Spud", ms: p.finishMs, me: k === bsMyId };
+      }).sort(function(a,b){ return a.ms - b.ms; });
+      var win = rows[0];
+      bsSetStatus(win ? ("Race over — " + (win.me ? "YOU WIN" : win.name + " wins") + " in " + (win.ms/1000).toFixed(1) + " s (server time). Full results: " +
+        rows.map(function(r){ return r.name + " " + (r.ms/1000).toFixed(1) + " s"; }).join(" · ")) : "Race over.");
+      $("kartMsg").textContent = win && win.me ? "You win! 🏆" : "Race over";
+    }
+    bsEnterRoomUI();
+  }
+  function bsOppNames(m){
+    return Object.keys(m.players || {}).filter(function(k){ return k !== bsMyId; })
+      .map(function(k){ return m.players[k].name || "a spud"; }).join(", ") || "the grid";
+  }
+  function bsStartLoop(){
+    if(bsRaf) cancelAnimationFrame(bsRaf);
+    var loop = function(){
+      bsDraw();
+      bsRaf = requestAnimationFrame(loop);
+    };
+    bsRaf = requestAnimationFrame(loop);
+    if(bsInputTimer) clearInterval(bsInputTimer);
+    bsInputTimer = setInterval(function(){
+      if(!bsRoomId || !bsSnap || (bsSnap.status !== "racing" && bsSnap.status !== "countdown")) return;
+      var cur = (kkeys.gas ? "1" : "0") + (kkeys.left ? "1" : "0") + (kkeys.right ? "1" : "0");
+      if(cur !== bsLastInput){
+        bsLastInput = cur;
+        bsSend({ t: "input", gas: kkeys.gas, left: kkeys.left, right: kkeys.right });
+      }
+    }, 50);
+  }
+  function bsInterp(){
+    // Interpolate between the last two snapshots for smooth 60fps rendering.
+    if(!bsSnap) return null;
+    var out = {};
+    var span = Math.max(1, bsSnapAt - bsSnapPrevAt);
+    var f = bsSnapPrev ? Math.min(1, (performance.now() - bsSnapAt) / span) : 1;
+    Object.keys(bsSnap.players || {}).forEach(function(k){
+      var b = bsSnap.players[k];
+      var a = bsSnapPrev && bsSnapPrev.players ? bsSnapPrev.players[k] : null;
+      if(!a || bsSnap.status === "waiting"){ out[k] = { x: b.x, y: b.y, h: b.h, p: b }; return; }
+      var dh = b.h - a.h;
+      while(dh > Math.PI) dh -= Math.PI * 2;
+      while(dh < -Math.PI) dh += Math.PI * 2;
+      out[k] = { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, h: a.h + dh * f, p: b };
+    });
+    return out;
+  }
+  function bsDraw(){
+    var pos = bsInterp();
+    kctx.fillStyle = "#3e7d3a"; kctx.fillRect(0, 0, KW, KH);
+    kctx.strokeStyle = "#4a4a4a"; kctx.lineWidth = 68; kctx.lineCap = "round";
+    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
+    kctx.strokeStyle = "#f5f0e1"; kctx.lineWidth = 3; kctx.setLineDash([14, 12]);
+    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
+    kctx.setLineDash([]);
+    var s = ellipsePoint(Math.PI / 2);
+    kctx.strokeStyle = "#fff"; kctx.lineWidth = 5;
+    kctx.beginPath(); kctx.moveTo(s.x - 16, s.y); kctx.lineTo(s.x + 16, s.y); kctx.stroke();
+    if(!pos) return;
+    Object.keys(pos).forEach(function(k){
+      var q = pos[k], isMe = k === bsMyId;
+      kctx.save();
+      kctx.translate(q.x, q.y); kctx.rotate(q.h);
+      kctx.fillStyle = q.p.color || "#c1272d"; kctx.fillRect(-14, -9, 28, 18);
+      kctx.fillStyle = "#222"; kctx.fillRect(-13, -13, 8, 5); kctx.fillRect(5, -13, 8, 5);
+      kctx.fillRect(-13, 8, 8, 5); kctx.fillRect(5, 8, 8, 5);
+      kctx.fillStyle = isMe ? "#b5793b" : "#e8c39e";
+      kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI * 2); kctx.fill();
+      if(isMe){ kctx.strokeStyle = "#fff"; kctx.lineWidth = 2; kctx.strokeRect(-15, -10, 30, 20); }
+      kctx.restore();
+      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
+      kctx.fillText((q.p.name || "Rival") + (isMe ? " (you)" : ""), q.x, q.y - 18);
+      kctx.textAlign = "left";
+    });
+    var me = bsSnap && bsMyId && bsSnap.players ? bsSnap.players[bsMyId] : null;
+    if(me){
+      $("kartLap").textContent = Math.min(2, Math.floor((me.total || 0) / (Math.PI * 2)) + 1) + " / 2";
+      if(me.finished) $("kartTime").textContent = (me.finishMs / 1000).toFixed(1) + " s";
+      else if(bsSnap.status === "racing" || bsSnap.status === "done")
+        $("kartTime").textContent = (Math.max(0, Date.now() - (bsSnap.startAt || 0)) / 1000).toFixed(1) + " s";
+    }
+  }
+  $("bsConnect").addEventListener("click", bsConnect);
+  $("bsDisconnect").addEventListener("click", function(){ bsDisconnect(false); });
+  $("bsAddr").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); bsConnect(); } });
+  $("bsCreate").addEventListener("click", function(){
+    if(liveKartId){ gtoast("Leave the Firebase live race first — one race at a time."); return; }
+    bsSend({ t: "hello", name: gameName() });
+    bsSend({ t: "create" });
+  });
+  $("bsStart").addEventListener("click", function(){ bsSend({ t: "start" }); });
+  $("bsLeave").addEventListener("click", function(){
+    bsSend({ t: "leave" });
+    bsClearRoom();
+    bsSetStatus("You left the race.");
+  });
+  // Keyboard driving for basement races (the solo handlers ignore kkeys
+  // while the local kart is parked, so feed them here too).
+  document.addEventListener("keydown", function(e){
+    if(!bsRoomId) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || "";
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if(e.key === " " || e.key === "ArrowUp"){ e.preventDefault(); kkeys.gas = true; }
+    if(e.key === "ArrowLeft"){ e.preventDefault(); kkeys.left = true; }
+    if(e.key === "ArrowRight"){ e.preventDefault(); kkeys.right = true; }
+  });
+  document.addEventListener("keyup", function(e){
+    if(!bsRoomId) return;
+    if(e.key === " " || e.key === "ArrowUp") kkeys.gas = false;
+    if(e.key === "ArrowLeft") kkeys.left = false;
+    if(e.key === "ArrowRight") kkeys.right = false;
+  });
+  window.addEventListener("beforeunload", function(){ if(bsWs){ try{ bsWs.close(); }catch(e){} } });
 
   /* ---------------- Arcade nav ---------------- */
   document.querySelectorAll("[data-goto]").forEach(function(b){
