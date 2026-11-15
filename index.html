@@ -631,6 +631,54 @@
       #kkSteerBar{ position:absolute; left:50%; bottom:16px; transform:translateX(-50%); width:150px; height:10px; border-radius:5px; background:rgba(10,18,32,.4); border:1px solid rgba(255,255,255,.4); }
       #kkSteerNeedle{ position:absolute; top:1px; left:50%; width:16px; height:6px; margin-left:-8px; border-radius:3px; background:#ffd94d; box-shadow:0 0 6px rgba(255,217,77,.8); }
       @media (max-width:560px){ .kk-tbtn.steer{ width:64px; height:64px; font-size:26px; } .kk-tbtn.item{ width:76px; height:76px; } #kkSteerBar{ display:none; } }
+      /* Spud Kart results: when you cross the line the race used to
+         just freeze — now a results card pops over the stage with
+         your placement in big type, the full standings (live, while
+         the other karts finish), confetti on a win, and the only
+         ways back into a race are the buttons on the card. */
+      #kkResults{ position:absolute; inset:0; z-index:8; display:flex; align-items:center; justify-content:center; background:rgba(6,10,22,.55); padding:10px; box-sizing:border-box; }
+      #kkResults[hidden]{ display:none; }
+      .kk-res-card{ position:relative; overflow:hidden; width:min(430px, 100%); max-height:min(94vh, 600px); overflow-y:auto; background:linear-gradient(180deg, #16233f, #0d1526); color:#fff; border:2px solid rgba(255,255,255,.75); border-radius:12px; box-shadow:0 18px 50px rgba(0,0,0,.55); text-align:center; padding:0 18px 16px; animation:kkResPop .38s cubic-bezier(.2,1.6,.4,1); }
+      @keyframes kkResPop{ from{ transform:scale(.82) translateY(14px); opacity:0; } to{ transform:scale(1) translateY(0); opacity:1; } }
+      .kk-res-flag{ height:16px; margin:0 -18px 10px; background:repeating-conic-gradient(#10131c 0% 25%, #f4f6fb 0% 50%) 0 0/16px 16px; border-bottom:2px solid rgba(255,255,255,.5); }
+      .kk-res-head{ font-size:40px; font-weight:800; letter-spacing:1px; line-height:1.05; text-shadow:0 3px 0 rgba(0,0,0,.35); }
+      .kk-res-head.place1{ color:#ffd94d; text-shadow:0 0 22px rgba(255,217,77,.55), 0 3px 0 rgba(0,0,0,.4); }
+      .kk-res-head.place2{ color:#e8edf5; }
+      .kk-res-head.place3{ color:#f0a35e; }
+      .kk-res-sub{ font-size:13.5px; color:#bcd0ee; margin-top:5px; font-weight:600; }
+      .kk-res-list{ list-style:none; margin:14px 0 4px; padding:0; text-align:left; }
+      .kk-res-row{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; background:rgba(255,255,255,.07); margin-bottom:6px; font-size:15px; }
+      .kk-res-row.me{ background:rgba(255,217,77,.18); outline:1.5px solid rgba(255,217,77,.75); font-weight:700; }
+      .kk-res-pos{ flex:0 0 auto; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; background:#3a4a6b; color:#fff; }
+      .kk-res-pos.p1{ background:#f5b301; color:#3a2700; box-shadow:0 0 12px rgba(245,179,1,.7); }
+      .kk-res-pos.p2{ background:#cfd8e6; color:#26314a; }
+      .kk-res-pos.p3{ background:#c97b2e; color:#2e1800; }
+      .kk-res-name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .kk-res-time{ font-variant-numeric:tabular-nums; color:#dbe7fb; font-size:13.5px; text-align:right; }
+      .kk-res-row.me .kk-res-time{ color:#ffe9a3; }
+      .kk-res-note{ font-size:12.5px; color:#9fb4d8; min-height:16px; margin-top:4px; }
+      .kk-res-btns{ display:flex; gap:9px; margin-top:10px; }
+      .kk-res-btns .btn{ flex:1; min-height:48px; font-size:15px; }
+      .kk-confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+      .kk-conf{ position:absolute; top:-16px; width:8px; height:13px; border-radius:2px; opacity:0; animation-name:kkConfFall; animation-timing-function:linear; animation-fill-mode:forwards; }
+      @keyframes kkConfFall{ 0%{ opacity:1; transform:translateY(0) rotate(0deg); } 85%{ opacity:1; } 100%{ opacity:0; transform:translateY(460px) rotate(620deg); } }
+      @media (prefers-reduced-motion: reduce){ .kk-res-card{ animation:none; } .kk-conf{ animation:none; display:none; } }
+      @media (max-width:560px){
+        /* Compact enough that the whole card — buttons included —
+           fits over a portrait phone's short stage without an
+           internal scroll swallowing the Race Again button. */
+        .kk-res-card{ padding:0 12px 12px; }
+        .kk-res-flag{ height:10px; margin:0 -12px 7px; background-size:10px 10px; }
+        .kk-res-head{ font-size:25px; }
+        .kk-res-sub{ font-size:12px; margin-top:3px; }
+        .kk-res-list{ margin:9px 0 2px; }
+        .kk-res-row{ font-size:13.5px; padding:5px 8px; margin-bottom:4px; gap:8px; }
+        .kk-res-pos{ width:24px; height:24px; font-size:13px; }
+        .kk-res-time{ font-size:12px; }
+        .kk-res-note{ font-size:11.5px; margin-top:2px; }
+        .kk-res-btns{ margin-top:7px; }
+        .kk-res-btns .btn{ min-height:42px; font-size:14px; }
+      }
       .scoreline{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; margin:6px 0; }
       .scoreline b{ color:var(--blue); }
       .chal-row{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px; }
@@ -975,6 +1023,20 @@
                       <div class="kk-tctl right">
                         <button class="kk-tbtn drift" id="kkBtnDrift" type="button" aria-label="Drift">DRIFT</button>
                         <button class="kk-tbtn item" id="kkBtnItem" type="button" aria-label="Use item">ITEM</button>
+                      </div>
+                    </div>
+                    <div id="kkResults" hidden>
+                      <div class="kk-res-card">
+                        <div class="kk-res-flag"></div>
+                        <div class="kk-res-head" id="kkResHead">FINISH!</div>
+                        <div class="kk-res-sub" id="kkResSub"></div>
+                        <ol class="kk-res-list" id="kkResList"></ol>
+                        <div class="kk-res-note" id="kkResNote"></div>
+                        <div class="kk-res-btns">
+                          <button class="btn orange" id="kkResAgain" type="button">Race Again</button>
+                          <button class="btn" id="kkResClose" type="button">Keep Watching</button>
+                        </div>
+                        <div class="kk-confetti" id="kkConfetti"></div>
                       </div>
                     </div>
                   </div>
@@ -5065,6 +5127,7 @@
   var kk = { ok: false, mode: "idle", phase: "idle", inView: true,
              samples: [], trackLen: 0, racers: [], boxes: [], coins: [], ramps: [],
              slicks: [], rockets: [], clouds: [], count: 0, raceT: 0, last: 0, acc: 0,
+             over: false, overT: 0, resShown: false, raceId: 0,
              shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
   var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
   var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null, kkGround = null;
@@ -6085,7 +6148,7 @@
     kkTrackIdx = idx;
     kkUpdateTrackInfo();
     if(!kkRenderer) return;
-    kk.phase = "idle"; kk.count = 0;
+    kk.phase = "idle"; kk.count = 0; kk.over = false; kkHideResults();
     kkBuildCircuit();
     kkResetGrid();
     kkFrame();
@@ -6165,7 +6228,7 @@
       r.y = 0; r.v = 0; r.vy = 0; r.air = false; r.hop = false; r.tricked = false; r.trickT = 0;
       r.driftDir = 0; r.charge = 0; r.boostT = 0; r.starT = 0; r.spinT = 0; r.item = null; r.coins = 0;
       r.nearIdx = ((idxF % KK_N) + KK_N) % KK_N; r.prevIdxF = idxF; r.prog = 0; r.startProg = 0;
-      r.finished = false; r.finishTime = 0; r.pairCd = {}; r.srv = null;
+      r.finished = false; r.finishTime = 0; r.dnf = false; r.pairCd = {}; r.srv = null;
       r.mesh.visible = true;
       kkSyncMesh(r, 0);
     });
@@ -6468,12 +6531,17 @@
       if(!r.finished && (r.prog - r.startProg) >= KK_N * 3){
         r.finished = true; r.finishTime = kk.raceT;
         if(r.isPlayer) kkFinishRace();
-        else kkSetMsg(KK_NAMES[kk.racers.indexOf(r)] + " finished " + kkOrdinal(kkRankOf(r)) + " in " + r.finishTime.toFixed(1) + " s.");
+        else{ kkSetMsg(KK_NAMES[kk.racers.indexOf(r)] + " finished " + kkOrdinal(kkRankOf(r)) + " in " + r.finishTime.toFixed(1) + " s."); if(kk.resShown) kkRenderResults(); }
       }
     });
   }
   function kkFinishRace(){
-    kk.phase = "done";
+    /* Don't freeze the world at the line any more: the phase stays
+       "race" with kk.over set, so the other karts keep driving and
+       post real finish times into the results card, while your kart
+       (finished) brakes itself to a stop. kkStep winds the race down
+       once everyone's in or the clock runs out. */
+    kk.over = true; kk.overT = 0; kk.resShown = false;
     var p = kk.racers[0], rank = kkRankOf(p), t = p.finishTime;
     kkBig("FINISH!"); kk.bigT = 1.6;
     var lines = kk.racers.slice().sort(function(a, b){ return kkScoreOf(b) - kkScoreOf(a); }).map(function(r, i){
@@ -6488,6 +6556,110 @@
     for(var i = 0; i < 5; i++) kkBurst(kkSpark, p.x + (Math.random() - 0.5) * 6, 2.5, p.z + (Math.random() - 0.5) * 6, 22, confetti[i], 4, 4, 1.1);
     if(window.__spudKartFinish3D) window.__spudKartFinish3D(t * 1000);
     kkHUD();
+    var rid = kk.raceId;
+    setTimeout(function(){ if(kk.over && kk.raceId === rid && kk.mode !== "server") kkShowResults(); }, 1500);
+  }
+  /* ---------------- Race results card ----------------
+     The finish used to be one line of small text that the next
+     message overwrote. Now it's a card over the stage: big placement,
+     every kart's position and time, updated live while the rest of
+     the field finishes, confetti when you win. */
+  function kkShowResults(){
+    kk.resShown = true;
+    var again = $("kkResAgain"), close = $("kkResClose");
+    if(again) again.textContent = "Race Again";
+    if(close) close.style.display = "";
+    kkRenderResults();
+    var ov = $("kkResults"); if(ov) ov.hidden = false;
+    var p = kk.racers[0];
+    if(p && p.finished && kkRankOf(p) === 1) kkConfettiBurst(46);
+    else if(p && p.finished && kkRankOf(p) <= 3) kkConfettiBurst(16);
+  }
+  function kkHideResults(){
+    kk.resShown = false;
+    var ov = $("kkResults"); if(ov) ov.hidden = true;
+  }
+  function kkRenderResults(){
+    var p = kk.racers[0]; if(!p || !p.finished) return;
+    var rank = kkRankOf(p);
+    var head = $("kkResHead"), sub = $("kkResSub"), list = $("kkResList"), note = $("kkResNote");
+    if(head){
+      head.textContent = rank === 1 ? "YOU WIN!" : "YOU FINISHED " + kkOrdinal(rank).toUpperCase() + "!";
+      head.className = "kk-res-head place" + rank;
+    }
+    if(sub) sub.textContent = kkTrack().name + " · your time " + p.finishTime.toFixed(1) + " s · " + p.coins + " Spud Coins";
+    if(list){
+      list.innerHTML = "";
+      kk.racers.slice().sort(function(a, b){ return kkScoreOf(b) - kkScoreOf(a); }).forEach(function(r, i){
+        var li = document.createElement("li");
+        li.className = "kk-res-row" + (r.isPlayer ? " me" : "");
+        var pos = document.createElement("span"); pos.className = "kk-res-pos p" + (i + 1); pos.textContent = String(i + 1);
+        var nm = document.createElement("span"); nm.className = "kk-res-name";
+        nm.textContent = KK_NAMES[kk.racers.indexOf(r)] + (r.isPlayer ? " (you)" : "");
+        var tm = document.createElement("span"); tm.className = "kk-res-time";
+        tm.textContent = r.finished ? r.finishTime.toFixed(1) + " s"
+          : r.dnf ? "Did not finish"
+          : "Still racing · lap " + kkClamp(Math.floor((r.prog - r.startProg) / KK_N) + 1, 1, 3) + " / 3";
+        li.appendChild(pos); li.appendChild(nm); li.appendChild(tm);
+        list.appendChild(li);
+      });
+    }
+    if(note){
+      var waiting = kk.racers.some(function(r){ return !r.finished; });
+      note.textContent = kk.phase === "done" ? "Final results. Race Again runs the same track right away."
+        : waiting ? "The other karts are still finishing — this list updates live as they cross the line."
+        : "Everyone's in — final results.";
+    }
+  }
+  function kkConfettiBurst(n){
+    var box = $("kkConfetti"); if(!box) return;
+    box.innerHTML = "";
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var colors = ["#f5b301", "#ff5b5b", "#3fa9ff", "#7be382", "#ff8ad4", "#ffffff"];
+    for(var i = 0; i < n; i++){
+      var s = document.createElement("span");
+      s.className = "kk-conf";
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.background = colors[i % colors.length];
+      s.style.animationDelay = (Math.random() * 0.7) + "s";
+      s.style.animationDuration = (2.1 + Math.random() * 1.5) + "s";
+      box.appendChild(s);
+    }
+    setTimeout(function(){ box.innerHTML = ""; }, 5200);
+  }
+  /* Same results card for a basement-server race: the standings are
+     the server's own calls (finishMs), your row is highlighted, and
+     the card's button just closes it — the next server race starts
+     from the server section below, not from here. */
+  function kkShowSrvResults(players, fin){
+    var meP = players[kkSrv.myId];
+    var myIdx = meP ? fin.indexOf(meP) : -1;
+    kk.resShown = true;
+    var again = $("kkResAgain"), close = $("kkResClose");
+    if(again) again.textContent = "Close";
+    if(close) close.style.display = "none";
+    var head = $("kkResHead"), sub = $("kkResSub"), list = $("kkResList"), note = $("kkResNote");
+    if(head){
+      if(myIdx === 0 && meP.finishMs){ head.textContent = "YOU WIN!"; head.className = "kk-res-head place1"; }
+      else if(myIdx > 0 && meP.finishMs){ head.textContent = "YOU FINISHED " + kkOrdinal(myIdx + 1).toUpperCase() + "!"; head.className = "kk-res-head place" + (myIdx + 1); }
+      else { head.textContent = "RACE OVER"; head.className = "kk-res-head"; }
+    }
+    if(sub) sub.textContent = "Basement Server Oval" + (meP && meP.finishMs ? " · your time " + (meP.finishMs / 1000).toFixed(1) + " s" : "");
+    if(list){
+      list.innerHTML = "";
+      fin.forEach(function(pl, i){
+        var li = document.createElement("li");
+        li.className = "kk-res-row" + (pl === meP ? " me" : "");
+        var pos = document.createElement("span"); pos.className = "kk-res-pos p" + (i + 1); pos.textContent = String(i + 1);
+        var nm = document.createElement("span"); nm.className = "kk-res-name"; nm.textContent = (pl.name || "A Spud") + (pl === meP ? " (you)" : "");
+        var tm = document.createElement("span"); tm.className = "kk-res-time"; tm.textContent = pl.finishMs ? (pl.finishMs / 1000).toFixed(1) + " s" : "Did not finish";
+        li.appendChild(pos); li.appendChild(nm); li.appendChild(tm);
+        list.appendChild(li);
+      });
+    }
+    if(note) note.textContent = "Final positions, called by the basement server. Leave the server race below to run another.";
+    var ov = $("kkResults"); if(ov) ov.hidden = false;
+    if(myIdx === 0 && meP.finishMs) kkConfettiBurst(46);
   }
   function kkHUD(){
     var p = kk.racers[0]; if(!p) return;
@@ -6507,6 +6679,7 @@
   function kkStartRace(){
     if(kk.mode === "server"){ kkSetMsg("You're in a basement-server race — that one runs from the server section in this panel."); return; }
     if(!kkInit()) return;
+    kk.raceId++; kk.over = false; kk.overT = 0; kkHideResults();
     kkResize();
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
     kkResetGrid();
@@ -6572,6 +6745,19 @@
     kk.racers.forEach(function(r){ kkStepRacer(r, dt, r.isPlayer ? pin : kkAIInput(r, dt)); });
     kkWorldStep(dt);
     kkHUD();
+    /* Post-finish wind-down: you've crossed the line (kk.over) but
+       the field is still racing to post real times for the results
+       card. Once everyone's finished — or 25 s have passed — the
+       race proper ends and stragglers are marked DNF. */
+    if(kk.over){
+      kk.overT += dt;
+      var allIn = kk.racers.every(function(r){ return r.finished; });
+      if(allIn || kk.overT > 25){
+        kk.phase = "done";
+        kk.racers.forEach(function(r){ if(!r.finished) r.dnf = true; });
+        if(kk.resShown) kkRenderResults();
+      }
+    }
   }
   var kkCamPos = null;
   function kkFrame(){ kkRender(0); }
@@ -6665,7 +6851,7 @@
      4PI), pushes colliding karts apart, halves their speed, stamps
      bumpAt, and broadcasts snapshots at 20 Hz with official finishMs. */
   var kkSrv = { ws: null, myId: null, room: null, state: null, slots: {}, nextSlot: 0,
-                posted: false, lastBump: 0, lastInput: "", inputT: 0 };
+                posted: false, resultsShown: false, lastBump: 0, lastInput: "", inputT: 0 };
   function kkSrvSetStatus(t){ var el = $("kkSrvStatus"); if(el) el.textContent = t; }
   function kkSrvName(){ var el = $("gameName"); return ((el && el.value) || "").trim() || "A Spud"; }
   function kkSrvSend(o){ if(kkSrv.ws && kkSrv.ws.readyState === 1){ try{ kkSrv.ws.send(JSON.stringify(o)); }catch(e){} } }
@@ -6676,7 +6862,8 @@
     kk.mode = "server"; kk.phase = "idle";
     kkApplyTheme("spud", KK_TRACKS[0]);
     kkCircuit.visible = false; kkOval.visible = true;
-    kkSrv.slots = {}; kkSrv.nextSlot = 0; kkSrv.posted = false; kkSrv.lastBump = 0;
+    kkSrv.slots = {}; kkSrv.nextSlot = 0; kkSrv.posted = false; kkSrv.resultsShown = false; kkSrv.lastBump = 0;
+    kkHideResults();
     kk.me = null;
     kk.racers.forEach(function(r){ r.srv = null; r.mesh.visible = false; });
     kkBig("");
@@ -6687,7 +6874,7 @@
   }
   function kkSrvExit(){
     if(kk.mode === "server"){
-      kk.mode = "idle"; kk.phase = "idle";
+      kk.mode = "idle"; kk.phase = "idle"; kkHideResults();
       kkApplyTrackTheme();
       kkCircuit.visible = true; kkOval.visible = false;
       kk.me = null;
@@ -6840,6 +7027,7 @@
     }else if(st.status === "countdown"){
       kkSrvSetStatus("Race starts in " + Math.max(1, Math.ceil(((st.startAt || 0) - Date.now()) / 1000)) + "s — get ready, your kart launches itself!");
       if(kkSrv.posted) kkSrv.posted = false;
+      kkSrv.resultsShown = false; kkHideResults();
     }else if(st.status === "racing"){
       kkSrvSetStatus("LIVE — the basement server is stepping every kart and calling the bumps.");
     }else if(st.status === "done"){
@@ -6849,6 +7037,7 @@
         return (i + 1) + ". " + (p.name || "A Spud") + (p.finishMs ? " " + (p.finishMs / 1000).toFixed(1) + " s" : "");
       }).join("  ·  ") + "  Leave and create a new room to race again.");
       $("kkSrvStart").hidden = true;
+      if(!kkSrv.resultsShown){ kkSrv.resultsShown = true; kkShowSrvResults(players, fin); }
     }
     if(me && me.srv){
       var s = me.srv;
@@ -6962,10 +7151,23 @@
   kkBindPad("kkBtnL", function(){ kkBtn.left = true; }, function(){ kkBtn.left = false; });
   kkBindPad("kkBtnR", function(){ kkBtn.right = true; }, function(){ kkBtn.right = false; });
   kkBindPad("kkBtnDrift", function(){ kkBtn.drift = true; }, function(){ kkBtn.drift = false; });
+  /* ITEM only ever uses an item. It used to double as a stealth
+     restart — any tap on it while not racing (above all right after
+     finishing, when you're still tapping) instantly restarted the
+     race and wiped the finish. Restarts live on the Start Race /
+     Race Again buttons and the results card now, nowhere else. */
   kkBindPad("kkBtnItem", function(){
     if(kk.mode !== "server" && kk.phase === "race" && kk.racers[0]) kkUseItem(kk.racers[0]);
-    else if(kk.mode !== "server" && kk.phase !== "count" && kk.phase !== "race") kkStartRace();
   }, null);
+  /* Results card buttons: Race Again is the deliberate restart;
+     Keep Watching just closes the card so you can watch the field
+     (or your parked kart) with the HUD's Race Again still below. */
+  var kkResAgainBtn = $("kkResAgain"), kkResCloseBtn = $("kkResClose");
+  if(kkResAgainBtn) kkResAgainBtn.addEventListener("click", function(){
+    kkHideResults();
+    if(kk.mode !== "server") kkStartRace();
+  });
+  if(kkResCloseBtn) kkResCloseBtn.addEventListener("click", function(){ kkHideResults(); });
   /* Full screen + landscape: the stage fills the display and the
      browser is asked to lock landscape while it's up (phones that
      can't lock still fill the width sideways). The renderer resizes
