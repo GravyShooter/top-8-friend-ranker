@@ -1,0 +1,1777 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#003399" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="MySpuds" />
+    <link rel="apple-touch-icon" href="assets/chris.jpg" />
+    <link rel="manifest" href="assets/manifest.webmanifest" />
+    <link rel="icon" href="data:," />
+    <title>MySpuds</title>
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+    </style>
+    <style>
+      :root{
+        --blue:#003399;
+        --blue-mid:#3366aa;
+        --blue-strip:#6699cc;
+        --hdr-blue-bg:#b1d0f0;
+        --orange:#ff6600;
+        --orange-bg:#ffcc99;
+        --orange-border:#ffcc99;
+        --page-bg:#e5e5e5;
+        --ink:#000;
+        --muted:#666;
+        --gold:#f5b301;
+        --green:#1d7a1d;
+      }
+      * { box-sizing: border-box; }
+      html,body{ margin:0; padding:0; }
+      body{
+        background:var(--page-bg);
+        color:var(--ink);
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        font-size:12px;
+        line-height:1.45;
+      }
+      a{ color:var(--blue); }
+      .wrap{
+        max-width:920px;
+        margin:0 auto;
+        background:#fff;
+        min-height:100vh;
+        box-shadow:0 0 18px rgba(0,0,0,.18);
+      }
+
+      /* ---------- Masthead (the costume) ---------- */
+      .masthead{
+        background:var(--blue);
+        color:#fff;
+        padding:12px 16px 10px;
+        display:flex;
+        align-items:baseline;
+        gap:12px;
+        flex-wrap:wrap;
+      }
+      .logo{
+        font-size:34px;
+        font-weight:800;
+        letter-spacing:-1.5px;
+        line-height:1;
+        color:#fff;
+      }
+      .logo .tld{ color:#9db9e8; font-weight:800; }
+      .tagline{ font-size:11px; color:#cfe0f7; font-style:italic; }
+      .live-pill{
+        margin-left:auto;
+        font-size:10px;
+        font-weight:bold;
+        background:rgba(255,255,255,.14);
+        border:1px solid rgba(255,255,255,.45);
+        border-radius:12px;
+        padding:3px 10px;
+        color:#fff;
+        white-space:nowrap;
+      }
+      .live-pill .dot{
+        display:inline-block; width:8px; height:8px; border-radius:50%;
+        background:#ffb3b3; margin-right:5px; vertical-align:0;
+      }
+      .live-pill.on .dot{ background:#7be382; }
+      .topnav{
+        background:var(--blue-strip);
+        color:#fff;
+        padding:5px 16px;
+        font-size:11px;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+      }
+      .topnav span{ color:#fff; }
+      .topnav i{ font-style:normal; color:#dbe9fa; margin:0 3px; }
+      @media (max-width:560px){ .topnav .late{ display:none; } }
+
+      /* ---------- Visit banner ---------- */
+      .visit-banner{
+        display:none;
+        background:#fff7d6;
+        border-bottom:2px solid var(--gold);
+        padding:10px 16px;
+        font-size:12px;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+      }
+      .visit-banner.show{ display:flex; }
+      .visit-banner b{ color:var(--blue); }
+
+      /* ---------- Layout ---------- */
+      .cols{
+        display:grid;
+        grid-template-columns:300px 1fr;
+        gap:14px;
+        padding:14px 16px 8px;
+      }
+      @media (max-width:740px){
+        .cols{ grid-template-columns:1fr; }
+      }
+
+      h1.dispname{
+        font-size:20px;
+        margin:0 0 8px;
+        color:#000;
+        word-break:break-word;
+      }
+      .picbox{
+        border:1px solid #ccc;
+        padding:6px;
+        text-align:center;
+        background:#fafafa;
+      }
+      .picbox img, .picbox .pic-fallback{
+        width:100%;
+        max-width:280px;
+        aspect-ratio:1/1;
+        object-fit:cover;
+        object-position:center 62%;
+        display:block;
+        margin:0 auto;
+        background:#dfe9f7;
+      }
+      .picbox .pic-fallback, .photo-edit .pic-fallback{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:84px;
+        font-weight:800;
+        color:#fff;
+        text-shadow:0 2px 6px rgba(0,0,0,.25);
+      }
+      .viewmy{ text-align:center; margin:6px 0 2px; font-size:11px; }
+      .moodline{ margin:8px 2px; font-size:11px; }
+      .moodline b{ color:#000; }
+      .lastlogin{ color:var(--muted); font-size:11px; margin:2px; }
+
+      .box{ border:1px solid var(--hdr-blue-bg); margin:12px 0; }
+      .box > h3{
+        margin:0;
+        background:var(--hdr-blue-bg);
+        color:var(--blue);
+        font-size:11px;
+        padding:4px 7px;
+        letter-spacing:.2px;
+      }
+      .box .body{ padding:7px; }
+
+      .contact-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:5px;
+      }
+      .contact-grid button{
+        font-family:inherit;
+        font-size:10px;
+        background:linear-gradient(#fdfdfd,#e8e8e8);
+        border:1px solid #999;
+        border-radius:3px;
+        cursor:pointer;
+        padding:4px 2px;
+        min-height:36px;
+        color:#333;
+      }
+      .contact-grid button:active{ background:#dcdcdc; }
+
+      .song-label{ font-weight:bold; color:var(--blue); word-break:break-word; }
+      .song-none{ color:var(--muted); font-style:italic; }
+      .playrow{ display:flex; align-items:center; gap:8px; margin-top:7px; }
+      .playbtn{
+        font-family:inherit;
+        font-size:12px;
+        font-weight:bold;
+        background:var(--orange);
+        color:#fff;
+        border:1px solid #c24e00;
+        border-radius:14px;
+        padding:6px 16px;
+        cursor:pointer;
+        min-height:36px;
+        min-width:96px;
+      }
+      .playbtn:active{ background:#c24e00; }
+      .player-slot{ margin-top:8px; }
+      .player-slot iframe{ width:100%; height:160px; border:0; display:block; background:#000; }
+      .song-note{ font-size:10px; color:var(--muted); margin-top:5px; }
+
+      .details-table{ width:100%; border-collapse:collapse; font-size:11px; }
+      .details-table td{ padding:2px 3px; vertical-align:top; }
+      .details-table td.k{ color:var(--blue); font-weight:bold; width:42%; }
+
+      /* ---------- Right column ---------- */
+      .network-box{
+        border:2px solid #000;
+        text-align:center;
+        font-weight:bold;
+        font-size:13px;
+        padding:12px 8px;
+        margin-bottom:14px;
+        word-break:break-word;
+      }
+      .obox{ border:2px solid var(--orange-border); margin:0 0 14px; }
+      .obox > h3{
+        margin:0;
+        background:var(--orange-bg);
+        color:var(--orange);
+        font-size:12px;
+        padding:4px 7px;
+      }
+      .obox .body{ padding:8px; white-space:pre-wrap; word-break:break-word; min-height:22px; }
+      .obox .body .blank{ color:var(--muted); font-style:italic; }
+
+      .friendspace-head{
+        display:flex;
+        align-items:baseline;
+        justify-content:space-between;
+        gap:8px;
+        flex-wrap:wrap;
+      }
+      .friend-count{ font-size:11px; margin:6px 0 8px; }
+      .friend-count b{ color:var(--orange); }
+
+      .top8{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:12px 8px;
+      }
+      @media (max-width:480px){
+        .top8{ gap:9px 6px; }
+      }
+      .slot{ text-align:center; min-width:0; }
+      .slot .fname{
+        display:block;
+        font-size:11px;
+        font-weight:bold;
+        color:var(--blue);
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+      .slot .avatar{
+        width:100%;
+        aspect-ratio:1/1;
+        margin:3px 0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        font-size:30px;
+        font-weight:800;
+        text-shadow:0 1px 4px rgba(0,0,0,.3);
+        border:1px solid rgba(0,0,0,.15);
+      }
+      .slot .avatar{ overflow:hidden; }
+      .slot .avatar img{ width:100%; height:100%; object-fit:cover; object-position:center 62%; display:block; }
+      @media (max-width:480px){ .slot .avatar{ font-size:22px; } }
+      .slot .rank{
+        display:inline-block;
+        font-size:10px;
+        font-weight:bold;
+        background:#eee;
+        border:1px solid #bbb;
+        border-radius:8px;
+        padding:1px 7px;
+        color:#333;
+      }
+      .slot.first .rank{ background:var(--gold); border-color:#c78f00; color:#3a2a00; }
+      .slot.empty .avatar{
+        background:#f2f2f2 !important;
+        color:#bbb;
+        border:1px dashed #bbb;
+        text-shadow:none;
+        font-size:22px;
+      }
+      .slot.empty .fname{ color:#999; font-weight:normal; font-style:italic; }
+      .slot:not(.empty){ cursor:pointer; }
+      .ondeck{ margin-top:10px; font-size:11px; color:var(--muted); }
+      .ondeck b{ color:#333; }
+
+      .actionrow{ display:flex; gap:8px; flex-wrap:wrap; margin:14px 16px 4px; padding-top:10px; border-top:1px dotted #bbb; align-items:center; }
+      .btn{
+        font-family:inherit;
+        font-size:12px;
+        font-weight:bold;
+        cursor:pointer;
+        border-radius:3px;
+        padding:7px 14px;
+        min-height:38px;
+        border:1px solid var(--blue);
+        background:#fff;
+        color:var(--blue);
+      }
+      .btn.primary{ background:var(--blue); color:#fff; }
+      .btn.orange{ background:var(--orange); border-color:#c24e00; color:#fff; }
+      .btn.danger{ border-color:#b00000; color:#b00000; }
+      .btn:active{ filter:brightness(.92); }
+      .share-note{ flex-basis:100%; font-size:11px; color:var(--muted); margin:0; }
+
+      /* ---------- Install box ---------- */
+      .install-box{ display:none; margin:0 16px 4px; }
+      .install-box.show{ display:block; }
+      .install-box .body{ white-space:normal; }
+      .install-box p{ margin:0 0 7px; }
+      .install-box ol{ margin:4px 0 10px; padding-left:20px; }
+      .install-box ol:last-child{ margin-bottom:0; }
+      .install-box li{ margin:3px 0; }
+      .install-box .plat{ font-weight:bold; color:var(--blue); margin-top:10px; }
+      .install-box .plat:first-of-type{ margin-top:6px; }
+      .install-box .yours{
+        display:inline-block; font-size:9px; font-weight:bold;
+        background:var(--gold); border:1px solid #c78f00; color:#3a2a00;
+        border-radius:8px; padding:0 6px; margin-left:5px; vertical-align:1px;
+      }
+      .pub-status{ font-size:11px; font-weight:bold; color:var(--muted); }
+      .pub-status.on{ color:var(--green); }
+
+      /* ---------- Directory (everyone's profiles) ---------- */
+      .dir-wrap{ margin:10px 16px 4px; }
+      .dir-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+        gap:10px;
+      }
+      .dir-card{
+        border:1px solid #ccc;
+        background:#fafafa;
+        padding:8px;
+        text-align:center;
+        cursor:pointer;
+        font-family:inherit;
+        width:100%;
+      }
+      .dir-card:active{ background:#eef3fb; }
+      .dir-card .davatar{
+        width:64px; height:64px; margin:0 auto 5px;
+        display:flex; align-items:center; justify-content:center;
+        color:#fff; font-size:22px; font-weight:800;
+        text-shadow:0 1px 4px rgba(0,0,0,.3);
+        border:1px solid rgba(0,0,0,.15);
+        overflow:hidden;
+      }
+      .dir-card .davatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+      .dir-card .dname{
+        display:block; font-size:12px; font-weight:bold; color:var(--blue);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+      .dir-card .dmeta{ display:block; font-size:10px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .dir-card .dyou{ display:inline-block; font-size:9px; font-weight:bold; background:var(--gold); border:1px solid #c78f00; color:#3a2a00; border-radius:8px; padding:0 6px; margin-top:4px; }
+      .dir-empty{ font-size:11px; color:var(--muted); font-style:italic; padding:4px 0 8px; }
+      .dir-search{ margin:0 0 10px; }
+
+      /* ---------- Directory picker (in Edit) ---------- */
+      .pick-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fill, minmax(104px, 1fr));
+        gap:8px;
+      }
+      .pick-card{
+        border:1px solid #ccc;
+        background:#fafafa;
+        border-radius:8px;
+        padding:7px 5px;
+        text-align:center;
+        cursor:pointer;
+        font-family:inherit;
+        width:100%;
+      }
+      .pick-card:disabled{ opacity:.65; cursor:default; }
+      .pick-card .pavatar{
+        width:48px; height:48px; margin:0 auto 4px;
+        display:flex; align-items:center; justify-content:center;
+        color:#fff; font-size:17px; font-weight:800;
+        text-shadow:0 1px 3px rgba(0,0,0,.3);
+        border:1px solid rgba(0,0,0,.15);
+        border-radius:6px;
+        overflow:hidden;
+      }
+      .pick-card .pavatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+      .pick-card .pname{
+        display:block; font-size:11px; font-weight:bold; color:var(--blue);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+      .pick-card .padd{ display:block; font-size:10px; color:var(--orange); font-weight:bold; margin-top:2px; }
+      .pick-card.in .padd{ color:var(--green); }
+
+      footer{
+        padding:14px 16px 22px;
+        color:var(--muted);
+        font-size:10px;
+        text-align:center;
+      }
+
+      /* ---------- Edit view ---------- */
+      #editView{ display:none; padding:14px 16px 20px; }
+      #editView.show{ display:block; }
+      #profileView.hide{ display:none; }
+      .edit-sec{ border:1px solid var(--hdr-blue-bg); margin:0 0 14px; }
+      .edit-sec > h3{
+        margin:0; background:var(--hdr-blue-bg); color:var(--blue);
+        font-size:12px; padding:5px 8px;
+      }
+      .edit-sec .body{ padding:10px; }
+      label.f{ display:block; font-weight:bold; color:var(--blue); margin:10px 0 4px; font-size:11px; }
+      label.f:first-child{ margin-top:0; }
+      input[type="text"], textarea{
+        width:100%;
+        font-family:inherit;
+        font-size:13px;
+        padding:7px;
+        border:1px solid #999;
+        border-radius:2px;
+        background:#fff;
+        color:#000;
+      }
+      textarea{ min-height:74px; resize:vertical; }
+      .hint{ font-size:10px; color:var(--muted); margin-top:4px; }
+      .photo-edit{ display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap; }
+      .photo-edit img, .photo-edit .pic-fallback{ width:96px; height:96px; object-fit:cover; border:1px solid #ccc; }
+      .photo-edit .pic-fallback{ font-size:36px; }
+      .filebtn{
+        display:inline-block;
+        font-size:12px; font-weight:bold;
+        background:#fff; color:var(--blue);
+        border:1px solid var(--blue); border-radius:3px;
+        padding:8px 14px; cursor:pointer; min-height:38px;
+      }
+      input[type="file"]{ display:none; }
+
+      .crew-row{
+        display:flex; align-items:center; gap:7px;
+        padding:6px; border:1px solid #ddd; margin-bottom:6px; background:#fcfcfc;
+      }
+      .crew-row.dragging{ opacity:.45; }
+      .crew-row .rk{
+        font-weight:800; font-size:12px; min-width:26px; text-align:center;
+        background:#eee; border:1px solid #bbb; border-radius:8px; padding:2px 0;
+      }
+      .crew-row.cut .rk{ background:var(--gold); border-color:#c78f00; }
+      .crew-row.deck .rk{ background:#f4f4f4; color:#999; }
+      .crew-row .mini{
+        width:34px; height:34px; flex:none;
+        display:flex; align-items:center; justify-content:center;
+        color:#fff; font-weight:800; font-size:13px;
+        text-shadow:0 1px 3px rgba(0,0,0,.3);
+        overflow:hidden;
+      }
+      .crew-row .mini img{ width:100%; height:100%; object-fit:cover; object-position:center 62%; display:block; }
+      .crew-row input{ flex:1; min-width:0; }
+      .crew-row .mv{
+        font-family:inherit; font-size:13px; cursor:pointer;
+        width:34px; height:34px; flex:none;
+        background:#fff; border:1px solid #999; border-radius:3px; color:#333;
+        padding:0;
+      }
+      .crew-row .mv.del{ color:#b00000; border-color:#d9a0a0; font-weight:bold; }
+      .crew-row .grip{ color:#aaa; cursor:grab; font-size:15px; padding:0 2px; user-select:none; }
+      .addrow{ display:flex; gap:7px; margin-top:8px; }
+      .addrow input{ flex:1; }
+      .deck-note{ font-size:11px; color:var(--muted); margin:4px 0 8px; }
+
+      /* ---------- Polish pass ---------- */
+      body{ background-image:linear-gradient(180deg,#d7e5f7,#e5e5e5 340px); background-attachment:fixed; }
+      .masthead{ background:linear-gradient(180deg,#0a50c2,#003399 72%); box-shadow:inset 0 -2px 0 rgba(0,0,0,.18); padding:14px 16px 12px; }
+      .logo{ text-shadow:0 2px 0 rgba(0,0,0,.25); }
+      .topnav{ background:linear-gradient(180deg,#7ba7dd,#6699cc); }
+      h1.dispname{ font-size:24px; letter-spacing:-.4px; }
+      .picbox{ border:2px solid var(--hdr-blue-bg); border-radius:8px; background:linear-gradient(180deg,#fff,#f2f7ff); box-shadow:0 2px 8px rgba(0,51,153,.12); padding:8px; }
+      .picbox img, .picbox .pic-fallback{ border-radius:5px; }
+      .box, .obox, .edit-sec{ border-radius:8px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.09); }
+      .box > h3{ background:linear-gradient(180deg,#cfe3fa,#b1d0f0); padding:5px 9px; }
+      .obox > h3{ background:linear-gradient(180deg,#ffdcb0,#ffcc99); padding:5px 9px; }
+      .network-box{ border-radius:8px; background:#f4f9ff; }
+      .slot .avatar{ border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,.18); }
+      .slot.first .avatar{ box-shadow:0 0 0 3px var(--gold), 0 2px 6px rgba(0,0,0,.25); }
+      .btn{ border-radius:6px; transition:filter .15s ease, box-shadow .15s ease; }
+      .btn:hover{ filter:brightness(1.06); box-shadow:0 2px 6px rgba(0,0,0,.15); }
+      .btn.primary{ background:linear-gradient(180deg,#0a50c2,#003399); }
+      .btn.orange{ background:linear-gradient(180deg,#ff7f24,#ff6600); }
+      .playbtn{ font-size:14px; padding:10px 24px; border-radius:999px; box-shadow:0 3px 8px rgba(255,102,0,.35); background:linear-gradient(180deg,#ff7f24,#ff6600); }
+      .playbtn.pulse{ animation:songpulse 1.4s ease-in-out infinite; }
+      @keyframes songpulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.05); } }
+      @media (prefers-reduced-motion: reduce){ .playbtn.pulse{ animation:none; } }
+      .song-status{ font-size:11px; color:var(--muted); }
+      .photo-cta{ text-align:center; margin:8px 0 2px; }
+      .photo-cta .btn{ width:100%; }
+      .filebtn{ background:linear-gradient(180deg,#ff7f24,#ff6600); color:#fff; border-color:#c24e00; border-radius:6px; }
+      .dir-card{ border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,.08); transition:box-shadow .15s ease; }
+      .dir-card:hover{ box-shadow:0 4px 12px rgba(0,51,153,.18); }
+      .dir-card .davatar{ border-radius:6px; }
+      .contact-grid button{ border-radius:6px; }
+      .visit-banner{ background:linear-gradient(180deg,#fffbe0,#fff3b0); }
+      input[type="text"]:focus, textarea:focus{ outline:2px solid var(--blue-strip); outline-offset:1px; }
+
+      #toast{
+        position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px);
+        background:#003399; color:#fff; font-size:12px; font-weight:bold;
+        padding:10px 18px; border-radius:20px; opacity:0; pointer-events:none;
+        transition:opacity .25s, transform .25s; max-width:88vw; text-align:center;
+        box-shadow:0 4px 14px rgba(0,0,0,.3); z-index:50;
+      }
+      #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <header class="masthead">
+        <div class="logo">myspuds<span class="tld">.com</span></div>
+        <div class="tagline">a place for friends</div>
+        <div class="live-pill" id="livePill"><span class="dot"></span><span id="livePillText">Connecting…</span></div>
+      </header>
+      <nav class="topnav" aria-hidden="true">
+        <span>Home</span><i>|</i><span>Browse</span><i>|</i><span>Search</span><i>|</i><span>Invite</span><i>|</i><span>Film</span><i>|</i><span>Mail</span><i>|</i><span>Blog</span><i>|</i><span>Favorites</span><span class="late"><i>|</i><span>Forum</span><i>|</i><span>Groups</span><i>|</i><span>Events</span><i>|</i><span>Videos</span><i>|</i><span>Music</span></span>
+      </nav>
+
+      <div class="visit-banner" id="visitBanner">
+        <span>You're visiting <b id="visitName">someone</b>'s profile — this is their page, not yours.</span>
+        <button class="btn orange" id="visitAddBtn" type="button">＋ Add to My Top 8</button>
+        <button class="btn primary" id="backToMine" type="button">Go to my profile</button>
+      </div>
+
+      <!-- ================= PROFILE VIEW ================= -->
+      <main id="profileView">
+        <div class="cols">
+          <aside>
+            <h1 class="dispname" id="dispName">Your Name</h1>
+            <div class="picbox">
+              <img id="profilePic" alt="Profile picture" style="display:none" />
+              <div class="pic-fallback" id="picFallback">?</div>
+              <div class="viewmy">View My: <a href="#" data-costume>Pics</a> | <a href="#" data-costume>Videos</a></div>
+            </div>
+            <div class="photo-cta" id="photoCta">
+              <button class="btn orange" id="quickPhotoBtn" type="button">Set My Photo</button>
+              <input type="file" id="photoFileMain" accept="image/*" />
+              <p class="hint">One tap, pick a picture, done. Your photo is public — everyone who visits your profile or sees you in the directory sees it, just like MySpace.</p>
+            </div>
+            <p class="moodline"><b>Mood:</b> <span id="moodText">…</span></p>
+            <p class="lastlogin">Last Login: <span id="lastLogin">today, obviously</span></p>
+
+            <div class="box">
+              <h3 id="contactHead">Contacting</h3>
+              <div class="body">
+                <div class="contact-grid">
+                  <button type="button" data-costume>Send Message</button>
+                  <button type="button" data-costume>Forward to Friend</button>
+                  <button type="button" id="addToTop8Btn">Add to Friends</button>
+                  <button type="button" data-costume>Add to Favorites</button>
+                  <button type="button" data-costume>Instant Message</button>
+                  <button type="button" data-costume>Block User</button>
+                  <button type="button" data-costume>Add to Group</button>
+                  <button type="button" data-costume>Rank User</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="box">
+              <h3>Profile Song</h3>
+              <div class="body">
+                <div id="songArea">
+                  <span class="song-none">No song yet. Every profile needs a song.</span>
+                </div>
+                <div class="player-slot" id="playerSlot"></div>
+                <p class="song-note">The song starts on its own while you view the profile — if your browser blocks autoplay, one tap anywhere starts it.</p>
+              </div>
+            </div>
+
+            <div class="box">
+              <h3 id="detailsHead">Details</h3>
+              <div class="body">
+                <table class="details-table">
+                  <tr><td class="k">Status:</td><td>In a Top 8</td></tr>
+                  <tr><td class="k">Here For:</td><td>Friends, Networking, Drama</td></tr>
+                  <tr><td class="k">Profile Views:</td><td>1,337</td></tr>
+                  <tr><td class="k">Member Since:</td><td>2003 (in spirit)</td></tr>
+                </table>
+              </div>
+            </div>
+          </aside>
+
+          <section>
+            <div class="network-box" id="networkBox">You are in an extended network</div>
+
+            <div class="obox">
+              <h3 id="aboutHead">About Me</h3>
+              <div class="body" id="aboutText"></div>
+            </div>
+
+            <div class="obox">
+              <h3>Who I'd Like to Meet</h3>
+              <div class="body" id="meetText"></div>
+            </div>
+
+            <div class="obox">
+              <h3 class="friendspace-head"><span id="friendSpaceHead">Friend Space (Top 8)</span></h3>
+              <div class="body">
+                <p class="friend-count" id="friendCount"></p>
+                <div class="top8" id="top8Grid"></div>
+                <p class="ondeck" id="onDeck"></p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="actionrow" id="ownActions">
+          <button class="btn primary" id="editBtn" type="button">Edit My Profile</button>
+          <button class="btn orange" id="publishBtn" type="button">Publish My Profile</button>
+          <button class="btn" id="browseBtn" type="button">Browse Everyone</button>
+          <button class="btn" id="copyTop8Btn" type="button">Copy My Top 8 (for texting)</button>
+          <button class="btn" id="installBtn" type="button">Install This Page</button>
+          <span class="pub-status" id="pubStatus">Not published yet</span>
+          <p class="share-note">Profiles are hosted together on Firebase now — publish yours and it shows up in the directory below for everyone. No codes to pass around. Only you can edit your own profile: it's tied to this browser's sign-in, so nobody else can overwrite it.</p>
+        </div>
+
+        <div class="obox install-box" id="installBox">
+          <h3>Install MySpuds on Your Phone</h3>
+          <div class="body">
+            <p>Put this page on your home screen like an app — one tap and you're straight on your profile, no browser hunting. It takes about 10 seconds:</p>
+            <p class="plat" id="platIos">iPhone (Safari)</p>
+            <ol>
+              <li>Tap the <b>Share</b> button (the square with an arrow pointing up) at the bottom of Safari.</li>
+              <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+              <li>Tap <b>Add</b> — done. The MySpuds icon is on your home screen.</li>
+            </ol>
+            <p class="plat" id="platAndroid">Android (Chrome)</p>
+            <ol>
+              <li>Tap the <b>⋮ menu</b> in the top-right corner of Chrome.</li>
+              <li>Tap <b>Install app</b> (or <b>Add to Home screen</b>).</li>
+              <li>Tap <b>Install</b> — done. The MySpuds icon lands on your home screen.</li>
+            </ol>
+            <p class="plat">On a computer</p>
+            <ol>
+              <li>In Chrome or Edge, click the <b>install icon</b> at the right end of the address bar (or the ⋮ menu → <b>Install</b>).</li>
+            </ol>
+            <p id="installDone" style="display:none; font-weight:bold; color:var(--green);">✓ You're already running the installed version right now.</p>
+          </div>
+        </div>
+
+        <div class="dir-wrap" id="directory">
+          <div class="obox" style="margin-bottom:6px;">
+            <h3>Browse Profiles — Everyone's Top 8</h3>
+            <div class="body" style="white-space:normal;">
+              <div class="dir-search">
+                <input type="text" id="dirSearch" placeholder="Search people by name…" aria-label="Search profiles by name" />
+              </div>
+              <p class="friend-count" id="dirCount" style="margin-top:0;">Connecting to Firebase…</p>
+              <div class="dir-grid" id="dirGrid"></div>
+              <p class="dir-empty" id="dirEmpty">Loading profiles…</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- ================= EDIT VIEW ================= -->
+      <section id="editView" aria-label="Edit your profile">
+        <div class="actionrow" style="margin:0 0 12px; padding:0; border:0;">
+          <button class="btn primary" id="doneBtn" type="button">← Done — View My Profile</button>
+          <span class="pub-status" id="pubStatusEdit"></span>
+        </div>
+
+        <div class="edit-sec">
+          <h3>The Basics</h3>
+          <div class="body">
+            <label class="f" for="inName">Display Name</label>
+            <input type="text" id="inName" maxlength="40" placeholder="e.g. xX_YourName_Xx" />
+            <p class="hint">Your name is how you appear in the shared directory — publishing needs one.</p>
+
+            <label class="f" for="inMood">Mood</label>
+            <input type="text" id="inMood" maxlength="40" placeholder="e.g. nostalgic" />
+
+            <label class="f">Profile Photo</label>
+            <div class="photo-edit">
+              <img id="editPic" alt="Your profile photo" style="display:none" />
+              <div class="pic-fallback" id="editPicFallback">?</div>
+              <div>
+                <label class="filebtn" for="photoFile">Upload a Photo</label>
+                <input type="file" id="photoFile" accept="image/*" />
+                <button class="btn" id="removePhotoBtn" type="button" style="margin-left:6px;">Remove</button>
+                <p class="hint">Public, like MySpace: once you publish, this photo shows on your profile and in the directory for everyone to see. It's shrunk automatically — just pick a good one.</p>
+              </div>
+            </div>
+
+            <label class="f" for="inAbout">About Me</label>
+            <textarea id="inAbout" maxlength="1200" placeholder="Tell the internet who you are. Glitter text optional."></textarea>
+
+            <label class="f" for="inMeet">Who I'd Like to Meet</label>
+            <textarea id="inMeet" maxlength="600" placeholder="e.g. Anyone who still remembers their MySpace password."></textarea>
+          </div>
+        </div>
+
+        <div class="edit-sec">
+          <h3>Profile Song (YouTube)</h3>
+          <div class="body">
+            <label class="f" for="inSongUrl">YouTube Link</label>
+            <input type="text" id="inSongUrl" placeholder="Paste a YouTube link — watch, youtu.be, or Shorts" />
+            <label class="f" for="inSongLabel">Song Title / Artist</label>
+            <input type="text" id="inSongLabel" maxlength="80" placeholder="e.g. Mr. Brightside — The Killers" />
+            <p class="hint">The song starts playing on its own while people view your profile (if a browser blocks autoplay, one tap starts it) — just like the old profile songs.</p>
+            <button class="btn" id="clearSongBtn" type="button">Clear Song</button>
+          </div>
+        </div>
+
+        <div class="edit-sec">
+          <h3>Your Top 8</h3>
+          <div class="body">
+            <p class="deck-note">The first 8 make the cut and appear on your profile. Anyone past #8 is <b>on deck</b> — one bad week and they're in. Reorder with the arrows or drag the rows. Choose wisely. Friendships have ended over this.</p>
+            <div id="crewList"></div>
+            <div class="addrow">
+              <input type="text" id="inFriend" maxlength="40" placeholder="Add a friend's name…" />
+              <button class="btn primary" id="addFriendBtn" type="button">Add Friend</button>
+            </div>
+            <p class="deck-note" style="margin-top:12px;"><b>Or pick from the directory</b> — everyone who has published is listed here with their photo. Tap someone to add them to your Top 8, photo included:</p>
+            <div class="pick-grid" id="pickGrid"></div>
+            <p class="dir-empty" id="pickEmpty">Loading the directory…</p>
+          </div>
+        </div>
+
+        <div class="edit-sec">
+          <h3>Publishing</h3>
+          <div class="body">
+            <p class="deck-note" style="margin-top:0;">Your edits publish automatically once you have a display name — everyone opening this page sees the same directory. Changed your mind about being listed?</p>
+            <button class="btn danger" id="unpublishBtn" type="button">Remove My Profile from the Directory</button>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        An unofficial tribute built for the Top 8 revival. Not affiliated with MySpace.
+      </footer>
+    </div>
+
+    <div id="toast" role="status"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var LS_KEY = "top8-profile-v3";
+  var LS_KEY_PREV = "top8-profile-v2";
+  var LS_KEY_LEGACY = "top8-profile-v1";
+  var AVATAR_COLORS = ["#3366aa","#cc3399","#339933","#ff6600","#663399","#009999","#cc0000","#e6a817","#0066cc","#993366","#558000","#b35900"];
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+  function initials(name){
+    var parts = String(name||"?").trim().split(/\s+/).filter(Boolean);
+    if(!parts.length) return "?";
+    if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+    return (parts[0].charAt(0) + parts[parts.length-1].charAt(0)).toUpperCase();
+  }
+  function colorFor(name){
+    var h = 0, s = String(name||"");
+    for(var i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; }
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+  // Chris is the house #1 — the Tom role, recast. The bundled photo is
+  // only a stand-in for before the directory loads: the "Chris" in a Top 8
+  // is Chris's real published profile, and its photo (and page) come from
+  // the shared directory like everyone else's.
+  var CHRIS_PHOTO = "assets/chris.jpg";
+  // The directory profile behind a crew name. Several profiles can share
+  // a name (a pile of stale "Chris" listings included), so the match is:
+  // your own published profile first, then a profile with a photo, then
+  // the most recently updated one. Returns {uid, profile} or null.
+  function directoryMatch(name){
+    var key = String(name || "").trim().toLowerCase();
+    if(!key) return null;
+    var best = null, bestUid = null;
+    var uids = Object.keys(allProfiles);
+    for(var i=0;i<uids.length;i++){
+      var p = allProfiles[uids[i]];
+      if(!p || !p.name || String(p.name).trim().toLowerCase() !== key) continue;
+      if(uids[i] === fbUid) return { uid: uids[i], profile: p };
+      if(!best ||
+         (!!p.photo && !best.photo) ||
+         (!!p.photo === !!best.photo && (p.updatedAt || 0) > (best.updatedAt || 0))){
+        best = p; bestUid = uids[i];
+      }
+    }
+    return best ? { uid: bestUid, profile: best } : null;
+  }
+  // A friend's Top 8 photo comes from their published profile in the
+  // shared directory (allProfiles, filled by Firebase below). Crew entries
+  // stay plain names, so photos resolve live — when a friend publishes or
+  // changes their photo, it shows up in every Top 8 that lists them. The
+  // bundled Chris photo is only the fallback for before the directory
+  // connects (or if Chris's profile is ever unpublished).
+  function friendPhoto(name){
+    var m = directoryMatch(name);
+    if(m && m.profile.photo) return m.profile.photo;
+    if(String(name || "").trim().toLowerCase() === "chris") return CHRIS_PHOTO;
+    return "";
+  }
+  // Chris's standing rule: he is #1 in everyone's Top 8. Returns a copy of
+  // a crew with "Chris" moved to (or inserted at) the #1 slot.
+  function withChrisFirst(crew){
+    var rest = (Array.isArray(crew) ? crew : []).filter(function(n){
+      return String(n).trim().toLowerCase() !== "chris";
+    });
+    return ["Chris"].concat(rest);
+  }
+  var toastTimer = null;
+  function toast(msg){
+    var t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
+
+  /* ---------------- Local state (this browser's copy) ---------------- */
+  function defaultState(){
+    // Blank start: the main profile is the visitor's own to set up — no
+    // name, no photo. Chris is everyone's first friend at #1 in the Top 8
+    // (the old Tom spot, recast); his photo appears in that friend slot
+    // only, never as the main profile photo. The main photo becomes Chris's
+    // only on a profile Chris himself set up under his own name.
+    return {
+      name: "", mood: "", about: "", meet: "",
+      photo: "", songId: "", songLabel: "",
+      crew: ["Chris"]
+    };
+  }
+  function blankState(){
+    return {
+      name: "", mood: "", about: "", meet: "",
+      photo: "", songId: "", songLabel: "",
+      crew: []
+    };
+  }
+  function loadOwn(){
+    try{
+      var raw = localStorage.getItem(LS_KEY);
+      var legacy = false;
+      if(!raw){
+        // Migration from v2 (blank defaults): a browser that never actually
+        // customized anything gets the new Chris default; anything the
+        // person typed or picked is carried over as-is.
+        raw = localStorage.getItem(LS_KEY_PREV);
+        if(raw){
+          var prev = JSON.parse(raw);
+          var untouchedPrev = !prev.name && !prev.about && !prev.meet && !prev.photo &&
+            !prev.songId && (!Array.isArray(prev.crew) || !prev.crew.length);
+          if(untouchedPrev) return defaultState();
+        }
+      }
+      if(!raw){
+        // One-time migration from v1, which auto-seeded "Tom" at #1 and a
+        // default mood. Strip that seed; anything the person actually
+        // typed is kept.
+        raw = localStorage.getItem(LS_KEY_LEGACY);
+        legacy = !!raw;
+      }
+      if(!raw) return defaultState();
+      var s = JSON.parse(raw);
+      var d = blankState();
+      for(var k in d){ if(s[k] !== undefined) d[k] = s[k]; }
+      if(!Array.isArray(d.crew)) d.crew = [];
+      // Migration from the build that made Chris the main profile by
+      // default: a browser still holding that exact untouched default
+      // (Chris's name + photo up top, Chris at #1, nothing else set) was
+      // never actually set up by its owner — switch it to the blank start
+      // with Chris as first friend only. Any profile someone really
+      // customized (including Chris's own) is left exactly as-is.
+      var isOldDefault = d.name === "Chris" && d.photo === CHRIS_PHOTO &&
+        !d.mood && !d.about && !d.meet && !d.songId && !d.songLabel &&
+        d.crew.length === 1 && d.crew[0] === "Chris";
+      if(isOldDefault && !legacy){
+        var fresh = defaultState();
+        try{ localStorage.setItem(LS_KEY, JSON.stringify(fresh)); }catch(e){}
+        return fresh;
+      }
+      if(legacy){
+        if(d.crew.length && d.crew[0] === "Tom") d.crew = d.crew.slice(1);
+        var untouched = !d.name && !d.about && !d.meet && !d.photo && !d.songId && !d.crew.length;
+        if(untouched && d.mood === "nostalgic") d.mood = "";
+        try{ localStorage.setItem(LS_KEY, JSON.stringify(d)); }catch(e){}
+      }
+      return d;
+    }catch(e){ return defaultState(); }
+  }
+  function saveOwn(){
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(own)); }catch(e){}
+    schedulePublish();
+  }
+  var own = loadOwn();
+  // Enforce the house rule on this browser's own crew: Chris sits at #1
+  // (moved there if he was elsewhere, added if he'd been removed). The
+  // next auto-publish carries the fixed order to the shared directory, so
+  // visitors see it on this profile's page too.
+  (function(){
+    var fixed = withChrisFirst(own.crew);
+    if(JSON.stringify(fixed) !== JSON.stringify(own.crew)){
+      own.crew = fixed;
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(own)); }catch(e){}
+    }
+  })();
+  var viewing = null;      // remote profile object being viewed, or null
+  var viewingUid = null;   // its Firebase uid
+  var viewingJson = "";    // last-rendered copy, so directory updates don't restart a playing song
+
+  /* ---------------- Firebase: shared profile hosting ----------------
+     Same Firebase project as SpudMaps. Profiles live at top8/profiles/<uid>,
+     keyed by each browser's anonymous-auth uid — so a profile can only be
+     written from the browser that owns it, and everyone can read/browse all. */
+  var FB_CONFIG = {
+    apiKey: "AIzaSyAhwvIBxEn_uXPP5Vang9TTczCj77NWBT4",
+    authDomain: "excellence-riviera-cancu-12f14.firebaseapp.com",
+    databaseURL: "https://excellence-riviera-cancu-12f14-default-rtdb.firebaseio.com",
+    projectId: "excellence-riviera-cancu-12f14",
+    storageBucket: "excellence-riviera-cancu-12f14.firebasestorage.app",
+    messagingSenderId: "872704716778",
+    appId: "1:872704716778:web:4e0036eefdb5fe26dd0c93"
+  };
+  var fbDb = null, fbAuth = null, fbUid = null, fbReady = false, fbConnected = false, fbFailed = false;
+  var profilesRef = null;
+  var allProfiles = {};   // uid -> profile, live from Firebase
+  var dirQuery = "";      // directory search text
+  var publishTimer = null, publishQueued = false, hasPublished = false;
+
+  function setLivePill(){
+    var pill = $("livePill"), txt = $("livePillText");
+    if(fbConnected){ pill.classList.add("on"); txt.textContent = "Live on Firebase"; }
+    else if(fbFailed){ pill.classList.remove("on"); txt.textContent = "Firebase unreachable"; }
+    else if(fbReady){ pill.classList.remove("on"); txt.textContent = "Firebase offline"; }
+    else { pill.classList.remove("on"); txt.textContent = "Connecting…"; }
+  }
+  function setPubStatus(){
+    var msg, on = false;
+    if(!own.name || !own.name.trim()){ msg = "Add a display name to publish"; }
+    else if(!fbReady){ msg = "Publishing unavailable — couldn't reach Firebase"; }
+    else if(hasPublished){ msg = "● Published — you're in the directory"; on = true; }
+    else { msg = "Not published yet — tap Publish"; }
+    $("pubStatus").textContent = msg;
+    $("pubStatus").classList.toggle("on", on);
+    $("pubStatusEdit").textContent = msg;
+    $("pubStatusEdit").classList.toggle("on", on);
+  }
+
+  function profilePayload(){
+    return {
+      name: own.name || "", mood: own.mood || "", about: own.about || "", meet: own.meet || "",
+      photo: own.photo || "", songId: own.songId || "", songLabel: own.songLabel || "",
+      crew: (own.crew || []).slice(0, 24),
+      updatedAt: (window.firebase && firebase.database) ? firebase.database.ServerValue.TIMESTAMP : Date.now()
+    };
+  }
+  function publishOwn(silent){
+    if(!own.name || !own.name.trim()){
+      if(!silent) toast("Give yourself a display name first — that's your directory listing.");
+      setPubStatus();
+      return;
+    }
+    if(!fbReady || !fbUid || !profilesRef){
+      publishQueued = true;
+      if(!silent) toast("Still connecting to Firebase — your profile publishes as soon as it connects.");
+      return;
+    }
+    var payload = profilePayload();
+    // RTDB chokes on very large strings; shrink an oversized photo for the published copy only.
+    function write(p){
+      profilesRef.child(fbUid).set(p).then(function(){
+        hasPublished = true;
+        setPubStatus();
+        if(!silent) toast("Published! You're in the directory.");
+      }).catch(function(){
+        if(!silent) toast("Publish failed — check your connection and try again.");
+      });
+    }
+    if(payload.photo && payload.photo.length > 90000){
+      shrinkExisting(payload.photo, 200, 0.6, function(small){
+        payload.photo = small || "";
+        write(payload);
+      });
+    }else{
+      write(payload);
+    }
+  }
+  function schedulePublish(){
+    if(!own.name || !own.name.trim()){ setPubStatus(); return; }
+    clearTimeout(publishTimer);
+    publishTimer = setTimeout(function(){ publishOwn(true); }, 1200);
+  }
+
+  function normalizeRemote(d){
+    if(!d || typeof d !== "object") return null;
+    return {
+      name: d.name || "", mood: d.mood || "", about: d.about || "", meet: d.meet || "",
+      photo: d.photo || "", songId: d.songId || "", songLabel: d.songLabel || "",
+      crew: Array.isArray(d.crew) ? d.crew : []
+    };
+  }
+
+  /* Open a directory profile as the viewed page (your own card just goes
+     home). Shared by the directory cards and the Top 8 slots, so the
+     "Chris" at #1 opens Chris's real profile, not a placeholder. */
+  function visitProfile(uid){
+    if(uid === fbUid){ showOwn(); window.scrollTo(0,0); return; }
+    var p = allProfiles[uid];
+    if(!p) return;
+    viewingUid = uid;
+    viewing = normalizeRemote(p);
+    viewingJson = JSON.stringify(viewing);
+    renderProfile(viewing, false);
+    window.scrollTo(0,0);
+    toast("Welcome to " + (viewing.name || "your friend") + "'s page.");
+  }
+
+  function renderDirectory(){
+    var grid = $("dirGrid"), empty = $("dirEmpty"), count = $("dirCount");
+    grid.innerHTML = "";
+    var allUids = Object.keys(allProfiles).filter(function(u){ return allProfiles[u] && allProfiles[u].name; });
+    var q = dirQuery.trim().toLowerCase();
+    var uids = q
+      ? allUids.filter(function(u){ return String(allProfiles[u].name).toLowerCase().indexOf(q) !== -1; })
+      : allUids;
+    uids.sort(function(a,b){
+      if(a === fbUid) return -1;
+      if(b === fbUid) return 1;
+      return String(allProfiles[a].name).toLowerCase() < String(allProfiles[b].name).toLowerCase() ? -1 : 1;
+    });
+    if(!fbReady){
+      if(fbFailed){
+        count.textContent = "Couldn't reach Firebase from this browser.";
+        empty.textContent = "The directory needs a connection — your own profile still works and saves on this device.";
+      }else{
+        count.textContent = "Connecting to Firebase…";
+        empty.textContent = "Loading profiles…";
+      }
+      empty.style.display = "block";
+      return;
+    }
+    count.innerHTML = "<b>" + allUids.length + "</b> profile" + (allUids.length === 1 ? "" : "s") + " hosted — tap one to visit their page." +
+      (q ? " Showing <b>" + uids.length + "</b> matching &ldquo;" + esc(dirQuery.trim()) + "&rdquo;." : "");
+    if(!uids.length){
+      empty.textContent = q
+        ? "No profiles match “" + dirQuery.trim() + "” — try another name."
+        : "Nobody's published yet. Be the first — set your name and tap Publish My Profile.";
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    uids.forEach(function(uid){
+      var p = allProfiles[uid];
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "dir-card";
+      var av = p.photo
+        ? '<span class="davatar"><img src="' + esc(p.photo) + '" alt="" /></span>'
+        : '<span class="davatar" style="background:' + colorFor(p.name) + '">' + esc(initials(p.name)) + "</span>";
+      card.innerHTML = av +
+        '<span class="dname">' + esc(p.name) + "</span>" +
+        '<span class="dmeta">' + (p.mood ? "Mood: " + esc(p.mood) + " · " : "") + (Array.isArray(p.crew) ? Math.min(p.crew.length, 8) : 0) + " in their Top 8</span>" +
+        (uid === fbUid ? '<span class="dyou">THIS IS YOU</span>' : "");
+      card.addEventListener("click", function(){ visitProfile(uid); });
+      grid.appendChild(card);
+    });
+  }
+
+  /* Directory picker in Edit: everyone who has published, with their
+     photo — tap to add them (by name) to your own Top 8. */
+  function renderPicker(){
+    var grid = $("pickGrid"), empty = $("pickEmpty");
+    if(!grid || !empty) return;
+    grid.innerHTML = "";
+    var uids = Object.keys(allProfiles).filter(function(u){
+      return allProfiles[u] && allProfiles[u].name && u !== fbUid;
+    });
+    uids.sort(function(a,b){
+      return String(allProfiles[a].name).toLowerCase() < String(allProfiles[b].name).toLowerCase() ? -1 : 1;
+    });
+    if(!fbReady){
+      empty.textContent = fbFailed
+        ? "Couldn't reach Firebase — the picker needs a connection."
+        : "Loading the directory…";
+      empty.style.display = "block";
+      return;
+    }
+    if(!uids.length){
+      empty.textContent = "Nobody else has published yet — once friends publish their profiles, they show up here with their photos, ready to add.";
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    uids.forEach(function(uid){
+      var p = allProfiles[uid];
+      var inCrew = own.crew.some(function(n){
+        return String(n).trim().toLowerCase() === String(p.name).trim().toLowerCase();
+      });
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "pick-card" + (inCrew ? " in" : "");
+      card.disabled = inCrew;
+      var av = p.photo
+        ? '<span class="pavatar"><img src="' + esc(p.photo) + '" alt="" /></span>'
+        : '<span class="pavatar" style="background:' + colorFor(p.name) + '">' + esc(initials(p.name)) + "</span>";
+      card.innerHTML = av +
+        '<span class="pname">' + esc(p.name) + "</span>" +
+        '<span class="padd">' + (inCrew ? "In your Top 8 ✓" : "＋ Add to Top 8") + "</span>";
+      if(!inCrew){
+        card.addEventListener("click", function(){
+          own.crew.push(p.name);
+          saveOwn(); renderCrewEditor(); renderPicker();
+          toast(p.name + (own.crew.length <= 8
+            ? " is in your Top 8 at #" + own.crew.length + " — photo and all!"
+            : " added — on deck at #" + own.crew.length + "."));
+        });
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  /* When directory data arrives (or changes), swap real photos into the
+     Top 8 grid and the Edit crew rows in place — without re-rendering the
+     profile, so a playing song is never restarted. */
+  function refreshFriendPhotos(){
+    var slots = $("top8Grid").children;
+    for(var i=0;i<slots.length;i++){
+      var slot = slots[i];
+      if(!slot.classList || slot.classList.contains("empty")) continue;
+      var fnameEl = slot.querySelector(".fname");
+      var av = slot.querySelector(".avatar");
+      if(!fnameEl || !av) continue;
+      var nm = fnameEl.textContent;
+      var fp = friendPhoto(nm);
+      if(!fp) continue;
+      var img = av.querySelector("img");
+      if(!img || img.getAttribute("src") !== fp){
+        av.style.background = "";
+        av.innerHTML = '<img src="' + esc(fp) + '" alt="' + esc(nm) + '" />';
+      }
+    }
+    var rows = $("crewList").children;
+    for(var j=0;j<rows.length;j++){
+      var row = rows[j];
+      if(!row.classList || !row.classList.contains("crew-row")) continue;
+      var input = row.querySelector("input");
+      var mini = row.querySelector(".mini");
+      if(!input || !mini) continue;
+      var fp2 = friendPhoto(input.value);
+      if(!fp2) continue;
+      var img2 = mini.querySelector("img");
+      if(!img2 || img2.getAttribute("src") !== fp2){
+        mini.style.background = "";
+        mini.innerHTML = '<img src="' + esc(fp2) + '" alt="" />';
+      }
+    }
+    renderPicker();
+  }
+
+  /* "Add to my Top 8" on a visited profile — adds the person (by name, so
+     their directory photo shows) to your own crew. */
+  function viewedInCrew(){
+    if(!viewing || !viewing.name) return false;
+    var key = viewing.name.trim().toLowerCase();
+    return own.crew.some(function(n){ return String(n).trim().toLowerCase() === key; });
+  }
+  function updateAddButtons(){
+    var inCrew = viewedInCrew();
+    var b1 = $("addToTop8Btn"), b2 = $("visitAddBtn");
+    if(b1) b1.textContent = viewing ? (inCrew ? "In Your Top 8 ✓" : "Add to Friends") : "Add to Friends";
+    if(b2){
+      b2.textContent = inCrew ? "In Your Top 8 ✓" : "＋ Add to My Top 8";
+      b2.disabled = inCrew;
+    }
+  }
+  function addViewedToTop8(){
+    if(!viewing || !viewing.name) return;
+    if(viewedInCrew()){ toast(viewing.name + " is already in your Top 8."); return; }
+    own.crew.push(viewing.name);
+    saveOwn();
+    updateAddButtons();
+    toast(viewing.name + (own.crew.length <= 8
+      ? " added to your Top 8 at #" + own.crew.length + " — photo and all!"
+      : " added — on deck at #" + own.crew.length + "."));
+  }
+
+  function initFirebase(){
+    try{
+      if(!window.firebase || typeof firebase.initializeApp !== "function"){ fbFailed = true; setLivePill(); renderDirectory(); renderPicker(); setPubStatus(); return; }
+      firebase.initializeApp(FB_CONFIG);
+      fbDb = firebase.database();
+      fbAuth = firebase.auth();
+      profilesRef = fbDb.ref("top8/profiles");
+      fbDb.ref(".info/connected").on("value", function(s){
+        fbConnected = !!s.val();
+        setLivePill();
+      });
+      fbAuth.onAuthStateChanged(function(u){
+        if(u){
+          fbUid = u.uid;
+          fbReady = true;
+          setLivePill(); setPubStatus();
+          // If my profile is already hosted, remember that (and don't clobber
+          // a newer hosted copy with a stale empty local one on first load).
+          profilesRef.child(fbUid).once("value").then(function(snap){
+            if(snap.exists()){ hasPublished = true; setPubStatus(); }
+            if(publishQueued){ publishQueued = false; publishOwn(true); }
+            else if(own.name && own.name.trim()){ schedulePublish(); }
+          }).catch(function(){});
+        }
+      });
+      fbAuth.signInAnonymously().catch(function(){ fbReady = false; fbFailed = true; setLivePill(); renderDirectory(); renderPicker(); setPubStatus(); });
+      profilesRef.on("value", function(snap){
+        allProfiles = snap.val() || {};
+        renderDirectory();
+        refreshFriendPhotos();
+        if(viewingUid && allProfiles[viewingUid]){
+          var nv = normalizeRemote(allProfiles[viewingUid]);
+          if(JSON.stringify(nv) !== viewingJson){
+            viewing = nv;
+            viewingJson = JSON.stringify(nv);
+            renderProfile(viewing, false);
+          }
+        }else if(viewingUid && !allProfiles[viewingUid]){
+          viewingUid = null; viewing = null;
+          showOwn();
+          toast("That profile was removed from the directory.");
+        }
+        if(fbUid && allProfiles[fbUid]){ hasPublished = true; setPubStatus(); }
+      }, function(){
+        renderDirectory();
+      });
+    }catch(e){
+      fbReady = false; fbFailed = true;
+      setLivePill(); renderDirectory(); renderPicker(); setPubStatus();
+    }
+  }
+
+  /* ---------------- YouTube ---------------- */
+  function extractYouTubeId(str){
+    if(!str) return "";
+    str = String(str).trim();
+    if(/^[A-Za-z0-9_-]{11}$/.test(str)) return str;
+    var m = str.match(/[?&]v=([A-Za-z0-9_-]{11})/) ||
+            str.match(/youtu\.be\/([A-Za-z0-9_-]{11})/) ||
+            str.match(/\/(?:shorts|embed|live)\/([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : "";
+  }
+
+  /* ---------------- Rendering a profile ---------------- */
+  function renderProfile(p, isOwn){
+    stopSong();
+    var name = p.name && p.name.trim() ? p.name : (isOwn ? "Your Name" : "A Friend");
+    $("dispName").textContent = name;
+    $("contactHead").textContent = "Contacting " + name;
+    $("detailsHead").textContent = name + "'s Details";
+    $("networkBox").textContent = name + " is in your extended network";
+    $("aboutHead").textContent = name + "'s About Me";
+    $("friendSpaceHead").textContent = name + "'s Friend Space (Top 8)";
+    $("moodText").textContent = p.mood && p.mood.trim() ? p.mood : "…";
+
+    var pic = $("profilePic"), fb = $("picFallback");
+    if(p.photo){
+      pic.src = p.photo; pic.style.display = "block"; fb.style.display = "none";
+    }else{
+      pic.removeAttribute("src"); pic.style.display = "none";
+      fb.style.display = "flex"; fb.textContent = initials(name);
+      fb.style.background = colorFor(name);
+    }
+
+    $("aboutText").innerHTML = p.about && p.about.trim()
+      ? esc(p.about)
+      : '<span class="blank">' + (isOwn ? "Blank. Tragic. Hit Edit and fix this." : "This space is mysteriously blank.") + "</span>";
+    $("meetText").innerHTML = p.meet && p.meet.trim()
+      ? esc(p.meet)
+      : '<span class="blank">' + (isOwn ? "Nobody yet — add who you'd like to meet in Edit." : "Keeping it mysterious.") + "</span>";
+
+    // Song — starts playing while you view the profile (see startSong).
+    var area = $("songArea");
+    if(p.songId){
+      area.innerHTML = '<span class="song-label">♪ ' + esc(p.songLabel || "Untitled anthem") + "</span>" +
+        '<div class="playrow"><button class="playbtn" id="playBtn" type="button">▶ Play</button>' +
+        '<span class="song-status" id="songStatus"></span></div>';
+      $("playBtn").addEventListener("click", function(){ toggleSong(p.songId); });
+      startSong(p.songId);
+    }else{
+      area.innerHTML = '<span class="song-none">' + (isOwn ? "No song yet. Every profile needs a song — add one in Edit." : "No profile song. Bold choice.") + "</span>";
+    }
+
+    // Top 8 — Chris is #1 on every profile (the house rule), so the
+    // displayed crew always leads with him, whoever's page this is.
+    var grid = $("top8Grid"); grid.innerHTML = "";
+    var crew = withChrisFirst(p.crew);
+    for(var i=0;i<8;i++){
+      var slot = document.createElement("div");
+      if(i < crew.length){
+        var nm = crew[i];
+        var fp = friendPhoto(nm);
+        slot.className = "slot" + (i===0 ? " first" : "");
+        slot.innerHTML =
+          '<span class="fname">' + esc(nm) + "</span>" +
+          (fp
+            ? '<div class="avatar"><img src="' + esc(fp) + '" alt="' + esc(nm) + '" /></div>'
+            : '<div class="avatar" style="background:' + colorFor(nm) + '">' + esc(initials(nm)) + "</div>") +
+          '<span class="rank">#' + (i+1) + (i===0 ? " ★" : "") + "</span>";
+      }else{
+        slot.className = "slot empty";
+        slot.innerHTML =
+          '<span class="fname">open slot</span>' +
+          '<div class="avatar">?</div>' +
+          '<span class="rank">#' + (i+1) + "</span>";
+      }
+      grid.appendChild(slot);
+    }
+    var inEight = Math.min(crew.length, 8);
+    $("friendCount").innerHTML = esc(name) + " has <b>" + crew.length + "</b> friend" + (crew.length===1?"":"s") +
+      " — displaying <b>" + inEight + "</b> of them in the Top 8.";
+    var deck = crew.slice(8);
+    $("onDeck").innerHTML = deck.length
+      ? "<b>On deck:</b> " + deck.map(esc).join(", ") + " — so close, yet so far."
+      : "";
+
+    $("ownActions").style.display = isOwn ? "flex" : "none";
+    $("photoCta").style.display = isOwn ? "block" : "none";
+    if(isOwn) $("quickPhotoBtn").textContent = p.photo ? "Change My Photo" : "Set My Photo";
+    $("visitBanner").classList.toggle("show", !isOwn);
+    if(!isOwn) $("visitName").textContent = name;
+    updateAddButtons();
+  }
+
+  /* ---------------- Profile song player ----------------
+     The song starts playing while you view the profile, like the old
+     MySpace profile songs. Browsers block autoplay-with-sound, so this
+     tries a real autoplay via the YouTube IFrame API first; if that's
+     blocked, the Play button pulses and the first tap anywhere on the
+     page starts it. If the API can't load at all, it falls back to a
+     plain embed the visitor can start with the same button. */
+  var ytPlayer = null, ytSongId = "", songState = "idle", fallbackPlaying = false, ytApiPromise = null;
+
+  function loadYtApi(){
+    if(window.YT && YT.Player) return Promise.resolve(true);
+    if(ytApiPromise) return ytApiPromise;
+    ytApiPromise = new Promise(function(resolve){
+      var done = false;
+      function finish(ok){ if(!done){ done = true; resolve(ok); } }
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){ if(prev) prev(); finish(true); };
+      var s = document.createElement("script");
+      s.src = "https://www.youtube.com/iframe_api";
+      s.onerror = function(){ finish(false); };
+      document.head.appendChild(s);
+      setTimeout(function(){ finish(!!(window.YT && YT.Player)); }, 5000);
+    });
+    return ytApiPromise;
+  }
+  function stopSong(){
+    if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
+    ytSongId = ""; songState = "idle"; fallbackPlaying = false;
+    var slot = $("playerSlot");
+    if(slot) slot.innerHTML = "";
+  }
+  function setSongUI(state, label){
+    songState = state;
+    var btn = $("playBtn"), st = $("songStatus");
+    if(btn){
+      if(state === "playing"){ btn.textContent = "❚❚ Pause"; btn.classList.remove("pulse"); }
+      else if(state === "loading"){ btn.textContent = "Loading…"; btn.classList.remove("pulse"); }
+      else if(state === "blocked"){ btn.textContent = "▶ Play the Song"; btn.classList.add("pulse"); }
+      else { btn.textContent = "▶ Play"; btn.classList.remove("pulse"); }
+    }
+    if(st) st.textContent = label || "";
+  }
+  function fallbackEmbed(id, autoplay){
+    var slot = $("playerSlot");
+    if(!slot) return;
+    slot.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+      (autoplay ? "?autoplay=1&rel=0" : "?rel=0") +
+      '" title="Profile song" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  }
+  function startSong(id){
+    stopSong();
+    ytSongId = id;
+    setSongUI("loading", "Starting the song…");
+    loadYtApi().then(function(ok){
+      if(ytSongId !== id) return; // visitor already moved to another profile
+      if(!ok){ fallbackEmbed(id, false); setSongUI("paused", "Tap play to hear the song."); return; }
+      var slot = $("playerSlot");
+      if(!slot) return;
+      slot.innerHTML = '<div id="ytMount"></div>';
+      try{
+        ytPlayer = new YT.Player("ytMount", {
+          width: "100%", height: "160",
+          videoId: id,
+          playerVars: { autoplay: 1, rel: 0, playsinline: 1 },
+          events: {
+            onReady: function(e){
+              try{ e.target.playVideo(); }catch(err){}
+              setTimeout(function(){
+                if(ytSongId !== id || !ytPlayer) return;
+                var st = -1;
+                try{ st = ytPlayer.getPlayerState(); }catch(err){}
+                if(st !== 1 && st !== 3){
+                  setSongUI("blocked", "Your browser blocked the autoplay — tap Play (or anywhere on the page) and the song starts.");
+                }
+              }, 1600);
+            },
+            onStateChange: function(e){
+              if(ytSongId !== id || !window.YT) return;
+              if(e.data === YT.PlayerState.PLAYING) setSongUI("playing", "Now playing while you browse the profile.");
+              else if(e.data === YT.PlayerState.PAUSED) setSongUI("paused", "Paused — tap to resume.");
+              else if(e.data === YT.PlayerState.ENDED) setSongUI("paused", "Song's over — tap to play it again.");
+            },
+            onError: function(){
+              if(ytSongId !== id) return;
+              if(ytPlayer){ try{ ytPlayer.destroy(); }catch(err){} ytPlayer = null; }
+              fallbackEmbed(id, false);
+              setSongUI("paused", "Tap play to hear the song.");
+            }
+          }
+        });
+      }catch(err){
+        ytPlayer = null;
+        fallbackEmbed(id, false);
+        setSongUI("paused", "Tap play to hear the song.");
+      }
+    });
+  }
+  function toggleSong(id){
+    if(ytPlayer && ytSongId === id){
+      try{
+        if(songState === "playing") ytPlayer.pauseVideo();
+        else ytPlayer.playVideo();
+      }catch(e){}
+      return;
+    }
+    if(fallbackPlaying){
+      $("playerSlot").innerHTML = "";
+      fallbackPlaying = false;
+      setSongUI("paused", "Paused — tap to play.");
+    }else{
+      fallbackEmbed(id, true);
+      fallbackPlaying = true;
+      setSongUI("playing", "Now playing while you browse the profile.");
+    }
+  }
+  // First tap anywhere unlocks a blocked autoplay (a user gesture is
+  // exactly what the browser was waiting for).
+  document.addEventListener("pointerdown", function(){
+    if(ytPlayer && ytSongId && songState === "blocked"){
+      try{ ytPlayer.playVideo(); }catch(e){}
+    }
+  });
+
+  /* ---------------- Edit view ---------------- */
+  function fillEditor(){
+    $("inName").value = own.name || "";
+    $("inMood").value = own.mood || "";
+    $("inAbout").value = own.about || "";
+    $("inMeet").value = own.meet || "";
+    $("inSongUrl").value = own.songId ? ("https://www.youtube.com/watch?v=" + own.songId) : "";
+    $("inSongLabel").value = own.songLabel || "";
+    renderEditPhoto();
+    renderCrewEditor();
+    setPubStatus();
+  }
+  function renderEditPhoto(){
+    var img = $("editPic"), fb = $("editPicFallback");
+    if(own.photo){
+      img.src = own.photo; img.style.display = "block"; fb.style.display = "none";
+    }else{
+      img.removeAttribute("src"); img.style.display = "none";
+      fb.style.display = "flex";
+      fb.textContent = initials(own.name || "?");
+      fb.style.background = colorFor(own.name || "?");
+    }
+  }
+  function renderCrewEditor(){
+    var list = $("crewList"); list.innerHTML = "";
+    own.crew.forEach(function(nm, idx){
+      var row = document.createElement("div");
+      row.className = "crew-row " + (idx < 8 ? "cut" : "deck");
+      row.draggable = true;
+      row.dataset.idx = idx;
+      var fp0 = friendPhoto(nm);
+      row.innerHTML =
+        '<span class="grip" title="Drag to reorder">☰</span>' +
+        '<span class="rk">#' + (idx+1) + "</span>" +
+        (fp0
+          ? '<span class="mini"><img src="' + esc(fp0) + '" alt="" /></span>'
+          : '<span class="mini" style="background:' + colorFor(nm) + '">' + esc(initials(nm)) + "</span>");
+      var input = document.createElement("input");
+      input.type = "text"; input.value = nm; input.maxLength = 40;
+      input.setAttribute("aria-label", "Friend name");
+      input.addEventListener("input", function(){
+        own.crew[idx] = input.value;
+        var mini = row.querySelector(".mini");
+        var fp = friendPhoto(input.value);
+        if(fp){
+          mini.style.background = "";
+          mini.innerHTML = '<img src="' + esc(fp) + '" alt="" />';
+        }else{
+          mini.textContent = initials(input.value || "?");
+          mini.style.background = colorFor(input.value || "?");
+        }
+        saveOwn();
+      });
+      row.appendChild(input);
+      var up = document.createElement("button");
+      up.type = "button"; up.className = "mv"; up.textContent = "↑"; up.title = "Move up";
+      up.disabled = idx === 0;
+      up.addEventListener("click", function(){ moveCrew(idx, idx-1); });
+      var dn = document.createElement("button");
+      dn.type = "button"; dn.className = "mv"; dn.textContent = "↓"; dn.title = "Move down";
+      dn.disabled = idx === own.crew.length-1;
+      dn.addEventListener("click", function(){ moveCrew(idx, idx+1); });
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "mv del"; del.textContent = "✕"; del.title = "Remove friend";
+      del.addEventListener("click", function(){
+        var removed = own.crew.splice(idx,1)[0];
+        saveOwn(); renderCrewEditor();
+        toast(removed + " removed. Brutal.");
+      });
+      row.appendChild(up); row.appendChild(dn); row.appendChild(del);
+
+      row.addEventListener("dragstart", function(e){
+        row.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", String(idx));
+      });
+      row.addEventListener("dragend", function(){ row.classList.remove("dragging"); });
+      row.addEventListener("dragover", function(e){ e.preventDefault(); });
+      row.addEventListener("drop", function(e){
+        e.preventDefault();
+        var from = parseInt(e.dataTransfer.getData("text/plain"), 10);
+        if(!isNaN(from) && from !== idx) moveCrew(from, idx);
+      });
+      list.appendChild(row);
+    });
+    if(!own.crew.length){
+      list.innerHTML = '<p class="deck-note">No friends yet — your Top 8 starts blank. Add someone below.</p>';
+    }
+    renderPicker();
+  }
+  function moveCrew(from, to){
+    if(to < 0 || to >= own.crew.length) return;
+    var item = own.crew.splice(from,1)[0];
+    own.crew.splice(to,0,item);
+    saveOwn(); renderCrewEditor();
+  }
+  function addFriend(){
+    var inp = $("inFriend");
+    var nm = inp.value.trim();
+    if(!nm){ toast("Type a name first."); return; }
+    own.crew.push(nm);
+    inp.value = "";
+    saveOwn(); renderCrewEditor();
+    toast(nm + (own.crew.length <= 8 ? " is in your Top 8 at #" + own.crew.length + "!" : " added — on deck at #" + own.crew.length + "."));
+    inp.focus();
+  }
+
+  /* ---------------- Photo handling ---------------- */
+  function processImageFile(file, maxDim, quality, cb){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+        var w = Math.max(1, Math.round(img.width * scale));
+        var h = Math.max(1, Math.round(img.height * scale));
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        cb(c.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = function(){ toast("That image didn't load — try another."); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  function shrinkExisting(dataUrl, maxDim, quality, cb){
+    var img = new Image();
+    img.onload = function(){
+      var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+      var w = Math.max(1, Math.round(img.width * scale));
+      var h = Math.max(1, Math.round(img.height * scale));
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      cb(c.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = function(){ cb(""); };
+    img.src = dataUrl;
+  }
+
+  function copyText(text, okMsg){
+    function done(){ toast(okMsg); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+    }else{ fallback(); }
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); done(); }
+      catch(e){ toast("Copy failed — long-press to copy it manually."); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  /* ---------------- Wiring ---------------- */
+  function showOwn(){
+    viewing = null;
+    viewingUid = null;
+    viewingJson = "";
+    renderProfile(own, true);
+  }
+  function enterEdit(){
+    fillEditor();
+    $("profileView").classList.add("hide");
+    $("editView").classList.add("show");
+    window.scrollTo(0,0);
+  }
+  function exitEdit(){
+    $("editView").classList.remove("show");
+    $("profileView").classList.remove("hide");
+    publishOwn(true);
+    showOwn();
+    window.scrollTo(0,0);
+  }
+
+  $("editBtn").addEventListener("click", enterEdit);
+  $("doneBtn").addEventListener("click", exitEdit);
+  $("publishBtn").addEventListener("click", function(){ publishOwn(false); });
+  $("browseBtn").addEventListener("click", function(){
+    $("directory").scrollIntoView({ block: "start" });
+  });
+  $("unpublishBtn").addEventListener("click", function(){
+    if(!fbReady || !fbUid || !profilesRef){ toast("Not connected to Firebase right now — try again in a moment."); return; }
+    profilesRef.child(fbUid).remove().then(function(){
+      hasPublished = false;
+      setPubStatus();
+      toast("Removed. You're out of the directory.");
+    }).catch(function(){ toast("Couldn't remove it — check your connection."); });
+  });
+  $("copyTop8Btn").addEventListener("click", function(){
+    var top = own.crew.slice(0,8);
+    if(!top.length){ toast("Your Top 8 is empty — add some friends first."); return; }
+    var name = own.name && own.name.trim() ? own.name : "My";
+    var lines = top.map(function(n,i){ return (i+1) + ". " + n; });
+    copyText(name + (name === "My" ? "" : "'s") + " Top 8:\n" + lines.join("\n"),
+      "Top 8 copied — paste it into a text or RCS thread.");
+  });
+  $("backToMine").addEventListener("click", function(){
+    showOwn();
+    window.scrollTo(0,0);
+  });
+  // Tapping a Top 8 slot visits that friend's real profile. The name is
+  // resolved against the directory at tap time, so it works even when the
+  // directory finished loading after the page rendered — and the Chris at
+  // #1 opens Chris's actual profile.
+  $("top8Grid").addEventListener("click", function(e){
+    var slot = e.target && e.target.closest ? e.target.closest(".slot") : null;
+    if(!slot || slot.classList.contains("empty")) return;
+    var fnameEl = slot.querySelector(".fname");
+    if(!fnameEl) return;
+    var m = directoryMatch(fnameEl.textContent);
+    if(!m) return;
+    if(m.uid === viewingUid) return;          // already looking at them
+    if(m.uid === fbUid && !viewing) return;    // that's you, and you're home
+    visitProfile(m.uid);
+  });
+  $("visitAddBtn").addEventListener("click", addViewedToTop8);
+  $("addToTop8Btn").addEventListener("click", function(){
+    if(viewing){ addViewedToTop8(); }
+    else { toast("lol — it's a tribute page. Just text them."); }
+  });
+  $("dirSearch").addEventListener("input", function(){
+    dirQuery = this.value;
+    renderDirectory();
+  });
+
+  $("inName").addEventListener("input", function(){ own.name = this.value; saveOwn(); renderEditPhoto(); setPubStatus(); });
+  $("inMood").addEventListener("input", function(){ own.mood = this.value; saveOwn(); });
+  $("inAbout").addEventListener("input", function(){ own.about = this.value; saveOwn(); });
+  $("inMeet").addEventListener("input", function(){ own.meet = this.value; saveOwn(); });
+  $("inSongUrl").addEventListener("input", function(){
+    own.songId = extractYouTubeId(this.value);
+    saveOwn();
+  });
+  $("inSongLabel").addEventListener("input", function(){ own.songLabel = this.value; saveOwn(); });
+  $("clearSongBtn").addEventListener("click", function(){
+    own.songId = ""; own.songLabel = "";
+    $("inSongUrl").value = ""; $("inSongLabel").value = "";
+    saveOwn(); toast("Song cleared. Silence is also a statement.");
+  });
+  $("addFriendBtn").addEventListener("click", addFriend);
+  $("inFriend").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addFriend(); } });
+
+  function applyPhotoFile(f){
+    if(!f) return;
+    processImageFile(f, 320, 0.82, function(dataUrl){
+      own.photo = dataUrl; saveOwn(); renderEditPhoto();
+      if(!$("editView").classList.contains("show")) showOwn();
+      toast("Profile photo set — it's on your profile for everyone to see.");
+    });
+  }
+  $("photoFile").addEventListener("change", function(){
+    applyPhotoFile(this.files && this.files[0]);
+    this.value = "";
+  });
+  $("photoFileMain").addEventListener("change", function(){
+    applyPhotoFile(this.files && this.files[0]);
+    this.value = "";
+  });
+  $("quickPhotoBtn").addEventListener("click", function(){ $("photoFileMain").click(); });
+  $("removePhotoBtn").addEventListener("click", function(){
+    own.photo = ""; saveOwn(); renderEditPhoto();
+    toast("Photo removed.");
+  });
+
+  document.querySelectorAll("[data-costume]").forEach(function(el){
+    el.addEventListener("click", function(e){
+      e.preventDefault();
+      toast("lol — it's a tribute page. Just text them.");
+    });
+  });
+
+  /* ---------------- Install (Add to Home Screen) ---------------- */
+  window.addEventListener("appinstalled", function(){
+    $("installDone").style.display = "block";
+    $("installBox").classList.add("show");
+    toast("Installed! Top 8 is on your home screen.");
+  });
+  function isStandalone(){
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+      window.navigator.standalone === true;
+  }
+  (function markYourPlatform(){
+    var ua = navigator.userAgent || "";
+    var tag = '<span class="yours">YOUR PHONE</span>';
+    if(/iphone|ipad|ipod/i.test(ua)) $("platIos").insertAdjacentHTML("beforeend", tag);
+    else if(/android/i.test(ua)) $("platAndroid").insertAdjacentHTML("beforeend", tag);
+    if(isStandalone()) $("installDone").style.display = "block";
+  })();
+  $("installBtn").addEventListener("click", function(){
+    // Installing is a browser-menu job on every platform (Share sheet on
+    // iPhone, ⋮ menu on Android) — the button shows the short steps.
+    var box = $("installBox");
+    box.classList.toggle("show");
+    if(box.classList.contains("show")) box.scrollIntoView({ block: "start" });
+  });
+
+  /* ---------------- Boot ---------------- */
+  showOwn();
+  setLivePill();
+  setPubStatus();
+  renderDirectory();
+  initFirebase();
+})();
+</script>
+</body>
+</html>
