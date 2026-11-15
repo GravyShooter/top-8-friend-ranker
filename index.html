@@ -773,7 +773,7 @@
           <div class="obox" style="margin-bottom:6px;">
             <h3>Spud Arcade — Games</h3>
             <div class="body" style="white-space:normal;">
-              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate-lo is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and Tate-lo's newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, shared leaderboards and friend challenges run through it all.</p>
+              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate Tac Toe is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and its newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, shared leaderboards and friend challenges run through it all.</p>
               <div class="playas">
                 <label for="gameName" style="font-weight:bold; color:var(--blue);">Playing as:</label>
                 <input type="text" id="gameName" maxlength="24" placeholder="Your game name (your profile name works)" />
@@ -782,9 +782,9 @@
               <div class="game-cards">
                 <div class="game-card">
                   <span class="game-tag live">LIVE · HEAD-TO-HEAD</span>
-                  <h4>Tate-lo</h4>
+                  <h4>Tate Tac Toe</h4>
                   <p>Potato tic-tac-toe. Three in a row wins the mash. Open a table for anyone, or challenge a friend directly — turns sync live through Firebase.</p>
-                  <button class="btn primary" type="button" data-goto="tatePanel">Play Tate-lo</button>
+                  <button class="btn primary" type="button" data-goto="tatePanel">Play Tate Tac Toe</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag live">LIVE DUELS · LEADERBOARD · CHALLENGES</span>
@@ -795,7 +795,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
                   <h4>Tate-lo 3D — WebGL</h4>
-                  <p>The WebGL Tate-lo: first-person Spudball in a real 3D garden arena — stone walls, crates for cover, gold and red Spudtans trading sour-cream shots. Splat five before they splat you.</p>
+                  <p>The WebGL Tate-lo 3D: first-person Spudball in a real 3D garden arena — stone walls, crates for cover, gold and red Spudtans trading sour-cream shots. Splat five before they splat you.</p>
                   <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
                 </div>
                 <div class="game-card">
@@ -816,14 +816,14 @@
               </div>
 
               <div class="game-panel" id="tatePanel">
-                <h4>Tate-lo — Live Head-to-Head</h4>
+                <h4>Tate Tac Toe — Live Head-to-Head</h4>
                 <div class="gbody">
                   <p class="game-status" id="tateStatus">Connecting…</p>
                   <div id="tateLobby">
                     <button class="btn orange" id="tateCreate" type="button">Open a Table (anyone can join)</button>
                     <div class="chal-row">
-                      <select id="tateFriend" aria-label="Friend to challenge at Tate-lo"></select>
-                      <button class="btn primary" id="tateChallenge" type="button">Challenge at Tate-lo</button>
+                      <select id="tateFriend" aria-label="Friend to challenge at Tate Tac Toe"></select>
+                      <button class="btn primary" id="tateChallenge" type="button">Challenge at Tate Tac Toe</button>
                     </div>
                     <p class="game-sub">Open tables &amp; your games — live:</p>
                     <ul class="lobby-list" id="tateLobbyList"></ul>
@@ -2353,7 +2353,7 @@
      top8/games/tatelo/<gameId>      live head-to-head boards
      top8/games/scores/runner/<uid>  best Runner score per person
      top8/games/challenges/<id>      friend challenges (beat-my-mark)
-   Tate-lo moves go through RTDB transactions, so two phones tapping at
+   Tate Tac Toe moves go through RTDB transactions, so two phones tapping at
    once can't both claim a cell or a turn. */
 (function(){
   "use strict";
@@ -2452,7 +2452,7 @@
     return game === "kart" ? (v/1000).toFixed(1) + " s" : String(Math.floor(v)) + " pts";
   }
   function gameLabel(game){
-    return game === "kart" ? "Spud Kart" : game === "runner" ? "SuperSpud Runner" : "Tate-lo";
+    return game === "kart" ? "Spud Kart" : game === "runner" ? "SuperSpud Runner" : "Tate Tac Toe";
   }
   if(NET) chalRef.on("value", function(snap){
     challenges = snap.val() || {};
@@ -2552,7 +2552,7 @@
     }).catch(function(){});
   }
 
-  /* ---------------- Tate-lo (live head-to-head) ---------------- */
+  /* ---------------- Tate Tac Toe (live head-to-head) ---------------- */
   var currentGameId = null, currentGameRef = null, currentGame = null;
   var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   function winnerOf(board){
@@ -2588,7 +2588,7 @@
           return; // someone else's private challenge
         }else{
           li.innerHTML = "<span><b>" + esc(g.hostName || "A Spud") + "</b>" +
-            (g.invitedUid === uid ? " challenged <b>you</b> at Tate-lo!" : " opened a Tate-lo table.") + "</span>";
+            (g.invitedUid === uid ? " challenged <b>you</b> at Tate Tac Toe!" : " opened a Tate Tac Toe table.") + "</span>";
           b.textContent = "Join game"; b.addEventListener("click", function(){ joinGame(id); });
         }
       }else{
