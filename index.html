@@ -773,7 +773,7 @@
           <div class="obox" style="margin-bottom:6px;">
             <h3>Spud Arcade — Games</h3>
             <div class="body" style="white-space:normal;">
-              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate Tac Toe is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and its newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, shared leaderboards and friend challenges run through it all.</p>
+              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate Tac Toe is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and its newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. <b>Spud Kart 3D</b> is the full WebGL Grand Prix — Mario Kart 64-style handling in a real 3D circuit, with basement-server races where the PC itself steps the karts and calls the bumps. Live duels, shared leaderboards and friend challenges run through it all.</p>
               <div class="playas">
                 <label for="gameName" style="font-weight:bold; color:var(--blue);">Playing as:</label>
                 <input type="text" id="gameName" maxlength="24" placeholder="Your game name (your profile name works)" />
@@ -803,6 +803,12 @@
                   <h4>Spud Escape 3D — WebGL</h4>
                   <p>The WebGL escape run: SpudMan drives the Tater Buggy out of a collapsing structure on a countdown — launch ramps over gaps, boost pads, checkpoint arches for more time, and the extraction pad at the end.</p>
                   <button class="btn primary" type="button" data-goto="escapePanel">Play Escape 3D</button>
+                </div>
+                <div class="game-card">
+                  <span class="game-tag">WEBGL 3D · GRAND PRIX · BASEMENT SERVER</span>
+                  <h4>Spud Kart 3D — WebGL</h4>
+                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. Potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races with real server-side bump physics.</p>
+                  <button class="btn primary" type="button" data-goto="kart3dPanel">Play Spud Kart 3D</button>
                 </div>
               </div>
 
@@ -901,6 +907,68 @@
                     <button class="btn" id="escRight" type="button">▶</button>
                   </div>
                   <p class="game-sub">Real WebGL (three.js): SpudMan at the wheel of the Tater Buggy, a collapsing structure, and a countdown that does not care about your feelings. Steer with ◀ ▶ (or A / D), hold Gas to roll. Orange <b>ramps</b> launch you over the gaps — fall and you lose 3 seconds getting fished back. Gold <b>boost pads</b> surge you forward, and every <b>checkpoint arch</b> adds +6 seconds. Cross all three levels and land on the glowing <b>extraction pad</b> before the clock dies.</p>
+                </div>
+              </div>
+
+              <div class="game-panel" id="kart3dPanel">
+                <h4>Spud Kart 3D — WebGL Grand Prix (Mario Kart 64 handling, spuds at the wheel)</h4>
+                <div class="gbody">
+                  <div class="scoreline"><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <div style="position:relative;">
+                    <div id="kkMount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                    <canvas id="kkMap" width="150" height="110" style="position:absolute; top:8px; right:8px; background:rgba(10,18,32,.55); border:1px solid rgba(255,255,255,.35); border-radius:6px; pointer-events:none;"></canvas>
+                    <div id="kkBig" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:46px; font-weight:800; color:#fff; text-shadow:0 3px 12px rgba(0,0,0,.6); pointer-events:none; letter-spacing:1px;"></div>
+                  </div>
+                  <div class="touchrow">
+                    <button class="btn" id="kkLeft" type="button">◀ Steer</button>
+                    <button class="btn" id="kkDrift" type="button">Drift / Hop</button>
+                    <button class="btn orange" id="kkGas" type="button">Gas ▲</button>
+                    <button class="btn" id="kkRight" type="button">Steer ▶</button>
+                  </div>
+                  <div class="touchrow">
+                    <button class="btn" id="kkBrake" type="button">Brake / Reverse</button>
+                    <button class="btn orange" id="kkStart" type="button">Start Race</button>
+                    <button class="btn" id="kkItemBtn" type="button">Use Item</button>
+                  </div>
+                  <div class="chal-row">
+                    <select id="kkKartSel" aria-label="Choose your kart">
+                      <option value="balanced">Super Spud · balanced kart</option>
+                      <option value="light">Lightning Yam · light — quick accel, sharp steering</option>
+                      <option value="heavy">King Russet · heavy — slow off the line, fastest top end</option>
+                    </select>
+                  </div>
+                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, steering gets heavier the faster you go, and the powerslide is the whole game. <b>Hold Drift while steering</b> to hop and slide; keep the slide going and the rear sparks turn <b>blue, then orange</b> — let go of Drift at orange for the big <b>mini-turbo</b>. <b>Gas</b> held from the last light gets a rocket start; hold it from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — tap <b>Use Item mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts. Keyboard: ↑ / W gas, ↓ / S brake, ← → / A D steer, Shift / L drift-hop, Space item.</p>
+                  <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
+                    <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Multiplayer — basement server races (real bump physics)</p>
+                    <p class="game-status" id="kkSrvStatus">Multiplayer runs on the basement server: the PC steps every kart, decides the bumps, and calls the finish times. There's no connect step — tap the race button and you're in; the connecting happens by itself, invisibly.</p>
+                    <button class="btn orange" id="kkSrvCreate" type="button">Start a Multiplayer Race</button>
+                    <button class="btn primary" id="kkSrvStart" type="button" hidden>Start Race (host)</button>
+                    <button class="btn danger" id="kkSrvLeave" type="button" hidden>Leave Server Race</button>
+                    <ul class="lobby-list" id="kkSrvRooms"></ul>
+                    <p class="lb-empty" id="kkSrvEmpty">No multiplayer races waiting right now.</p>
+                    <div class="share-link-box" id="kkInviteBox" style="display:none;">
+                      <label for="kkInviteInput">Race invite link — send this to your friends. It carries the server address inside it, so they just tap it and they're in the race — no setup, no typing, nothing:</label>
+                      <div class="share-link-row">
+                        <input type="text" id="kkInviteInput" readonly value="" aria-label="Race invite link" />
+                        <button class="btn primary" id="kkInviteCopy" type="button">Copy Invite Link</button>
+                      </div>
+                    </div>
+                    <details id="kkSrvSetup" style="margin-top:8px;">
+                      <summary style="cursor:pointer; font-weight:bold; color:var(--blue); font-size:11px;">Server setup — one time, host only (friends never touch this)</summary>
+                      <p class="game-sub"><b>One-click setup:</b> <a href="assets/spud-kart-setup.cmd" download>download the setup file</a> onto the basement PC and double-click it. It installs Node.js if it's missing, downloads the server, sets it to start itself every time the PC turns on, and starts it right away. No terminal, no typing — and after that one double-click there is nothing to run or click ever again; the server is simply on whenever the PC is. If Windows warns about the download, click <b>More info → Run anyway</b> — it's just this setup file. (<a href="assets/spud-kart-server.js" download>The server file itself</a>, if you ever want it on its own.) If Windows Firewall asks while the server starts, click <b>Allow access</b> — that's the phones reaching the server.</p>
+                      <div class="chal-row">
+                        <input type="text" id="kkSrvAddr" placeholder="ws://100.x.x.x:8787 — the PC's Tailscale address" aria-label="Basement server address" />
+                      </div>
+                      <p class="game-sub">Type the server's address once — the server window prints it when it starts (the 192.168 one works on the same Wi-Fi; the 100.x Tailscale one works from anywhere, for friends in other houses on the same tailnet). This device remembers it from then on, and it travels inside race invite links so friends never type anything at all. Up to 4 karts per race, 2 laps on the server's Oval. If a browser refuses the ws:// connection from this https page, allow insecure content for this site in its site settings.</p>
+                    </details>
+                  </div>
+                  <p class="game-sub" style="font-weight:bold; color:var(--blue);">Shared leaderboard — fastest times</p>
+                  <ol class="lb-list" id="kartLb"></ol>
+                  <p class="lb-empty" id="kartLbEmpty">No times posted yet. Be the first.</p>
+                  <div class="chal-row">
+                    <select id="kartFriend" aria-label="Friend to challenge at Spud Kart 3D"></select>
+                    <button class="btn primary" id="kartChallenge" type="button">Challenge to Beat My Time</button>
+                  </div>
                 </div>
               </div>
 
@@ -2444,7 +2512,7 @@
     if(prev && list.indexOf(prev) !== -1) sel.value = prev;
   }
   function fillFriendSelects(){
-    fillSelect($("tateFriend")); fillSelect($("runFriend"));
+    fillSelect($("tateFriend")); fillSelect($("runFriend")); fillSelect($("kartFriend"));
   }
 
   /* ---------------- Challenges ---------------- */
@@ -2452,7 +2520,7 @@
     return game === "kart" ? (v/1000).toFixed(1) + " s" : String(Math.floor(v)) + " pts";
   }
   function gameLabel(game){
-    return game === "kart" ? "Spud Kart" : game === "runner" ? "SuperSpud Runner" : "Tate Tac Toe";
+    return game === "kart" ? "Spud Kart 3D" : game === "runner" ? "SuperSpud Runner" : "Tate Tac Toe";
   }
   if(NET) chalRef.on("value", function(snap){
     challenges = snap.val() || {};
@@ -2484,7 +2552,7 @@
         var b = document.createElement("button");
         b.type = "button"; b.className = "btn primary"; b.textContent = "Play";
         b.addEventListener("click", function(){
-          $(c.game === "runner" ? "runnerPanel" : "chalPanel").scrollIntoView({ block: "start" });
+          $(c.game === "runner" ? "runnerPanel" : c.game === "kart" ? "kart3dPanel" : "chalPanel").scrollIntoView({ block: "start" });
         });
         li.appendChild(b);
       }
@@ -2518,6 +2586,8 @@
     });
   }
   $("runChallenge").addEventListener("click", function(){ sendChallenge("runner", myRunBest, $("runFriend")); });
+  var kartChalBtn = $("kartChallenge");
+  if(kartChalBtn) kartChalBtn.addEventListener("click", function(){ sendChallenge("kart", myKartBest, $("kartFriend")); });
 
   /* ---------------- Leaderboards ---------------- */
   function renderLb(listEl, emptyEl, rows, fmtVal){
@@ -2538,6 +2608,25 @@
     $("runBest").textContent = myRunBest == null ? "—" : Math.floor(myRunBest);
     renderLb($("runLb"), $("runLbEmpty"), rows, function(x){ return Math.floor(x) + " pts"; });
   });
+  if(NET) kartScoreRef.on("value", function(snap){
+    var v = snap.val() || {}, rows = Object.keys(v).map(function(u){
+      return { uid: u, name: v[u].name, val: v[u].timeMs || 0 };
+    }).filter(function(r){ return r.val > 0; }).sort(function(a,b){ return a.val - b.val; });
+    myKartBest = (uid && v[uid]) ? v[uid].timeMs : null;
+    var kb = $("kartBest");
+    if(kb) kb.textContent = myKartBest == null ? "—" : (myKartBest/1000).toFixed(1) + " s";
+    var lbEl = $("kartLb"), lbEmpty = $("kartLbEmpty");
+    if(lbEl && lbEmpty) renderLb(lbEl, lbEmpty, rows, function(x){ return (x/1000).toFixed(1) + " s"; });
+  });
+  /* The WebGL Kart lives in its own script — this is its way back in:
+     a finished race (solo, or a basement-server race the server timed)
+     posts the time to the shared Kart leaderboard and settles any
+     Kart challenge sent to this player. */
+  window.__spudKartFinish3D = function(timeMs){
+    if(!(timeMs > 0)) return;
+    submitScore("kart", Math.round(timeMs));
+    settleChallenges("kart", Math.round(timeMs));
+  };
   function submitScore(game, val){
     if(!uid) return;
     var ref = game === "kart" ? kartScoreRef.child(uid) : runScoreRef.child(uid);
@@ -3807,6 +3896,7 @@
   if(!window.THREE){
     var f1 = $("b3Msg"); if(f1) f1.textContent = "WebGL didn't load in this browser — the 2D games above still play.";
     var f2 = $("escMsg"); if(f2) f2.textContent = "WebGL didn't load in this browser — the 2D games above still play.";
+    var f3 = $("kkMsg"); if(f3) f3.textContent = "WebGL didn't load in this browser — Spud Kart 3D needs WebGL.";
     return;
   }
   function std(color, rough){
@@ -3926,7 +4016,7 @@
     b3Cam.aspect = w / h;
     b3Cam.updateProjectionMatrix();
   }
-  window.addEventListener("resize", function(){ b3Resize(); escResize(); });
+  window.addEventListener("resize", function(){ b3Resize(); escResize(); kkResize(); });
   function b3Blocked(x, z){
     if(Math.abs(x) > 17.6 || Math.abs(z) > 17.6) return true;
     for(var i = 0; i < b3.crates.length; i++){
@@ -4387,9 +4477,1406 @@
     else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") esc.keys.right = false;
   });
 
-  // Idle frames so both WebGL panels show their arenas before Start.
+  /* ================= Spud Kart 3D — WebGL Grand Prix =================
+     Mario Kart 64 handling with an all-original food cast: hop into a
+     powerslide, charge the mini-turbo blue -> orange, release for boost.
+     Engine pull tapers toward top speed, steering gets heavier with
+     speed, grass kills momentum, bumps shove both karts apart and halve
+     speed. Solo: 3 laps vs 3 AI on the Grand Prix circuit. Basement
+     server mode: the Node server (assets/spud-kart-server.js) steps the
+     karts on its own Oval — this client only sends gas/steer and renders
+     the server's snapshots in 3D. Max-quality render: dynamic shadows,
+     PMREM environment reflections, clearcoat paint, bloom, particles. */
+  var KK_N = 720, KK_SRV_S = 0.22;
+  var kk = { ok: false, mode: "idle", phase: "idle", inView: true,
+             samples: [], trackLen: 0, racers: [], boxes: [], coins: [], ramps: [],
+             slicks: [], rockets: [], clouds: [], count: 0, raceT: 0, last: 0, acc: 0,
+             shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
+  var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
+  var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null;
+  var KK_CLASSES = {
+    light:    { vmax: 27.5, accel: 27.0, yaw: 2.60 },
+    balanced: { vmax: 29.5, accel: 22.5, yaw: 2.35 },
+    heavy:    { vmax: 32.0, accel: 18.0, yaw: 2.10 }
+  };
+  var KK_COLORS = [0xc1272d, 0x2456c8, 0x2e8b3a, 0x8b30c9];
+  var KK_NAMES = ["You", "Carrie Carrot", "Broc Lee", "Tom Ato"];
+  var KK_ITEM_LABEL = { boost: "Golden Butter Boost", rocket: "Carrot Rocket", slick: "Butter Slick", star: "Sour Cream Star" };
+  function kkSetMsg(t){ var el = $("kkMsg"); if(el) el.textContent = t; }
+  function kkBig(t){ var el = $("kkBig"); if(el) el.textContent = t; }
+  function kkAngDiff(a, b){ var d = a - b; while(d > Math.PI) d -= Math.PI * 2; while(d < -Math.PI) d += Math.PI * 2; return d; }
+  function kkClamp(v, a, b){ return v < a ? a : v > b ? b : v; }
+  var kkSeed = 1234567;
+  function kkRand(){ kkSeed = (kkSeed * 1103515245 + 12345) & 0x7fffffff; return kkSeed / 0x7fffffff; }
+  var kkAC = null;
+  function kkBeep(f, d, type){
+    try{
+      if(!kkAC) kkAC = new (window.AudioContext || window.webkitAudioContext)();
+      if(kkAC.state === "suspended") kkAC.resume();
+      var o = kkAC.createOscillator(), g = kkAC.createGain(), t = kkAC.currentTime;
+      o.type = type || "square"; o.frequency.value = f; g.gain.value = 0.05;
+      o.connect(g); g.connect(kkAC.destination);
+      o.start(t); g.gain.exponentialRampToValueAtTime(0.001, t + (d || 0.12)); o.stop(t + (d || 0.12));
+    }catch(e){}
+  }
+  function kkCanvasTex(w, h, draw, rx, ry){
+    var c = document.createElement("canvas"); c.width = w; c.height = h;
+    draw(c.getContext("2d"), w, h);
+    var t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    if(rx) t.repeat.set(rx, ry == null ? rx : ry);
+    t.anisotropy = 4; t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+  function kkRBox(w, h, d, r){
+    if(THREE.RoundedBoxGeometry) return new THREE.RoundedBoxGeometry(w, h, d, 3, r);
+    return new THREE.BoxGeometry(w, h, d);
+  }
+  /* Soft round sprite for particle points (hard squares are banned). */
+  var kkSoftTex = null;
+  function kkGetSoftTex(){
+    if(kkSoftTex) return kkSoftTex;
+    var c = document.createElement("canvas"); c.width = c.height = 64;
+    var g = c.getContext("2d"), gr = g.createRadialGradient(32, 32, 2, 32, 32, 30);
+    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.5, "rgba(255,255,255,.55)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    kkSoftTex = new THREE.CanvasTexture(c);
+    return kkSoftTex;
+  }
+  function kkMakeParticles(n, size, additive, opacity){
+    var geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+    for(var i = 0; i < n; i++) pos[i * 3 + 1] = -999;
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    var mat = new THREE.PointsMaterial({ size: size, map: kkGetSoftTex(), transparent: true, depthWrite: false,
+      vertexColors: true, opacity: opacity, blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending });
+    var points = new THREE.Points(geo, mat);
+    points.frustumCulled = false;
+    return { points: points, pos: pos, col: col, vel: new Float32Array(n * 3),
+             life: new Float32Array(n), max: new Float32Array(n), grav: 0, head: 0, n: n };
+  }
+  function kkSpawn(P, x, y, z, vx, vy, vz, life, r, g, b){
+    var i = P.head; P.head = (P.head + 1) % P.n;
+    P.pos[i * 3] = x; P.pos[i * 3 + 1] = y; P.pos[i * 3 + 2] = z;
+    P.vel[i * 3] = vx; P.vel[i * 3 + 1] = vy; P.vel[i * 3 + 2] = vz;
+    P.col[i * 3] = r; P.col[i * 3 + 1] = g; P.col[i * 3 + 2] = b;
+    P.life[i] = life; P.max[i] = life;
+  }
+  function kkBurst(P, x, y, z, count, color, spread, up, life){
+    var c = new THREE.Color(color);
+    for(var i = 0; i < count; i++){
+      kkSpawn(P, x, y, z, (Math.random() - 0.5) * spread, Math.random() * up, (Math.random() - 0.5) * spread,
+        life * (0.5 + Math.random() * 0.7), c.r, c.g, c.b);
+    }
+  }
+  function kkUpdateParticles(P, dt){
+    for(var i = 0; i < P.n; i++){
+      if(P.life[i] <= 0) continue;
+      P.life[i] -= dt;
+      if(P.life[i] <= 0){ P.pos[i * 3 + 1] = -999; continue; }
+      P.vel[i * 3 + 1] -= P.grav * dt;
+      P.pos[i * 3] += P.vel[i * 3] * dt;
+      P.pos[i * 3 + 1] += P.vel[i * 3 + 1] * dt;
+      P.pos[i * 3 + 2] += P.vel[i * 3 + 2] * dt;
+      if(P.pos[i * 3 + 1] < 0.05 && P.grav > 0) P.pos[i * 3 + 1] = 0.05;
+    }
+    P.points.geometry.attributes.position.needsUpdate = true;
+    P.points.geometry.attributes.color.needsUpdate = true;
+  }
+  function kkNameSprite(name){
+    var c = document.createElement("canvas"); c.width = 256; c.height = 64;
+    var tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+    var spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+    spr.scale.set(3.8, 0.95, 1); spr.position.y = 2.25;
+    spr.userData.canvas = c; spr.userData.tex = tex;
+    kkDrawName(spr, name);
+    return spr;
+  }
+  function kkDrawName(spr, name){
+    var g = spr.userData.canvas.getContext("2d");
+    g.clearRect(0, 0, 256, 64);
+    g.font = "800 30px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.lineWidth = 7; g.strokeStyle = "rgba(0,0,0,.65)"; g.strokeText(name, 128, 32);
+    g.fillStyle = "#fff"; g.fillText(name, 128, 32);
+    spr.userData.tex.needsUpdate = true;
+  }
+  function kkMakeDriver(kind, capColor){
+    var g = new THREE.Group();
+    if(kind === "carrot"){
+      var body = new THREE.Mesh(new THREE.ConeGeometry(0.42, 1.15, 14), std(0xe8762a, 0.6));
+      body.rotation.x = Math.PI; body.position.y = 0.55; g.add(body);
+      for(var i = 0; i < 3; i++){
+        var leaf = new THREE.Mesh(new THREE.ConeGeometry(0.11, 0.5, 8), std(0x2e8b3a, 0.7));
+        leaf.position.set((i - 1) * 0.14, 1.25, 0); leaf.rotation.z = (i - 1) * 0.35; g.add(leaf);
+      }
+    }else if(kind === "broccoli"){
+      var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.22, 0.5, 10), std(0xa8c686, 0.8));
+      stem.position.y = 0.25; g.add(stem);
+      var fm = std(0x2e7d32, 0.95);
+      [[0, 0.78, 0, 0.34], [0.24, 0.66, 0.08, 0.26], [-0.24, 0.66, -0.06, 0.26], [0.05, 0.68, -0.22, 0.25], [-0.04, 0.7, 0.22, 0.25]].forEach(function(s){
+        var m = new THREE.Mesh(new THREE.SphereGeometry(s[3], 12, 10), fm);
+        m.position.set(s[0], s[1], s[2]); g.add(m);
+      });
+    }else if(kind === "tomato"){
+      var tb = new THREE.Mesh(new THREE.SphereGeometry(0.48, 16, 12), std(0xd0342c, 0.45));
+      tb.position.y = 0.5; tb.scale.y = 0.92; g.add(tb);
+      var top = new THREE.Mesh(new THREE.ConeGeometry(0.3, 0.18, 6), std(0x2e8b3a, 0.7));
+      top.position.y = 0.95; g.add(top);
+    }else{ /* spud */
+      var sb = new THREE.Mesh(new THREE.SphereGeometry(0.5, 18, 14), std(0xc99a5b, 0.75));
+      sb.position.y = 0.52; sb.scale.set(1, 0.92, 0.95); g.add(sb);
+      var cap = new THREE.Mesh(new THREE.SphereGeometry(0.36, 14, 10), std(capColor, 0.55));
+      cap.scale.set(1, 0.45, 1); cap.position.y = 0.86; g.add(cap);
+      var eyeM = std(0x1c1c1c, 0.4);
+      [-0.16, 0.16].forEach(function(x){
+        var e = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 8), eyeM);
+        e.position.set(x, 0.58, 0.44); g.add(e);
+      });
+    }
+    g.traverse(function(m){ if(m.isMesh) m.castShadow = true; });
+    return g;
+  }
+  function kkMakeKart(bodyColor, driverKind){
+    var grp = new THREE.Group(), tilt = new THREE.Group();
+    grp.add(tilt);
+    var paint = new THREE.MeshPhysicalMaterial({ color: bodyColor, roughness: 0.32, metalness: 0.05, clearcoat: 1.0, clearcoatRoughness: 0.28 });
+    var dark = std(0x24262b, 0.7), chrome = new THREE.MeshStandardMaterial({ color: 0xd8dde3, roughness: 0.22, metalness: 0.95 });
+    var body = new THREE.Mesh(kkRBox(1.5, 0.45, 2.35, 0.14), paint);
+    body.position.y = 0.5; tilt.add(body);
+    var nose = new THREE.Mesh(kkRBox(1.14, 0.3, 0.8, 0.1), paint);
+    nose.position.set(0, 0.42, 1.32); tilt.add(nose);
+    var seat = new THREE.Mesh(kkRBox(0.95, 0.55, 0.3, 0.08), dark);
+    seat.position.set(0, 0.82, -0.72); tilt.add(seat);
+    var wing = new THREE.Mesh(kkRBox(1.55, 0.09, 0.42, 0.03), paint);
+    wing.position.set(0, 1.0, -1.18); tilt.add(wing);
+    [-0.55, 0.55].forEach(function(x){
+      var strut = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.42, 0.09), dark);
+      strut.position.set(x, 0.78, -1.18); tilt.add(strut);
+      var pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.42, 10), chrome);
+      pipe.rotation.x = Math.PI / 2; pipe.position.set(x * 0.55, 0.42, -1.32); tilt.add(pipe);
+    });
+    var wheelG = new THREE.TorusGeometry(0.17, 0.045, 8, 18);
+    var wheel = new THREE.Mesh(wheelG, dark);
+    wheel.position.set(0, 0.88, 0.42); wheel.rotation.x = 0.5; tilt.add(wheel);
+    var driver = kkMakeDriver(driverKind, bodyColor);
+    driver.position.set(0, 0.72, -0.28); tilt.add(driver);
+    var tireM = std(0x17181c, 0.92), hubM = chrome;
+    var wheels = [];
+    [[-0.84, 0.36, 0.82, true], [0.84, 0.36, 0.82, true], [-0.86, 0.43, -0.8, false], [0.86, 0.43, -0.8, false]].forEach(function(w){
+      var pivot = new THREE.Group(); pivot.position.set(w[0], w[1], w[2]);
+      var tire = new THREE.Mesh(new THREE.CylinderGeometry(w[1], w[1], 0.3, 18), tireM);
+      tire.rotation.z = Math.PI / 2; pivot.add(tire);
+      var hub = new THREE.Mesh(new THREE.CylinderGeometry(w[1] * 0.45, w[1] * 0.45, 0.32, 12), hubM);
+      hub.rotation.z = Math.PI / 2; pivot.add(hub);
+      tilt.add(pivot);
+      wheels.push({ pivot: pivot, tire: tire, hub: hub, front: w[3], r: w[1] });
+    });
+    var flame = new THREE.Mesh(new THREE.ConeGeometry(0.24, 1.1, 10),
+      new THREE.MeshBasicMaterial({ color: 0xff8c2e, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false }));
+    flame.rotation.x = -Math.PI / 2; flame.position.set(0, 0.44, -1.75); flame.visible = false;
+    tilt.add(flame);
+    grp.traverse(function(m){ if(m.isMesh && m !== flame) m.castShadow = true; });
+    return { grp: grp, tilt: tilt, wheels: wheels, flame: flame, paint: paint };
+  }
+  function kkPosAt(u, lat){
+    var f = ((u % 1) + 1) % 1, fi = f * KK_N, i0 = Math.floor(fi) % KK_N, fr = fi - Math.floor(fi);
+    var a = kk.samples[i0], b = kk.samples[(i0 + 1) % KK_N];
+    var x = a.x + (b.x - a.x) * fr, z = a.z + (b.z - a.z) * fr;
+    var nx = a.nx + (b.nx - a.nx) * fr, nz = a.nz + (b.nz - a.nz) * fr;
+    var tx = a.tx + (b.tx - a.tx) * fr, tz = a.tz + (b.tz - a.tz) * fr;
+    return { x: x + nx * lat, z: z + nz * lat, tx: tx, tz: tz, nx: nx, nz: nz };
+  }
+  function kkInit(){
+    if(kkRenderer) return true;
+    try{ kkRenderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" }); }
+    catch(e){ kkSetMsg("WebGL isn't available in this browser."); return false; }
+    kkRenderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    kkRenderer.shadowMap.enabled = true;
+    kkRenderer.shadowMap.type = THREE.PCFShadowMap;
+    kkRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    kkRenderer.toneMappingExposure = 1.07;
+    kkRenderer.outputColorSpace = THREE.SRGBColorSpace;
+    kkMount.appendChild(kkRenderer.domElement);
+    kkScene = new THREE.Scene();
+    kkScene.fog = new THREE.Fog(0xdcecf7, 130, 520);
+    try{
+      // Environment reflections from a painted equirect sky (cheap —
+      // no PMREM render pass): clearcoat paint and gold coins pick up
+      // the sky, sun blob and green ground bounce.
+      var envC = document.createElement("canvas"); envC.width = 512; envC.height = 256;
+      var eg = envC.getContext("2d");
+      var grad = eg.createLinearGradient(0, 0, 0, 256);
+      grad.addColorStop(0, "#2e63c8"); grad.addColorStop(0.42, "#9fd0ff");
+      grad.addColorStop(0.52, "#ffe3b3"); grad.addColorStop(0.58, "#7aa653"); grad.addColorStop(1, "#3f6b2f");
+      eg.fillStyle = grad; eg.fillRect(0, 0, 512, 256);
+      var sunG = eg.createRadialGradient(360, 92, 4, 360, 92, 60);
+      sunG.addColorStop(0, "rgba(255,246,200,1)"); sunG.addColorStop(1, "rgba(255,246,200,0)");
+      eg.fillStyle = sunG; eg.fillRect(280, 20, 170, 150);
+      var envTex = new THREE.CanvasTexture(envC);
+      envTex.mapping = THREE.EquirectangularReflectionMapping;
+      envTex.colorSpace = THREE.SRGBColorSpace;
+      kkScene.environment = envTex;
+    }catch(e){}
+    kkCam = new THREE.PerspectiveCamera(64, 1.6, 0.1, 1600);
+    // Sky dome: gradient shader + sun glow sprite
+    var sky = new THREE.Mesh(new THREE.SphereGeometry(760, 28, 18), new THREE.ShaderMaterial({
+      side: THREE.BackSide, depthWrite: false, fog: false,
+      uniforms: { top: { value: new THREE.Color(0x2e63c8) }, mid: { value: new THREE.Color(0x9fd0ff) }, bot: { value: new THREE.Color(0xffe3b3) } },
+      vertexShader: "varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+      fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 mid; uniform vec3 bot;" +
+        "void main(){ float h = normalize(vP).y;" +
+        " vec3 c = h > 0.10 ? mix(mid, top, smoothstep(0.10, 0.65, h)) : mix(bot, mid, smoothstep(-0.06, 0.10, h));" +
+        " gl_FragColor = vec4(c, 1.0); }"
+    }));
+    kkScene.add(sky);
+    var glowTex = kkGetSoftTex();
+    var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffe9a8, transparent: true, opacity: 0.9, depthWrite: false, fog: false }));
+    glow.scale.set(190, 190, 1); glow.position.set(260, 330, 150);
+    kkScene.add(glow);
+    // Lights: hemisphere fill + shadow-casting sun + warm bounce
+    kkScene.add(new THREE.HemisphereLight(0xbfd9ff, 0x56743c, 0.85));
+    kkSun = new THREE.DirectionalLight(0xffe3b3, 1.75);
+    kkSun.castShadow = true;
+    kkSun.shadow.mapSize.set(2048, 2048);
+    kkSun.shadow.camera.left = -52; kkSun.shadow.camera.right = 52;
+    kkSun.shadow.camera.top = 52; kkSun.shadow.camera.bottom = -52;
+    kkSun.shadow.camera.near = 5; kkSun.shadow.camera.far = 160;
+    kkSun.shadow.bias = -0.0004; kkSun.shadow.normalBias = 0.03;
+    kkScene.add(kkSun); kkScene.add(kkSun.target);
+    var bounce = new THREE.DirectionalLight(0xffd9b0, 0.3);
+    bounce.position.set(-30, 18, -40); kkScene.add(bounce);
+    // Ground
+    var grassTex = kkCanvasTex(256, 256, function(g){
+      g.fillStyle = "#4d8a3d"; g.fillRect(0, 0, 256, 256);
+      for(var i = 0; i < 2600; i++){
+        g.fillStyle = ["#457c36", "#57a047", "#3f7431", "#5da34c"][(Math.random() * 4) | 0];
+        g.fillRect(Math.random() * 256, Math.random() * 256, 3, 3);
+      }
+    }, 70, 70);
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1 }));
+    ground.rotation.x = -Math.PI / 2; ground.position.y = -0.06; ground.receiveShadow = true;
+    kkScene.add(ground);
+    // Distant hills + drifting clouds (shared by both tracks)
+    var hillM = std(0x6f9a58, 1);
+    for(var hi = 0; hi < 8; hi++){
+      var ha = hi / 8 * Math.PI * 2 + 0.4, hr = 330 + (hi % 3) * 60;
+      var hill = new THREE.Mesh(new THREE.SphereGeometry(90 + (hi % 4) * 26, 18, 12), hillM);
+      hill.scale.y = 0.32; hill.position.set(Math.cos(ha) * hr, -6, Math.sin(ha) * hr);
+      kkScene.add(hill);
+    }
+    var cloudM = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
+    for(var ci = 0; ci < 9; ci++){
+      var cg = new THREE.Group();
+      var puffs = 3 + (ci % 3);
+      for(var pi = 0; pi < puffs; pi++){
+        var pm = new THREE.Mesh(new THREE.SphereGeometry(4 + ((ci + pi) % 3) * 1.6, 12, 10), cloudM);
+        pm.scale.y = 0.45; pm.position.set(pi * 5 - puffs * 2.4, (pi % 2) * 1.1, (pi % 3) - 1);
+        cg.add(pm);
+      }
+      cg.position.set((kkRand() - 0.5) * 560, 58 + kkRand() * 34, (kkRand() - 0.5) * 560);
+      kkScene.add(cg); kk.clouds.push(cg);
+    }
+    kkBuildCircuit();
+    kkBuildOval();
+    // Racers
+    var kinds = ["spud", "carrot", "broccoli", "tomato"];
+    for(var ri = 0; ri < 4; ri++){
+      var built = kkMakeKart(KK_COLORS[ri], kinds[ri]);
+      var spr = kkNameSprite(KK_NAMES[ri]);
+      if(ri === 0) spr.visible = false;
+      built.grp.add(spr);
+      kkScene.add(built.grp);
+      kk.racers.push({ mesh: built.grp, tilt: built.tilt, wheels: built.wheels, flame: built.flame,
+        paint: built.paint, nameSpr: spr, isPlayer: ri === 0, cls: KK_CLASSES.balanced, vmaxMul: 1,
+        x: 0, z: 0, y: 0, th: 0, vth: 0, v: 0, vy: 0, air: false, hop: false, tricked: false, trickT: 0,
+        driftDir: 0, charge: 0, boostT: 0, starT: 0, spinT: 0, item: null, coins: 0,
+        prog: 0, prevIdxF: 0, nearIdx: 0, startProg: 0, lat: 0, offroad: false,
+        finished: false, finishTime: 0, pairCd: {}, srv: null,
+        ai: { offset: [-2.4, 0.4, 2.5][ri - 1] || 0, skill: [0, 0.945, 0.972, 1.0][ri], phase: ri * 2.1, itemT: 6 + ri * 3.5, driftHeld: false } });
+    }
+    kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
+    // Slick + rocket pools
+    var slickM = new THREE.MeshStandardMaterial({ color: 0xf7d154, roughness: 0.25, metalness: 0.05 });
+    for(var si = 0; si < 12; si++){
+      var sm = new THREE.Mesh(new THREE.CylinderGeometry(1.05, 1.05, 0.09, 18), slickM);
+      sm.position.y = -999; sm.castShadow = false; kkScene.add(sm);
+      kk.slicks.push({ mesh: sm, active: false, x: 0, z: 0, age: 0, life: 0, owner: null });
+    }
+    var rocketBody = new THREE.Group();
+    var rc = new THREE.Mesh(new THREE.ConeGeometry(0.3, 1.5, 12), std(0xe8762a, 0.5));
+    rc.rotation.x = Math.PI / 2; rocketBody.add(rc);
+    var rl = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.5, 8), std(0x2e8b3a, 0.7));
+    rl.rotation.x = -Math.PI / 2; rl.position.z = -0.9; rocketBody.add(rl);
+    for(var rki = 0; rki < 3; rki++){
+      var rm = rocketBody.clone();
+      rm.position.y = -999; rm.visible = false; kkScene.add(rm);
+      kk.rockets.push({ mesh: rm, active: false, x: 0, z: 0, th: 0, life: 0, grace: 0, owner: null, target: null });
+    }
+    // Particles
+    kkSpark = kkMakeParticles(420, 0.5, true, 0.95); kkSpark.grav = 3.5;
+    kkScene.add(kkSpark.points);
+    kkDust = kkMakeParticles(260, 0.9, false, 0.4); kkDust.grav = -0.4;
+    kkScene.add(kkDust.points);
+    // Post: bloom (guarded — plain render if the composer won't build)
+    try{
+      kkComposer = new THREE.EffectComposer(kkRenderer);
+      kkComposer.addPass(new THREE.RenderPass(kkScene, kkCam));
+      kkComposer.addPass(new THREE.UnrealBloomPass(new THREE.Vector2(640, 400), 0.35, 0.55, 0.82));
+      kkComposer.addPass(new THREE.OutputPass());
+    }catch(e){ kkComposer = null; }
+    kk.ok = true;
+    kkResize();
+    kkResetGrid();
+    kkFrame();
+    kk.last = performance.now();
+    requestAnimationFrame(kkLoop);
+    if("IntersectionObserver" in window && kkMount){
+      new IntersectionObserver(function(en){ kk.inView = en[0].isIntersecting; }, { threshold: 0.02 }).observe(kkMount);
+    }
+    return true;
+  }
+  function kkResize(){
+    if(!kkRenderer) return;
+    var w = kkMount.clientWidth || 640, h = kkMount.clientHeight || 400;
+    kkRenderer.setSize(w, h);
+    if(kkComposer) kkComposer.setSize(w, h);
+    kkCam.aspect = w / h;
+    kkCam.updateProjectionMatrix();
+  }
+  function kkRibbon(pts, w0, w1, mat, uvScale){
+    // pts: [{x,z,nx,nz}] closed loop; ribbon between lateral w0..w1
+    var n = pts.length, pos = [], uv = [], idx = [], dist = 0;
+    for(var i = 0; i <= n; i++){
+      var p = pts[i % n];
+      if(i > 0){ var q = pts[(i - 1) % n]; dist += Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.z - q.z) * (p.z - q.z)); }
+      pos.push(p.x + p.nx * w0, 0, p.z + p.nz * w0, p.x + p.nx * w1, 0, p.z + p.nz * w1);
+      uv.push(0, dist / uvScale, 1, dist / uvScale);
+      if(i < n){ var a = i * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(idx); geo.computeVertexNormals();
+    var m = new THREE.Mesh(geo, mat);
+    m.receiveShadow = true;
+    return m;
+  }
+  function kkArch(texMat){
+    var g = new THREE.Group();
+    var postM = std(0x8a8578, 0.9);
+    [-6.6, 6.6].forEach(function(x){
+      var p = new THREE.Mesh(new THREE.BoxGeometry(0.8, 6.4, 0.8), postM);
+      p.position.set(x, 3.2, 0); p.castShadow = true; g.add(p);
+    });
+    var banner = new THREE.Mesh(new THREE.BoxGeometry(14, 1.7, 0.5), texMat);
+    banner.position.y = 6.6; banner.castShadow = true; g.add(banner);
+    return g;
+  }
+  function kkBannerTex(text){
+    return new THREE.MeshStandardMaterial({ map: kkCanvasTex(512, 64, function(g, w, h){
+      g.fillStyle = "#003399"; g.fillRect(0, 0, w, h);
+      g.strokeStyle = "#f5b301"; g.lineWidth = 5; g.strokeRect(4, 4, w - 8, h - 8);
+      g.font = "800 34px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "#fff"; g.fillText(text, w / 2, h / 2 + 1);
+    }), roughness: 0.6 });
+  }
+  function kkBuildCircuit(){
+    kkCircuit = new THREE.Group();
+    var ctrl = [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]]
+      .map(function(p){ return new THREE.Vector3(p[0], 0, p[1]); });
+    var curve = new THREE.CatmullRomCurve3(ctrl, true, "centripetal", 0.5);
+    kk.trackLen = curve.getLength();
+    for(var i = 0; i < KK_N; i++){
+      var u = i / KK_N, p = curve.getPointAt(u), t = curve.getTangentAt(u);
+      kk.samples.push({ x: p.x, z: p.z, tx: t.x, tz: t.z, nx: t.z, nz: -t.x, seg: kk.trackLen / KK_N });
+    }
+    var asphalt = new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 256, function(g){
+      g.fillStyle = "#3c3f45"; g.fillRect(0, 0, 256, 256);
+      for(var i = 0; i < 1500; i++){ g.fillStyle = Math.random() < 0.5 ? "#34373d" : "#45484f"; g.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
+      g.fillStyle = "rgba(255,255,255,.5)";
+      for(var d = 0; d < 256; d += 32) g.fillRect(124, d, 8, 18);
+    }, 1, 1), roughness: 0.95 });
+    asphalt.map.repeat.set(1, 1);
+    var road = kkRibbon(kk.samples, -5.6, 5.6, asphalt, 7);
+    road.material.map = asphalt.map;
+    kkCircuit.add(road);
+    var curbTex = kkCanvasTex(128, 32, function(g){
+      g.fillStyle = "#d0342c"; g.fillRect(0, 0, 128, 16); g.fillStyle = "#f4f1e8"; g.fillRect(0, 16, 128, 16);
+    }, 1, 1);
+    var curbM = new THREE.MeshStandardMaterial({ map: curbTex, roughness: 0.8 });
+    kkCircuit.add(kkRibbon(kk.samples, -6.4, -5.6, curbM, 4));
+    kkCircuit.add(kkRibbon(kk.samples, 5.6, 6.4, curbM, 4));
+    // Start line + arch
+    var s0 = kkPosAt(0, 0);
+    var line = new THREE.Mesh(new THREE.PlaneGeometry(11.2, 2.6), new THREE.MeshStandardMaterial({ map: kkCanvasTex(128, 32, function(g){
+      for(var y = 0; y < 4; y++) for(var x = 0; x < 8; x++){ g.fillStyle = (x + y) % 2 ? "#111" : "#fff"; g.fillRect(x * 16, y * 8, 16, 8); }
+    }), roughness: 0.85 }));
+    line.rotation.x = -Math.PI / 2; line.rotation.z = Math.atan2(s0.tx, s0.tz);
+    line.position.set(s0.x, 0.02, s0.z);
+    kkCircuit.add(line);
+    var arch = kkArch(kkBannerTex("SPUD KART 3D"));
+    arch.position.set(s0.x, 0, s0.z);
+    arch.rotation.y = Math.atan2(s0.tx, s0.tz);
+    kkCircuit.add(arch);
+    // Trees + hay bales placed clear of the road
+    var trunkM = std(0x6b4a2b, 0.95), leafM = std(0x2e7d32, 0.95), leaf2M = std(0x3f9142, 0.95);
+    function nearRoad(x, z, d){
+      for(var i = 0; i < KK_N; i += 8){
+        var s = kk.samples[i], dx = x - s.x, dz = z - s.z;
+        if(dx * dx + dz * dz < d * d) return true;
+      }
+      return false;
+    }
+    for(var ti = 0; ti < 52; ti++){
+      var tx2 = (kkRand() - 0.5) * 330, tz2 = (kkRand() - 0.5) * 300;
+      if(nearRoad(tx2, tz2, 11.5)) continue;
+      var tree = new THREE.Group();
+      var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.4, 2.4, 8), trunkM);
+      trunk.position.y = 1.2; trunk.castShadow = true; tree.add(trunk);
+      var lm = ti % 2 ? leafM : leaf2M;
+      var c1 = new THREE.Mesh(new THREE.ConeGeometry(1.9, 3.6, 10), lm);
+      c1.position.y = 4.1; c1.castShadow = true; tree.add(c1);
+      var c2 = new THREE.Mesh(new THREE.ConeGeometry(1.35, 2.6, 10), lm);
+      c2.position.y = 5.9; c2.castShadow = true; tree.add(c2);
+      var sc = 0.8 + kkRand() * 0.7;
+      tree.scale.setScalar(sc); tree.position.set(tx2, 0, tz2); tree.rotation.y = kkRand() * 3;
+      kkCircuit.add(tree);
+    }
+    var baleM = std(0xd9b84a, 0.95);
+    for(var bi = 0; bi < 12; bi++){
+      var bu = kkRand(), bl = (bi % 2 ? 1 : -1) * (8.5 + kkRand() * 3);
+      var bp = kkPosAt(bu, bl);
+      var bale = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 1.5, 14), baleM);
+      bale.rotation.z = Math.PI / 2; bale.rotation.y = kkRand() * 3;
+      bale.position.set(bp.x, 1.1, bp.z); bale.castShadow = true;
+      kkCircuit.add(bale);
+    }
+    // Grandstand by the start line
+    var gs = new THREE.Group(), gsM = std(0xb9c2cc, 0.8), gsRoof = std(0xc1272d, 0.7);
+    for(var row = 0; row < 4; row++){
+      var bench = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 1.6), gsM);
+      bench.position.set(0, 0.6 + row * 0.85, -row * 1.5); bench.castShadow = true; gs.add(bench);
+    }
+    var roof = new THREE.Mesh(new THREE.BoxGeometry(17, 0.25, 8), gsRoof);
+    roof.position.set(0, 5.2, -2.4); roof.rotation.x = 0.16; roof.castShadow = true; gs.add(roof);
+    var gp = kkPosAt(0.995, -13.5);
+    gs.position.set(gp.x, 0, gp.z);
+    gs.rotation.y = Math.atan2(gp.tx, gp.tz) + Math.PI;
+    kkCircuit.add(gs);
+    // Item crates
+    var crateTex = kkCanvasTex(128, 128, function(g){
+      g.fillStyle = "#e8762a"; g.fillRect(0, 0, 128, 128);
+      g.strokeStyle = "#8a4a12"; g.lineWidth = 8; g.strokeRect(6, 6, 116, 116);
+      g.font = "800 74px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillStyle = "#fff"; g.fillText("?", 64, 70);
+    });
+    var crateM = new THREE.MeshStandardMaterial({ map: crateTex, roughness: 0.5, emissive: 0x903c00, emissiveIntensity: 0.35 });
+    [0.07, 0.24, 0.41, 0.58, 0.75, 0.9].forEach(function(u, i){
+      var lat = i % 2 ? 2.6 : -2.6, p = kkPosAt(u, lat);
+      var m = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), crateM);
+      m.position.set(p.x, 1.05, p.z); m.castShadow = true;
+      kkCircuit.add(m);
+      kk.boxes.push({ mesh: m, x: p.x, z: p.z, u: u, active: true, respawnT: 0, spin: i * 1.3 });
+    });
+    // Spud Coin arcs
+    var coinM = new THREE.MeshStandardMaterial({ color: 0xf5b301, roughness: 0.24, metalness: 1.0, emissive: 0x694d00, emissiveIntensity: 0.4 });
+    [0.15, 0.33, 0.5, 0.67, 0.84, 0.935].forEach(function(u){
+      for(var k = 0; k < 5; k++){
+        var p2 = kkPosAt(u + k * 0.0045, Math.sin(k * 1.1) * 1.6);
+        var cm = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.12, 18), coinM);
+        cm.rotation.x = Math.PI / 2; cm.rotation.z = -Math.atan2(p2.tx, p2.tz);
+        cm.position.set(p2.x, 0.95, p2.z);
+        kkCircuit.add(cm);
+        kk.coins.push({ mesh: cm, x: p2.x, z: p2.z, taken: false, spin: k * 0.7 });
+      }
+    });
+    // Ramps
+    var rampTex = kkCanvasTex(128, 128, function(g){
+      g.fillStyle = "#e8762a"; g.fillRect(0, 0, 128, 128);
+      g.fillStyle = "#fff";
+      for(var i = 0; i < 4; i++){ g.beginPath(); g.moveTo(14 + i * 30, 96); g.lineTo(28 + i * 30, 40); g.lineTo(42 + i * 30, 96); g.fill(); }
+    });
+    [0.365, 0.795].forEach(function(u){
+      var p3 = kkPosAt(u, 0);
+      var wedge = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.5, 3.6), new THREE.MeshStandardMaterial({ map: rampTex, roughness: 0.7 }));
+      wedge.position.set(p3.x, 0.42, p3.z);
+      wedge.rotation.y = Math.atan2(p3.tx, p3.tz);
+      wedge.rotateX(-0.30);
+      wedge.castShadow = true;
+      kkCircuit.add(wedge);
+      kk.ramps.push({ u: u, x: p3.x, z: p3.z });
+    });
+    kkScene.add(kkCircuit);
+  }
+  function kkBuildOval(){
+    kkOval = new THREE.Group();
+    // The basement server's track: ellipse radii (228,118) in a 640x360
+    // field, road where the normalised radius is 0.70..1.30, scaled by KK_SRV_S.
+    function ellPt(f, t){ return { x: 228 * f * Math.cos(t) * KK_SRV_S, z: 118 * f * Math.sin(t) * KK_SRV_S }; }
+    var ptsIn = [], ptsMid = [], M = 160;
+    for(var i = 0; i < M; i++){
+      var t = i / M * Math.PI * 2, a = ellPt(0.7, t), b = ellPt(1.3, t), mid = ellPt(1.0, t);
+      var nx = mid.x, nz = mid.z, nl = Math.sqrt(nx * nx + nz * nz) || 1;
+      ptsIn.push({ x: a.x, z: a.z, nx: nx / nl, nz: nz / nl });
+      ptsMid.push({ x: (a.x + b.x) / 2, z: (a.z + b.z) / 2, nx: nx / nl, nz: nz / nl, w: Math.sqrt((b.x - a.x) * (b.x - a.x) + (b.z - a.z) * (b.z - a.z)) });
+    }
+    var asphalt = new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 256, function(g){
+      g.fillStyle = "#3c3f45"; g.fillRect(0, 0, 256, 256);
+      for(var i = 0; i < 1500; i++){ g.fillStyle = Math.random() < 0.5 ? "#34373d" : "#45484f"; g.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
+    }), roughness: 0.95 });
+    // Variable-width ribbon: inner edge ptsIn, outer = inner + normal * local width
+    var pos = [], uv = [], idx = [], dist = 0;
+    for(var j = 0; j <= M; j++){
+      var pm = ptsMid[j % M], pn = ptsIn[j % M];
+      if(j > 0) dist += 1;
+      pos.push(pn.x, 0, pn.z, pn.x + pm.nx * pm.w, 0, pn.z + pm.nz * pm.w);
+      uv.push(0, dist / 7, 1, dist / 7);
+      if(j < M){ var a2 = j * 2; idx.push(a2, a2 + 2, a2 + 1, a2 + 1, a2 + 2, a2 + 3); }
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(idx); geo.computeVertexNormals();
+    var road = new THREE.Mesh(geo, asphalt); road.receiveShadow = true;
+    kkOval.add(road);
+    // Curb rings (thin ribbons just inside/outside the road edges)
+    var curbM = new THREE.MeshBasicMaterial({ color: 0xd0342c, side: THREE.DoubleSide });
+    [0.70, 1.30].forEach(function(f){
+      var pts = [];
+      for(var i = 0; i < M; i++){
+        var t2 = i / M * Math.PI * 2, e = ellPt(f, t2), mm = ellPt(1.0, t2);
+        var nl2 = Math.sqrt(mm.x * mm.x + mm.z * mm.z) || 1;
+        pts.push({ x: e.x, z: e.z, nx: mm.x / nl2, nz: mm.z / nl2 });
+      }
+      kkOval.add(kkRibbon(pts, f < 1 ? -0.55 : 0, f < 1 ? 0 : 0.55, curbM, 4));
+    });
+    // Start line at the server's grid angle (bottom of the oval)
+    var ga = Math.PI / 2 + 0.16, sp = ellPt(1.0, ga);
+    var line = new THREE.Mesh(new THREE.PlaneGeometry(13.5, 2.6), new THREE.MeshStandardMaterial({ map: kkCanvasTex(128, 32, function(g){
+      for(var y = 0; y < 4; y++) for(var x = 0; x < 8; x++){ g.fillStyle = (x + y) % 2 ? "#111" : "#fff"; g.fillRect(x * 16, y * 8, 16, 8); }
+    }), roughness: 0.85 }));
+    line.rotation.x = -Math.PI / 2; line.rotation.z = -ga;
+    line.position.set(sp.x, 0.02, sp.z);
+    kkOval.add(line);
+    var arch = kkArch(kkBannerTex("BASEMENT OVAL"));
+    arch.position.set(sp.x, 0, sp.z);
+    arch.rotation.y = Math.atan2(-228 * Math.sin(ga), 118 * Math.cos(ga));
+    kkOval.add(arch);
+    var baleM = std(0xd9b84a, 0.95);
+    for(var bi = 0; bi < 10; bi++){
+      var bt = bi / 10 * Math.PI * 2 + 0.3, bp = ellPt(1.62, bt);
+      var bale = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 1.5, 14), baleM);
+      bale.rotation.z = Math.PI / 2; bale.position.set(bp.x, 1.1, bp.z); bale.castShadow = true;
+      kkOval.add(bale);
+    }
+    kkOval.visible = false;
+    kkScene.add(kkOval);
+  }
+  function kkResetGrid(){
+    var spots = [[-9, -2.6], [-9, 2.6], [-21, 2.6], [-21, -2.6]];
+    kk.racers.forEach(function(r, i){
+      var idxF = KK_N + spots[i][0];
+      var sm = kk.samples[((idxF % KK_N) + KK_N) % KK_N];
+      r.x = sm.x + sm.nx * spots[i][1]; r.z = sm.z + sm.nz * spots[i][1];
+      r.th = Math.atan2(sm.tx, sm.tz); r.vth = r.th;
+      r.y = 0; r.v = 0; r.vy = 0; r.air = false; r.hop = false; r.tricked = false; r.trickT = 0;
+      r.driftDir = 0; r.charge = 0; r.boostT = 0; r.starT = 0; r.spinT = 0; r.item = null; r.coins = 0;
+      r.nearIdx = ((idxF % KK_N) + KK_N) % KK_N; r.prevIdxF = idxF; r.prog = 0; r.startProg = 0;
+      r.finished = false; r.finishTime = 0; r.pairCd = {}; r.srv = null;
+      r.mesh.visible = true;
+      kkSyncMesh(r, 0);
+    });
+    kk.slicks.forEach(function(s){ s.active = false; s.mesh.position.y = -999; });
+    kk.rockets.forEach(function(s){ s.active = false; s.mesh.visible = false; });
+    kk.coins.forEach(function(c){ c.taken = false; c.mesh.visible = true; });
+    kk.boxes.forEach(function(b){ b.active = true; b.mesh.visible = true; b.respawnT = 0; });
+  }
+  function kkSyncMesh(r, dt){
+    r.mesh.position.set(r.x, r.y, r.z);
+    r.mesh.rotation.y = r.th;
+    var lean = 0;
+    if(r.driftDir) lean = -r.driftDir * 0.13;
+    r.tilt.rotation.z = lean;
+    r.tilt.rotation.x = r.air ? kkClamp(-r.vy * 0.02, -0.3, 0.35) : (r.boostT > 0 ? -0.04 : 0);
+    if(r.trickT > 0){ r.trickT -= dt; r.tilt.rotation.z = Math.sin((0.55 - r.trickT) / 0.55 * Math.PI * 2) * 1.2; }
+    var spin = r.v * dt;
+    r.wheels.forEach(function(w){
+      w.tire.rotation.x += spin / w.r; w.hub.rotation.x += spin / w.r;
+    });
+    var steerVis = r.isPlayer ? ((kk.keys.left ? 1 : 0) - (kk.keys.right ? 1 : 0)) : (r.aiSteer || 0);
+    r.wheels.forEach(function(w){ if(w.front) w.pivot.rotation.y = steerVis * 0.38; });
+    r.flame.visible = r.boostT > 0;
+    if(r.flame.visible) r.flame.scale.set(1, 0.8 + Math.random() * 0.5 + r.boostT * 0.3, 1);
+    if(r.starT > 0 && Math.random() < 0.5){
+      kkSpawn(kkSpark, r.x + (Math.random() - 0.5) * 1.6, 1 + Math.random(), r.z + (Math.random() - 0.5) * 1.6,
+        0, 1.5, 0, 0.5, 1, 0.95, 0.4);
+    }
+  }
+  function kkOrdinal(n){ return n === 1 ? "1st" : n === 2 ? "2nd" : n === 3 ? "3rd" : n + "th"; }
+  function kkScoreOf(r){ return r.finished ? 100000 - r.finishTime : r.prog - r.startProg; }
+  function kkRankOf(r){
+    var s = kkScoreOf(r), rank = 1;
+    kk.racers.forEach(function(o){ if(o !== r && kkScoreOf(o) > s) rank++; });
+    return rank;
+  }
+  function kkRollItem(rank){
+    var table = rank >= 4 ? [["star", 0.4], ["rocket", 0.3], ["boost", 0.3]]
+      : rank === 3 ? [["star", 0.26], ["rocket", 0.3], ["boost", 0.26], ["slick", 0.18]]
+      : rank === 2 ? [["rocket", 0.3], ["boost", 0.3], ["slick", 0.24], ["star", 0.16]]
+      : [["slick", 0.36], ["boost", 0.3], ["rocket", 0.2], ["star", 0.14]];
+    var x = Math.random(), acc = 0;
+    for(var i = 0; i < table.length; i++){ acc += table[i][1]; if(x <= acc) return table[i][0]; }
+    return "boost";
+  }
+  function kkUseItem(r){
+    if(r.air && !r.hop && r.v > 4){
+      if(!r.tricked){ r.tricked = true; r.trickT = 0.55; if(r.isPlayer) kkSetMsg("Trick! Land it for a boost."); }
+      return;
+    }
+    if(!r.item || r.spinT > 0 || r.finished) return;
+    var it = r.item; r.item = null;
+    if(it === "boost"){ r.boostT = Math.max(r.boostT, 1.05); if(r.isPlayer) kkBeep(920, 0.12, "square"); }
+    else if(it === "star"){ r.starT = 6; if(r.isPlayer){ kkSetMsg("Sour Cream Star — invincible! Bump rivals to spin them."); kkBeep(1180, 0.16, "square"); } }
+    else if(it === "slick"){
+      for(var i = 0; i < kk.slicks.length; i++){ var s = kk.slicks[i]; if(s.active) continue;
+        s.active = true; s.age = 0; s.life = 25; s.owner = r;
+        s.x = r.x - Math.sin(r.vth) * 2.3; s.z = r.z - Math.cos(r.vth) * 2.3;
+        s.mesh.position.set(s.x, 0.06, s.z); break; }
+      if(r.isPlayer) kkSetMsg("Butter Slick dropped — mind it next lap!");
+    }
+    else if(it === "rocket"){
+      for(var j = 0; j < kk.rockets.length; j++){ var rk = kk.rockets[j]; if(rk.active) continue;
+        rk.active = true; rk.owner = r; rk.life = 4; rk.grace = 0.35; rk.th = r.vth;
+        rk.x = r.x + Math.sin(r.vth) * 2; rk.z = r.z + Math.cos(r.vth) * 2;
+        rk.mesh.visible = true; rk.mesh.position.set(rk.x, 0.8, rk.z); rk.mesh.rotation.y = rk.th;
+        rk.target = null; var bestD = 1e12;
+        kk.racers.forEach(function(o){ if(o === r || o.finished) return; var d = o.prog - r.prog; if(d > 0 && d < bestD){ bestD = d; rk.target = o; } });
+        break; }
+      if(r.isPlayer) kkBeep(520, 0.1, "sawtooth");
+    }
+    if(r.isPlayer) kkHUD();
+  }
+  function kkProgress(r){
+    var best = 1e18, bi = r.nearIdx;
+    for(var o = -60; o <= 60; o++){
+      var i = ((r.nearIdx + o) % KK_N + KK_N) % KK_N, s = kk.samples[i];
+      var dx = r.x - s.x, dz = r.z - s.z, d = dx * dx + dz * dz;
+      if(d < best){ best = d; bi = i; }
+    }
+    r.nearIdx = bi;
+    var sm = kk.samples[bi];
+    var along = (r.x - sm.x) * sm.tx + (r.z - sm.z) * sm.tz;
+    var idxF = bi + kkClamp(along / sm.seg, -0.6, 1.4);
+    var dF = idxF - r.prevIdxF;
+    while(dF > KK_N / 2) dF -= KK_N;
+    while(dF < -KK_N / 2) dF += KK_N;
+    r.prog += dF; r.prevIdxF = idxF;
+    r.lat = (r.x - sm.x) * sm.nx + (r.z - sm.z) * sm.nz;
+    r.offroad = Math.abs(r.lat) > 5.6;
+    if(Math.abs(r.lat) > 30){
+      var push = (Math.abs(r.lat) - 30) * (r.lat > 0 ? 1 : -1);
+      r.x -= sm.nx * push; r.z -= sm.nz * push;
+      r.v *= 0.72;
+    }
+  }
+  function kkStepRacer(r, dt, inp){
+    if(r.boostT > 0) r.boostT -= dt;
+    if(r.starT > 0) r.starT -= dt;
+    if(r.finished) inp = { gas: false, brake: true, steer: 0, drift: false };
+    if(r.spinT > 0){
+      r.spinT -= dt;
+      r.v = Math.max(0, r.v - 30 * dt);
+      r.th += 8.5 * dt;
+      r.vth = r.th;
+    }else{
+      var cls = r.cls;
+      var vmax = (cls.vmax + Math.min(10, r.coins) * 0.3) * (r.vmaxMul || 1);
+      if(r.starT > 0) vmax += 3.5;
+      if(r.boostT > 0) vmax += 8;
+      if(r.offroad && !r.air) vmax = Math.min(vmax, 10.5);
+      if(inp.gas && !r.air){
+        var a = cls.accel * (1 - Math.max(0, r.v) / vmax);
+        if(r.boostT > 0) a += 26;
+        r.v += a * dt;
+      }else if(inp.brake){
+        if(r.v > 0.6) r.v -= 30 * dt; else r.v = Math.max(-8, r.v - 10 * dt);
+      }else{
+        r.v -= r.v * 0.55 * dt;
+        if(Math.abs(r.v) < 0.05) r.v = 0;
+      }
+      if(r.offroad && !r.air && r.v > vmax) r.v = Math.max(vmax, r.v - 34 * dt);
+      if(r.v > vmax * 1.3) r.v = vmax * 1.3;
+      var sf = Math.min(1, Math.abs(r.v) / 7) * (1 - 0.38 * Math.min(1, Math.abs(r.v) / 30));
+      if(!r.air && r.driftDir === 0 && inp.drift && inp.steer !== 0 && r.v > 7){
+        r.vy = 3.6; r.air = true; r.hop = true;
+      }
+      if(r.air){
+        r.th += inp.steer * 0.8 * sf * dt;
+      }else if(r.driftDir !== 0){
+        if(!inp.drift){
+          if(r.charge >= 1.55){ r.boostT = Math.max(r.boostT, 1.25); if(r.isPlayer){ kkSetMsg("Mini-turbo — full boost!"); kkBeep(880, 0.18, "square"); } }
+          else if(r.charge >= 0.8){ r.boostT = Math.max(r.boostT, 0.7); if(r.isPlayer){ kkSetMsg("Mini-turbo!"); kkBeep(740, 0.14, "square"); } }
+          r.driftDir = 0; r.charge = 0;
+        }else if(r.v < 3.5){
+          r.driftDir = 0; r.charge = 0;
+        }else{
+          var counter = inp.steer === -r.driftDir ? 1 : 0;
+          var into = inp.steer === r.driftDir ? 1 : 0;
+          r.charge += dt * (counter ? 1.35 : 0.85);
+          r.th += r.driftDir * (1.5 + counter * 0.55 - into * 0.25) * dt * Math.min(1, Math.abs(r.v) / 9);
+          r.vth = r.th - r.driftDir * 0.46;
+          r.v -= 1.6 * dt;
+          var col = r.charge >= 1.55 ? 0xff7b24 : r.charge >= 0.8 ? 0x3fa9ff : 0xffffff;
+          kkBurst(kkSpark, r.x - Math.sin(r.vth) * 1.1, 0.25, r.z - Math.cos(r.vth) * 1.1, 2, col, 2.2, 2.2, 0.4);
+        }
+      }else{
+        r.th += inp.steer * cls.yaw * sf * dt * (r.v < 0 ? -1 : 1);
+        var diff = kkAngDiff(r.th, r.vth);
+        r.vth += diff * Math.min(1, 11 * dt);
+      }
+    }
+    r.x += Math.sin(r.vth) * r.v * dt;
+    r.z += Math.cos(r.vth) * r.v * dt;
+    if(r.air){
+      r.y += r.vy * dt; r.vy -= 17 * dt;
+      if(r.y <= 0){
+        r.y = 0; r.air = false;
+        if(r.hop){
+          r.hop = false;
+          if(inp.drift && inp.steer !== 0 && r.spinT <= 0){ r.driftDir = inp.steer > 0 ? 1 : -1; r.charge = 0; r.vth = r.th - r.driftDir * 0.46; }
+        }else if(r.tricked){
+          r.tricked = false; r.boostT = Math.max(r.boostT, 0.85);
+          if(r.isPlayer){ kkSetMsg("Trick landed — boost!"); kkBeep(980, 0.15, "square"); }
+          kkBurst(kkSpark, r.x, 0.4, r.z, 14, 0xffd94d, 3, 3, 0.5);
+        }
+        kkBurst(kkDust, r.x, 0.2, r.z, 5, 0xcfc4a5, 2, 1.2, 0.5);
+      }
+    }
+    kkProgress(r);
+    if(!r.air && r.v > 11 && r.spinT <= 0){
+      for(var i = 0; i < kk.ramps.length; i++){
+        var rp = kk.ramps[i], dx = r.x - rp.x, dz = r.z - rp.z;
+        if(dx * dx + dz * dz < 7.5){ r.air = true; r.hop = false; r.vy = 6 + r.v * 0.16; break; }
+      }
+    }
+    if(r.offroad && r.v > 6 && Math.random() < 0.4) kkBurst(kkDust, r.x, 0.25, r.z, 1, 0x9db87a, 1.6, 1.6, 0.6);
+  }
+  function kkAIInput(r, dt){
+    var inp = { gas: true, brake: false, steer: 0, drift: false };
+    var ahead = 12 + Math.abs(r.v) * 0.55;
+    var ti = ((Math.round(r.prevIdxF + ahead) % KK_N) + KK_N) % KK_N;
+    var s = kk.samples[ti];
+    var off = r.ai.offset + Math.sin(kk.raceT * 0.35 + r.ai.phase) * 1.3;
+    var txp = s.x + s.nx * off, tzp = s.z + s.nz * off;
+    var desired = Math.atan2(txp - r.x, tzp - r.z);
+    var diff = kkAngDiff(desired, r.th);
+    inp.steer = kkClamp(diff * 2.4, -1, 1);
+    r.aiSteer = inp.steer;
+    var t2 = kk.samples[((Math.round(r.prevIdxF + 30) % KK_N) + KK_N) % KK_N];
+    var swing = kkAngDiff(Math.atan2(t2.tx, t2.tz), Math.atan2(s.tx, s.tz));
+    if(Math.abs(swing) > 0.5 && r.v > 17 && !r.air){
+      inp.drift = true;
+      if(Math.abs(diff) < 0.25) inp.steer = swing > 0 ? 1 : -1;
+    }
+    if(Math.abs(diff) > 2.3 && r.v > 13){ inp.gas = false; inp.brake = true; inp.drift = false; }
+    var p = kk.racers[0];
+    r.vmaxMul = kkClamp(r.ai.skill + (p.prog - r.prog) * 0.00045, 0.9, 1.1);
+    r.ai.itemT -= dt;
+    if(r.ai.itemT <= 0){
+      r.ai.itemT = 7 + Math.random() * 6;
+      if(r.item) kkUseItem(r);
+      else if(Math.random() < 0.55) r.item = kkRollItem(kkRankOf(r));
+    }
+    return inp;
+  }
+  function kkWorldStep(dt){
+    kk.boxes.forEach(function(b){
+      if(!b.active){ b.respawnT -= dt; if(b.respawnT <= 0){ b.active = true; b.mesh.visible = true; } return; }
+      kk.racers.forEach(function(r){
+        if(!b.active || r.item || r.air || r.finished) return;
+        var dx = r.x - b.x, dz = r.z - b.z;
+        if(dx * dx + dz * dz < 3.1){
+          r.item = kkRollItem(kkRankOf(r));
+          b.active = false; b.mesh.visible = false; b.respawnT = 5;
+          if(r.isPlayer){ kkSetMsg("Got: " + KK_ITEM_LABEL[r.item] + " — Use Item!"); kkBeep(1040, 0.1, "square"); kkHUD(); }
+        }
+      });
+    });
+    kk.coins.forEach(function(c){
+      if(c.taken) return;
+      kk.racers.forEach(function(r){
+        if(c.taken || r.air) return;
+        var dx = r.x - c.x, dz = r.z - c.z;
+        if(dx * dx + dz * dz < 1.7){
+          c.taken = true; c.mesh.visible = false;
+          if(r.coins < 10){ r.coins++; if(r.isPlayer){ kkBeep(1320, 0.07, "square"); kkBurst(kkSpark, c.x, 1, c.z, 6, 0xf5b301, 1.6, 2, 0.4); kkHUD(); } }
+        }
+      });
+    });
+    kk.slicks.forEach(function(s){
+      if(!s.active) return;
+      s.age += dt; s.life -= dt;
+      if(s.life <= 0){ s.active = false; s.mesh.position.y = -999; return; }
+      if(s.age < 0.6) return;
+      kk.racers.forEach(function(r){
+        if(!s.active || r.air || r.spinT > 0 || r.finished) return;
+        var dx = r.x - s.x, dz = r.z - s.z;
+        if(dx * dx + dz * dz < 1.35){
+          s.active = false; s.mesh.position.y = -999;
+          if(r.starT > 0) return;
+          r.spinT = 1.15; r.v *= 0.25;
+          if(r.isPlayer){ kkSetMsg("Butter Slick! You spun out."); kk.shake = 0.35; kkBeep(180, 0.25, "sawtooth"); }
+          kkBurst(kkSpark, r.x, 0.6, r.z, 12, 0xf7d154, 3, 3, 0.5);
+        }
+      });
+    });
+    kk.rockets.forEach(function(rk){
+      if(!rk.active) return;
+      rk.life -= dt; rk.grace -= dt;
+      if(rk.target && !rk.target.finished){
+        var want = Math.atan2(rk.target.x - rk.x, rk.target.z - rk.z);
+        rk.th += kkClamp(kkAngDiff(want, rk.th), -2.6 * dt, 2.6 * dt);
+      }
+      rk.x += Math.sin(rk.th) * 46 * dt; rk.z += Math.cos(rk.th) * 46 * dt;
+      rk.mesh.position.set(rk.x, 0.8, rk.z); rk.mesh.rotation.y = rk.th;
+      var dead = rk.life <= 0;
+      if(!dead && rk.grace <= 0){
+        for(var i = 0; i < kk.racers.length; i++){
+          var r = kk.racers[i];
+          if(r === rk.owner || r.finished) continue;
+          var dx = r.x - rk.x, dz = r.z - rk.z;
+          if(dx * dx + dz * dz < 1.6){
+            dead = true;
+            if(r.starT <= 0 && r.spinT <= 0){
+              r.spinT = 1.15; r.v *= 0.3;
+              if(r.isPlayer){ kkSetMsg("Carrot Rocket hit! You spun out."); kk.shake = 0.4; }
+              else if(rk.owner && rk.owner.isPlayer) kkSetMsg("Rocket hit " + KK_NAMES[kk.racers.indexOf(r)] + "!");
+              kkBurst(kkSpark, r.x, 0.8, r.z, 16, 0xe8762a, 3.5, 3.5, 0.5);
+            }
+            break;
+          }
+        }
+      }
+      if(dead){ rk.active = false; rk.mesh.visible = false; }
+    });
+    for(var a = 0; a < kk.racers.length; a++) for(var b2 = a + 1; b2 < kk.racers.length; b2++){
+      var ra = kk.racers[a], rb = kk.racers[b2];
+      var dx2 = rb.x - ra.x, dz2 = rb.z - ra.z, d2 = dx2 * dx2 + dz2 * dz2;
+      if(d2 >= 4.2 || d2 === 0) continue;
+      var key = a + "-" + b2;
+      if(ra.pairCd[key] && kk.raceT < ra.pairCd[key]) continue;
+      ra.pairCd[key] = kk.raceT + 0.3;
+      var dist = Math.sqrt(d2), push = (2.05 - dist) / 2, nx = dx2 / dist, nz = dz2 / dist;
+      ra.x -= nx * push; ra.z -= nz * push; rb.x += nx * push; rb.z += nz * push;
+      if(ra.starT > 0 && rb.starT <= 0 && rb.spinT <= 0){ rb.spinT = 1.0; rb.v *= 0.3; }
+      else if(rb.starT > 0 && ra.starT <= 0 && ra.spinT <= 0){ ra.spinT = 1.0; ra.v *= 0.3; }
+      else{ ra.v *= 0.5; rb.v *= 0.5; }
+      if(ra.isPlayer || rb.isPlayer){
+        kk.shake = Math.max(kk.shake, 0.22); kkBeep(140, 0.12, "sawtooth");
+        if(ra.starT <= 0 && rb.starT <= 0) kkSetMsg("Bump! Both karts shoved apart, speed halved.");
+      }
+      kkBurst(kkSpark, (ra.x + rb.x) / 2, 0.7, (ra.z + rb.z) / 2, 8, 0xffffff, 2.4, 2.4, 0.35);
+    }
+    kk.racers.forEach(function(r){
+      if(!r.finished && (r.prog - r.startProg) >= KK_N * 3){
+        r.finished = true; r.finishTime = kk.raceT;
+        if(r.isPlayer) kkFinishRace();
+        else kkSetMsg(KK_NAMES[kk.racers.indexOf(r)] + " finished " + kkOrdinal(kkRankOf(r)) + " in " + r.finishTime.toFixed(1) + " s.");
+      }
+    });
+  }
+  function kkFinishRace(){
+    kk.phase = "done";
+    var p = kk.racers[0], rank = kkRankOf(p), t = p.finishTime;
+    kkBig("FINISH!"); kk.bigT = 1.6;
+    var lines = kk.racers.slice().sort(function(a, b){ return kkScoreOf(b) - kkScoreOf(a); }).map(function(r, i){
+      return (i + 1) + ". " + KK_NAMES[kk.racers.indexOf(r)] + (r.finished ? " — " + r.finishTime.toFixed(1) + " s" : " — still racing");
+    });
+    kkSetMsg("You finished " + kkOrdinal(rank) + " in " + t.toFixed(1) + " s!  " + lines.join("  ·  "));
+    $("kkStart").textContent = "Race Again";
+    kkBeep(784, 0.14, "square");
+    setTimeout(function(){ kkBeep(988, 0.14, "square"); }, 130);
+    setTimeout(function(){ kkBeep(1175, 0.3, "square"); }, 270);
+    var confetti = [0xff5b5b, 0xf5b301, 0x3fa9ff, 0x7be382, 0xff8ad4];
+    for(var i = 0; i < 5; i++) kkBurst(kkSpark, p.x + (Math.random() - 0.5) * 6, 2.5, p.z + (Math.random() - 0.5) * 6, 22, confetti[i], 4, 4, 1.1);
+    if(window.__spudKartFinish3D) window.__spudKartFinish3D(t * 1000);
+    kkHUD();
+  }
+  function kkHUD(){
+    var p = kk.racers[0]; if(!p) return;
+    if(kk.mode === "server") return;
+    var lap = kkClamp(Math.floor((p.prog - p.startProg) / KK_N) + 1, 1, 3);
+    $("kkLap").textContent = lap + " / 3";
+    $("kkPos").textContent = (kk.phase === "race" || kk.phase === "done") ? kkOrdinal(kkRankOf(p)) : "—";
+    $("kkTime").textContent = kk.raceT.toFixed(1) + " s";
+    $("kkCoins").textContent = p.coins;
+    $("kkItem").textContent = p.item ? KK_ITEM_LABEL[p.item] + " — Use Item!"
+      : p.driftDir ? (p.charge >= 1.55 ? "Drift: ORANGE — release for the big boost!" : p.charge >= 0.8 ? "Drift: blue — keep sliding…" : "Drift: sliding…")
+      : "— hit a ? crate";
+    $("kkSpeed").textContent = Math.round(Math.abs(p.v) * 3.6);
+  }
+  function kkStartRace(){
+    if(kk.mode === "server"){ kkSetMsg("You're in a basement-server race — that one runs from the server section in this panel."); return; }
+    if(!kkInit()) return;
+    kkResize();
+    kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
+    kkResetGrid();
+    kk.phase = "count"; kk.count = 3.6; kk.lastCount = 4; kk.gasAt = null; kk.raceT = 0; kk.bigT = 0;
+    kkBig(""); kkSetMsg("Lights out in 3… hold Gas from the LAST light for a rocket start — from the first light, you burn out.");
+    $("kkStart").textContent = "Restart Race";
+    kkHUD();
+  }
+  function kkStep(dt){
+    if(kk.mode === "server"){ kkSrvStep(dt); return; }
+    if(kk.phase === "count"){
+      kk.count -= dt;
+      var c = Math.ceil(kk.count);
+      if(c !== kk.lastCount && c >= 1 && c <= 3){ kk.lastCount = c; kkBig(String(c)); kkBeep(440, 0.12, "square"); }
+      if(kk.keys.gas && kk.gasAt === null) kk.gasAt = kk.count;
+      if(kk.count <= 0){
+        kk.phase = "race"; kk.raceT = 0; kkBig("GO!"); kk.bigT = 0.8; kkBeep(880, 0.3, "square");
+        var p = kk.racers[0];
+        if(kk.keys.gas && kk.gasAt !== null){
+          if(kk.gasAt > 2.3){ p.spinT = 1.0; kkSetMsg("Burnout! Gas from the first light — you spun on the line."); }
+          else if(kk.gasAt <= 1.15){ p.boostT = 1.1; kkSetMsg("Rocket start! Perfect gas timing."); }
+        }
+      }
+      return;
+    }
+    if(kk.phase !== "race") return;
+    kk.raceT += dt;
+    var pin = { gas: kk.keys.gas, brake: kk.keys.brake, steer: (kk.keys.left ? 1 : 0) - (kk.keys.right ? 1 : 0), drift: kk.keys.drift };
+    kk.racers.forEach(function(r){ kkStepRacer(r, dt, r.isPlayer ? pin : kkAIInput(r, dt)); });
+    kkWorldStep(dt);
+    kkHUD();
+  }
+  var kkCamPos = null;
+  function kkFrame(){ kkRender(0); }
+  function kkRender(dt){
+    if(!kk.ok) return;
+    if(!kkCamPos) kkCamPos = new THREE.Vector3(24, 9, 24);
+    var t = performance.now() / 1000;
+    kk.clouds.forEach(function(c, i){ c.position.x += dt * (0.5 + (i % 3) * 0.2); if(c.position.x > 330) c.position.x = -330; });
+    if(kkCircuit.visible){
+      kk.boxes.forEach(function(b){ if(b.active){ b.mesh.rotation.y += dt * 1.8; b.mesh.position.y = 1.05 + Math.sin(t * 2.4 + b.spin) * 0.14; } });
+      kk.coins.forEach(function(c){ if(!c.taken) c.mesh.rotation.z += dt * 2.6; });
+    }
+    kkUpdateParticles(kkSpark, dt);
+    kkUpdateParticles(kkDust, dt);
+    if(kk.mode === "server") kkSrvRender(dt);
+    else kk.racers.forEach(function(r){ kkSyncMesh(r, dt); });
+    var p = (kk.mode === "server" && kk.me) ? kk.me : kk.racers[0];
+    if(kk.mode === "idle" && kk.phase === "idle"){
+      var c0 = kk.samples[KK_N - 16], ang = t * 0.1;
+      kkCamPos.set(c0.x + Math.cos(ang) * 16, 6.5, c0.z + Math.sin(ang) * 16);
+      kkCam.position.lerp(kkCamPos, dt ? Math.min(1, 3 * dt) : 1);
+      kkCam.lookAt(c0.x, 1, c0.z);
+      if(Math.abs(kkCam.fov - 58) > 0.1){ kkCam.fov += (58 - kkCam.fov) * 0.05; kkCam.updateProjectionMatrix(); }
+    }else if(p){
+      var fx = Math.sin(p.th), fz = Math.cos(p.th), spd = Math.abs(p.v);
+      kkCamPos.set(p.x - fx * (9 + spd * 0.05), p.y + 4.4 + spd * 0.02, p.z - fz * (9 + spd * 0.05));
+      kkCam.position.lerp(kkCamPos, dt ? 1 - Math.exp(-6 * dt) : 1);
+      if(kk.shake > 0){
+        kk.shake -= dt;
+        kkCam.position.x += (Math.random() - 0.5) * kk.shake * 0.7;
+        kkCam.position.y += (Math.random() - 0.5) * kk.shake * 0.5;
+      }
+      kkCam.lookAt(p.x + fx * 7, p.y + 1.1, p.z + fz * 7);
+      var targetFov = 62 + Math.min(11, spd * 0.3) + (p.boostT > 0 ? 5 : 0);
+      if(Math.abs(kkCam.fov - targetFov) > 0.1){ kkCam.fov += (targetFov - kkCam.fov) * Math.min(1, 8 * dt + 0.01); kkCam.updateProjectionMatrix(); }
+      kkSun.position.set(p.x + 34, 46, p.z + 20);
+      kkSun.target.position.set(p.x, 0, p.z);
+      kkSun.target.updateMatrixWorld();
+    }
+    if(kk.bigT > 0){ kk.bigT -= dt; if(kk.bigT <= 0) kkBig(""); }
+    kk.mapT -= dt;
+    if(kk.mapT <= 0){ kk.mapT = 0.12; kkDrawMap(); }
+    if(kkComposer) kkComposer.render(); else kkRenderer.render(kkScene, kkCam);
+  }
+  function kkDrawMap(){
+    var cv = $("kkMap"); if(!cv || !kk.samples.length) return;
+    var g = cv.getContext("2d"), W = 150, H = 110;
+    g.clearRect(0, 0, W, H);
+    var pts = [], minX = 1e9, maxX = -1e9, minZ = 1e9, maxZ = -1e9, i, x, z;
+    if(kk.mode === "server"){
+      for(i = 0; i <= 60; i++){ var t = i / 60 * Math.PI * 2; pts.push([228 * Math.cos(t) * KK_SRV_S, 118 * Math.sin(t) * KK_SRV_S]); }
+    }else{
+      for(i = 0; i < KK_N; i += 10) pts.push([kk.samples[i].x, kk.samples[i].z]);
+      pts.push([kk.samples[0].x, kk.samples[0].z]);
+    }
+    pts.forEach(function(q){ if(q[0] < minX) minX = q[0]; if(q[0] > maxX) maxX = q[0]; if(q[1] < minZ) minZ = q[1]; if(q[1] > maxZ) maxZ = q[1]; });
+    var sc = Math.min((W - 14) / (maxX - minX || 1), (H - 14) / (maxZ - minZ || 1));
+    function mx(wx){ return 7 + (wx - minX) * sc; }
+    function mz(wz){ return 7 + (wz - minZ) * sc; }
+    g.beginPath();
+    pts.forEach(function(q, qi){ if(qi === 0) g.moveTo(mx(q[0]), mz(q[1])); else g.lineTo(mx(q[0]), mz(q[1])); });
+    g.closePath();
+    g.strokeStyle = "rgba(255,255,255,.75)"; g.lineWidth = 2; g.stroke();
+    kk.racers.forEach(function(r, ri){
+      if(!r.mesh.visible) return;
+      if(kk.mode === "server" && !r.srv) return;
+      g.beginPath(); g.arc(mx(r.x), mz(r.z), ri === 0 ? 4 : 3, 0, Math.PI * 2);
+      g.fillStyle = "#" + KK_COLORS[ri].toString(16).padStart(6, "0");
+      g.fill();
+      if(ri === 0){ g.lineWidth = 1.6; g.strokeStyle = "#fff"; g.stroke(); }
+    });
+  }
+  function kkLoop(ts){
+    requestAnimationFrame(kkLoop);
+    if(!kk.ok) return;
+    var dt = Math.min(0.06, ((ts - kk.last) / 1000) || 0.016);
+    kk.last = ts;
+    if(document.hidden || !kk.inView) return;
+    try{
+      kk.acc += dt;
+      var iter = 0;
+      while(kk.acc >= 1 / 60 && iter < 4){ kkStep(1 / 60); kk.acc -= 1 / 60; iter++; }
+      if(iter === 4) kk.acc = 0;
+      kkRender(dt);
+    }catch(err){}
+  }
+  /* ---------------- Basement server client ----------------
+     Protocol (assets/spud-kart-server.js): phones send only inputs;
+     the server steps karts at 30 Hz on its 640x360 Oval (ellipse radii
+     228x118, road at normalised radius 0.70..1.30, 2 laps = total angle
+     4PI), pushes colliding karts apart, halves their speed, stamps
+     bumpAt, and broadcasts snapshots at 20 Hz with official finishMs. */
+  var kkSrv = { ws: null, myId: null, room: null, state: null, slots: {}, nextSlot: 0,
+                posted: false, lastBump: 0, lastInput: "", inputT: 0 };
+  function kkSrvSetStatus(t){ var el = $("kkSrvStatus"); if(el) el.textContent = t; }
+  function kkSrvName(){ var el = $("gameName"); return ((el && el.value) || "").trim() || "A Spud"; }
+  function kkSrvSend(o){ if(kkSrv.ws && kkSrv.ws.readyState === 1){ try{ kkSrv.ws.send(JSON.stringify(o)); }catch(e){} } }
+  function kkSrvX(sx){ return (sx - 320) * KK_SRV_S; }
+  function kkSrvZ(sy){ return (sy - 180) * KK_SRV_S; }
+  function kkSrvEnter(){
+    if(!kkInit()) return;
+    kk.mode = "server"; kk.phase = "idle";
+    kkCircuit.visible = false; kkOval.visible = true;
+    kkSrv.slots = {}; kkSrv.nextSlot = 0; kkSrv.posted = false; kkSrv.lastBump = 0;
+    kk.me = null;
+    kk.racers.forEach(function(r){ r.srv = null; r.mesh.visible = false; });
+    kkBig("");
+    $("kkSrvLeave").hidden = false;
+    $("kkSrvCreate").hidden = true;
+    $("kkLap").textContent = "— / 2"; $("kkPos").textContent = "—";
+    $("kkCoins").textContent = "—"; $("kkItem").textContent = "Server race — no items on the Oval";
+  }
+  function kkSrvExit(){
+    if(kk.mode === "server"){
+      kk.mode = "idle"; kk.phase = "idle";
+      kkCircuit.visible = true; kkOval.visible = false;
+      kk.me = null;
+      kk.racers.forEach(function(r, i){
+        r.srv = null;
+        r.paint.color.set(KK_COLORS[i]);
+        kkDrawName(r.nameSpr, KK_NAMES[i]);
+        r.nameSpr.visible = i !== 0;
+      });
+      kkResetGrid();
+      kkHUD();
+    }
+    kkSrv.state = null; kkSrv.room = null;
+    $("kkSrvLeave").hidden = true;
+    $("kkSrvCreate").hidden = false;
+    $("kkSrvStart").hidden = true;
+    kkSrvInvite();
+  }
+  /* No-click connection: the address is typed once (by the host, under
+     Server setup) or arrives inside a race invite link (#srv=), is
+     remembered on this device, and every race button connects silently
+     in the background — there is no Connect button and no visible
+     connecting state for players. */
+  function kkSrvStored(){
+    try{ return localStorage.getItem("spudKartServerAddr") || ""; }catch(e){ return ""; }
+  }
+  function kkSrvStore(addr){
+    try{ localStorage.setItem("spudKartServerAddr", addr); }catch(e){}
+  }
+  function kkSrvAddr(){
+    var el = $("kkSrvAddr");
+    return ((el && el.value) || "").trim() || kkSrvStored();
+  }
+  function kkSrvInvite(){
+    var box = $("kkInviteBox"), input = $("kkInviteInput");
+    if(!box || !input) return;
+    var addr = kkSrvAddr();
+    if(!addr){ box.style.display = "none"; return; }
+    input.value = location.href.split("#")[0] + "#srv=" + encodeURIComponent(addr) +
+      (kkSrv.room ? "&room=" + encodeURIComponent(kkSrv.room) : "");
+    box.style.display = "block";
+  }
+  function kkSrvOpen(silent){
+    if(kkSrv.ws && kkSrv.ws.readyState <= 1) return true;
+    var url = kkSrvAddr();
+    if(!url) return false;
+    if(!/^wss?:\/\//i.test(url)) url = "ws://" + url;
+    var ws;
+    try{ ws = new WebSocket(url); }catch(e){
+      if(!silent) kkSrvSetStatus("That server address didn't work — check it under Server setup.");
+      return false;
+    }
+    kkSrv.ws = ws; kkSrv.silent = !!silent;
+    ws.onopen = function(){
+      kkSrv.everOpened = true;
+      kkSrvStore(url);
+      var el = $("kkSrvAddr"); if(el) el.value = url;
+      kkSrvSend({ t: "hello", name: kkSrvName() });
+      kkSrvInvite();
+      if(kkSrv.pendingRoom){
+        var rm = kkSrv.pendingRoom; kkSrv.pendingRoom = null;
+        kkSrvSend({ t: "join", room: rm });
+      }
+      if(kkSrv.onOpenCb){ var cb = kkSrv.onOpenCb; kkSrv.onOpenCb = null; cb(); }
+    };
+    ws.onmessage = function(ev){ var m; try{ m = JSON.parse(ev.data); }catch(e){ return; } kkSrvOnMsg(m); };
+    ws.onclose = function(){
+      kkSrv.ws = null; kkSrv.onOpenCb = null;
+      if(kk.mode === "server"){ kkSrvExit(); kkSrvSetStatus("Disconnected from the basement server."); }
+      else if(kkSrv.everOpened) kkSrvSetStatus("Multiplayer server disconnected — it reconnects by itself when you start a race.");
+    };
+    ws.onerror = function(){
+      kkSrv.onOpenCb = null;
+      if(!kkSrv.silent) kkSrvSetStatus("Couldn't reach the server — is the basement PC on? (The server starts itself when the PC boots.)");
+    };
+    return true;
+  }
+  function kkSrvEnsure(cb){
+    if(kkSrv.ws && kkSrv.ws.readyState === 1){ cb(); return; }
+    if(kkSrv.ws && kkSrv.ws.readyState === 0){ kkSrv.onOpenCb = cb; return; }
+    if(!kkSrvAddr()){
+      kkSrvSetStatus("One-time host setup: add the server address under “Server setup” below — or open a race invite link and it's filled in for you.");
+      var d = $("kkSrvSetup"); if(d) d.open = true;
+      return;
+    }
+    kkSrv.onOpenCb = cb;
+    if(!kkSrvOpen(true)) kkSrv.onOpenCb = null;
+  }
+  function kkSrvOnMsg(m){
+    if(!m || typeof m.t !== "string") return;
+    if(m.t === "welcome"){ kkSrv.myId = m.id; }
+    else if(m.t === "rooms"){ kkSrvRenderRooms(m.rooms || []); }
+    else if(m.t === "joined"){
+      kkSrv.room = m.room; kkSrv.myId = m.you || kkSrv.myId;
+      kkSrvEnter();
+      kkSrvInvite();
+      kkSrvSetStatus("You're in the race room — the host presses Start Race when everyone's in. Your kart appears on the Oval.");
+    }
+    else if(m.t === "state"){ kkSrv.state = m; if(kk.mode === "server") kkSrvApplyState(m); }
+    else if(m.t === "error"){ kkSrvSetStatus(m.msg || "The server said no."); }
+    else if(m.t === "left"){ kkSrvExit(); kkSrvSetStatus("You left the server race."); }
+  }
+  function kkSrvRenderRooms(rooms){
+    var list = $("kkSrvRooms"), empty = $("kkSrvEmpty");
+    if(!list) return;
+    list.innerHTML = "";
+    empty.style.display = rooms.length ? "none" : "block";
+    rooms.forEach(function(r){
+      var li = document.createElement("li"), b = document.createElement("button");
+      li.innerHTML = "<span><b>" + String(r.hostName || "A Spud").replace(/</g, "&lt;") + "</b> is hosting a server race — " + (r.count || 1) + " kart(s) in.</span>";
+      b.type = "button"; b.className = "btn primary"; b.textContent = "Join race";
+      b.addEventListener("click", function(){
+        kkSrvEnsure(function(){
+          kkSrvSend({ t: "hello", name: kkSrvName() });
+          kkSrvSend({ t: "join", room: r.id });
+        });
+      });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+  }
+  function kkSrvApplyState(st){
+    var players = st.players || {}, seen = {};
+    Object.keys(players).forEach(function(id){
+      var p = players[id], slot = kkSrv.slots[id];
+      if(slot == null){
+        if(kkSrv.nextSlot > 3) return;
+        slot = kkSrv.nextSlot++; kkSrv.slots[id] = slot;
+        var r0 = kk.racers[slot];
+        kkDrawName(r0.nameSpr, p.name || "A Spud");
+        r0.nameSpr.visible = id !== kkSrv.myId;
+        if(p.color) r0.paint.color.set(p.color);
+      }
+      seen[slot] = true;
+      var r = kk.racers[slot], wasNull = !r.srv;
+      r.mesh.visible = true;
+      r.srv = { x: kkSrvX(p.x), z: kkSrvZ(p.y), th: Math.atan2(Math.cos(p.h), Math.sin(p.h)),
+                v: (p.speed || 0) * KK_SRV_S, total: p.total || 0,
+                finished: !!p.finished, finishMs: p.finishMs, bumpAt: p.bumpAt || 0, name: p.name || "A Spud" };
+      if(wasNull){ r.x = r.srv.x; r.z = r.srv.z; r.th = r.srv.th; }
+      if(id === kkSrv.myId) kk.me = r;
+    });
+    kk.racers.forEach(function(r, i){ if(!seen[i]){ r.mesh.visible = false; r.srv = null; } });
+    $("kkSrvStart").hidden = !(st.hostId === kkSrv.myId && st.status === "waiting");
+    var me = kk.me;
+    if(st.status === "waiting"){
+      kkSrvSetStatus(st.hostId === kkSrv.myId
+        ? "Your server room is live — when everyone's in, press Start Race (host). Karts are on the Oval grid."
+        : "In the room — waiting for the host to start the race.");
+    }else if(st.status === "countdown"){
+      kkSrvSetStatus("Race starts in " + Math.max(1, Math.ceil(((st.startAt || 0) - Date.now()) / 1000)) + "s — hold Gas!");
+      if(kkSrv.posted) kkSrv.posted = false;
+    }else if(st.status === "racing"){
+      kkSrvSetStatus("LIVE — the basement server is stepping every kart and calling the bumps.");
+    }else if(st.status === "done"){
+      var fin = Object.keys(players).map(function(id){ return players[id]; })
+        .sort(function(a, b){ return (a.finishMs || 1e12) - (b.finishMs || 1e12); });
+      kkSrvSetStatus("Race over — server results: " + fin.map(function(p, i){
+        return (i + 1) + ". " + (p.name || "A Spud") + (p.finishMs ? " " + (p.finishMs / 1000).toFixed(1) + " s" : "");
+      }).join("  ·  ") + "  Leave and create a new room to race again.");
+      $("kkSrvStart").hidden = true;
+    }
+    if(me && me.srv){
+      var s = me.srv;
+      $("kkLap").textContent = Math.min(2, Math.floor(s.total / (Math.PI * 2)) + 1) + " / 2";
+      var rank = 1;
+      Object.keys(players).forEach(function(id){
+        if(id === kkSrv.myId) return;
+        var o = players[id];
+        if((o.finished && !s.finished) || (o.finished === s.finished && (o.total || 0) > s.total)) rank++;
+      });
+      $("kkPos").textContent = kkOrdinal(rank);
+      $("kkTime").textContent = st.status === "racing" || st.status === "done"
+        ? Math.max(0, (Date.now() - (st.startAt || Date.now())) / 1000).toFixed(1) + " s" : "0.0 s";
+      $("kkSpeed").textContent = Math.round(Math.abs(s.v) * 3.6);
+      if(s.bumpAt && s.bumpAt > kkSrv.lastBump){
+        kkSrv.lastBump = s.bumpAt;
+        kk.shake = 0.3; kkBeep(140, 0.12, "sawtooth");
+        kkSetMsg("BUMP! The server shoved both karts apart — speed halved.");
+      }
+      if(s.finished && s.finishMs && !kkSrv.posted){
+        kkSrv.posted = true;
+        kkBig("FINISH!"); kk.bigT = 1.6;
+        kkSetMsg("Server finish: " + (s.finishMs / 1000).toFixed(1) + " s — posted to the shared leaderboard.");
+        if(window.__spudKartFinish3D) window.__spudKartFinish3D(s.finishMs);
+      }
+    }
+  }
+  function kkSrvStep(dt){
+    if(!kkSrv.ws || kkSrv.ws.readyState !== 1) return;
+    var st = kkSrv.state;
+    if(!st || (st.status !== "racing" && st.status !== "countdown")) return;
+    var inp = { gas: !!kk.keys.gas, left: !!kk.keys.left, right: !!kk.keys.right };
+    var sig = (inp.gas ? "g" : "") + (inp.left ? "l" : "") + (inp.right ? "r" : "");
+    kkSrv.inputT += dt;
+    if(sig !== kkSrv.lastInput || kkSrv.inputT > 0.25){
+      kkSrv.lastInput = sig; kkSrv.inputT = 0;
+      kkSrvSend({ t: "input", gas: inp.gas, left: inp.left, right: inp.right });
+    }
+  }
+  function kkSrvRender(dt){
+    var k = dt ? 1 - Math.exp(-14 * dt) : 1;
+    kk.racers.forEach(function(r){
+      if(!r.srv) return;
+      r.x += (r.srv.x - r.x) * k;
+      r.z += (r.srv.z - r.z) * k;
+      r.th += kkAngDiff(r.srv.th, r.th) * k;
+      r.v = r.srv.v;
+      kkSyncMesh(r, dt);
+    });
+  }
+  /* ---------------- Kart input bindings ---------------- */
+  $("kkStart").addEventListener("click", kkStartRace);
+  holdBtn($("kkGas"), function(){ kk.keys.gas = true; }, function(){ kk.keys.gas = false; });
+  holdBtn($("kkBrake"), function(){ kk.keys.brake = true; }, function(){ kk.keys.brake = false; });
+  holdBtn($("kkLeft"), function(){ kk.keys.left = true; }, function(){ kk.keys.left = false; });
+  holdBtn($("kkRight"), function(){ kk.keys.right = true; }, function(){ kk.keys.right = false; });
+  holdBtn($("kkDrift"), function(){ kk.keys.drift = true; }, function(){ kk.keys.drift = false; });
+  $("kkItemBtn").addEventListener("click", function(){
+    if(kk.mode === "solo" && kk.phase === "race") kkUseItem(kk.racers[0]);
+  });
+  $("kkKartSel").addEventListener("change", function(){
+    kk.racers[0].cls = KK_CLASSES[this.value] || KK_CLASSES.balanced;
+  });
+  $("kkSrvCreate").addEventListener("click", function(){
+    kkSrvEnsure(function(){
+      kkSrvSend({ t: "hello", name: kkSrvName() });
+      kkSrvSend({ t: "create" });
+    });
+  });
+  $("kkInviteCopy").addEventListener("click", function(){
+    var input = $("kkInviteInput");
+    input.select();
+    function done(){ kkSrvSetStatus("Invite link copied — send it to your friends. They tap it and they're in your race: no setup, no typing, nothing."); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(input.value).then(done, function(){
+        try{ document.execCommand("copy"); }catch(e){}
+        done();
+      });
+    }else{
+      try{ document.execCommand("copy"); }catch(e){}
+      done();
+    }
+  });
+  $("kkSrvStart").addEventListener("click", function(){ kkSrvSend({ t: "start" }); });
+  $("kkSrvLeave").addEventListener("click", function(){
+    kkSrvSend({ t: "leave" });
+    kkSrvExit();
+    kkSrvSetStatus("You left the server race.");
+  });
+  document.addEventListener("keydown", function(e){
+    var tag = (document.activeElement && document.activeElement.tagName) || "";
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    var active = kk.mode === "server" || kk.phase === "race" || kk.phase === "count";
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") kk.keys.gas = true;
+    else if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") kk.keys.brake = true;
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") kk.keys.left = true;
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") kk.keys.right = true;
+    else if(e.key === "Shift" || e.key === "l" || e.key === "L") kk.keys.drift = true;
+    else if(e.key === " "){
+      if(active && !e.repeat && kk.mode === "solo" && kk.phase === "race") kkUseItem(kk.racers[0]);
+    }
+    if(active && (e.key.indexOf("Arrow") === 0 || e.key === " ")) e.preventDefault();
+  });
+  document.addEventListener("keyup", function(e){
+    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") kk.keys.gas = false;
+    else if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") kk.keys.brake = false;
+    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") kk.keys.left = false;
+    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") kk.keys.right = false;
+    else if(e.key === "Shift" || e.key === "l" || e.key === "L") kk.keys.drift = false;
+  });
+  /* Invite-link entry + remembered address: an address arriving in
+     the link (#srv=, with &room= to land straight in a race) or saved
+     on this device is picked up silently — the page connects in the
+     background and, for an invite, joins the room by itself. A friend
+     tapping an invite does nothing at all and is simply in. */
+  (function(){
+    var srvParam = null, roomParam = null, m;
+    m = /[#&]srv=([^&]+)/.exec(location.hash || "");
+    if(m){ try{ srvParam = decodeURIComponent(m[1]); }catch(e){} }
+    m = /[#&]room=([^&]+)/.exec(location.hash || "");
+    if(m){ try{ roomParam = decodeURIComponent(m[1]); }catch(e){} }
+    if(roomParam) kkSrv.pendingRoom = roomParam;
+    var addr = srvParam || kkSrvStored();
+    if(addr){
+      if(srvParam) kkSrvStore(srvParam);
+      var el = $("kkSrvAddr"); if(el) el.value = addr;
+      kkSrvInvite();
+      setTimeout(function(){ kkSrvOpen(true); }, 1200);
+    }
+  })();
+  // Idle frames so all WebGL panels show their scenes before Start.
   try{ b3Init(); }catch(e){}
   try{ escInit(); }catch(e){}
+  /* Kart init stays out of the parse path (so first paint is fast)
+     but fires on window load at the latest — kkInit draws one idle
+     frame immediately, like the other WebGL games. Start Race /
+     server connect also init on demand. */
+  var kkInitQueued = false;
+  function kkQueueInit(){
+    if(kkInitQueued || kk.ok) return;
+    kkInitQueued = true;
+    try{ kkInit(); }catch(e){}
+  }
+  if("IntersectionObserver" in window && kkMount){
+    var kkObs = new IntersectionObserver(function(en){
+      if(en[0].isIntersecting){ kkQueueInit(); kkObs.disconnect(); }
+    }, { rootMargin: "700px" });
+    kkObs.observe(kkMount);
+  }
+  if(document.readyState === "complete") kkQueueInit();
+  else window.addEventListener("load", kkQueueInit);
+  setTimeout(kkQueueInit, 2500);
 })();
 </script>
 </body>
