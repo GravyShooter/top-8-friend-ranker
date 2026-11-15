@@ -773,7 +773,7 @@
           <div class="obox" style="margin-bottom:6px;">
             <h3>Spud Arcade — Games</h3>
             <div class="body" style="white-space:normal;">
-              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate Tac Toe is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and its newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. <b>Spud Kart 3D</b> is the full WebGL Grand Prix — Mario Kart 64-style handling in a real 3D circuit, with basement-server races where the PC itself steps the karts and calls the bumps. Live duels, shared leaderboards and friend challenges run through it all.</p>
+              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate Tac Toe is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and its newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. <b>Spud Kart 3D</b> is the full WebGL Grand Prix — Mario Kart 64-style handling across <b>7 Grand Prix tracks</b> (6 of them loving imitations of Mario Kart 64 classics, re-skinned for spuds), plus the basement-server Oval as an 8th layout, where the PC itself steps the karts and calls the bumps. Live duels, shared leaderboards and friend challenges run through it all.</p>
               <div class="playas">
                 <label for="gameName" style="font-weight:bold; color:var(--blue);">Playing as:</label>
                 <input type="text" id="gameName" maxlength="24" placeholder="Your game name (your profile name works)" />
@@ -807,7 +807,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · GRAND PRIX · BASEMENT SERVER</span>
                   <h4>Spud Kart 3D — WebGL</h4>
-                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. Potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races with real server-side bump physics.</p>
+                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus spud versions of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64 — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics.</p>
                   <button class="btn primary" type="button" data-goto="kart3dPanel">Play Spud Kart 3D</button>
                 </div>
               </div>
@@ -911,9 +911,9 @@
               </div>
 
               <div class="game-panel" id="kart3dPanel">
-                <h4>Spud Kart 3D — WebGL Grand Prix (Mario Kart 64 handling, spuds at the wheel)</h4>
+                <h4>Spud Kart 3D — WebGL Grand Prix · 7 Tracks (Mario Kart 64 handling, spuds at the wheel)</h4>
                 <div class="gbody">
-                  <div class="scoreline"><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
+                  <div class="scoreline"><span>Track <b id="kkTrackName">Spud Circuit</b></span><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <div style="position:relative;">
                     <div id="kkMount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
                     <canvas id="kkMap" width="150" height="110" style="position:absolute; top:8px; right:8px; background:rgba(10,18,32,.55); border:1px solid rgba(255,255,255,.35); border-radius:6px; pointer-events:none;"></canvas>
@@ -931,13 +931,25 @@
                     <button class="btn" id="kkItemBtn" type="button">Use Item</button>
                   </div>
                   <div class="chal-row">
+                    <select id="kkTrackSel" aria-label="Choose your track">
+                      <option value="0">1 · Spud Circuit — the original house circuit</option>
+                      <option value="1">2 · Spudway Speedway — after Luigi Raceway (MK64)</option>
+                      <option value="2">3 · Moo Moo Tater Farm — after Moo Moo Farm (MK64)</option>
+                      <option value="3">4 · Troopa Tater Beach — after Koopa Troopa Beach (MK64)</option>
+                      <option value="4">5 · Choco Tater Mountain — after Choco Mountain (MK64)</option>
+                      <option value="5">6 · Royal Russet Raceway — after Royal Raceway (MK64)</option>
+                      <option value="6">7 · Rainbow Spud Road — after Rainbow Road (MK64)</option>
+                    </select>
+                  </div>
+                  <p class="game-sub" id="kkTrackInfo" style="margin-top:2px;"><b>Spud Circuit</b> — the original. Wide, flowing, the one to learn powerslides on. <i>Plus the basement-server Oval below makes 8 layouts in total.</i></p>
+                  <div class="chal-row">
                     <select id="kkKartSel" aria-label="Choose your kart">
                       <option value="balanced">Super Spud · balanced kart</option>
                       <option value="light">Lightning Yam · light — quick accel, sharp steering</option>
                       <option value="heavy">King Russet · heavy — slow off the line, fastest top end</option>
                     </select>
                   </div>
-                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, steering gets heavier the faster you go, and the powerslide is the whole game. <b>Hold Drift while steering</b> to hop and slide; keep the slide going and the rear sparks turn <b>blue, then orange</b> — let go of Drift at orange for the big <b>mini-turbo</b>. <b>Gas</b> held from the last light gets a rocket start; hold it from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — tap <b>Use Item mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts. Keyboard: ↑ / W gas, ↓ / S brake, ← → / A D steer, Shift / L drift-hop, Space item.</p>
+                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, steering gets heavier the faster you go, and the powerslide is the whole game. <b>Hold Drift while steering</b> to hop and slide; keep the slide going and the rear sparks turn <b>blue, then orange</b> — let go of Drift at orange for the big <b>mini-turbo</b>. <b>Gas</b> held from the last light gets a rocket start; hold it from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — tap <b>Use Item mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts, on whichever of the <b>7 tracks</b> you pick above — every track is a different layout with its own scenery, ground and corners; the MK64 ones keep the shape and feel of the originals (the wide speedway oval, the farm's rolling S-bends, the beach loop, Choco Mountain's tight hairpins, Royal Raceway's long castle straight, Rainbow Road's big flowing sweep) with original spud names and art, no Nintendo assets. Keyboard: ↑ / W gas, ↓ / S brake, ← → / A D steer, Shift / L drift-hop, Space item.</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Multiplayer — basement server races (real bump physics)</p>
                     <p class="game-status" id="kkSrvStatus">Multiplayer runs on the basement server: the PC steps every kart, decides the bumps, and calls the finish times. There's no connect step — tap the race button and you're in; the connecting happens by itself, invisibly.</p>
@@ -959,7 +971,7 @@
                       <div class="chal-row">
                         <input type="text" id="kkSrvAddr" placeholder="ws://100.x.x.x:8787 — the PC's Tailscale address" aria-label="Basement server address" />
                       </div>
-                      <p class="game-sub">Type the server's address once — the server window prints it when it starts (the 192.168 one works on the same Wi-Fi; the 100.x Tailscale one works from anywhere, for friends in other houses on the same tailnet). This device remembers it from then on, and it travels inside race invite links so friends never type anything at all. Up to 4 karts per race, 2 laps on the server's Oval. If a browser refuses the ws:// connection from this https page, allow insecure content for this site in its site settings.</p>
+                      <p class="game-sub">Type the server's address once — the server window prints it when it starts (the 192.168 one works on the same Wi-Fi; the 100.x Tailscale one works from anywhere, for friends in other houses on the same tailnet). This device remembers it from then on, and it travels inside race invite links so friends never type anything at all. Up to 4 karts per race, 2 laps on the server's Oval — that's the 8th layout; the 7 Grand Prix tracks above are solo vs the AI. If a browser refuses the ws:// connection from this https page, allow insecure content for this site in its site settings.</p>
                     </details>
                   </div>
                   <p class="game-sub" style="font-weight:bold; color:var(--blue);">Shared leaderboard — fastest times</p>
@@ -4493,7 +4505,43 @@
              slicks: [], rockets: [], clouds: [], count: 0, raceT: 0, last: 0, acc: 0,
              shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
   var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
-  var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null;
+  var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null, kkGround = null;
+  /* ---- The tracks: 7 Grand Prix circuits. Six are imitations of
+     Mario Kart 64 layouts — same corner character and flow, rebuilt
+     from original control points with spud names/scenery (no Nintendo
+     art, music or assets). The basement-server Oval is an 8th layout,
+     built separately in kkBuildOval and owned by the server. ---- */
+  var KK_TRACKS = [
+    { id: "spud", name: "Spud Circuit", theme: "spud", banner: "SPUD KART 3D", ground: 0xffffff, fog: 0xdcecf7, road: 0xffffff,
+      info: "<b>Spud Circuit</b> — the original house circuit. Wide and flowing; the one to learn powerslides on.",
+      ctrl: [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]] },
+    { id: "speedway", name: "Spudway Speedway", theme: "speedway", banner: "SPUDWAY SPEEDWAY", ground: 0xf2f7e8, fog: 0xdcecf7, road: 0xffffff,
+      info: "<b>Spudway Speedway</b> — after <b>Luigi Raceway</b> (Mario Kart 64): a long, wide speedway oval with gentle banked-feeling sweepers. Flat out, draft the straights, powerslide the ends.",
+      ctrl: [[0, -96], [52, -88], [84, -52], [90, 0], [84, 52], [52, 88], [0, 96], [-52, 88], [-84, 52], [-90, 0], [-84, -52], [-52, -88]] },
+    { id: "farm", name: "Moo Moo Tater Farm", theme: "farm", banner: "MOO MOO TATER FARM", ground: 0xd8ffc8, fog: 0xe4f2d8, road: 0xf5ead0,
+      info: "<b>Moo Moo Tater Farm</b> — after <b>Moo Moo Farm</b> (Mario Kart 64): rolling countryside S-bends past the barn, silo and hay bales. The dirt-toned road is narrower in feel — stay off the grass.",
+      ctrl: [[0, -70], [40, -68], [62, -38], [48, -8], [70, 22], [42, 48], [8, 40], [-18, 62], [-52, 44], [-68, 8], [-52, -32], [-28, -52]] },
+    { id: "beach", name: "Troopa Tater Beach", theme: "beach", banner: "TROOPA TATER BEACH", ground: 0xffe9a8, fog: 0xd8f2f7, road: 0xfff2cf,
+      info: "<b>Troopa Tater Beach</b> — after <b>Koopa Troopa Beach</b> (Mario Kart 64): a sandy coastal loop with palms, umbrellas and the sea alongside. Sweep wide around the bay, cut the headland tight.",
+      ctrl: [[0, -80], [48, -70], [78, -30], [60, 8], [78, 42], [38, 68], [0, 58], [-30, 72], [-68, 40], [-58, -6], [-72, -44], [-36, -62]] },
+    { id: "choco", name: "Choco Tater Mountain", theme: "mountain", banner: "CHOCO TATER MTN", ground: 0xc99a68, fog: 0xf2e2cc, road: 0xe8d8c0,
+      info: "<b>Choco Tater Mountain</b> — after <b>Choco Mountain</b> (Mario Kart 64): tight hairpins and short straights under brown peaks. Brake early, drift everything, the walls of the valley punish greedy lines.",
+      ctrl: [[0, -78], [30, -70], [58, -48], [44, -18], [66, 6], [50, 36], [18, 30], [-6, 52], [-38, 58], [-62, 28], [-48, -2], [-66, -38], [-34, -58]] },
+    { id: "royal", name: "Royal Russet Raceway", theme: "royal", banner: "ROYAL RUSSET RACEWAY", ground: 0xeaf2ff, fog: 0xdcecf7, road: 0xffffff,
+      info: "<b>Royal Russet Raceway</b> — after <b>Royal Raceway</b> (Mario Kart 64): a long castle straight, big sweeping bends and a proper grand-prix feel past the Russet Castle towers.",
+      ctrl: [[0, -88], [52, -78], [80, -38], [68, 2], [84, 38], [48, 70], [6, 62], [-22, 80], [-58, 56], [-76, 12], [-62, -34], [-30, -66]] },
+    { id: "rainbow", name: "Rainbow Spud Road", theme: "rainbow", banner: "RAINBOW SPUD ROAD", ground: 0x5a6fb8, fog: 0xc8d4ff, road: 0x9aa8ff,
+      info: "<b>Rainbow Spud Road</b> — after <b>Rainbow Road</b> (Mario Kart 64): the big one — a long, flowing, rainbow-curbed sweep high above everything. No shortcuts, just rhythm: hold the slide and don't lift.",
+      ctrl: [[0, -92], [62, -80], [92, -28], [74, 28], [92, 68], [40, 88], [-12, 72], [-48, 90], [-88, 48], [-74, -8], [-90, -52], [-44, -76]] }
+  ];
+  var kkTrackIdx = 0;
+  function kkTrack(){ return KK_TRACKS[kkTrackIdx] || KK_TRACKS[0]; }
+  function kkUpdateTrackInfo(){
+    var t = kkTrack();
+    var info = $("kkTrackInfo"); if(info) info.innerHTML = t.info + " <i>Plus the basement-server Oval below makes 8 layouts in total.</i>";
+    var nm = $("kkTrackName"); if(nm) nm.textContent = t.name;
+    var sel = $("kkTrackSel"); if(sel && String(sel.value) !== String(kkTrackIdx)) sel.value = String(kkTrackIdx);
+  }
   var KK_CLASSES = {
     light:    { vmax: 27.5, accel: 27.0, yaw: 2.60 },
     balanced: { vmax: 29.5, accel: 22.5, yaw: 2.35 },
@@ -4756,6 +4804,7 @@
     }, 70, 70);
     var ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2; ground.position.y = -0.06; ground.receiveShadow = true;
+    kkGround = ground;
     kkScene.add(ground);
     // Distant hills + drifting clouds (shared by both tracks)
     var hillM = std(0x6f9a58, 1);
@@ -4881,9 +4930,17 @@
       g.fillStyle = "#fff"; g.fillText(text, w / 2, h / 2 + 1);
     }), roughness: 0.6 });
   }
+  function kkApplyTrackTheme(){
+    var t = kkTrack();
+    if(kkGround && kkGround.material) kkGround.material.color.setHex(t.ground);
+    if(kkScene && kkScene.fog) kkScene.fog.color.setHex(t.fog);
+  }
   function kkBuildCircuit(){
+    var def = kkTrack();
+    if(kkCircuit && kkScene) kkScene.remove(kkCircuit);
+    kk.samples = []; kk.boxes = []; kk.coins = []; kk.ramps = [];
     kkCircuit = new THREE.Group();
-    var ctrl = [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]]
+    var ctrl = def.ctrl
       .map(function(p){ return new THREE.Vector3(p[0], 0, p[1]); });
     var curve = new THREE.CatmullRomCurve3(ctrl, true, "centripetal", 0.5);
     kk.trackLen = curve.getLength();
@@ -4891,7 +4948,7 @@
       var u = i / KK_N, p = curve.getPointAt(u), t = curve.getTangentAt(u);
       kk.samples.push({ x: p.x, z: p.z, tx: t.x, tz: t.z, nx: t.z, nz: -t.x, seg: kk.trackLen / KK_N });
     }
-    var asphalt = new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 256, function(g){
+    var asphalt = new THREE.MeshStandardMaterial({ color: def.road, map: kkCanvasTex(256, 256, function(g){
       g.fillStyle = "#3c3f45"; g.fillRect(0, 0, 256, 256);
       for(var i = 0; i < 1500; i++){ g.fillStyle = Math.random() < 0.5 ? "#34373d" : "#45484f"; g.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
       g.fillStyle = "rgba(255,255,255,.5)";
@@ -4901,9 +4958,14 @@
     var road = kkRibbon(kk.samples, -5.6, 5.6, asphalt, 7);
     road.material.map = asphalt.map;
     kkCircuit.add(road);
-    var curbTex = kkCanvasTex(128, 32, function(g){
-      g.fillStyle = "#d0342c"; g.fillRect(0, 0, 128, 16); g.fillStyle = "#f4f1e8"; g.fillRect(0, 16, 128, 16);
-    }, 1, 1);
+    var curbTex = def.theme === "rainbow"
+      ? kkCanvasTex(128, 32, function(g){
+          var cols = ["#e0342c", "#e8762a", "#f5d301", "#2e8b3a", "#2456c8", "#8b30c9"];
+          for(var ci2 = 0; ci2 < 6; ci2++){ g.fillStyle = cols[ci2]; g.fillRect(ci2 * 22, 0, 22, 32); }
+        }, 1, 1)
+      : kkCanvasTex(128, 32, function(g){
+          g.fillStyle = def.theme === "beach" ? "#2456c8" : "#d0342c"; g.fillRect(0, 0, 128, 16); g.fillStyle = "#f4f1e8"; g.fillRect(0, 16, 128, 16);
+        }, 1, 1);
     var curbM = new THREE.MeshStandardMaterial({ map: curbTex, roughness: 0.8 });
     kkCircuit.add(kkRibbon(kk.samples, -6.4, -5.6, curbM, 4));
     kkCircuit.add(kkRibbon(kk.samples, 5.6, 6.4, curbM, 4));
@@ -4915,7 +4977,7 @@
     line.rotation.x = -Math.PI / 2; line.rotation.z = Math.atan2(s0.tx, s0.tz);
     line.position.set(s0.x, 0.02, s0.z);
     kkCircuit.add(line);
-    var arch = kkArch(kkBannerTex("SPUD KART 3D"));
+    var arch = kkArch(kkBannerTex(def.banner));
     arch.position.set(s0.x, 0, s0.z);
     arch.rotation.y = Math.atan2(s0.tx, s0.tz);
     kkCircuit.add(arch);
@@ -4928,23 +4990,38 @@
       }
       return false;
     }
-    for(var ti = 0; ti < 52; ti++){
+    var treeCount = def.theme === "beach" ? 34 : def.theme === "mountain" ? 22 : def.theme === "rainbow" ? 14 : 52;
+    for(var ti = 0; ti < treeCount; ti++){
       var tx2 = (kkRand() - 0.5) * 330, tz2 = (kkRand() - 0.5) * 300;
       if(nearRoad(tx2, tz2, 11.5)) continue;
       var tree = new THREE.Group();
-      var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.4, 2.4, 8), trunkM);
-      trunk.position.y = 1.2; trunk.castShadow = true; tree.add(trunk);
-      var lm = ti % 2 ? leafM : leaf2M;
-      var c1 = new THREE.Mesh(new THREE.ConeGeometry(1.9, 3.6, 10), lm);
-      c1.position.y = 4.1; c1.castShadow = true; tree.add(c1);
-      var c2 = new THREE.Mesh(new THREE.ConeGeometry(1.35, 2.6, 10), lm);
-      c2.position.y = 5.9; c2.castShadow = true; tree.add(c2);
+      if(def.theme === "beach"){
+        var ptrunk = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.34, 3.6, 8), trunkM);
+        ptrunk.position.y = 1.8; ptrunk.rotation.z = 0.14; ptrunk.castShadow = true; tree.add(ptrunk);
+        for(var pf = 0; pf < 5; pf++){
+          var frond = new THREE.Mesh(new THREE.ConeGeometry(0.5, 2.6, 6), leafM);
+          frond.position.set(Math.cos(pf * 1.26) * 0.9, 3.7, Math.sin(pf * 1.26) * 0.9);
+          frond.rotation.z = Math.cos(pf * 1.26) * 1.15; frond.rotation.x = -Math.sin(pf * 1.26) * 1.15;
+          frond.castShadow = true; tree.add(frond);
+        }
+      }else if(def.theme === "mountain"){
+        var rock = new THREE.Mesh(new THREE.SphereGeometry(1.5 + kkRand() * 1.4, 9, 7), std(0x8a7a68, 1));
+        rock.scale.y = 0.65; rock.position.y = 0.6; rock.castShadow = true; tree.add(rock);
+      }else{
+        var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.4, 2.4, 8), trunkM);
+        trunk.position.y = 1.2; trunk.castShadow = true; tree.add(trunk);
+        var lm = ti % 2 ? leafM : leaf2M;
+        var c1 = new THREE.Mesh(new THREE.ConeGeometry(1.9, 3.6, 10), lm);
+        c1.position.y = 4.1; c1.castShadow = true; tree.add(c1);
+        var c2 = new THREE.Mesh(new THREE.ConeGeometry(1.35, 2.6, 10), lm);
+        c2.position.y = 5.9; c2.castShadow = true; tree.add(c2);
+      }
       var sc = 0.8 + kkRand() * 0.7;
       tree.scale.setScalar(sc); tree.position.set(tx2, 0, tz2); tree.rotation.y = kkRand() * 3;
       kkCircuit.add(tree);
     }
     var baleM = std(0xd9b84a, 0.95);
-    for(var bi = 0; bi < 12; bi++){
+    for(var bi = 0; bi < (def.theme === "farm" ? 22 : 12); bi++){
       var bu = kkRand(), bl = (bi % 2 ? 1 : -1) * (8.5 + kkRand() * 3);
       var bp = kkPosAt(bu, bl);
       var bale = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 1.5, 14), baleM);
@@ -5007,7 +5084,84 @@
       kkCircuit.add(wedge);
       kk.ramps.push({ u: u, x: p3.x, z: p3.z });
     });
+    // ---- Themed landmark props (original art, placed clear of the road) ----
+    (function(){
+      function at(u, lat){ return kkPosAt(u, lat); }
+      function box(w, h, d, col, x, y, z, ry){
+        var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), std(col, 0.85));
+        m.position.set(x, y, z); if(ry) m.rotation.y = ry; m.castShadow = true; kkCircuit.add(m); return m;
+      }
+      if(def.theme === "farm"){
+        var bp = at(0.52, -24);
+        box(10, 5, 7, 0xb03024, bp.x, 2.5, bp.z, Math.atan2(bp.tx, bp.tz));
+        var roof = box(11, 0.4, 8, 0x6b4a2b, bp.x, 5.4, bp.z, Math.atan2(bp.tx, bp.tz)); roof.rotation.x = 0.0;
+        var sp = at(0.52, -31);
+        var silo = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 9, 14), std(0xb9c2cc, 0.6));
+        silo.position.set(sp.x, 4.5, sp.z); silo.castShadow = true; kkCircuit.add(silo);
+        var cap2 = new THREE.Mesh(new THREE.SphereGeometry(1.8, 14, 8), std(0x8a8578, 0.7));
+        cap2.scale.y = 0.55; cap2.position.set(sp.x, 9, sp.z); kkCircuit.add(cap2);
+      }else if(def.theme === "beach"){
+        [0.18, 0.46, 0.72].forEach(function(u, i){
+          var wp = at(u, i % 2 ? 26 : -26);
+          var sea = new THREE.Mesh(new THREE.CircleGeometry(17 + i * 3, 22), new THREE.MeshStandardMaterial({ color: 0x2e7fc8, roughness: 0.25, metalness: 0.1 }));
+          sea.rotation.x = -Math.PI / 2; sea.position.set(wp.x, 0.01, wp.z); kkCircuit.add(sea);
+          var up2 = at(u + 0.03, i % 2 ? 11 : -11);
+          var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 2.2, 8), std(0x8a6b48, 0.8));
+          pole.position.set(up2.x, 1.1, up2.z); kkCircuit.add(pole);
+          var umb = new THREE.Mesh(new THREE.ConeGeometry(1.7, 0.7, 10), std(i % 2 ? 0xe8762a : 0xd0342c, 0.7));
+          umb.position.set(up2.x, 2.3, up2.z); umb.castShadow = true; kkCircuit.add(umb);
+        });
+      }else if(def.theme === "mountain"){
+        [0.12, 0.34, 0.55, 0.76, 0.92].forEach(function(u, i){
+          var mp = at(u, i % 2 ? 30 : -30);
+          var peak = new THREE.Mesh(new THREE.ConeGeometry(11 + (i % 3) * 3, 17 + (i % 3) * 4, 7), std(i % 2 ? 0x8a6242 : 0x9a7250, 1));
+          peak.position.set(mp.x, 7, mp.z); peak.castShadow = true; kkCircuit.add(peak);
+          var snow = new THREE.Mesh(new THREE.ConeGeometry(4.2, 6, 7), std(0xfff6da, 0.9));
+          snow.position.set(mp.x, 13.5 + (i % 3) * 1.3, mp.z); kkCircuit.add(snow);
+        });
+      }else if(def.theme === "royal"){
+        var cp = at(0.02, -22);
+        var baseRy = Math.atan2(cp.tx, cp.tz);
+        box(14, 6, 5, 0xb9c2cc, cp.x, 3, cp.z, baseRy);
+        [-5.5, 0, 5.5].forEach(function(off, i){
+          var tp = at(0.02, -22 + off * 0); // towers share the castle front, offset in world X by tower index
+          var tower = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.9, 10 + i * 1.5, 12), std(0xc8cfd8, 0.8));
+          tower.position.set(cp.x + off * Math.cos(baseRy), 5 + i * 0.7, cp.z - off * Math.sin(baseRy)); tower.castShadow = true; kkCircuit.add(tower);
+          var cone = new THREE.Mesh(new THREE.ConeGeometry(2.3, 3.4, 12), std(0xc1272d, 0.7));
+          cone.position.set(tower.position.x, 11.5 + i * 1.4, tower.position.z); cone.castShadow = true; kkCircuit.add(cone);
+        });
+      }else if(def.theme === "rainbow"){
+        var cols = [0xe0342c, 0xe8762a, 0xf5d301, 0x2e8b3a, 0x2456c8, 0x8b30c9];
+        for(var ri2 = 0; ri2 < 18; ri2++){
+          var rp = at(ri2 / 18, ri2 % 2 ? 10.5 : -10.5);
+          var orb = new THREE.Mesh(new THREE.SphereGeometry(0.65, 12, 10),
+            new THREE.MeshStandardMaterial({ color: cols[ri2 % 6], roughness: 0.3, emissive: cols[ri2 % 6], emissiveIntensity: 0.45 }));
+          orb.position.set(rp.x, 3.2 + (ri2 % 3), rp.z); kkCircuit.add(orb);
+        }
+      }else if(def.theme === "speedway"){
+        var gp2 = at(0.48, 15);
+        box(18, 1.2, 5, 0xb9c2cc, gp2.x, 1.6, gp2.z, Math.atan2(gp2.tx, gp2.tz));
+        box(19, 0.3, 6.5, 0xc1272d, gp2.x, 3.6, gp2.z, Math.atan2(gp2.tx, gp2.tz));
+      }
+    })();
+    kkApplyTrackTheme();
     kkScene.add(kkCircuit);
+  }
+  function kkSetTrack(idx){
+    idx = kkClamp(parseInt(idx, 10) || 0, 0, KK_TRACKS.length - 1);
+    if(kk.mode === "server"){
+      kkSetMsg("Leave the basement-server race first — server races always run the Oval.");
+      kkUpdateTrackInfo();
+      return;
+    }
+    kkTrackIdx = idx;
+    kkUpdateTrackInfo();
+    if(!kkRenderer) return;
+    kk.phase = "idle"; kk.count = 0;
+    kkBuildCircuit();
+    kkResetGrid();
+    kkFrame();
+    kkSetMsg(kkTrack().name + " loaded — tap Start Race. 3 laps, 4 karts.");
   }
   function kkBuildOval(){
     kkOval = new THREE.Group();
@@ -5393,7 +5547,7 @@
     var lines = kk.racers.slice().sort(function(a, b){ return kkScoreOf(b) - kkScoreOf(a); }).map(function(r, i){
       return (i + 1) + ". " + KK_NAMES[kk.racers.indexOf(r)] + (r.finished ? " — " + r.finishTime.toFixed(1) + " s" : " — still racing");
     });
-    kkSetMsg("You finished " + kkOrdinal(rank) + " in " + t.toFixed(1) + " s!  " + lines.join("  ·  "));
+    kkSetMsg("You finished " + kkOrdinal(rank) + " on " + kkTrack().name + " in " + t.toFixed(1) + " s!  " + lines.join("  ·  "));
     $("kkStart").textContent = "Race Again";
     kkBeep(784, 0.14, "square");
     setTimeout(function(){ kkBeep(988, 0.14, "square"); }, 130);
@@ -5423,7 +5577,7 @@
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
     kkResetGrid();
     kk.phase = "count"; kk.count = 3.6; kk.lastCount = 4; kk.gasAt = null; kk.raceT = 0; kk.bigT = 0;
-    kkBig(""); kkSetMsg("Lights out in 3… hold Gas from the LAST light for a rocket start — from the first light, you burn out.");
+    kkBig(""); kkSetMsg(kkTrack().name + " — lights out in 3… hold Gas from the LAST light for a rocket start — from the first light, you burn out.");
     $("kkStart").textContent = "Restart Race";
     kkHUD();
   }
@@ -5788,6 +5942,11 @@
   $("kkKartSel").addEventListener("change", function(){
     kk.racers[0].cls = KK_CLASSES[this.value] || KK_CLASSES.balanced;
   });
+  var kkTrackSelEl = $("kkTrackSel");
+  if(kkTrackSelEl){
+    kkTrackSelEl.addEventListener("change", function(){ kkSetTrack(this.value); });
+    kkUpdateTrackInfo();
+  }
   $("kkSrvCreate").addEventListener("click", function(){
     kkSrvEnsure(function(){
       kkSrvSend({ t: "hello", name: kkSrvName() });
