@@ -787,19 +787,55 @@
   // is Chris's real published profile, and its photo (and page) come from
   // the shared directory like everyone else's.
   var CHRIS_PHOTO = "assets/chris.jpg";
+  function isChrisName(name){
+    return String(name || "").trim().toLowerCase() === "chris";
+  }
+  // A photo the person actually uploaded (a data URL from the photo
+  // picker) — as opposed to the bundled stand-in path, which is what the
+  // old default-Chris profiles all published with.
+  function isUploadedPhoto(photo){
+    return !!photo && photo !== CHRIS_PHOTO;
+  }
+  // The canonical Chris: the real published profile behind the house #1.
+  // The directory holds a pile of stale "Chris" listings from when Chris
+  // was the default profile; those carry the bundled photo path (or no
+  // photo at all), while Chris's real profile carries the photo he
+  // uploaded himself. So an uploaded photo outranks the bundled stand-in
+  // no matter which was updated last; recency only breaks ties within a
+  // tier. Returns {uid, profile} or null.
+  function houseChris(){
+    var best = null, bestUid = null, bestScore = -1;
+    var uids = Object.keys(allProfiles);
+    for(var i=0;i<uids.length;i++){
+      var p = allProfiles[uids[i]];
+      if(!p || !isChrisName(p.name)) continue;
+      var score = !p.photo ? 0 : (isUploadedPhoto(p.photo) ? 2 : 1);
+      if(score > bestScore ||
+         (score === bestScore && (p.updatedAt || 0) > ((best && best.updatedAt) || 0))){
+        best = p; bestUid = uids[i]; bestScore = score;
+      }
+    }
+    return best ? { uid: bestUid, profile: best } : null;
+  }
   // The directory profile behind a crew name. Several profiles can share
-  // a name (a pile of stale "Chris" listings included), so the match is:
-  // your own published profile first, then a profile with a photo, then
-  // the most recently updated one. Returns {uid, profile} or null.
+  // a name, so the match is: your own published profile first, then a
+  // profile with a photo, then the most recently updated one. "Chris" is
+  // the exception — he always resolves to the canonical house profile
+  // above, never to the viewer's own same-named listing. Returns
+  // {uid, profile} or null.
   function directoryMatch(name){
     var key = String(name || "").trim().toLowerCase();
     if(!key) return null;
+    if(key === "chris"){
+      var hc = houseChris();
+      if(hc) return hc;
+    }
     var best = null, bestUid = null;
     var uids = Object.keys(allProfiles);
     for(var i=0;i<uids.length;i++){
       var p = allProfiles[uids[i]];
       if(!p || !p.name || String(p.name).trim().toLowerCase() !== key) continue;
-      if(uids[i] === fbUid) return { uid: uids[i], profile: p };
+      if(uids[i] === fbUid && key !== "chris") return { uid: uids[i], profile: p };
       if(!best ||
          (!!p.photo && !best.photo) ||
          (!!p.photo === !!best.photo && (p.updatedAt || 0) > (best.updatedAt || 0))){
@@ -815,18 +851,34 @@
   // bundled Chris photo is only the fallback for before the directory
   // connects (or if Chris's profile is ever unpublished).
   function friendPhoto(name){
+    if(isChrisName(name)){
+      var hc = houseChris();
+      if(hc && hc.profile.photo) return hc.profile.photo;
+      return CHRIS_PHOTO;
+    }
     var m = directoryMatch(name);
     if(m && m.profile.photo) return m.profile.photo;
-    if(String(name || "").trim().toLowerCase() === "chris") return CHRIS_PHOTO;
     return "";
   }
-  // Chris's standing rule: he is #1 in everyone's Top 8. Returns a copy of
-  // a crew with "Chris" moved to (or inserted at) the #1 slot.
+  // Chris's standing rule: his real profile is #1 in everyone's Top 8.
+  // Returns a copy of a crew with "Chris" moved to (or inserted at) the
+  // #1 slot.
   function withChrisFirst(crew){
     var rest = (Array.isArray(crew) ? crew : []).filter(function(n){
-      return String(n).trim().toLowerCase() !== "chris";
+      return !isChrisName(n);
     });
     return ["Chris"].concat(rest);
+  }
+  // The crew a profile page actually displays. Everyone leads with Chris
+  // at #1 — except Chris himself: on his own page there is no separate
+  // default Chris taking the #1 slot, so his Top 8 is his real friends,
+  // starting with his actual #1.
+  function crewForDisplay(p){
+    var crew = Array.isArray(p && p.crew) ? p.crew.slice() : [];
+    if(isChrisName(p && p.name)){
+      return crew.filter(function(n){ return !isChrisName(n); });
+    }
+    return withChrisFirst(crew);
   }
   var toastTimer = null;
   function toast(msg){
@@ -911,17 +963,22 @@
     schedulePublish();
   }
   var own = loadOwn();
-  // Enforce the house rule on this browser's own crew: Chris sits at #1
-  // (moved there if he was elsewhere, added if he'd been removed). The
+  // Enforce the house rule on this browser's own crew. For everyone else,
+  // Chris sits at #1 (moved there if he was elsewhere, added if he'd been
+  // removed). For Chris himself, any "Chris" entry is himself — it comes
+  // out, so his own page never shows the default Chris as his #1. The
   // next auto-publish carries the fixed order to the shared directory, so
   // visitors see it on this profile's page too.
-  (function(){
-    var fixed = withChrisFirst(own.crew);
+  function enforceOwnCrew(){
+    var fixed = crewForDisplay(own);
     if(JSON.stringify(fixed) !== JSON.stringify(own.crew)){
       own.crew = fixed;
       try{ localStorage.setItem(LS_KEY, JSON.stringify(own)); }catch(e){}
+      return true;
     }
-  })();
+    return false;
+  }
+  enforceOwnCrew();
   var viewing = null;      // remote profile object being viewed, or null
   var viewingUid = null;   // its Firebase uid
   var viewingJson = "";    // last-rendered copy, so directory updates don't restart a playing song
@@ -968,7 +1025,10 @@
     return {
       name: own.name || "", mood: own.mood || "", about: own.about || "", meet: own.meet || "",
       photo: own.photo || "", songId: own.songId || "", songLabel: own.songLabel || "",
-      crew: (own.crew || []).slice(0, 24),
+      // Publish the enforced crew, so the shared copy itself honors the
+      // house rule: Chris at #1 for everyone, and no self-entry on
+      // Chris's own listing.
+      crew: crewForDisplay(own).slice(0, 24),
       updatedAt: (window.firebase && firebase.database) ? firebase.database.ServerValue.TIMESTAMP : Date.now()
     };
   }
@@ -1305,10 +1365,12 @@
       area.innerHTML = '<span class="song-none">' + (isOwn ? "No song yet. Every profile needs a song — add one in Edit." : "No profile song. Bold choice.") + "</span>";
     }
 
-    // Top 8 — Chris is #1 on every profile (the house rule), so the
-    // displayed crew always leads with him, whoever's page this is.
+    // Top 8 — Chris's real profile is #1 on every profile (the house
+    // rule), so the displayed crew always leads with him — except on
+    // Chris's own page, where there is no Chris slot at all and his
+    // friends start at #1.
     var grid = $("top8Grid"); grid.innerHTML = "";
-    var crew = withChrisFirst(p.crew);
+    var crew = crewForDisplay(p);
     for(var i=0;i<8;i++){
       var slot = document.createElement("div");
       if(i < crew.length){
@@ -1556,6 +1618,12 @@
     if(!own.crew.length){
       list.innerHTML = '<p class="deck-note">No friends yet — your Top 8 starts blank. Add someone below.</p>';
     }
+    if(isChrisName(own.name)){
+      var note = document.createElement("p");
+      note.className = "deck-note";
+      note.innerHTML = "<b>House rule:</b> you're Chris — your real profile is automatically #1 on everyone else's Top 8, so you don't take a slot on your own page. Your Top 8 here is for your friends.";
+      list.insertBefore(note, list.firstChild);
+    }
     renderPicker();
   }
   function moveCrew(from, to){
@@ -1694,7 +1762,13 @@
     renderDirectory();
   });
 
-  $("inName").addEventListener("input", function(){ own.name = this.value; saveOwn(); renderEditPhoto(); setPubStatus(); });
+  $("inName").addEventListener("input", function(){
+    own.name = this.value;
+    // Becoming (or stopping being) Chris changes the house rule for your
+    // own crew — re-run it and redraw the crew editor to match.
+    enforceOwnCrew();
+    saveOwn(); renderEditPhoto(); renderCrewEditor(); setPubStatus();
+  });
   $("inMood").addEventListener("input", function(){ own.mood = this.value; saveOwn(); });
   $("inAbout").addEventListener("input", function(){ own.about = this.value; saveOwn(); });
   $("inMeet").addEventListener("input", function(){ own.meet = this.value; saveOwn(); });
