@@ -789,7 +789,7 @@
                 <div class="game-card">
                   <span class="game-tag live">LIVE DUELS · LEADERBOARD · CHALLENGES</span>
                   <h4>SuperSpud Runner — Maxed Out</h4>
-                  <p>The most recent Runner: SpudMan — gold armor, red gauntlets, sour cream on top — on the run through four worlds. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups.</p>
+                  <p>The SpudMaps build of the Runner: the actual SpudMan sprite, animated — stride bob, forward rock, and his white cape streaming and flapping behind him while the world scrolls past in parallax layers. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups.</p>
                   <button class="btn primary" type="button" data-goto="runnerPanel">Play Runner</button>
                 </div>
                 <div class="game-card">
@@ -853,7 +853,7 @@
               </div>
 
               <div class="game-panel" id="runnerPanel">
-                <h4>SuperSpud Runner — Maxed Out · SpudMan &amp; the Double Jump</h4>
+                <h4>SuperSpud Runner — Maxed Out · SpudMan, the Cape &amp; the Double Jump</h4>
                 <div class="gbody">
                   <div class="scoreline"><span>Score <b id="runScore">0</b></span><span>Distance <b id="runDist">0 m</b></span><span>World <b id="runWorld">Sunset Rooftops</b></span><span>Best <b id="runBest">—</b></span><span id="runFx" style="font-weight:bold; color:var(--green);"></span><span id="runMsg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <canvas class="game-canvas" id="runCanvas" width="1024" height="460"></canvas>
@@ -862,7 +862,7 @@
                     <button class="btn orange" id="runStart" type="button">Start Run</button>
                     <button class="btn" id="runJump" type="button">Jump ▲ — tap again mid-air to double-jump</button>
                   </div>
-                  <p class="game-sub">That's <b>SpudMan</b> — the loaded-potato hero in gold armor and red gauntlets, sour cream and chives on top, fork in hand. <b>Jump</b> clears forks, knives, mashers, butter slicks and rolling pins; press Jump <b>again mid-air to double-jump</b> the wide hazard pairs (it comes back every time you land). <b>Duck</b> slides under the Hover Peeler — jumping into it ends the run. Seven toppings (chili +30 and sour cream +25 ride high — jump for them), three power-ups (Spud Magnet, Sour Cream Shield, Double-Loaded ×2), a +50 bonus every 250 m, and a new world every 400 m: Sunset Rooftops → Starlight Spud City → Buttercup Meadow → Sour Cream Snowcaps. Keyboard: Space / ↑ jump, ↓ / S slide.</p>
+                  <p class="game-sub">That's <b>SpudMan</b> — the actual sprite from the SpudMaps build, animated as he runs: stride bob, forward rock, chive bits shedding at speed, and his <b>white cape streaming and flapping behind him</b> — longer and wilder the faster he goes — while the world scrolls past in parallax layers behind him. <b>Jump</b> clears forks, knives, mashers, butter slicks and rolling pins; press Jump <b>again mid-air to double-jump</b> the wide hazard pairs (it comes back every time you land). <b>Duck</b> slides under the Hover Peeler — jumping into it ends the run. Seven toppings (chili +30 and sour cream +25 ride high — jump for them), three power-ups (Spud Magnet, Sour Cream Shield, Double-Loaded ×2), a +50 bonus every 250 m, and a new world every 400 m: Sunset Rooftops → Starlight Spud City → Buttercup Meadow → Sour Cream Snowcaps. Keyboard: Space / ↑ jump, ↓ / S slide.</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Live duel — race a friend at the same time</p>
                     <p class="game-status" id="runLiveStatus">Open a duel room or join one — both runners start together and scores stream live.</p>
@@ -2858,9 +2858,14 @@
   /* ---------------- SuperSpud Runner — Maxed Out ----------------
      The most recent Runner, ported from the resort app: SpudMan himself
      (the loaded-potato hero in gold armor and red gauntlets, sour cream
-     and chives on top, fork in hand — assets/superspud-run.png and
-     superspud-jump.png, with a drawn armored-spud fallback until they
-     load), the DOUBLE JUMP (one mid-air second jump, earned back on
+     and chives on top, fork in hand — the actual assets/superspud.png
+     sprite from the live SpudMaps build, animated with that build's
+     stride bob, forward rock and segmented FLAPPING CAPE drawn as
+     cloth behind him, over its scrolling parallax backgrounds —
+     glowing sun / cratered moon, twinkling stars, drifting clouds,
+     two skyline layers, speed streaks; the older run/jump sprite pair
+     and a drawn armored-spud stay as fallbacks), the DOUBLE JUMP
+     (one mid-air second jump, earned back on
      landing, with kick rings so the spent jump reads), four worlds
      rotating every 400 m, six hazards unlocking as the run deepens,
      hazard pairs late, seven toppings at their real point values
@@ -2876,16 +2881,16 @@
   var WORLDS = [
     { name: "Sunset Rooftops", sky: ["#2b1846", "#83325e", "#e2603f", "#f9b14a"], celestial: "sun",
       far: "rgba(66,34,82,0.65)", near: "#241233", ground: "#33203c", groundTop: "#4a2c50",
-      rim: "#ffb84d", cloud: "rgba(255,178,148,0.5)", decor: "clouds" },
+      rim: "#ffb84d", detail: "rgba(255,178,102,0.4)", cloud: "rgba(255,178,148,0.5)", decor: "clouds" },
     { name: "Starlight Spud City", sky: ["#060a24", "#14204d", "#2c3a6e", "#4a4a86"], celestial: "moon",
       far: "rgba(24,32,72,0.8)", near: "#0a0f2c", ground: "#131a38", groundTop: "#1e2a52",
-      rim: "#9fd8ff", cloud: "rgba(120,140,220,0.28)", decor: "stars" },
+      rim: "#9fd8ff", detail: "rgba(159,216,255,0.35)", cloud: "rgba(120,140,220,0.28)", decor: "stars" },
     { name: "Buttercup Meadow", sky: ["#7ec8e8", "#a8dcf0", "#d8f2d8", "#fdf3b8"], celestial: "sun",
       far: "rgba(94,148,84,0.55)", near: "#3d6b35", ground: "#4a7a3a", groundTop: "#5d9448",
-      rim: "#ffe98a", cloud: "rgba(255,255,255,0.75)", decor: "clouds" },
+      rim: "#ffe98a", detail: "rgba(255,233,138,0.55)", cloud: "rgba(255,255,255,0.75)", decor: "clouds" },
     { name: "Sour Cream Snowcaps", sky: ["#2c3e5e", "#5e7a9e", "#a8c4dc", "#eef6fb"], celestial: "moon",
       far: "rgba(120,148,180,0.6)", near: "#48607e", ground: "#dfeaf2", groundTop: "#f4fafd",
-      rim: "#ffffff", cloud: "rgba(255,255,255,0.5)", decor: "snow" }
+      rim: "#ffffff", detail: "rgba(120,160,200,0.4)", cloud: "rgba(255,255,255,0.5)", decor: "snow" }
   ];
   var DIMS = {
     fork: { w: 20, h: 66 }, knife: { w: 16, h: 78 }, masher: { w: 58, h: 44 },
@@ -2896,17 +2901,31 @@
     magnet: { w: 40, h: 40 }, shield: { w: 40, h: 44 }, mult: { w: 40, h: 40 }
   };
   var OVER_TITLES = { fork: "Forked!", knife: "Sliced!", masher: "Mashed!", butterSlick: "Slipped on butter!", peeler: "Peeled!", rollingPin: "Rolled flat!" };
-  var runImgRun = new Image(), runImgJump = new Image(), runImgOk = false;
-  runImgRun.onload = function(){ runImgOk = true; if(!run || run.over) drawRun(); };
+  // The actual SpudMan sprite: the same assets/superspud.png the live
+  // SpudMaps Runner runs — a cape-less cutout, because that build draws
+  // the cape as animated cloth behind him (see drawSpudMan). The older
+  // run/jump pair stays as a fallback if this one ever fails to load,
+  // and the drawn armored spud below that.
+  var runImg = new Image(), runImgOk = false;
+  var runImgRun = new Image(), runImgJump = new Image(), runImgPairOk = false;
+  runImg.onload = function(){ runImgOk = true; if(!run || run.over) drawRun(); };
+  runImg.src = "assets/superspud.png";
+  runImgRun.onload = function(){ runImgPairOk = true; if(!runImgOk && (!run || run.over)) drawRun(); };
   runImgRun.src = "assets/superspud-run.png";
   runImgJump.src = "assets/superspud-jump.png";
   var run = null, runRaf = null, runLast = 0;
   var keys = { jumpHeld: false, duckHeld: false };
   function runSpeed(){ return run ? Math.min(980, 335 + run.distPx * 0.088) : 335; }
+  // 0 at the opening pace, 1 at top speed — the one dial the cape
+  // flutter and chive shedding read, same as the SpudMaps build.
+  function runSpeedNorm(){ return Math.max(0, Math.min(1, (runSpeed() - 335) / 645)); }
+  function runNowT(){ return (window.performance && performance.now ? performance.now() : Date.now()) / 1000; }
+  var CHIVE_GREENS = ["#3e9b4f", "#57b25e", "#2e7d3b"];
   function runDistM(){ return run ? Math.floor(run.distPx / 10) : 0; }
   function runScoreNow(){ return run ? Math.floor(run.distPx / 10) + run.bonus : 0; }
   function resetRun(){
     run = { t: 0, distPx: 0, bonus: 0, x: 78, y: 0, vy: 0, jumps: 0, slideT: 0, squash: 0,
+            runPhase: 0, capePhase: 0, chives: [], chiveTimer: 0,
             ents: [], rings: [], floats: [], dust: [], spawnIn: 520, lastObsEnd: -1e9, lastGroupEnd: -1e9,
             magnetT: 0, multT: 0, shieldOn: false, invulnT: 0, powerCd: 6,
             milestones: 0, nextMilestone: 250, worldIdx: 0, banner: null,
@@ -2995,15 +3014,97 @@
     }
   }
   function drawSpudMan(x, groundY, sliding, airborne){
-    // x = hitbox left, groundY = canvas y of his feet.
-    var drawH = sliding ? 74 : 128, drawW = drawH; // sprites are square
+    // x = hitbox left, groundY = canvas y of his feet. Ported from the
+    // live SpudMaps Runner's drawSuperSpud: the actual superspud.png
+    // sprite, animated by motion — a stride bob and forward rock on
+    // the ground, a lean back on the way up and a dive on the way
+    // down, a squash when he lands, flattened into a skid on a slide —
+    // and his cape drawn behind him as a segmented cloth: a sine wave
+    // travels down the chain (capePhase, advanced in runStep), so the
+    // cape streams out long and flaps harder the faster he runs.
     var cx = x + 46;
     if(runImgOk){
+      var PW = 92, PH = 96;
+      var running = !!run && !run.over;
+      var sn = running ? runSpeedNorm() : 0;
+      // Shadow, shrinking as he climbs
+      var shScale = Math.max(0.45, 1 - (GROUND - groundY) / 300);
+      rctx.fillStyle = "rgba(20,6,28," + (0.42 * shScale) + ")";
+      rctx.beginPath(); rctx.ellipse(cx, GROUND + 13, PW * 0.44 * shScale, 6 * shScale, 0, 0, Math.PI * 2); rctx.fill();
+      var bobY = 0, lean = 0, sx = 1, sy = 1;
+      var rph = run ? run.runPhase : 0;
+      if(airborne){
+        lean = (run && run.vy < 0) ? -0.10 : 0.14; // nose up rising, diving falling
+        sy = 1.03; sx = 0.97;
+      }else if(running){
+        bobY = -Math.abs(Math.sin(rph)) * 4.5;
+        lean = 0.07 + Math.sin(rph * 2) * 0.018;
+      }else{
+        bobY = Math.sin(runNowT() * 2.1) * 1.6; // idle breathing on the start screen
+      }
+      var sq = run ? run.squash : 0;
+      if(sq !== 0){ sy *= 1 - 0.11 * sq; sx *= 1 + 0.09 * sq; }
+      if(sliding){ sy *= 0.58; sx *= 1.16; lean += 0.32; bobY = 0; }
+      rctx.save();
+      rctx.translate(cx, groundY + bobY);
+      rctx.rotate(lean + (!airborne && running ? Math.sin(rph) * 0.028 : 0));
+      rctx.scale(sx, sy);
+      // The cape: a waving cloth, not a flag shape. Its spine is a
+      // chain of points running back from his shoulder; a sine wave
+      // travels down the chain, growing toward the tip, so at pace
+      // the cape streams out long and ripples hard. Rising lifts it,
+      // a dive streams it up and back, a slide pins it flat behind
+      // him, and grounded at the opening pace it hangs short.
+      var diving = airborne && run && run.vy > 60;
+      var capeLen = sliding ? 62 : airborne ? 58 + sn * 14 : running ? 34 + sn * 38 : 20;
+      var capeLift = diving ? 26 : airborne ? 15 : sliding ? 6 : sn * 9;
+      var capeAmp = (running || airborne) ? 1.6 + sn * 5.5 + (airborne ? 2.2 : 0) : 1.1;
+      // On the ready screen the run clock is stopped, so fall back to
+      // frame time for a gentle idle sway.
+      var capePh = running ? run.capePhase : runNowT() * 3.2;
+      var SEG = 6, topPts = [], botPts = [];
+      var shX = -PW * 0.02, shTop = -PH + 24, shBot = -PH + 66;
+      for(var cs = 0; cs <= SEG; cs++){
+        var cf = cs / SEG;
+        var wave = Math.sin(capePh - cf * 4.4) * capeAmp * cf
+          + Math.cos(capePh * 0.63 - cf * 2.6) * capeAmp * 0.45 * cf;
+        var spineX = shX - capeLen * cf;
+        var spineY = (shTop + shBot) / 2 + 30 * cf - capeLift * cf + wave;
+        var half = 21 - 8 * cf; // the cloth narrows toward the tip
+        topPts.push([spineX + wave * 0.3, spineY - half]);
+        botPts.push([spineX - wave * 0.3, spineY + half]);
+      }
+      var capeG = rctx.createLinearGradient(shX, shTop, shX - capeLen, shTop + 40);
+      capeG.addColorStop(0, "#fdfcf8");
+      capeG.addColorStop(1, "#c9cfd9");
+      rctx.fillStyle = capeG;
+      rctx.beginPath();
+      rctx.moveTo(topPts[0][0], topPts[0][1]);
+      for(var ct = 1; ct <= SEG; ct++) rctx.lineTo(topPts[ct][0], topPts[ct][1]);
+      for(var cb2 = SEG; cb2 >= 0; cb2--) rctx.lineTo(botPts[cb2][0], botPts[cb2][1]);
+      rctx.closePath();
+      rctx.fill();
+      // One soft fold line down the cloth so the ripple reads as
+      // fabric, not a solid slab.
+      rctx.strokeStyle = "rgba(120,132,152,0.35)";
+      rctx.lineWidth = 1.4;
+      rctx.beginPath();
+      for(var cf2 = 0; cf2 <= SEG; cf2++){
+        var fx2 = (topPts[cf2][0] + botPts[cf2][0]) / 2, fy2 = (topPts[cf2][1] + botPts[cf2][1]) / 2;
+        if(cf2 === 0) rctx.moveTo(fx2, fy2); else rctx.lineTo(fx2, fy2);
+      }
+      rctx.stroke();
+      // The hero himself — the actual SpudMan sprite
+      rctx.drawImage(runImg, -PW / 2, -PH, PW, PH);
+      rctx.restore();
+    }else if(runImgPairOk){
+      // Fallback pair (caped poses baked into the art): plain bob.
+      var drawH = sliding ? 74 : 128, drawW = drawH; // sprites are square
       var img = airborne ? (runImgJump.complete && runImgJump.naturalWidth ? runImgJump : runImgRun) : runImgRun;
       rctx.save();
       rctx.translate(cx, groundY);
-      var sq = run ? run.squash : 0;
-      rctx.scale(1 - sq * 0.10, 1 + sq * 0.10);
+      var sq2 = run ? run.squash : 0;
+      rctx.scale(1 - sq2 * 0.10, 1 + sq2 * 0.10);
       if(!airborne && !sliding && run && !run.over){
         rctx.translate(0, -Math.abs(Math.sin(run.phase * 10)) * 3); // running bob
       }
@@ -3195,69 +3296,104 @@
   }
   function drawRun(){
     var w = WORLDS[run ? run.worldIdx : 0];
-    var grd = rctx.createLinearGradient(0, 0, 0, RH);
-    grd.addColorStop(0, w.sky[0]); grd.addColorStop(0.45, w.sky[1]); grd.addColorStop(0.75, w.sky[2]); grd.addColorStop(1, w.sky[3]);
-    rctx.fillStyle = grd; rctx.fillRect(0, 0, RW, RH);
-    var t = run ? run.t : 0, scroll = run ? run.distPx : 0;
-    // Celestial body
-    if(w.celestial === "sun"){
-      rctx.fillStyle = "rgba(255,236,170,0.95)";
-      rctx.beginPath(); rctx.arc(RW - 150, 74, 30, 0, Math.PI * 2); rctx.fill();
-      rctx.fillStyle = "rgba(255,214,120,0.35)";
-      rctx.beginPath(); rctx.arc(RW - 150, 74, 46, 0, Math.PI * 2); rctx.fill();
-    }else{
-      rctx.fillStyle = "rgba(240,244,255,0.95)";
-      rctx.beginPath(); rctx.arc(RW - 150, 70, 24, 0, Math.PI * 2); rctx.fill();
-      rctx.fillStyle = w.sky[1];
-      rctx.beginPath(); rctx.arc(RW - 140, 62, 20, 0, Math.PI * 2); rctx.fill();
-    }
-    // Decor: stars / snow / clouds
+    // Background ported from the live SpudMaps Runner: gradient sky,
+    // a glowing sun / cratered moon, twinkling stars or falling snow,
+    // clouds and two skyline layers each scrolling at its own parallax
+    // rate, ground detail streaming past at full speed, and speed
+    // streaks at pace — the world moves past him in depth layers.
+    var grd = rctx.createLinearGradient(0, 0, 0, GROUND);
+    grd.addColorStop(0, w.sky[0]); grd.addColorStop(0.42, w.sky[1]); grd.addColorStop(0.74, w.sky[2]); grd.addColorStop(1, w.sky[3]);
+    rctx.fillStyle = grd; rctx.fillRect(0, 0, RW, GROUND);
+    var tt = runNowT(), scroll = run ? run.distPx : 0;
     var i;
+    // Celestial body: a low sun or a cratered moon, per world, glowing
+    var sunX = RW - 176, sunY = GROUND - 62;
+    if(w.celestial === "sun"){
+      var glow = rctx.createRadialGradient(sunX, sunY, 8, sunX, sunY, 120);
+      glow.addColorStop(0, "rgba(255,190,84,0.55)");
+      glow.addColorStop(1, "rgba(255,150,64,0)");
+      rctx.fillStyle = glow;
+      rctx.fillRect(sunX - 120, sunY - 120, 240, 240);
+      var sunG = rctx.createLinearGradient(0, sunY - 46, 0, sunY + 46);
+      sunG.addColorStop(0, "#ffe27a");
+      sunG.addColorStop(1, "#ff8f3d");
+      rctx.fillStyle = sunG;
+      rctx.beginPath(); rctx.arc(sunX, sunY, 46, 0, Math.PI * 2); rctx.fill();
+    }else{
+      var mglow = rctx.createRadialGradient(sunX, sunY, 8, sunX, sunY, 105);
+      mglow.addColorStop(0, "rgba(220,232,255,0.4)");
+      mglow.addColorStop(1, "rgba(200,220,255,0)");
+      rctx.fillStyle = mglow;
+      rctx.fillRect(sunX - 105, sunY - 105, 210, 210);
+      rctx.fillStyle = "#eef3fa";
+      rctx.beginPath(); rctx.arc(sunX, sunY, 36, 0, Math.PI * 2); rctx.fill();
+      rctx.fillStyle = "rgba(170,188,214,0.55)";
+      rctx.beginPath(); rctx.arc(sunX - 11, sunY - 8, 7.5, 0, Math.PI * 2); rctx.fill();
+      rctx.beginPath(); rctx.arc(sunX + 12, sunY + 10, 5.5, 0, Math.PI * 2); rctx.fill();
+      rctx.beginPath(); rctx.arc(sunX + 6, sunY - 16, 4.2, 0, Math.PI * 2); rctx.fill();
+    }
+    // World decor: twinkling stars or falling snow
     if(w.decor === "stars"){
       rctx.fillStyle = "rgba(255,255,255,0.85)";
-      for(i = 0; i < 46; i++){
-        var sx = (i * 173.3) % RW, sy = (i * 97.7) % 190;
-        if(Math.sin(t * 2 + i) > -0.3) rctx.fillRect(sx, sy, 2, 2);
+      for(i = 0; i < 42; i++){
+        var stx = (i * 173 + 41) % RW, sty = (i * 97 + 13) % 150 + 8;
+        rctx.globalAlpha = 0.45 + 0.55 * Math.abs(Math.sin(tt * 1.7 + i));
+        rctx.fillRect(stx, sty, 2.2, 2.2);
       }
+      rctx.globalAlpha = 1;
     }else if(w.decor === "snow"){
-      rctx.fillStyle = "rgba(255,255,255,0.8)";
-      for(i = 0; i < 36; i++){
-        var fx = ((i * 211.3 - scroll * 0.4 + t * 12) % RW + RW) % RW;
-        var fy = (i * 67.7 + t * 26) % GROUND;
-        rctx.beginPath(); rctx.arc(fx, fy, 2, 0, Math.PI * 2); rctx.fill();
-      }
-    }else{
-      rctx.fillStyle = w.cloud;
-      for(i = 0; i < 6; i++){
-        var clx = ((i * 260 - scroll * 0.18) % (RW + 240) + RW + 240) % (RW + 240) - 120;
-        var cly = 44 + (i * 53) % 110;
-        rctx.beginPath();
-        rctx.ellipse(clx, cly, 44, 13, 0, 0, Math.PI * 2);
-        rctx.ellipse(clx + 30, cly + 4, 30, 10, 0, 0, Math.PI * 2);
-        rctx.fill();
+      rctx.fillStyle = "rgba(255,255,255,0.9)";
+      for(i = 0; i < 34; i++){
+        var snx = ((i * 149 + 29 - scroll * 0.3) % (RW + 20) + RW + 20) % (RW + 20) - 10;
+        var sny = ((i * 67 + tt * 26 * (1 + (i % 3) * 0.4)) % (GROUND + 16)) - 8;
+        rctx.beginPath(); rctx.arc(snx, sny, 1.6 + (i % 3) * 0.7, 0, Math.PI * 2); rctx.fill();
       }
     }
-    // Skyline silhouettes, two parallax layers (deterministic rooftops)
-    function skyline(off, color, base, hMin, hVar, wdt){
+    // Clouds drift at their own slow parallax in every world
+    rctx.fillStyle = w.cloud;
+    var coff = (scroll * 0.15) % 300;
+    for(i = 0; i < 3; i++){
+      var clx = ((i * 300 + 90 - coff) % (RW + 160) + RW + 160) % (RW + 160) - 80;
+      var cly = 34 + i * 30;
+      rctx.beginPath();
+      rctx.ellipse(clx, cly, 36, 10, 0, 0, Math.PI * 2);
+      rctx.ellipse(clx + 24, cly + 3, 24, 8, 0, 0, Math.PI * 2);
+      rctx.fill();
+    }
+    // Backdrop, two parallax layers, tinted per world
+    function skylineLayer(off, color, minH, maxH, bw){
       rctx.fillStyle = color;
-      var startIdx = Math.floor(off / wdt);
-      for(var bi = startIdx; bi < startIdx + RW / wdt + 2; bi++){
-        var bh = hMin + ((bi * 37) % 10) / 10 * hVar;
-        var bx = bi * wdt - off;
-        rctx.fillRect(bx, base - bh, wdt - 6, bh);
-        rctx.fillRect(bx + 6, base - bh - 7, wdt - 20, 7); // rooftop lip / chimney block
+      var start = Math.floor(off / bw);
+      for(var k = -1; k < RW / bw + 2; k++){
+        var idx = start + k;
+        var bh = minH + ((idx * 37 + ((idx * idx) % 13) * 7) % (maxH - minH));
+        var bx = idx * bw - off;
+        rctx.fillRect(bx, GROUND - bh, bw - 3, bh);
+        if(bh > (minH + maxH) / 2) rctx.fillRect(bx + bw * 0.3, GROUND - bh - 7, bw * 0.34, 7);
       }
     }
-    skyline(scroll * 0.3, w.far, GROUND, 60, 90, 92);
-    skyline(scroll * 0.6, w.near, GROUND, 26, 54, 64);
-    // Ground
+    skylineLayer(scroll * 0.1, w.far, 26, 74, 46);
+    skylineLayer(scroll * 0.28, w.near, 14, 52, 34);
+    // Ground ledge in the world's colors, with its bright rim
     rctx.fillStyle = w.ground; rctx.fillRect(0, GROUND, RW, RH - GROUND);
-    rctx.fillStyle = w.groundTop; rctx.fillRect(0, GROUND, RW, 6);
-    rctx.strokeStyle = w.rim; rctx.lineWidth = 2;
+    rctx.fillStyle = w.groundTop; rctx.fillRect(0, GROUND, RW, 7);
+    rctx.strokeStyle = w.rim; rctx.lineWidth = 2.5;
     rctx.beginPath(); rctx.moveTo(0, GROUND + 1); rctx.lineTo(RW, GROUND + 1); rctx.stroke();
-    rctx.fillStyle = "rgba(0,0,0,0.18)";
-    var dashOff = scroll % 46;
-    for(i = 0; i < RW / 46 + 1; i++) rctx.fillRect(i * 46 - dashOff, GROUND + 26, 24, 4);
+    rctx.fillStyle = w.detail;
+    var goff = scroll % 46;
+    for(i = 0; i < RW / 46 + 1; i++){
+      rctx.beginPath(); rctx.ellipse(i * 46 - goff + 18, GROUND + 26, 5, 2.4, 0, 0, Math.PI * 2); rctx.fill();
+    }
+    // Speed streaks while running
+    if(run && !run.over){
+      rctx.strokeStyle = "rgba(255,236,200,0.20)";
+      rctx.lineWidth = 3; rctx.lineCap = "round";
+      for(i = 0; i < 4; i++){
+        var sx2 = RW - ((scroll * 1.7 + i * 260 + (i % 2) * 90) % (RW + 180)) + 60;
+        var sy2 = 52 + ((i * 53) % 150);
+        rctx.beginPath(); rctx.moveTo(sx2, sy2); rctx.lineTo(sx2 + 44, sy2); rctx.stroke();
+      }
+    }
     if(!run){ drawSpudMan(78, GROUND, false, false); return; }
     // Magnet aura
     if(run.magnetT > 0){
@@ -3280,6 +3416,17 @@
     run.dust.forEach(function(d){
       rctx.fillStyle = "rgba(230,210,180," + Math.max(0, 0.55 - d.life) + ")";
       rctx.beginPath(); rctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); rctx.fill();
+    });
+    // Shed chive bits trailing off his head, tumbling and fading
+    run.chives.forEach(function(cp){
+      rctx.save();
+      rctx.translate(cp.x, cp.y);
+      rctx.rotate(cp.rot);
+      rctx.globalAlpha = Math.max(0, 1 - cp.life / cp.maxLife);
+      rctx.strokeStyle = CHIVE_GREENS[cp.shade];
+      rctx.lineWidth = 2.1; rctx.lineCap = "round";
+      rctx.beginPath(); rctx.moveTo(-cp.len / 2, 0); rctx.lineTo(cp.len / 2, 0); rctx.stroke();
+      rctx.restore();
     });
     var sliding = run.slideT > 0 && run.y <= 0.01;
     drawSpudMan(run.x, GROUND - run.y, sliding, run.y > 0.01);
@@ -3320,6 +3467,42 @@
     runLast = ts;
     run.t += dt; run.phase += dt;
     var spd = runSpeed();
+    run.runPhase += dt * (spd / 34); // stride clock for the bob and rock
+    // Cape flutter clock: the wave travels faster as he does, so the
+    // cloth streams instead of just waving harder.
+    var sn = runSpeedNorm();
+    run.capePhase += dt * (7 + sn * 17 + (run.y > 1 ? 5 : 0));
+    // Chive shedding: bits flake off the top of his head, the faster
+    // the thicker — a rare fleck at the opening pace, a steady
+    // sprinkle at top speed. Purely decorative: shed bits are not the
+    // chive topping and never touch counts or score.
+    run.chiveTimer -= dt;
+    if(run.chiveTimer <= 0){
+      run.chiveTimer = 0.5 - sn * 0.43 + Math.random() * 0.05;
+      if(run.chives.length < 70){
+        run.chives.push({ x: run.x + 36 + Math.random() * 26, y: GROUND - run.y - 96 + 6 + Math.random() * 12,
+          vx: -(30 + Math.random() * 45) - sn * 55, vy: -(14 + Math.random() * 26),
+          rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 11,
+          len: 4.5 + Math.random() * 3.5, shade: Math.floor(Math.random() * 3), life: 0, maxLife: 0.6 + Math.random() * 0.35 });
+        // At speed a second fleck often comes off with it.
+        if(sn > 0.45 && Math.random() < sn){
+          run.chives.push({ x: run.x + 36 + Math.random() * 26, y: GROUND - run.y - 96 + 6 + Math.random() * 12,
+            vx: -(30 + Math.random() * 45) - sn * 55, vy: -(10 + Math.random() * 22),
+            rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 11,
+            len: 4 + Math.random() * 3, shade: Math.floor(Math.random() * 3), life: 0, maxLife: 0.55 + Math.random() * 0.3 });
+        }
+      }
+    }
+    for(var cb = run.chives.length - 1; cb >= 0; cb--){
+      var bit = run.chives[cb];
+      bit.life += dt;
+      bit.x += (bit.vx - spd * 0.38) * dt;
+      bit.y += bit.vy * dt;
+      bit.vy += 150 * dt; // light bits flutter down, not drop
+      bit.vx *= (1 - 0.7 * dt); // drag settles the trail
+      bit.rot += bit.vr * dt;
+      if(bit.life > bit.maxLife) run.chives.splice(cb, 1);
+    }
     run.distPx += spd * dt;
     // Milestones: +50 every 250 m
     var dm = runDistM();
@@ -3436,6 +3619,7 @@
     run.over = true;
     if(runRaf) cancelAnimationFrame(runRaf);
     drawRun();
+    startRunIdle();
     var finalScore = runScoreNow(), dm = runDistM();
     if(liveRunId && liveRunRef && uid){
       liveRunRef.child("players/" + uid).update({
@@ -3472,7 +3656,18 @@
     if(run.y > 0.01) run.vy = Math.min(run.vy, -1500); // slam down, slide on touchdown
     run.slideT = 0.62;
   }
+  // Idle loop: while no run is live, keep redrawing so the ready
+  // screen stays alive — cape swaying, stars twinkling, SpudMan
+  // breathing — like the SpudMaps build. Stops when a run starts.
+  var runIdleRaf = null;
+  function runIdleLoop(){
+    if(run && !run.over){ runIdleRaf = null; return; }
+    drawRun();
+    runIdleRaf = requestAnimationFrame(runIdleLoop);
+  }
+  function startRunIdle(){ if(!runIdleRaf) runIdleRaf = requestAnimationFrame(runIdleLoop); }
   function startRun(){
+    if(runIdleRaf){ cancelAnimationFrame(runIdleRaf); runIdleRaf = null; }
     resetRun();
     $("runMsg").textContent = "";
     $("runFx").textContent = "";
@@ -3484,6 +3679,7 @@
     drawRun();
   }
   $("runStart").addEventListener("click", startRun);
+  startRunIdle();
   function holdBtn(el, down, up){
     el.addEventListener("pointerdown", function(e){ e.preventDefault(); down(); });
     ["pointerup","pointerleave","pointercancel"].forEach(function(ev){ el.addEventListener(ev, function(){ if(up) up(); }); });
