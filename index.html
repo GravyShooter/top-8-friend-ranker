@@ -773,7 +773,7 @@
           <div class="obox" style="margin-bottom:6px;">
             <h3>Spud Arcade — Games</h3>
             <div class="body" style="white-space:normal;">
-              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate-lo is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and Tate-lo also has its newest forms, <b>Spudball</b> and the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. <b>Spud Kart — Resort Grand Prix</b> brings three tracks, four racers, coins and items. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, race rooms, shared leaderboards and friend challenges run through it all.</p>
+              <p style="margin-top:0;">The Spud games from the resort app, now living here — <b>all at their most recent versions</b>. <b>Tate-lo is live head-to-head</b>: open a table or challenge a friend and the board syncs move-for-move in real time — and Tate-lo's newest form is the <b>WebGL Tate-lo 3D</b>. <b>SuperSpud Runner — Maxed Out</b> is the full loaded build: SpudMan himself, the double jump, four worlds, seven toppings and power-ups. And <b>Spud Escape 3D</b> is the WebGL escape run. Live duels, shared leaderboards and friend challenges run through it all.</p>
               <div class="playas">
                 <label for="gameName" style="font-weight:bold; color:var(--blue);">Playing as:</label>
                 <input type="text" id="gameName" maxlength="24" placeholder="Your game name (your profile name works)" />
@@ -791,18 +791,6 @@
                   <h4>SuperSpud Runner — Maxed Out</h4>
                   <p>The SpudMaps build of the Runner: the actual SpudMan sprite, animated — stride bob, forward rock, and his white cape streaming and flapping behind him while the world scrolls past in parallax layers. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups.</p>
                   <button class="btn primary" type="button" data-goto="runnerPanel">Play Runner</button>
-                </div>
-                <div class="game-card">
-                  <span class="game-tag live">LIVE RACING · BASEMENT SERVER · LEADERBOARD</span>
-                  <h4>Spud Kart — Resort Grand Prix</h4>
-                  <p>The most recent Kart: three tracks (Resort Grand Prix, Prism Spud Skyway, Twilight Mash Mile), four racers, Spud Coins, item boxes, ramps and butter slicks — plus live race rooms and the basement server, where the PC runs the race and karts really collide.</p>
-                  <button class="btn primary" type="button" data-goto="kartPanel">Race Kart</button>
-                </div>
-                <div class="game-card">
-                  <span class="game-tag">SOLO VS BOTS · ARENA</span>
-                  <h4>Tate-lo — Spudball</h4>
-                  <p>Tate-lo's newest arena form: top-down sour-cream blaster duels in a garden arena. One hit splats — unless a Butter Shield eats it. Out-splat three bot Spudtans, each with a style of its own.</p>
-                  <button class="btn primary" type="button" data-goto="ballPanel">Play Spudball</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
@@ -823,7 +811,7 @@
                 <div class="gbody">
                   <p class="game-sub" style="margin-top:0;">Challenges sent to you, and the ones you've sent. Play the game to settle one sent to you — beat the mark and it flips to <b>beaten</b> for both of you, live.</p>
                   <ul class="chal-list" id="chalList"></ul>
-                  <p class="lb-empty" id="chalEmpty">No challenges yet. Post a Runner score or a Kart time, then challenge a friend from that game's panel.</p>
+                  <p class="lb-empty" id="chalEmpty">No challenges yet. Post a Runner score, then challenge a friend from the Runner panel.</p>
                 </div>
               </div>
 
@@ -879,89 +867,6 @@
                     <select id="runFriend" aria-label="Friend to challenge at SuperSpud Runner"></select>
                     <button class="btn primary" id="runChallenge" type="button">Challenge to Beat My Best</button>
                   </div>
-                </div>
-              </div>
-
-              <div class="game-panel" id="kartPanel">
-                <h4>Spud Kart — Resort Grand Prix</h4>
-                <div class="gbody">
-                  <div class="scoreline"><span>Lap <b id="kartLap">– / 3</b></span><span>Position <b id="kartPos">—</b></span><span>Time <b id="kartTime">0.0 s</b></span><span>Coins <b id="kartCoins">0</b></span><span>Item <b id="kartItemSlot">none — hit a ? box</b></span><span>Best <b id="kartBest">—</b></span><span id="kartMsg" style="font-weight:bold; color:var(--orange);"></span></div>
-                  <canvas class="game-canvas" id="kartCanvas" width="640" height="360"></canvas>
-                  <div class="touchrow">
-                    <button class="btn" id="kartLeft" type="button">◀</button>
-                    <button class="btn" id="kartItemBtn" type="button" disabled>Use Item</button>
-                    <button class="btn orange" id="kartStart" type="button">Start Race</button>
-                    <button class="btn" id="kartGas" type="button">Gas ▲</button>
-                    <button class="btn" id="kartRight" type="button">▶</button>
-                  </div>
-                  <div class="chal-row" style="margin-top:8px;">
-                    <select id="kartTrack" aria-label="Choose a track">
-                      <option value="resort">🌅 Resort Grand Prix — sunset coast</option>
-                      <option value="skyway">🌈 Prism Spud Skyway — no guardrail</option>
-                      <option value="mash">🌙 Twilight Mash Mile — tight &amp; twisty</option>
-                    </select>
-                    <select id="kartDriver" aria-label="Choose your racer">
-                      <option value="0">🥔 Super Spud · balanced</option>
-                      <option value="1">🚀 Russet Rocket · quick launch</option>
-                      <option value="2">💛 Yukon Goldie · top speed</option>
-                      <option value="3">💜 Purple Majesty · tight steering</option>
-                    </select>
-                  </div>
-                  <p class="game-sub">Hold Gas to roll, steer with ◀ ▶. Three laps against three rival spuds in solo — bumping slows you both. Gold <b>Spud Coins</b> each nudge your top speed up (to +12%); <b>? boxes</b> hand out a Boost, a Shield, a Butter Trap or Superstar invincibility — tap <b>Use Item</b> (or Space) to fire it, and tap it mid-air off a <b>ramp</b> to trick for a landing boost. Butter slicks spin you out unless you're shielded or starred. On the Skyway there's <b>no guardrail</b>: slide off the edge and you get fished back, a few seconds poorer. Grass slows you on the other tracks. Keyboard: ↑ gas, ← → steer, Space item/trick. Live races and basement-server races run on the Resort layout, 2 laps on the server (it calls its own finish).</p>
-                  <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
-                    <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Live race — head-to-head on the same track</p>
-                    <p class="game-status" id="kartLiveStatus">Create a race room or join one — when a rival joins, the countdown starts and their kart appears on your track, synced live.</p>
-                    <button class="btn orange" id="kartLiveCreate" type="button">Create Live Race</button>
-                    <button class="btn danger" id="kartLiveLeave" type="button" hidden>Leave Race</button>
-                    <ul class="lobby-list" id="kartRaceList"></ul>
-                    <p class="lb-empty" id="kartRaceEmpty">No race rooms waiting right now.</p>
-                  </div>
-                  <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
-                    <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Basement server — real collisions</p>
-                    <p class="game-status" id="bsStatus">Not connected. On the basement server the PC runs the race itself: phones send only gas &amp; steering, the server moves every kart and decides the bumps — so karts actually collide, and finish times come from the server, not the phones.</p>
-                    <div class="chal-row" style="margin-top:0;">
-                      <input type="text" id="bsAddr" placeholder="ws://100.x.x.x:8787 — the PC's Tailscale address" autocomplete="off" autocapitalize="off" spellcheck="false" />
-                      <button class="btn primary" id="bsConnect" type="button">Connect</button>
-                      <button class="btn danger" id="bsDisconnect" type="button" hidden>Disconnect</button>
-                    </div>
-                    <div id="bsLobby" hidden>
-                      <div class="touchrow" style="justify-content:flex-start;">
-                        <button class="btn orange" id="bsCreate" type="button">Create Server Race</button>
-                        <button class="btn primary" id="bsStart" type="button" hidden>Start Race</button>
-                        <button class="btn danger" id="bsLeave" type="button" hidden>Leave Race</button>
-                      </div>
-                      <ul class="lobby-list" id="bsRoomList"></ul>
-                      <p class="lb-empty" id="bsRoomEmpty">No server races waiting right now.</p>
-                      <p class="game-sub" id="bsRoomInfo"></p>
-                    </div>
-                    <p class="game-sub"><b>Set it up once:</b> <a href="assets/spud-kart-server.js" download>download the server file</a>, put it on the basement PC, install Node.js (free at nodejs.org), and run <b>node spud-kart-server.js</b> — then leave the PC on while you race. The server window prints the addresses to type above: the 192.168 one works on the same Wi-Fi; friends in other houses install Tailscale, join the same tailnet, and use the PC's 100.x Tailscale address. Up to 4 karts per race. If a browser refuses the ws:// connection from this https page, allow insecure content for this site in its site settings.</p>
-                  </div>
-                  <p class="game-sub" style="font-weight:bold; color:var(--blue);">Shared leaderboard — fastest times</p>
-                  <ol class="lb-list" id="kartLb"></ol>
-                  <p class="lb-empty" id="kartLbEmpty">No times posted yet. Be the first.</p>
-                  <div class="chal-row">
-                    <select id="kartFriend" aria-label="Friend to challenge at Spud Kart"></select>
-                    <button class="btn primary" id="kartChallenge" type="button">Challenge to Beat My Time</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="game-panel" id="ballPanel">
-                <h4>Tate-lo — Spudball (top-down arena)</h4>
-                <div class="gbody">
-                  <div class="scoreline"><span>You <b id="ballYou">0</b> splats</span><span>Bots <b id="ballBots">0</b></span><span>First to <b>5</b></span><span id="ballMsg" style="font-weight:bold; color:var(--orange);"></span></div>
-                  <canvas class="game-canvas" id="ballCanvas" width="900" height="600"></canvas>
-                  <div class="touchrow">
-                    <button class="btn" id="ballLeft" type="button">◀</button>
-                    <button class="btn" id="ballUp" type="button">▲</button>
-                    <button class="btn" id="ballDown" type="button">▼</button>
-                    <button class="btn" id="ballRight" type="button">▶</button>
-                  </div>
-                  <div class="touchrow">
-                    <button class="btn orange" id="ballStart" type="button">Start Match</button>
-                    <button class="btn" id="ballFire" type="button">Fire Sour Cream</button>
-                  </div>
-                  <p class="game-sub">Move with the pads (or WASD / arrow keys), aim with your movement, and fire sour cream (or Space). One hit splats — a glowing <b>Butter Shield</b> pickup eats one hit. The bots have styles: Sharpspuds hold range and snipe, Mash Rushers charge you, Peel Dodgers won't sit still. First to 5 splats takes the match.</p>
                 </div>
               </div>
 
@@ -2447,7 +2352,6 @@
    the main script above. Layout:
      top8/games/tatelo/<gameId>      live head-to-head boards
      top8/games/scores/runner/<uid>  best Runner score per person
-     top8/games/scores/kart/<uid>    best Kart time per person
      top8/games/challenges/<id>      friend challenges (beat-my-mark)
    Tate-lo moves go through RTDB transactions, so two phones tapping at
    once can't both claim a cell or a turn. */
@@ -2468,7 +2372,7 @@
   var NET = !!(window.firebase && typeof firebase.database === "function");
   if(!NET){
     var gc0 = $("gameConn");
-    if(gc0) gc0.textContent = "Multiplayer offline — Firebase didn't load. Solo Runner & Kart still play.";
+    if(gc0) gc0.textContent = "Multiplayer offline — Firebase didn't load. The Runner still plays solo.";
     var ts0 = $("tateStatus"); if(ts0) ts0.textContent = "Live play needs Firebase — it didn't load in this browser.";
   }
   var FB_CONFIG = {
@@ -2540,7 +2444,7 @@
     if(prev && list.indexOf(prev) !== -1) sel.value = prev;
   }
   function fillFriendSelects(){
-    fillSelect($("tateFriend")); fillSelect($("runFriend")); fillSelect($("kartFriend"));
+    fillSelect($("tateFriend")); fillSelect($("runFriend"));
   }
 
   /* ---------------- Challenges ---------------- */
@@ -2580,7 +2484,7 @@
         var b = document.createElement("button");
         b.type = "button"; b.className = "btn primary"; b.textContent = "Play";
         b.addEventListener("click", function(){
-          $(c.game === "kart" ? "kartPanel" : "runnerPanel").scrollIntoView({ block: "start" });
+          $(c.game === "runner" ? "runnerPanel" : "chalPanel").scrollIntoView({ block: "start" });
         });
         li.appendChild(b);
       }
@@ -2614,7 +2518,6 @@
     });
   }
   $("runChallenge").addEventListener("click", function(){ sendChallenge("runner", myRunBest, $("runFriend")); });
-  $("kartChallenge").addEventListener("click", function(){ sendChallenge("kart", myKartBest, $("kartFriend")); });
 
   /* ---------------- Leaderboards ---------------- */
   function renderLb(listEl, emptyEl, rows, fmtVal){
@@ -2634,14 +2537,6 @@
     myRunBest = (uid && v[uid]) ? v[uid].score : null;
     $("runBest").textContent = myRunBest == null ? "—" : Math.floor(myRunBest);
     renderLb($("runLb"), $("runLbEmpty"), rows, function(x){ return Math.floor(x) + " pts"; });
-  });
-  if(NET) kartScoreRef.on("value", function(snap){
-    var v = snap.val() || {}, rows = Object.keys(v).map(function(u){
-      return { uid: u, name: v[u].name, val: v[u].timeMs || 0 };
-    }).sort(function(a,b){ return a.val - b.val; });
-    myKartBest = (uid && v[uid]) ? v[uid].timeMs : null;
-    $("kartBest").textContent = myKartBest == null ? "—" : (myKartBest/1000).toFixed(1) + " s";
-    renderLb($("kartLb"), $("kartLbEmpty"), rows, function(x){ return (x/1000).toFixed(1) + " s"; });
   });
   function submitScore(game, val){
     if(!uid) return;
@@ -3687,460 +3582,20 @@
   holdBtn($("runJump"), doJump, null);
   holdBtn($("runDuck"), function(){ keys.duckHeld = true; doSlide(); }, function(){ keys.duckHeld = false; });
 
-  /* ---------------- Spud Kart (time trial) ---------------- */
-  var kc = $("kartCanvas"), kctx = kc.getContext("2d");
-  var KW = 640, KH = 360, KCX = 320, KCY = 180, KRX = 228, KRY = 118;
-  /* Spud Kart — Resort Grand Prix (most recent build): three tracks and
-     four racers from the resort app. Track geometry rides in KRX/KRY, so
-     the Firebase live race and the basement server — whose physics use
-     these exact numbers — always run the Resort layout; the picker only
-     changes solo races. */
-  var TRACKS = {
-    resort: { name: "Resort Grand Prix", rx: 228, ry: 118, bg: "#3e7d3a", road: "#4a4a4a", edge: "#f5f0e1", skyway: false, grassMax: 72 },
-    skyway: { name: "Prism Spud Skyway", rx: 238, ry: 126, bg: "#241233", road: "#5a4a8a", edge: "#ffd94d", skyway: true, grassMax: 72 },
-    mash:   { name: "Twilight Mash Mile", rx: 204, ry: 99, bg: "#1c2440", road: "#3a3f55", edge: "#9fd8ff", skyway: false, grassMax: 56 }
-  };
-  var DRIVERS = [
-    { name: "Super Spud", accel: 1.0, top: 1.0, steer: 1.0 },
-    { name: "Russet Rocket", accel: 1.35, top: 0.97, steer: 1.0 },
-    { name: "Yukon Goldie", accel: 0.92, top: 1.10, steer: 0.95 },
-    { name: "Purple Majesty", accel: 1.0, top: 0.98, steer: 1.30 }
-  ];
-  var TRK = TRACKS.resort, DRV = DRIVERS[0], kartTrackKey = "resort";
-  function kartLaps(){ return bsRoomId ? 2 : 3; }
-  function ellipsePointF(a, f){ return { x: KCX + KRX * f * Math.cos(a), y: KCY + KRY * f * Math.sin(a) }; }
-  function applyTrackDriver(){
-    kartTrackKey = liveKartId ? "resort" : (($("kartTrack") || {}).value || "resort");
-    if(!TRACKS[kartTrackKey]) kartTrackKey = "resort";
-    TRK = TRACKS[kartTrackKey];
-    KRX = TRK.rx; KRY = TRK.ry;
-    DRV = DRIVERS[parseInt(($("kartDriver") || {}).value || "0", 10) || 0] || DRIVERS[0];
-  }
-  var ITEM_NAMES = { boost: "Boost", shield: "Shield", trap: "Butter Trap", star: "Superstar" };
-  function updateItemUI(){
-    var slot = $("kartItemSlot"), btn = $("kartItemBtn");
-    if(slot) slot.textContent = kart && kart.item ? ITEM_NAMES[kart.item] : "none — hit a ? box";
-    if(btn) btn.disabled = !kart || kart.over || (!kart.item && !(kart.airT > 0 && kart.trickArmed));
-  }
-  function useItem(){
-    if(!kart || kart.over || bsRoomId) return;
-    if(kart.airT > 0 && kart.trickArmed){
-      kart.trickArmed = false;
-      kart.boostT = Math.max(kart.boostT, 1.3);
-      $("kartMsg").textContent = "Trick! Landing boost!";
-      updateItemUI();
-      return;
-    }
-    if(!kart.item) return;
-    var it = kart.item; kart.item = null;
-    if(it === "boost"){ kart.boostT = 1.4; $("kartMsg").textContent = "Boost!"; }
-    else if(it === "shield"){ kart.shieldT = 8; $("kartMsg").textContent = "Shield up — 8 s!"; }
-    else if(it === "star"){ kart.starT = 5; $("kartMsg").textContent = "SUPERSTAR — invincible for 5 s!"; }
-    else if(it === "trap"){
-      kart.slicks.push({ ang: 0, f: 1, x: kart.x - Math.cos(kart.h) * 28, y: kart.y - Math.sin(kart.h) * 28, melt: 0, mine: true });
-      $("kartMsg").textContent = "Butter trap dropped behind you!";
-    }
-    updateItemUI();
-  }
-  var kart = null, kartRaf = null, kartLast = 0;
-  var kkeys = { gas: false, left: false, right: false };
-  function ellipsePoint(a){ return { x: KCX + KRX*Math.cos(a), y: KCY + KRY*Math.sin(a) }; }
-  function resetKart(){
-    var p = ellipsePoint(Math.PI / 2);
-    kart = { x: p.x, y: p.y, h: Math.PI, speed: 0, prevAng: Math.PI / 2, total: 0,
-             startedAt: null, elapsed: 0, over: false, finished: false,
-             coins: 0, item: null, shieldT: 0, starT: 0, boostT: 0, spinT: 0,
-             airT: 0, trickArmed: false, falling: 0, bumpCd: 0,
-             coinsList: [], boxes: [], slicks: [], bots: [], ramps: [] };
-    var ci;
-    for(ci = 0; ci < 12; ci++) kart.coinsList.push({ ang: ci * Math.PI / 6 + 0.3, f: 1.0, taken: 0 });
-    [0.8, 2.4, 4.0, 5.5].forEach(function(a){ kart.boxes.push({ ang: a, f: 1.0, taken: 0 }); });
-    [2.2, 3.6, 5.2].forEach(function(a, ix){
-      var s = { ang: a, f: ix % 2 ? 0.92 : 1.08, x: 0, y: 0, melt: 0, mine: false };
-      var pt = ellipsePointF(s.ang, s.f); s.x = pt.x; s.y = pt.y;
-      kart.slicks.push(s);
-    });
-    kart.ramps = [{ ang: 2.9, f: 1.0 }, { ang: 5.6, f: 1.0 }];
-  }
-  function spawnBotsIfSolo(){
-    if(!kart || liveKartId || bsRoomId) return;
-    var defs = [
-      { name: "Mash Rusher", color: "#2456c8", speed: 158 },
-      { name: "Peel Dodger", color: "#2e8b3a", speed: 170 },
-      { name: "Sharpspud", color: "#8b30c9", speed: 182 }
-    ];
-    kart.bots = defs.map(function(b, ix){
-      var a0 = Math.PI / 2 + 0.24 + ix * 0.15;
-      var pt = ellipsePointF(a0, ix % 2 ? 1.07 : 0.93);
-      return { name: b.name, color: b.color, speed: b.speed, ang: a0, total: 0,
-               f: ix % 2 ? 1.07 : 0.93, dip: 0, x: pt.x, y: pt.y, h: Math.PI };
-    });
-  }
-
-  function drawKartShape(x, y, h, bodyColor, skinColor, scale){
-    kctx.save();
-    kctx.translate(x, y); kctx.rotate(h); kctx.scale(scale || 1, scale || 1);
-    kctx.fillStyle = bodyColor; kctx.fillRect(-14, -9, 28, 18);
-    kctx.fillStyle = "#222"; kctx.fillRect(-13, -13, 8, 5); kctx.fillRect(5, -13, 8, 5);
-    kctx.fillRect(-13, 8, 8, 5); kctx.fillRect(5, 8, 8, 5);
-    kctx.fillStyle = skinColor;
-    kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI * 2); kctx.fill();
-    kctx.restore();
-  }
-  function drawKart(){
-    var i, pt;
-    if(TRK.skyway){
-      var grd = kctx.createLinearGradient(0, 0, 0, KH);
-      grd.addColorStop(0, "#3a1c5e"); grd.addColorStop(0.6, "#7a4a9e"); grd.addColorStop(1, "#e2603f");
-      kctx.fillStyle = grd; kctx.fillRect(0, 0, KW, KH);
-      kctx.fillStyle = "rgba(255,255,255,0.8)";
-      for(i = 0; i < 30; i++) kctx.fillRect((i * 197.3) % KW, (i * 89.7) % 130, 2, 2);
-      kctx.strokeStyle = "rgba(255,143,171,0.55)"; kctx.lineWidth = 76;
-      kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
-    }else{
-      kctx.fillStyle = TRK.bg; kctx.fillRect(0, 0, KW, KH);
-      kctx.fillStyle = "rgba(0,0,0,0.10)";
-      for(i = 0; i < 14; i++){
-        kctx.beginPath(); kctx.ellipse((i * 149.7) % KW, (i * 83.3) % KH, 22, 12, 0, 0, Math.PI * 2); kctx.fill();
-      }
-      if(kartTrackKey === "mash"){
-        kctx.fillStyle = "rgba(240,244,255,0.9)";
-        kctx.beginPath(); kctx.arc(KW - 60, 42, 17, 0, Math.PI * 2); kctx.fill();
-      }
-    }
-    kctx.strokeStyle = TRK.road; kctx.lineWidth = 68; kctx.lineCap = "round";
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
-    kctx.strokeStyle = TRK.edge; kctx.lineWidth = 3; kctx.setLineDash([14, 12]);
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
-    kctx.setLineDash([]);
-    var s = ellipsePoint(Math.PI / 2);
-    kctx.strokeStyle = "#fff"; kctx.lineWidth = 5;
-    kctx.beginPath(); kctx.moveTo(s.x - 16, s.y); kctx.lineTo(s.x + 16, s.y); kctx.stroke();
-    if(!kart) return;
-    // Ramps
-    kart.ramps.forEach(function(r){
-      pt = ellipsePointF(r.ang, r.f);
-      kctx.save(); kctx.translate(pt.x, pt.y);
-      kctx.rotate(Math.atan2(KRY * Math.cos(r.ang), -KRX * Math.sin(r.ang)));
-      kctx.fillStyle = "#e8762a"; kctx.fillRect(-17, -11, 34, 22);
-      kctx.fillStyle = "#fff";
-      kctx.beginPath(); kctx.moveTo(-6, -6); kctx.lineTo(6, 0); kctx.lineTo(-6, 6); kctx.closePath(); kctx.fill();
-      kctx.restore();
-    });
-    // Coins
-    kart.coinsList.forEach(function(c){
-      if(c.taken > 0) return;
-      pt = ellipsePointF(c.ang, c.f);
-      kctx.fillStyle = "#ffd94d"; kctx.beginPath(); kctx.arc(pt.x, pt.y, 8, 0, Math.PI * 2); kctx.fill();
-      kctx.strokeStyle = "#b57f0a"; kctx.lineWidth = 2; kctx.stroke();
-      kctx.fillStyle = "#b57f0a"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
-      kctx.fillText("S", pt.x, pt.y + 3.5); kctx.textAlign = "left";
-    });
-    // Item boxes
-    kart.boxes.forEach(function(b){
-      if(b.taken > 0) return;
-      pt = ellipsePointF(b.ang, b.f);
-      kctx.save(); kctx.translate(pt.x, pt.y);
-      kctx.fillStyle = "#ff4fa3"; kctx.fillRect(-10, -10, 20, 20);
-      kctx.strokeStyle = "#fff"; kctx.lineWidth = 2; kctx.strokeRect(-10, -10, 20, 20);
-      kctx.fillStyle = "#fff"; kctx.font = "bold 15px Verdana"; kctx.textAlign = "center";
-      kctx.fillText("?", 0, 6); kctx.textAlign = "left";
-      kctx.restore();
-    });
-    // Butter slicks
-    kart.slicks.forEach(function(sl){
-      if(sl.melt > 0) return;
-      kctx.fillStyle = "#ffe66d";
-      kctx.beginPath(); kctx.ellipse(sl.x, sl.y, 15, 6, 0, 0, Math.PI * 2); kctx.fill();
-    });
-    // Bots
-    kart.bots.forEach(function(b){
-      drawKartShape(b.x, b.y, b.h, b.color, "#e8c39e", 1);
-      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
-      kctx.fillText(b.name, b.x, b.y - 18); kctx.textAlign = "left";
-    });
-    // Live race: the opponent's kart, streamed from their phone.
-    if(kartOpp && typeof kartOpp.x === "number"){
-      drawKartShape(kartOpp.x, kartOpp.y, kartOpp.h || 0, "#2456c8", "#e8c39e", 1);
-      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
-      kctx.fillText(kartOpp.name || "Rival", kartOpp.x, kartOpp.y - 18); kctx.textAlign = "left";
-    }
-    // Player
-    if(kart.falling > 0){
-      kctx.fillStyle = "#fff"; kctx.font = "bold 16px Verdana"; kctx.textAlign = "center";
-      kctx.fillText("Off the Skyway — fished back…", KCX, KCY);
-      kctx.textAlign = "left";
-      return;
-    }
-    var airScale = kart.airT > 0 ? 1.25 : 1;
-    if(kart.airT > 0){
-      kctx.fillStyle = "rgba(0,0,0,0.3)";
-      kctx.beginPath(); kctx.ellipse(kart.x, kart.y + 10, 17, 6, 0, 0, Math.PI * 2); kctx.fill();
-    }
-    drawKartShape(kart.x, kart.y, kart.h + (kart.spinT > 0 ? kart.spinT * 9 : 0), "#c1272d", "#b5793b", airScale);
-    if(kart.shieldT > 0){
-      kctx.strokeStyle = "rgba(255,217,77,0.9)"; kctx.lineWidth = 2.5;
-      kctx.beginPath(); kctx.arc(kart.x, kart.y, 24, 0, Math.PI * 2); kctx.stroke();
-    }
-    if(kart.starT > 0){
-      kctx.fillStyle = "#ffd94d";
-      for(i = 0; i < 4; i++){
-        var sa = kart.elapsed / 160 + i * Math.PI / 2;
-        kctx.beginPath(); kctx.arc(kart.x + Math.cos(sa) * 22, kart.y + Math.sin(sa) * 22, 3, 0, Math.PI * 2); kctx.fill();
-      }
-    }
-  }
-
-  function kartStep(ts){
-    if(!kart || kart.over) return;
-    var dt = Math.min(0.033, (ts - kartLast) / 1000 || 0.016);
-    kartLast = ts;
-    // Live race countdown: both karts sit on the grid until startAt.
-    if(liveKartRoom && liveKartRoom.status === "countdown"){
-      if(Date.now() < (liveKartRoom.startAt || 0)){
-        $("kartMsg").textContent = "Live race starts in " + Math.max(1, Math.ceil(((liveKartRoom.startAt || 0) - Date.now()) / 1000)) + "…";
-        drawKart();
-        kartRaf = requestAnimationFrame(kartStep);
-        return;
-      }
-      if(!kart.countdownDone){
-        kart.countdownDone = true;
-        kart.startedAt = ts;
-        if(liveKartRef) liveKartRef.update({ status: "racing" }).catch(function(){});
-        $("kartMsg").textContent = "GO!";
-      }
-    }
-    // Live race: stream my kart to the room (~8×/sec).
-    if(liveKartId && liveKartRef && ts - kartPubLast > 120){
-      kartPubLast = ts;
-      liveKartRef.child("players/" + uid).update({
-        name: gameName(), x: Math.round(kart.x), y: Math.round(kart.y),
-        h: Math.round(kart.h * 100) / 100, total: Math.round(kart.total * 1000) / 1000,
-        finished: kart.finishedMs || null
-      }).catch(function(){});
-    }
-    // Fished back onto the Skyway after a fall.
-    if(kart.falling > 0){
-      kart.falling -= dt;
-      if(kart.falling <= 0){
-        var rp = ellipsePoint(kart.prevAng);
-        kart.x = rp.x; kart.y = rp.y; kart.speed = 0;
-        kart.h = Math.atan2(KRY * Math.cos(kart.prevAng), -KRX * Math.sin(kart.prevAng));
-        $("kartMsg").textContent = "Back on the road — go!";
-      }
-      drawKart();
-      kartRaf = requestAnimationFrame(kartStep);
-      return;
-    }
-    // Timers
-    if(kart.shieldT > 0) kart.shieldT = Math.max(0, kart.shieldT - dt);
-    if(kart.starT > 0) kart.starT = Math.max(0, kart.starT - dt);
-    if(kart.boostT > 0) kart.boostT = Math.max(0, kart.boostT - dt);
-    if(kart.bumpCd > 0) kart.bumpCd = Math.max(0, kart.bumpCd - dt);
-    var wasAir = kart.airT > 0;
-    if(kart.airT > 0) kart.airT = Math.max(0, kart.airT - dt);
-    if(wasAir && kart.airT <= 0) updateItemUI();
-    kart.coinsList.forEach(function(c){ if(c.taken > 0) c.taken = Math.max(0, c.taken - dt); });
-    kart.boxes.forEach(function(b){ if(b.taken > 0) b.taken = Math.max(0, b.taken - dt); });
-    kart.slicks.forEach(function(sl){ if(sl.melt > 0) sl.melt = Math.max(0, sl.melt - dt); });
-    // Surface
-    var dxn = (kart.x - KCX) / KRX, dyn = (kart.y - KCY) / KRY;
-    var norm = Math.sqrt(dxn * dxn + dyn * dyn);
-    var onRoad = (norm > 0.70 && norm < 1.30) || kart.airT > 0;
-    if(TRK.skyway && kart.airT <= 0 && !(norm > 0.70 && norm < 1.30) && kart.speed > 30 && kart.startedAt){
-      kart.falling = 1.1; kart.speed = 0;
-      $("kartMsg").textContent = "Off the Skyway!";
-      drawKart();
-      kartRaf = requestAnimationFrame(kartStep);
-      return;
-    }
-    var coinBonus = Math.min(0.12, kart.coins * 0.01);
-    var maxSpeed = onRoad ? 205 * DRV.top * (1 + coinBonus) : TRK.grassMax;
-    if(kart.boostT > 0) maxSpeed += 135;
-    if(kart.starT > 0) maxSpeed = Math.max(maxSpeed, 255);
-    if(kart.spinT > 0){
-      kart.spinT = Math.max(0, kart.spinT - dt);
-      kart.speed = Math.max(0, kart.speed - 320 * dt);
-    }else if(kkeys.gas){
-      if(!kart.startedAt) kart.startedAt = ts;
-      kart.speed = Math.min(maxSpeed, kart.speed + (kart.boostT > 0 ? 330 : 150 * DRV.accel) * dt);
-    }else{
-      kart.speed = Math.max(0, kart.speed - 110 * dt);
-    }
-    if(!onRoad && kart.speed > maxSpeed) kart.speed = Math.max(maxSpeed, kart.speed - 260 * dt);
-    if(kart.speed > 4 && kart.spinT <= 0){
-      var steer = (kkeys.left ? -1 : 0) + (kkeys.right ? 1 : 0);
-      kart.h += steer * 2.0 * DRV.steer * dt;
-    }
-    kart.x += Math.cos(kart.h) * kart.speed * dt;
-    kart.y += Math.sin(kart.h) * kart.speed * dt;
-    kart.x = Math.max(14, Math.min(KW - 14, kart.x));
-    kart.y = Math.max(14, Math.min(KH - 14, kart.y));
-    var ang = Math.atan2((kart.y - KCY) / KRY, (kart.x - KCX) / KRX);
-    var d = ang - kart.prevAng;
-    while(d > Math.PI) d -= Math.PI * 2;
-    while(d < -Math.PI) d += Math.PI * 2;
-    if(d > 0 && kart.speed > 20) kart.total += d;
-    kart.prevAng = ang;
-    if(kart.startedAt) kart.elapsed = ts - kart.startedAt;
-    // Ramps: launch!
-    if(kart.airT <= 0 && kart.speed > 110){
-      for(var ri = 0; ri < kart.ramps.length; ri++){
-        var rpt = ellipsePointF(kart.ramps[ri].ang, kart.ramps[ri].f);
-        var rdx = kart.x - rpt.x, rdy = kart.y - rpt.y;
-        if(rdx * rdx + rdy * rdy < 32 * 32){
-          kart.airT = 0.75; kart.trickArmed = true;
-          $("kartMsg").textContent = "Airborne! Tap Item / Space to trick!";
-          updateItemUI();
-          break;
-        }
-      }
-    }
-    // Coins, boxes, slicks
-    var i2, cpt, ddx, ddy;
-    for(i2 = 0; i2 < kart.coinsList.length; i2++){
-      var cn = kart.coinsList[i2];
-      if(cn.taken > 0) continue;
-      cpt = ellipsePointF(cn.ang, cn.f);
-      ddx = kart.x - cpt.x; ddy = kart.y - cpt.y;
-      if(ddx * ddx + ddy * ddy < 24 * 24){
-        cn.taken = 8; kart.coins++;
-        $("kartCoins").textContent = kart.coins;
-      }
-    }
-    for(i2 = 0; i2 < kart.boxes.length; i2++){
-      var bx = kart.boxes[i2];
-      if(bx.taken > 0) continue;
-      cpt = ellipsePointF(bx.ang, bx.f);
-      ddx = kart.x - cpt.x; ddy = kart.y - cpt.y;
-      if(ddx * ddx + ddy * ddy < 24 * 24){
-        bx.taken = 8;
-        if(!kart.item){
-          kart.item = ["boost", "shield", "trap", "star"][Math.floor(Math.random() * 4)];
-          $("kartMsg").textContent = "Item: " + ITEM_NAMES[kart.item] + " — tap Use Item!";
-          updateItemUI();
-        }
-      }
-    }
-    if(kart.airT <= 0){
-      for(i2 = 0; i2 < kart.slicks.length; i2++){
-        var sl = kart.slicks[i2];
-        if(sl.melt > 0) continue;
-        ddx = kart.x - sl.x; ddy = kart.y - sl.y;
-        if(ddx * ddx + ddy * ddy < 19 * 19){
-          if(kart.shieldT > 0){ kart.shieldT = 0; sl.melt = 5; $("kartMsg").textContent = "Shield ate the butter!"; updateItemUI(); }
-          else if(kart.starT > 0){ sl.melt = 5; }
-          else { kart.spinT = 0.8; sl.melt = 5; $("kartMsg").textContent = "Butter! Spun out!"; }
-        }
-      }
-    }
-    // Bots (solo): follow the racing line, dip when bumped.
-    var pos = 1;
-    kart.bots.forEach(function(b){
-      if(b.dip > 0) b.dip = Math.max(0, b.dip - dt);
-      var dang = (b.speed * (b.dip > 0 ? 0.45 : 1)) * dt / 185;
-      if(kart.startedAt){ b.ang += dang; b.total += dang; }
-      var bp = ellipsePointF(b.ang, b.f);
-      b.x = bp.x; b.y = bp.y;
-      b.h = Math.atan2(KRY * Math.cos(b.ang), -KRX * Math.sin(b.ang));
-      if(b.total > kart.total) pos++;
-      var bdx = kart.x - b.x, bdy = kart.y - b.y;
-      if(bdx * bdx + bdy * bdy < 27 * 27 && kart.bumpCd <= 0 && kart.airT <= 0){
-        if(kart.starT <= 0) kart.speed *= 0.6;
-        b.dip = 0.6; kart.bumpCd = 0.8;
-        $("kartMsg").textContent = "Bump!";
-      }
-    });
-    if(liveKartId && kartOpp && typeof kartOpp.total === "number" && kartOpp.total > kart.total) pos++;
-    var ord = ["1st", "2nd", "3rd", "4th"][pos - 1] || (pos + "th");
-    $("kartPos").textContent = kart.startedAt ? ord : "—";
-    kart.finalPos = pos;
-    var laps = kartLaps();
-    $("kartLap").textContent = Math.min(laps, Math.floor(kart.total / (Math.PI * 2)) + 1) + " / " + laps;
-    $("kartTime").textContent = (kart.elapsed / 1000).toFixed(1) + " s";
-    drawKart();
-    if(kart.total >= Math.PI * 2 * laps){ finishKart(); return; }
-    kartRaf = requestAnimationFrame(kartStep);
-  }
-
-  function finishKart(){
-    if(!kart) return;
-    kart.over = true; kart.finished = true;
-    if(kartRaf) cancelAnimationFrame(kartRaf);
-    var ms = Math.round(kart.elapsed);
-    kart.finishedMs = ms;
-    if(liveKartId && liveKartRef && uid){
-      liveKartRef.child("players/" + uid).update({ finished: ms, name: gameName() }).catch(function(){});
-    }
-    var ord = ["1st", "2nd", "3rd", "4th"][(kart.finalPos || 1) - 1] || "1st";
-    $("kartMsg").textContent = kart.bots.length
-      ? "Finished " + ord + "! " + (ms / 1000).toFixed(1) + " s · " + kart.coins + " coins"
-      : "Finished! " + (ms / 1000).toFixed(1) + " s";
-    $("kartPos").textContent = ord;
-    $("kartStart").textContent = "Race Again";
-    submitScore("kart", ms);
-    settleChallenges("kart", ms);
-    if(myKartBest == null || ms < myKartBest) $("kartBest").textContent = (ms / 1000).toFixed(1) + " s";
-    drawKart();
-  }
-
-  function startKart(){
-    if(bsRoomId){ gtoast("You're in a basement-server race — the server starts this one."); return; }
-    applyTrackDriver();
-    resetKart();
-    spawnBotsIfSolo();
-    $("kartMsg").textContent = "";
-    $("kartLap").textContent = "1 / " + kartLaps();
-    $("kartTime").textContent = "0.0 s";
-    $("kartCoins").textContent = "0";
-    $("kartPos").textContent = "—";
-    updateItemUI();
-    $("kartStart").textContent = "Restart";
-    kartLast = performance.now();
-    if(kartRaf) cancelAnimationFrame(kartRaf);
-    kartRaf = requestAnimationFrame(kartStep);
-    drawKart();
-  }
-
-  $("kartStart").addEventListener("click", startKart);
-  holdBtn($("kartGas"), function(){ kkeys.gas = true; }, function(){ kkeys.gas = false; });
-  holdBtn($("kartLeft"), function(){ kkeys.left = true; }, function(){ kkeys.left = false; });
-  holdBtn($("kartRight"), function(){ kkeys.right = true; }, function(){ kkeys.right = false; });
-  $("kartItemBtn").addEventListener("click", useItem);
-  $("kartTrack").addEventListener("change", function(){
-    if(bsRoomId){ this.value = "resort"; return; }
-    if(kart && !kart.over && kart.startedAt) return; // mid-race: applies next race
-    applyTrackDriver(); resetKart(); drawKart();
-  });
-  $("kartDriver").addEventListener("change", function(){
-    if(kart && !kart.over && kart.startedAt) return;
-    applyTrackDriver();
-  });
-
   document.addEventListener("keydown", function(e){
     var tag = (document.activeElement && document.activeElement.tagName) || "";
     if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-    if(e.key === "ArrowUp"){
-      if(kart && !kart.over){ e.preventDefault(); kkeys.gas = true; }
-    }
-    if(e.key === " "){
-      if(run && !run.over){ e.preventDefault(); doJump(); }
-      else if(kart && !kart.over){ e.preventDefault(); useItem(); }
-    }
-    if(e.key === "ArrowDown" && run && !run.over){ e.preventDefault(); keys.duckHeld = true; }
-    if((e.key === "s" || e.key === "S") && run && !run.over && !(ball && ball.started && !ball.over)){ keys.duckHeld = true; }
-    if(e.key === "ArrowLeft" && kart && !kart.over) kkeys.left = true;
-    if(e.key === "ArrowRight" && kart && !kart.over) kkeys.right = true;
+    if(!run || run.over) return;
+    if(e.key === " " || e.key === "ArrowUp"){ e.preventDefault(); doJump(); }
+    if(e.key === "ArrowDown"){ e.preventDefault(); keys.duckHeld = true; }
+    if(e.key === "s" || e.key === "S"){ keys.duckHeld = true; }
   });
   document.addEventListener("keyup", function(e){
     if(e.key === "ArrowDown") keys.duckHeld = false;
     if(e.key === "s" || e.key === "S") keys.duckHeld = false;
-    if(e.key === "ArrowUp") kkeys.gas = false;
-    if(e.key === "ArrowLeft") kkeys.left = false;
-    if(e.key === "ArrowRight") kkeys.right = false;
   });
 
-  /* ---------------- Live rooms: Kart races + Runner duels ----------------
+  /* ---------------- Live rooms: Runner duels ----------------
      Room shape (top8/games/kartraces/<id>, top8/games/runnerraces/<id>):
        { hostUid, hostName, guestUid, guestName, status, startAt, createdAt,
          players: { <uid>: { name, x, y, h, total, finished }   (kart)
@@ -4176,7 +3631,6 @@
       list.appendChild(li);
     });
   }
-  if(NET) kartRacesRef.on("value", function(s){ renderRaceLobby(s.val() || {}, "kart"); });
   if(NET) runRacesRef.on("value", function(s){ renderRaceLobby(s.val() || {}, "runner"); });
 
   function createRace(game){
@@ -4319,500 +3773,8 @@
     $(game === "kart" ? "kartLiveStatus" : "runLiveStatus").textContent = "You left the " + (game === "kart" ? "race." : "duel.");
     gtoast("Left the live " + (game === "kart" ? "race." : "duel."));
   }
-  $("kartLiveCreate").addEventListener("click", function(){ createRace("kart"); });
   $("runLiveCreate").addEventListener("click", function(){ createRace("runner"); });
-  $("kartLiveLeave").addEventListener("click", function(){ leaveRace("kart"); });
   $("runLiveLeave").addEventListener("click", function(){ leaveRace("runner"); });
-
-  /* ---------------- Basement server Kart — server-authoritative ----------------
-     The basement PC runs assets/spud-kart-server.js (download link in the
-     panel). Phones send only inputs over a WebSocket; the server steps
-     every kart at 30 Hz, resolves kart-to-kart collisions, and broadcasts
-     official snapshots at 20 Hz, which this renders with interpolation.
-     Nothing here touches Firebase; the two live modes are independent. */
-  var bsWs = null, bsMyId = null, bsRoomId = null, bsIsHost = false;
-  var bsSnapPrev = null, bsSnapPrevAt = 0, bsSnap = null, bsSnapAt = 0;
-  var bsRaf = null, bsInputTimer = null, bsLastInput = "", bsLastBump = 0, bsBumpMsgAt = 0;
-
-  function bsSetStatus(t){ var el = $("bsStatus"); if(el) el.textContent = t; }
-  function bsSend(o){ if(bsWs && bsWs.readyState === 1){ try{ bsWs.send(JSON.stringify(o)); }catch(e){} } }
-
-  function bsRenderRooms(rooms){
-    var list = $("bsRoomList"), empty = $("bsRoomEmpty");
-    if(!list) return;
-    list.innerHTML = "";
-    var show = (rooms || []).filter(function(r){ return r && r.id !== bsRoomId; });
-    empty.style.display = show.length ? "none" : "block";
-    show.forEach(function(r){
-      var li = document.createElement("li"), b = document.createElement("button");
-      li.innerHTML = "<span><b>" + esc(r.hostName || "A Spud") + "</b> is hosting a server race (" + (r.count || 1) + "/4 karts).</span>";
-      b.type = "button"; b.className = "btn primary"; b.textContent = "Join race";
-      b.addEventListener("click", function(){ bsSend({ t: "join", room: r.id }); });
-      li.appendChild(b);
-      list.appendChild(li);
-    });
-  }
-  function bsUpdateRoomInfo(){
-    var info = $("bsRoomInfo");
-    if(!bsSnap || !bsRoomId){ info.textContent = ""; return; }
-    var names = Object.keys(bsSnap.players || {}).map(function(k){ return bsSnap.players[k].name || "A Spud"; });
-    info.textContent = "In this race: " + names.join(", ") +
-      (bsSnap.status === "waiting" ? (bsIsHost ? " — you're the host: hit Start Race when everyone's in." : " — waiting for the host to start.") : "");
-  }
-  function bsEnterRoomUI(){
-    $("bsCreate").hidden = !!bsRoomId;
-    $("bsLeave").hidden = !bsRoomId;
-    $("bsStart").hidden = !(bsRoomId && bsIsHost && bsSnap && bsSnap.status === "waiting");
-    bsRenderRooms(bsLastRooms);
-    bsUpdateRoomInfo();
-  }
-  var bsLastRooms = [];
-
-  function bsConnect(){
-    var addr = ($("bsAddr").value || "").trim();
-    if(!/^wss?:\/\//i.test(addr)) addr = "ws://" + addr;
-    if(addr.replace(/^wss?:\/\//i, "").indexOf(":") === -1) addr += ":8787";
-    if(liveKartId){ gtoast("Leave the Firebase live race first — one race at a time."); return; }
-    bsDisconnect(true);
-    kartTrackKey = "resort"; TRK = TRACKS.resort; KRX = TRK.rx; KRY = TRK.ry;
-    var trkSel = $("kartTrack"); if(trkSel) trkSel.value = "resort";
-    bsSetStatus("Connecting to " + addr + " …");
-    var ws;
-    try{ ws = new WebSocket(addr); }
-    catch(e){ bsSetStatus("That address doesn't look right — it should look like ws://100.x.x.x:8787."); return; }
-    bsWs = ws;
-    var opened = false;
-    ws.onopen = function(){
-      opened = true;
-      bsSend({ t: "hello", name: gameName() });
-      $("bsConnect").hidden = true; $("bsDisconnect").hidden = false;
-      $("bsLobby").hidden = false;
-      bsSetStatus("Connected to the basement server. Create a race or join one below.");
-    };
-    ws.onmessage = function(ev){
-      var m; try{ m = JSON.parse(ev.data); }catch(e){ return; }
-      if(!m || !m.t) return;
-      if(m.t === "welcome"){ bsMyId = m.id; }
-      else if(m.t === "rooms"){ bsLastRooms = m.rooms || []; if(!bsRoomId) bsRenderRooms(bsLastRooms); }
-      else if(m.t === "joined"){
-        bsRoomId = m.room; bsIsHost = false; bsSnap = null; bsSnapPrev = null;
-        if(kartRaf) cancelAnimationFrame(kartRaf);
-        if(kart) kart.over = true;
-        bsEnterRoomUI();
-        bsStartLoop();
-        bsSetStatus("You're in the race — waiting for the start.");
-      }
-      else if(m.t === "state"){ bsOnState(m); }
-      else if(m.t === "left"){ bsClearRoom(); bsSetStatus("You left the race."); }
-      else if(m.t === "error"){ gtoast(m.msg || "The server said no."); }
-    };
-    ws.onerror = function(){
-      if(!opened) bsSetStatus("Couldn't reach the server at " + addr + " — check it's running on the PC (node spud-kart-server.js), the address is right, and Tailscale is connected on both ends.");
-    };
-    ws.onclose = function(){
-      if(bsWs === ws){
-        bsWs = null; bsClearRoom();
-        $("bsConnect").hidden = false; $("bsDisconnect").hidden = true; $("bsLobby").hidden = true;
-        bsSetStatus("Disconnected from the basement server.");
-      }
-    };
-  }
-  function bsDisconnect(silent){
-    bsClearRoom();
-    if(bsWs){ var w = bsWs; bsWs = null; try{ w.close(); }catch(e){} }
-    $("bsConnect").hidden = false; $("bsDisconnect").hidden = true; $("bsLobby").hidden = true;
-    if(!silent) bsSetStatus("Disconnected from the basement server.");
-  }
-  function bsClearRoom(){
-    bsRoomId = null; bsIsHost = false; bsSnap = null; bsSnapPrev = null; bsLastBump = 0;
-    if(bsRaf) cancelAnimationFrame(bsRaf); bsRaf = null;
-    if(bsInputTimer) clearInterval(bsInputTimer); bsInputTimer = null;
-    bsLastInput = "";
-    $("bsStart").hidden = true; $("bsLeave").hidden = true; $("bsCreate").hidden = false;
-    $("bsRoomInfo").textContent = "";
-    resetKart(); kart.over = true; drawKart();
-  }
-  function bsOnState(m){
-    if(!bsRoomId || m.room !== bsRoomId) return;
-    bsSnapPrev = bsSnap; bsSnapPrevAt = bsSnapAt;
-    bsSnap = m; bsSnapAt = performance.now();
-    bsIsHost = m.hostId === bsMyId;
-    var me = m.players && bsMyId ? m.players[bsMyId] : null;
-    if(m.status === "waiting"){
-      bsSetStatus(bsIsHost ? "Your server race is open — racers join from the list below. Hit Start Race when everyone's in." : "In the race — waiting for the host to start it.");
-    }else if(m.status === "countdown"){
-      bsSetStatus("Server race vs " + bsOppNames(m) + " — starting in " + Math.max(1, Math.ceil(((m.startAt || 0) - Date.now())/1000)) + "s. Hold Gas!");
-      $("kartMsg").textContent = "Starts in " + Math.max(1, Math.ceil(((m.startAt || 0) - Date.now())/1000)) + "…";
-    }else if(m.status === "racing"){
-      if(me && me.bumpAt && me.bumpAt !== bsLastBump){
-        bsLastBump = me.bumpAt; bsBumpMsgAt = Date.now();
-        $("kartMsg").textContent = "BUMP! The server felt that one.";
-      }else if(Date.now() - bsBumpMsgAt > 1200 && $("kartMsg").textContent.indexOf("BUMP") === 0){
-        $("kartMsg").textContent = "";
-      }
-      if(me && me.finished) bsSetStatus("You finished in " + (me.finishMs/1000).toFixed(1) + " s (server time) — waiting for the others…");
-      else bsSetStatus("LIVE on the basement server vs " + bsOppNames(m) + " — positions & collisions decided by the PC.");
-    }else if(m.status === "done"){
-      var rows = Object.keys(m.players || {}).map(function(k){
-        var p = m.players[k]; return { name: p.name || "A Spud", ms: p.finishMs, me: k === bsMyId };
-      }).sort(function(a,b){ return a.ms - b.ms; });
-      var win = rows[0];
-      bsSetStatus(win ? ("Race over — " + (win.me ? "YOU WIN" : win.name + " wins") + " in " + (win.ms/1000).toFixed(1) + " s (server time). Full results: " +
-        rows.map(function(r){ return r.name + " " + (r.ms/1000).toFixed(1) + " s"; }).join(" · ")) : "Race over.");
-      $("kartMsg").textContent = win && win.me ? "You win! 🏆" : "Race over";
-    }
-    bsEnterRoomUI();
-  }
-  function bsOppNames(m){
-    return Object.keys(m.players || {}).filter(function(k){ return k !== bsMyId; })
-      .map(function(k){ return m.players[k].name || "a spud"; }).join(", ") || "the grid";
-  }
-  function bsStartLoop(){
-    if(bsRaf) cancelAnimationFrame(bsRaf);
-    var loop = function(){
-      bsDraw();
-      bsRaf = requestAnimationFrame(loop);
-    };
-    bsRaf = requestAnimationFrame(loop);
-    if(bsInputTimer) clearInterval(bsInputTimer);
-    bsInputTimer = setInterval(function(){
-      if(!bsRoomId || !bsSnap || (bsSnap.status !== "racing" && bsSnap.status !== "countdown")) return;
-      var cur = (kkeys.gas ? "1" : "0") + (kkeys.left ? "1" : "0") + (kkeys.right ? "1" : "0");
-      if(cur !== bsLastInput){
-        bsLastInput = cur;
-        bsSend({ t: "input", gas: kkeys.gas, left: kkeys.left, right: kkeys.right });
-      }
-    }, 50);
-  }
-  function bsInterp(){
-    // Interpolate between the last two snapshots for smooth 60fps rendering.
-    if(!bsSnap) return null;
-    var out = {};
-    var span = Math.max(1, bsSnapAt - bsSnapPrevAt);
-    var f = bsSnapPrev ? Math.min(1, (performance.now() - bsSnapAt) / span) : 1;
-    Object.keys(bsSnap.players || {}).forEach(function(k){
-      var b = bsSnap.players[k];
-      var a = bsSnapPrev && bsSnapPrev.players ? bsSnapPrev.players[k] : null;
-      if(!a || bsSnap.status === "waiting"){ out[k] = { x: b.x, y: b.y, h: b.h, p: b }; return; }
-      var dh = b.h - a.h;
-      while(dh > Math.PI) dh -= Math.PI * 2;
-      while(dh < -Math.PI) dh += Math.PI * 2;
-      out[k] = { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, h: a.h + dh * f, p: b };
-    });
-    return out;
-  }
-  function bsDraw(){
-    var pos = bsInterp();
-    kctx.fillStyle = "#3e7d3a"; kctx.fillRect(0, 0, KW, KH);
-    kctx.strokeStyle = "#4a4a4a"; kctx.lineWidth = 68; kctx.lineCap = "round";
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
-    kctx.strokeStyle = "#f5f0e1"; kctx.lineWidth = 3; kctx.setLineDash([14, 12]);
-    kctx.beginPath(); kctx.ellipse(KCX, KCY, KRX, KRY, 0, 0, Math.PI * 2); kctx.stroke();
-    kctx.setLineDash([]);
-    var s = ellipsePoint(Math.PI / 2);
-    kctx.strokeStyle = "#fff"; kctx.lineWidth = 5;
-    kctx.beginPath(); kctx.moveTo(s.x - 16, s.y); kctx.lineTo(s.x + 16, s.y); kctx.stroke();
-    if(!pos) return;
-    Object.keys(pos).forEach(function(k){
-      var q = pos[k], isMe = k === bsMyId;
-      kctx.save();
-      kctx.translate(q.x, q.y); kctx.rotate(q.h);
-      kctx.fillStyle = q.p.color || "#c1272d"; kctx.fillRect(-14, -9, 28, 18);
-      kctx.fillStyle = "#222"; kctx.fillRect(-13, -13, 8, 5); kctx.fillRect(5, -13, 8, 5);
-      kctx.fillRect(-13, 8, 8, 5); kctx.fillRect(5, 8, 8, 5);
-      kctx.fillStyle = isMe ? "#b5793b" : "#e8c39e";
-      kctx.beginPath(); kctx.ellipse(0, 0, 8, 7, 0, 0, Math.PI * 2); kctx.fill();
-      if(isMe){ kctx.strokeStyle = "#fff"; kctx.lineWidth = 2; kctx.strokeRect(-15, -10, 30, 20); }
-      kctx.restore();
-      kctx.fillStyle = "#fff"; kctx.font = "bold 10px Verdana"; kctx.textAlign = "center";
-      kctx.fillText((q.p.name || "Rival") + (isMe ? " (you)" : ""), q.x, q.y - 18);
-      kctx.textAlign = "left";
-    });
-    var me = bsSnap && bsMyId && bsSnap.players ? bsSnap.players[bsMyId] : null;
-    if(me){
-      $("kartLap").textContent = Math.min(2, Math.floor((me.total || 0) / (Math.PI * 2)) + 1) + " / 2";
-      if(me.finished) $("kartTime").textContent = (me.finishMs / 1000).toFixed(1) + " s";
-      else if(bsSnap.status === "racing" || bsSnap.status === "done")
-        $("kartTime").textContent = (Math.max(0, Date.now() - (bsSnap.startAt || 0)) / 1000).toFixed(1) + " s";
-    }
-  }
-  $("bsConnect").addEventListener("click", bsConnect);
-  $("bsDisconnect").addEventListener("click", function(){ bsDisconnect(false); });
-  $("bsAddr").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); bsConnect(); } });
-  $("bsCreate").addEventListener("click", function(){
-    if(liveKartId){ gtoast("Leave the Firebase live race first — one race at a time."); return; }
-    bsSend({ t: "hello", name: gameName() });
-    bsSend({ t: "create" });
-  });
-  $("bsStart").addEventListener("click", function(){ bsSend({ t: "start" }); });
-  $("bsLeave").addEventListener("click", function(){
-    bsSend({ t: "leave" });
-    bsClearRoom();
-    bsSetStatus("You left the race.");
-  });
-  // Keyboard driving for basement races (the solo handlers ignore kkeys
-  // while the local kart is parked, so feed them here too).
-  document.addEventListener("keydown", function(e){
-    if(!bsRoomId) return;
-    var tag = (document.activeElement && document.activeElement.tagName) || "";
-    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-    if(e.key === " " || e.key === "ArrowUp"){ e.preventDefault(); kkeys.gas = true; }
-    if(e.key === "ArrowLeft"){ e.preventDefault(); kkeys.left = true; }
-    if(e.key === "ArrowRight"){ e.preventDefault(); kkeys.right = true; }
-  });
-  document.addEventListener("keyup", function(e){
-    if(!bsRoomId) return;
-    if(e.key === " " || e.key === "ArrowUp") kkeys.gas = false;
-    if(e.key === "ArrowLeft") kkeys.left = false;
-    if(e.key === "ArrowRight") kkeys.right = false;
-  });
-  window.addEventListener("beforeunload", function(){ if(bsWs){ try{ bsWs.close(); }catch(e){} } });
-
-  /* ---------------- Tate-lo — Spudball (top-down arena, solo vs bots) ----------------
-     Tate-lo's newest arena form from the resort app, shrunk to fit the
-     Arcade: a sunlit garden arena, sour-cream blasters, one hit splats
-     (a Butter Shield pickup eats one), and three bot Spudtans with
-     styles — Sharpspuds hold range and snipe, Mash Rushers charge,
-     Peel Dodgers strafe. First to 5 splats. */
-  var bc = $("ballCanvas"), bctx = bc.getContext("2d");
-  var BW = 900, BH = 600;
-  var HEDGES = [
-    { x: 180, y: 130, w: 130, h: 34 }, { x: 590, y: 130, w: 130, h: 34 },
-    { x: 180, y: 436, w: 130, h: 34 }, { x: 590, y: 436, w: 130, h: 34 },
-    { x: 433, y: 250, w: 34, h: 100 }, { x: 90, y: 283, w: 90, h: 34 }, { x: 720, y: 283, w: 90, h: 34 }
-  ];
-  var ball = null, ballRaf = null, ballLast = 0;
-  var bkeys = { left: false, right: false, up: false, down: false };
-  function ballReset(){
-    ball = { over: false, started: false, youScore: 0, botScore: 0, shots: [], shieldPickup: null, shieldT: 6,
-             player: { x: 450, y: 520, r: 20, face: -Math.PI / 2, shield: false, respawn: 0, fireCd: 0 },
-             bots: [
-               { name: "Sharpspud", style: "sniper", color: "#2456c8", x: 160, y: 110, r: 20, face: Math.PI / 2, fireCd: 1.4, respawn: 0, strafe: 1 },
-               { name: "Mash Rusher", style: "rusher", color: "#c1272d", x: 740, y: 110, r: 20, face: Math.PI / 2, fireCd: 1.0, respawn: 0, strafe: 1 },
-               { name: "Peel Dodger", style: "dodger", color: "#8b30c9", x: 450, y: 90, r: 20, face: Math.PI / 2, fireCd: 1.2, respawn: 0, strafe: -1 }
-             ] };
-  }
-  function ballBlocked(x, y, r){
-    if(x < r || x > BW - r || y < r || y > BH - r) return true;
-    for(var i = 0; i < HEDGES.length; i++){
-      var h = HEDGES[i];
-      if(x + r > h.x && x - r < h.x + h.w && y + r > h.y && y - r < h.y + h.h) return true;
-    }
-    return false;
-  }
-  function ballMove(e, dx, dy){
-    if(!ballBlocked(e.x + dx, e.y, e.r)) e.x += dx;
-    if(!ballBlocked(e.x, e.y + dy, e.r)) e.y += dy;
-  }
-  function ballFire(e, fromBot){
-    var s = fromBot ? 370 : 470;
-    ball.shots.push({ x: e.x + Math.cos(e.face) * 24, y: e.y + Math.sin(e.face) * 24,
-                      vx: Math.cos(e.face) * s, vy: Math.sin(e.face) * s, bot: !!fromBot });
-  }
-  function ballDrawSpud(e, color, isPlayer){
-    bctx.save();
-    bctx.translate(e.x, e.y);
-    if(e.respawn > 0){ bctx.globalAlpha = 0.25 + 0.2 * Math.sin(performance.now() / 90); }
-    bctx.fillStyle = "#b5793b";
-    bctx.beginPath(); bctx.ellipse(0, 0, e.r, e.r * 0.88, 0, 0, Math.PI * 2); bctx.fill();
-    bctx.fillStyle = color;
-    bctx.beginPath(); bctx.ellipse(0, -e.r * 0.55, e.r * 0.72, e.r * 0.42, 0, Math.PI, Math.PI * 2); bctx.fill();
-    bctx.fillStyle = "#fff";
-    bctx.beginPath(); bctx.ellipse(0, -e.r * 0.78, 7, 5, 0, 0, Math.PI * 2); bctx.fill();
-    bctx.strokeStyle = "#5a4632"; bctx.lineWidth = 5; bctx.lineCap = "round";
-    bctx.beginPath(); bctx.moveTo(0, 0);
-    bctx.lineTo(Math.cos(e.face) * 30, Math.sin(e.face) * 30); bctx.stroke();
-    if(e.shield){
-      bctx.strokeStyle = "rgba(255,217,77,0.9)"; bctx.lineWidth = 2.5;
-      bctx.beginPath(); bctx.arc(0, 0, e.r + 7, 0, Math.PI * 2); bctx.stroke();
-    }
-    bctx.restore();
-    bctx.fillStyle = "#fff"; bctx.font = "bold 11px Verdana"; bctx.textAlign = "center";
-    bctx.fillText(isPlayer ? "You" : e.name, e.x, e.y - e.r - 12);
-    bctx.textAlign = "left";
-  }
-  function drawBall(){
-    bctx.fillStyle = "#4a7a3a"; bctx.fillRect(0, 0, BW, BH);
-    bctx.fillStyle = "#5d9448";
-    for(var i = 0; i < 22; i++) bctx.fillRect((i * 263.3) % BW, (i * 151.7) % BH, 26, 7);
-    bctx.fillStyle = "#9a6a44";
-    bctx.fillRect(BW / 2 - 30, 0, 60, BH); bctx.fillRect(0, BH / 2 - 30, BW, 60);
-    bctx.fillStyle = "#2e5d2a";
-    HEDGES.forEach(function(h){ bctx.fillRect(h.x, h.y, h.w, h.h); });
-    bctx.fillStyle = "#3d6b35";
-    HEDGES.forEach(function(h){ bctx.fillRect(h.x + 4, h.y + 4, h.w - 8, 6); });
-    if(!ball){ return; }
-    if(ball.shieldPickup){
-      var p = ball.shieldPickup;
-      bctx.fillStyle = "#ffd94d";
-      bctx.beginPath(); bctx.arc(p.x, p.y, 13, 0, Math.PI * 2); bctx.fill();
-      bctx.fillStyle = "#7a4a00"; bctx.font = "bold 13px Verdana"; bctx.textAlign = "center";
-      bctx.fillText("S", p.x, p.y + 4.5); bctx.textAlign = "left";
-    }
-    ball.shots.forEach(function(s){
-      bctx.fillStyle = s.bot ? "#ffb3a0" : "#fff6da";
-      bctx.beginPath(); bctx.arc(s.x, s.y, 6, 0, Math.PI * 2); bctx.fill();
-      bctx.strokeStyle = "rgba(255,255,255,0.5)"; bctx.lineWidth = 2; bctx.stroke();
-    });
-    ball.bots.forEach(function(b){ ballDrawSpud(b, b.color, false); });
-    ballDrawSpud(ball.player, "#e8a91c", true);
-  }
-  function ballSplat(target, byBot){
-    if(target.shield){
-      target.shield = false;
-      $("ballMsg").textContent = byBot ? "Your Butter Shield ate that hit!" : "Shield down — that spud was protected!";
-      return;
-    }
-    if(byBot){
-      ball.botScore++;
-      target.respawn = 1.2;
-      target.x = 450; target.y = 520;
-      $("ballMsg").textContent = "Splatted! The bots have " + ball.botScore + " — first to 5.";
-    }else{
-      ball.youScore++;
-      target.respawn = 1.2;
-      var corners = [[90, 90], [810, 90], [90, 510], [810, 510]];
-      var c = corners[Math.floor(Math.random() * 4)];
-      target.x = c[0]; target.y = c[1];
-      $("ballMsg").textContent = "SPLAT! You have " + ball.youScore + " — first to 5.";
-    }
-    $("ballYou").textContent = ball.youScore;
-    $("ballBots").textContent = ball.botScore;
-    if(ball.youScore >= 5 || ball.botScore >= 5){
-      ball.over = true;
-      $("ballMsg").textContent = ball.youScore >= 5
-        ? "🏆 You take the Tate-lo Spudball match, " + ball.youScore + "–" + ball.botScore + "!"
-        : "The bots take it, " + ball.botScore + "–" + ball.youScore + ". Rematch?";
-      $("ballStart").textContent = "Play Again";
-    }
-  }
-  function ballStep(ts){
-    if(!ball || ball.over || !ball.started) return;
-    var dt = Math.min(0.033, (ts - ballLast) / 1000 || 0.016);
-    ballLast = ts;
-    var p = ball.player, i, b, dx, dy, dist;
-    if(p.respawn > 0) p.respawn = Math.max(0, p.respawn - dt);
-    if(p.fireCd > 0) p.fireCd = Math.max(0, p.fireCd - dt);
-    // Player movement
-    dx = (bkeys.right ? 1 : 0) - (bkeys.left ? 1 : 0);
-    dy = (bkeys.down ? 1 : 0) - (bkeys.up ? 1 : 0);
-    if((dx || dy) && p.respawn <= 0){
-      var len = Math.sqrt(dx * dx + dy * dy);
-      p.face = Math.atan2(dy, dx);
-      ballMove(p, dx / len * 235 * dt, dy / len * 235 * dt);
-    }
-    // Bots
-    ball.bots.forEach(function(b){
-      if(b.respawn > 0){ b.respawn = Math.max(0, b.respawn - dt); return; }
-      if(b.fireCd > 0) b.fireCd = Math.max(0, b.fireCd - dt);
-      dx = p.x - b.x; dy = p.y - b.y;
-      dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      b.face = Math.atan2(dy, dx);
-      var mx = 0, my = 0, spd = 120;
-      if(b.style === "rusher"){ mx = dx / dist; my = dy / dist; spd = 168; }
-      else if(b.style === "sniper"){
-        if(dist > 290){ mx = dx / dist; my = dy / dist; }
-        else if(dist < 210){ mx = -dx / dist; my = -dy / dist; }
-        else { mx = -dy / dist * b.strafe; my = dx / dist * b.strafe; }
-        spd = 118;
-      }else{ // dodger: orbit fast, direction flips now and then
-        if(Math.random() < dt * 0.5) b.strafe *= -1;
-        mx = -dy / dist * b.strafe + dx / dist * 0.35;
-        my = dx / dist * b.strafe + dy / dist * 0.35;
-        spd = 158;
-      }
-      var ml = Math.sqrt(mx * mx + my * my) || 1;
-      if(p.respawn <= 0) ballMove(b, mx / ml * spd * dt, my / ml * spd * dt);
-      if(b.fireCd <= 0 && dist < 360 && p.respawn <= 0){
-        ballFire(b, true);
-        b.fireCd = b.style === "sniper" ? 1.7 : b.style === "rusher" ? 1.05 : 1.3;
-      }
-    });
-    // Shield pickup lifecycle
-    ball.shieldT -= dt;
-    if(!ball.shieldPickup && ball.shieldT <= 0){
-      ball.shieldPickup = { x: 120 + Math.random() * (BW - 240), y: 110 + Math.random() * (BH - 220) };
-      if(ballBlocked(ball.shieldPickup.x, ball.shieldPickup.y, 18)) ball.shieldPickup = null;
-    }
-    if(ball.shieldPickup){
-      var all = [p].concat(ball.bots);
-      for(i = 0; i < all.length; i++){
-        var e = all[i];
-        if(e.respawn > 0 || e.shield) continue;
-        var sx = e.x - ball.shieldPickup.x, sy = e.y - ball.shieldPickup.y;
-        if(sx * sx + sy * sy < 30 * 30){
-          e.shield = true; ball.shieldPickup = null; ball.shieldT = 9;
-          if(e === p) $("ballMsg").textContent = "Butter Shield up — it eats one hit!";
-          break;
-        }
-      }
-    }
-    // Shots
-    for(i = ball.shots.length - 1; i >= 0; i--){
-      var s = ball.shots[i];
-      s.x += s.vx * dt; s.y += s.vy * dt;
-      var dead = s.x < 0 || s.x > BW || s.y < 0 || s.y > BH || ballBlocked(s.x, s.y, 4);
-      if(!dead){
-        if(s.bot){
-          if(p.respawn <= 0){
-            var hx = s.x - p.x, hy = s.y - p.y;
-            if(hx * hx + hy * hy < (p.r + 5) * (p.r + 5)){ ballSplat(p, true); dead = true; }
-          }
-        }else{
-          for(var bi = 0; bi < ball.bots.length; bi++){
-            var bb = ball.bots[bi];
-            if(bb.respawn > 0) continue;
-            var bx2 = s.x - bb.x, by2 = s.y - bb.y;
-            if(bx2 * bx2 + by2 * by2 < (bb.r + 5) * (bb.r + 5)){ ballSplat(bb, false); dead = true; break; }
-          }
-        }
-      }
-      if(dead) ball.shots.splice(i, 1);
-    }
-    drawBall();
-    if(!ball.over) ballRaf = requestAnimationFrame(ballStep);
-  }
-  function ballDoFire(){
-    if(!ball || ball.over || !ball.started || ball.player.respawn > 0 || ball.player.fireCd > 0) return;
-    ballFire(ball.player, false);
-    ball.player.fireCd = 0.28;
-  }
-  function startBall(){
-    ballReset();
-    ball.started = true;
-    $("ballYou").textContent = "0"; $("ballBots").textContent = "0";
-    $("ballMsg").textContent = "Match on — first to 5 splats!";
-    $("ballStart").textContent = "Restart Match";
-    ballLast = performance.now();
-    if(ballRaf) cancelAnimationFrame(ballRaf);
-    ballRaf = requestAnimationFrame(ballStep);
-    drawBall();
-  }
-  $("ballStart").addEventListener("click", startBall);
-  holdBtn($("ballFire"), ballDoFire, null);
-  holdBtn($("ballLeft"), function(){ bkeys.left = true; }, function(){ bkeys.left = false; });
-  holdBtn($("ballRight"), function(){ bkeys.right = true; }, function(){ bkeys.right = false; });
-  holdBtn($("ballUp"), function(){ bkeys.up = true; }, function(){ bkeys.up = false; });
-  holdBtn($("ballDown"), function(){ bkeys.down = true; }, function(){ bkeys.down = false; });
-  document.addEventListener("keydown", function(e){
-    if(!ball || !ball.started || ball.over) return;
-    var tag = (document.activeElement && document.activeElement.tagName) || "";
-    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-    if(run && !run.over) return; // the Runner owns WASD/Space while a run is live
-    var k = e.key.toLowerCase();
-    if(k === "w") bkeys.up = true;
-    else if(k === "s") bkeys.down = true;
-    else if(k === "a") bkeys.left = true;
-    else if(k === "d") bkeys.right = true;
-    else if(e.key === " "){ e.preventDefault(); ballDoFire(); }
-  });
-  document.addEventListener("keyup", function(e){
-    var k = e.key.toLowerCase();
-    if(k === "w") bkeys.up = false;
-    else if(k === "s") bkeys.down = false;
-    else if(k === "a") bkeys.left = false;
-    else if(k === "d") bkeys.right = false;
-  });
 
   /* ---------------- Arcade nav ---------------- */
   document.querySelectorAll("[data-goto]").forEach(function(b){
@@ -4824,8 +3786,6 @@
   if(gb) gb.addEventListener("click", function(){ $("games").scrollIntoView({ block: "start" }); });
 
   resetRun(); run.over = true; drawRun();
-  resetKart(); drawKart();
-  ballReset(); drawBall();
   setConn();
 })();
 </script>
