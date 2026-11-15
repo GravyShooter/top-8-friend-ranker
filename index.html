@@ -596,6 +596,16 @@
       .game-canvas{ width:100%; height:auto; display:block; background:#1d2b45; border:2px solid #333; border-radius:6px; touch-action:none; }
       .touchrow{ display:flex; gap:8px; margin-top:8px; }
       .touchrow .btn{ flex:1; min-height:48px; font-size:14px; user-select:none; -webkit-user-select:none; touch-action:none; }
+      /* Kart full screen: the stage fills the display (landscape is
+         requested on entry) and the 3D view stretches to match. */
+      #kkStage:fullscreen{ background:#000; }
+      #kkStage:fullscreen #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      #kkStage:-webkit-full-screen{ background:#000; }
+      #kkStage:-webkit-full-screen #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      #b3Stage:fullscreen{ background:#000; }
+      #b3Stage:fullscreen #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      #b3Stage:-webkit-full-screen{ background:#000; }
+      #b3Stage:-webkit-full-screen #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
       .scoreline{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; margin:6px 0; }
       .scoreline b{ color:var(--blue); }
       .chal-row{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px; }
@@ -795,7 +805,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
                   <h4>Tate-lo 3D — WebGL</h4>
-                  <p>The WebGL Tate-lo 3D: first-person Spudball in a real 3D garden arena — stone walls, crates for cover, gold and red Spudtans trading sour-cream shots. Splat five before they splat you.</p>
+                  <p>The WebGL Tate-lo 3D: first-person Spudball in a box canyon after Halo's Blood Gulch — two bases, canyon walls, the great ring in the sky, Halo movement and that floaty jump, gold and red Spudtans trading sour-cream shots. Splat five before they splat you. Two-thumb touch controls, full-screen landscape, and Xbox controller support.</p>
                   <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
                 </div>
                 <div class="game-card">
@@ -807,7 +817,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · GRAND PRIX · BASEMENT SERVER</span>
                   <h4>Spud Kart 3D — WebGL</h4>
-                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus spud versions of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64 — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics.</p>
+                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus faithful recreations of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64, layouts and scenery matched to the originals (Rainbow Road races through deep space) with only the racers and names swapped for spuds — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics. Mario Kart Tour controls (auto-accelerate, drag to steer and drift, tap for items), full-screen landscape play, and Xbox controller support.</p>
                   <button class="btn primary" type="button" data-goto="kart3dPanel">Play Spud Kart 3D</button>
                 </div>
               </div>
@@ -880,17 +890,21 @@
                 <h4>Tate-lo 3D — WebGL (first-person Spudball)</h4>
                 <div class="gbody">
                   <div class="scoreline"><span>Splats <b id="b3Splats">0 / 5</b></span><span>Times splatted <b id="b3Down">0</b></span><span>Time <b id="b3Time">0.0 s</b></span><span id="b3Msg" style="font-weight:bold; color:var(--orange);"></span></div>
-                  <div id="b3Mount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
-                  <div class="touchrow">
-                    <button class="btn" id="b3Left" type="button">◀ Turn</button>
-                    <button class="btn" id="b3Fwd" type="button">▲ Forward</button>
-                    <button class="btn" id="b3Right" type="button">Turn ▶</button>
+                  <div id="b3Stage" style="position:relative;">
+                    <div id="b3Mount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                    <div style="position:absolute; left:50%; top:50%; width:22px; height:22px; margin:-11px 0 0 -11px; pointer-events:none; opacity:.85;">
+                      <div style="position:absolute; left:50%; top:0; width:2px; height:7px; margin-left:-1px; background:#7dff8a;"></div>
+                      <div style="position:absolute; left:50%; bottom:0; width:2px; height:7px; margin-left:-1px; background:#7dff8a;"></div>
+                      <div style="position:absolute; top:50%; left:0; height:2px; width:7px; margin-top:-1px; background:#7dff8a;"></div>
+                      <div style="position:absolute; top:50%; right:0; height:2px; width:7px; margin-top:-1px; background:#7dff8a;"></div>
+                    </div>
                   </div>
                   <div class="touchrow">
                     <button class="btn orange" id="b3Start" type="button">Start 3D Match</button>
-                    <button class="btn" id="b3Fire" type="button">Fire Sour Cream</button>
+                    <button class="btn" id="b3FullBtn" type="button">Full Screen</button>
                   </div>
-                  <p class="game-sub">Real WebGL (three.js): a first-person garden arena — ivy stone walls, crates for cover, warm fog. Gold and red Spudtans hunt you and fire back; one hit splats either way, and a splat respawns the spud across the arena. First to 5 splats wins. Keyboard: ↑ / W forward, ← → / A D turn, Space fire. Drag on the view also turns.</p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim; <b>hold it down</b> to fire, and a quick <b>double-tap on the right side</b> jumps. <b>Full Screen</b> fills the display landscape. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Start begins the match.</span></p>
+                  <p class="game-sub">Real WebGL (three.js) doing Halo (original Xbox) the spud way: a box-canyon arena after <b>Blood Gulch</b> — red base vs blue base, canyon walls, scattered rocks and trees, and the great ring hanging in the sky. The physics are Halo's too: quick, weighty strafing movement, that famous <b>floaty jump</b>, and fast sour-cream bolts you can dodge. Gold and red Spudtans hunt you and fire back; one hit splats either way, and a splat respawns the spud at the far base. First to 5 splats wins. Keyboard: W A S D move/strafe, drag or ← → to aim, F hold to fire, Space jump.</p>
                 </div>
               </div>
 
@@ -914,22 +928,16 @@
                 <h4>Spud Kart 3D — WebGL Grand Prix · 7 Tracks (Mario Kart 64 handling, spuds at the wheel)</h4>
                 <div class="gbody">
                   <div class="scoreline"><span>Track <b id="kkTrackName">Spud Circuit</b></span><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
-                  <div style="position:relative;">
+                  <div id="kkStage" style="position:relative;">
                     <div id="kkMount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
                     <canvas id="kkMap" width="150" height="110" style="position:absolute; top:8px; right:8px; background:rgba(10,18,32,.55); border:1px solid rgba(255,255,255,.35); border-radius:6px; pointer-events:none;"></canvas>
                     <div id="kkBig" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:46px; font-weight:800; color:#fff; text-shadow:0 3px 12px rgba(0,0,0,.6); pointer-events:none; letter-spacing:1px;"></div>
                   </div>
                   <div class="touchrow">
-                    <button class="btn" id="kkLeft" type="button">◀ Steer</button>
-                    <button class="btn" id="kkDrift" type="button">Drift / Hop</button>
-                    <button class="btn orange" id="kkGas" type="button">Gas ▲</button>
-                    <button class="btn" id="kkRight" type="button">Steer ▶</button>
-                  </div>
-                  <div class="touchrow">
-                    <button class="btn" id="kkBrake" type="button">Brake / Reverse</button>
                     <button class="btn orange" id="kkStart" type="button">Start Race</button>
-                    <button class="btn" id="kkItemBtn" type="button">Use Item</button>
+                    <button class="btn" id="kkFullBtn" type="button">Full Screen</button>
                   </div>
+                  <p class="game-sub" style="margin-top:4px;"><b>Mario Kart Tour controls — no buttons to hold:</b> your kart <b>accelerates by itself</b>. <b>Drag on the track</b> to steer; <b>drag hard and hold</b> to hop into a drift, then let go for the mini-turbo. <b>Tap the track</b> to use your item — or tap mid-air off a ramp for a trick. At the lights, <b>touch and hold from the last light</b> for a rocket start. <b>Full Screen</b> fills the display and turns the race landscape. <span id="kkPadStatus">An Xbox or any standard controller works too — pair it and press any button: left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.</span></p>
                   <div class="chal-row">
                     <select id="kkTrackSel" aria-label="Choose your track">
                       <option value="0">1 · Spud Circuit — the original house circuit</option>
@@ -949,7 +957,7 @@
                       <option value="heavy">King Russet · heavy — slow off the line, fastest top end</option>
                     </select>
                   </div>
-                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, steering gets heavier the faster you go, and the powerslide is the whole game. <b>Hold Drift while steering</b> to hop and slide; keep the slide going and the rear sparks turn <b>blue, then orange</b> — let go of Drift at orange for the big <b>mini-turbo</b>. <b>Gas</b> held from the last light gets a rocket start; hold it from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — tap <b>Use Item mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts, on whichever of the <b>7 tracks</b> you pick above — every track is a different layout with its own scenery, ground and corners; the MK64 ones keep the shape and feel of the originals (the wide speedway oval, the farm's rolling S-bends, the beach loop, Choco Mountain's tight hairpins, Royal Raceway's long castle straight, Rainbow Road's big flowing sweep) with original spud names and art, no Nintendo assets. Keyboard: ↑ / W gas, ↓ / S brake, ← → / A D steer, Shift / L drift-hop, Space item.</p>
+                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, steering gets heavier the faster you go, and the powerslide is the whole game. The controls are Mario Kart Tour's: the kart <b>accelerates by itself</b>, you <b>drag to steer</b>, <b>drag hard and hold</b> to hop and slide — keep the slide going and the rear sparks turn <b>blue, then orange</b> — and <b>let go</b> at orange for the big <b>mini-turbo</b>. <b>Touch and hold from the last light</b> for a rocket start; hold from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — <b>tap mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts, on whichever of the <b>7 tracks</b> you pick above — and the MK64 ones are faithful to the originals, not just inspired: Luigi Raceway's stadium dogbone with its hill tunnel and hot-air balloon, Moo Moo Farm's fenced pastures, barn, silos, windmill and mole mounds, Koopa Troopa Beach as a sand island in open sea with rock spires in the surf, Choco Mountain's rock-walled dirt road and boulder-strewn brown peaks, Royal Raceway sweeping past the castle and its lake — and Rainbow Road where it belongs, <b>out in deep space</b>: no ground, no sky, just stars, a ringed planet, asteroids, giant neon signs and a road paved in rainbow tiles. Only the racers and the names are spuds. Keyboard: ← → / A D steer, Shift / L drift-hop, Space item, ↓ / S brake. Controller: left stick, RT, LT, LB/RB, X.</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Multiplayer — basement server races (real bump physics)</p>
                     <p class="game-status" id="kkSrvStatus">Multiplayer runs on the basement server: the PC steps every kart, decides the bumps, and calls the finish times. There's no connect step — tap the race button and you're in; the connecting happens by itself, invisibly.</p>
@@ -3951,66 +3959,196 @@
 
   /* ---------------- Tate-lo 3D — first-person Spudball (WebGL) ---------------- */
   var b3 = { ok: false, running: false, over: false, splats: 0, down: 0, time: 0,
-             px: 0, pz: 14, head: Math.PI, invuln: 0, fireCd: 0,
-             keys: { fwd: false, left: false, right: false }, enemies: [], shots: [], crates: [] };
-  var b3Mount = $("b3Mount"), b3Renderer = null, b3Scene = null, b3Cam = null, b3Last = 0, b3Raf = 0;
+             px: 0, pz: 46, head: Math.PI, pitch: 0, py: 0, vy: 0, vx: 0, vz: 0, grounded: true,
+             invuln: 0, fireCd: 0, jumpQ: false,
+             keys: { f: false, b: false, sl: false, sr: false, tl: false, tr: false, fire: false },
+             stick: { x: 0, y: 0 }, enemies: [], shots: [], crates: [] };
+  var b3Mount = $("b3Mount"), b3Renderer = null, b3Scene = null, b3Cam = null, b3Last = 0, b3Raf = 0, b3Gun = null, b3GunKick = 0;
+  /* Two-thumb touch: left half is a floating move stick, right half
+     aims by dragging, holds to fire, double-taps to jump. */
+  var b3Touch = { moveId: null, mx0: 0, my0: 0, aimId: null, ax: 0, ay: 0, aimT: 0, aimMoved: 0, fire: false, lastTap: 0 };
+  /* Gamepad, Halo layout: left stick moves, right stick aims, RT
+     fires, A jumps, Start starts. */
+  var b3Pad = { active: false, mx: 0, my: 0, ax: 0, ay: 0, fire: false, jumpEdge: false, startEdge: false, wasJump: false, wasStart: false };
+  function b3PollPad(){
+    b3Pad.jumpEdge = false; b3Pad.startEdge = false;
+    var gp = null;
+    try{
+      var gps = navigator.getGamepads ? navigator.getGamepads() : [];
+      for(var i = 0; i < gps.length; i++){ if(gps[i] && gps[i].connected){ gp = gps[i]; break; } }
+    }catch(e){}
+    b3Pad.active = !!gp;
+    if(!gp){ b3Pad.mx = b3Pad.my = b3Pad.ax = b3Pad.ay = 0; b3Pad.fire = false; b3Pad.wasJump = b3Pad.wasStart = false; return; }
+    function dz(v){ return Math.abs(v) < 0.16 ? 0 : v; }
+    function btn(n){ return !!(gp.buttons && gp.buttons[n] && gp.buttons[n].pressed); }
+    b3Pad.mx = dz(gp.axes[0] || 0); b3Pad.my = dz(gp.axes[1] || 0);
+    if(btn(14)) b3Pad.mx = -1; else if(btn(15)) b3Pad.mx = 1;
+    if(btn(12)) b3Pad.my = -1; else if(btn(13)) b3Pad.my = 1;
+    b3Pad.ax = dz(gp.axes[2] || 0); b3Pad.ay = dz(gp.axes[3] || 0);
+    b3Pad.fire = btn(7); // RT fires; A (below) jumps
+    var j = btn(0) || btn(1);
+    b3Pad.jumpEdge = j && !b3Pad.wasJump; b3Pad.wasJump = j;
+    var st = btn(9);
+    b3Pad.startEdge = st && !b3Pad.wasStart; b3Pad.wasStart = st;
+  }
   function b3SetMsg(t){ var el = $("b3Msg"); if(el) el.textContent = t; }
   function b3SpawnPoint(far){
     for(var tries = 0; tries < 12; tries++){
-      var x = (Math.random() * 2 - 1) * 15, z = (Math.random() * 2 - 1) * 15;
+      var x = (Math.random() * 2 - 1) * 24, z = (Math.random() * 2 - 1) * 50;
       var dx = x - b3.px, dz = z - b3.pz;
-      if(far && dx * dx + dz * dz < 120) continue;
+      if(far && dx * dx + dz * dz < 900) continue;
+      if(b3Blocked(x, z)) continue;
       return { x: x, z: z };
     }
-    return { x: 0, z: -12 };
+    return { x: 0, z: -46 };
   }
   function b3Init(){
     if(b3Renderer) return true;
     try{
-      b3Renderer = new THREE.WebGLRenderer({ antialias: true });
+      b3Renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
     }catch(e){ b3SetMsg("WebGL isn't available in this browser."); return false; }
     b3Renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    b3Renderer.shadowMap.enabled = true;
+    b3Renderer.shadowMap.type = THREE.PCFShadowMap;
+    b3Renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    b3Renderer.toneMappingExposure = 1.05;
+    b3Renderer.outputColorSpace = THREE.SRGBColorSpace;
     b3Mount.appendChild(b3Renderer.domElement);
     b3Scene = new THREE.Scene();
-    b3Scene.background = new THREE.Color(0xe8b06a);
-    b3Scene.fog = new THREE.Fog(0xe8b06a, 26, 60);
-    b3Cam = new THREE.PerspectiveCamera(68, 1.6, 0.1, 120);
-    lights(b3Scene, 0xffe0b0, 0x4a7a3a, 0xffd9a0);
-    // Ground: grass with a brick cross path
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(44, 44), std(0x4a7a3a, 0.95));
-    ground.rotation.x = -Math.PI / 2;
-    b3Scene.add(ground);
-    var pathMat = std(0x9a6a44, 0.95);
-    var p1 = new THREE.Mesh(new THREE.PlaneGeometry(4, 44), pathMat);
-    p1.rotation.x = -Math.PI / 2; p1.position.y = 0.01; b3Scene.add(p1);
-    var p2 = new THREE.Mesh(new THREE.PlaneGeometry(44, 4), pathMat);
-    p2.rotation.x = -Math.PI / 2; p2.position.y = 0.012; b3Scene.add(p2);
-    // Perimeter stone walls with ivy
-    var stone = std(0x8a8578, 0.95), ivy = std(0x2e5d2a, 0.95);
-    function wall(x, z, w, d){
-      var m = new THREE.Mesh(new THREE.BoxGeometry(w, 3.2, d), stone);
-      m.position.set(x, 1.6, z); b3Scene.add(m);
-      for(var i = 0; i < 3; i++){
-        var iv = new THREE.Mesh(new THREE.BoxGeometry(w > d ? 2.2 : 0.3, 1.1, w > d ? 0.3 : 2.2), ivy);
-        iv.position.set(x + (w > d ? (i - 1) * w / 3.4 : 0), 2.2 - (i % 2) * 0.5, z + (w > d ? 0 : (i - 1) * w / 3.4));
-        b3Scene.add(iv);
-      }
-    }
-    wall(0, -19, 40, 1.6); wall(0, 19, 40, 1.6); wall(-19, 0, 1.6, 40); wall(19, 0, 1.6, 40);
-    // Crates for cover
-    var crateMat = std(0x9a6a44, 0.9);
-    [[-8, -6], [8, -6], [-8, 6], [8, 6], [0, -12], [-13, 0], [13, 0], [0, 10]].forEach(function(c){
-      var s = 1.6 + (Math.abs(c[0] + c[1]) % 3) * 0.35;
-      var m = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), crateMat);
-      m.position.set(c[0], s / 2, c[1]);
-      m.rotation.y = (c[0] * 7 + c[1]) % 0.9;
-      b3Scene.add(m);
-      b3.crates.push({ x: c[0], z: c[1], r: s * 0.78 });
+    b3Scene.background = new THREE.Color(0x8fb8dd);
+    b3Scene.fog = new THREE.Fog(0xa8c4de, 70, 260);
+    b3Cam = new THREE.PerspectiveCamera(72, 1.6, 0.1, 900);
+    // Halo daylight: bright sun with real shadows + sky bounce
+    b3Scene.add(new THREE.HemisphereLight(0xbfd9ff, 0x8a7a56, 0.9));
+    var sun = new THREE.DirectionalLight(0xfff2d8, 1.9);
+    sun.position.set(45, 70, -30);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.camera.left = -75; sun.shadow.camera.right = 75;
+    sun.shadow.camera.top = 75; sun.shadow.camera.bottom = -75;
+    sun.shadow.camera.near = 5; sun.shadow.camera.far = 220;
+    sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.03;
+    b3Scene.add(sun); b3Scene.add(sun.target);
+    // The great ring in the sky — the silhouette that says Halo.
+    var ring = new THREE.Mesh(new THREE.TorusGeometry(560, 7, 8, 72),
+      new THREE.MeshBasicMaterial({ color: 0xdfe9f2, fog: false }));
+    ring.position.set(0, 210, -260); ring.rotation.x = 0.42; ring.rotation.y = 0.2;
+    b3Scene.add(ring);
+    var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: kkGetSoftTex(), color: 0xfff3c8, transparent: true, opacity: 0.95, depthWrite: false, fog: false }));
+    glow.scale.set(150, 150, 1); glow.position.set(300, 330, -420);
+    b3Scene.add(glow);
+    // Distant mesas beyond the canyon rim
+    var mesaM = std(0xa8845e, 1);
+    [[-190, -160, 120, 46], [200, -120, 150, 60], [-210, 90, 130, 52], [190, 170, 160, 66], [0, -260, 220, 74]].forEach(function(ms){
+      var mesa = new THREE.Mesh(new THREE.CylinderGeometry(ms[2] * 0.72, ms[2], ms[3], 7), mesaM);
+      mesa.position.set(ms[0], ms[3] / 2 - 4, ms[1]);
+      b3Scene.add(mesa);
     });
+    // Canyon floor: mottled grass-and-dirt, with the worn dirt track
+    // running base to base like the Gulch's vehicle path.
+    var gtex = kkCanvasTex(256, 256, function(g){
+      g.fillStyle = "#77894f"; g.fillRect(0, 0, 256, 256);
+      for(var i = 0; i < 2400; i++){
+        g.fillStyle = ["#6d8148", "#82975a", "#8f8657", "#756f45"][(Math.random() * 4) | 0];
+        g.fillRect(Math.random() * 256, Math.random() * 256, 3, 3);
+      }
+    }, 26, 46);
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(150, 260), new THREE.MeshStandardMaterial({ map: gtex, roughness: 1 }));
+    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
+    b3Scene.add(ground);
+    var dirtM = std(0x9a7d55, 1);
+    var track = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 118), dirtM);
+    track.rotation.x = -Math.PI / 2; track.rotation.z = 0.045; track.position.y = 0.015; track.receiveShadow = true;
+    b3Scene.add(track);
+    // Canyon walls: stacked rock strata boxes all the way round.
+    var rockA = std(0xa8845e, 1), rockB = std(0x96754e, 1);
+    function cliff(x, z, w, d, h, m){
+      var c = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m || rockA);
+      c.position.set(x, h / 2 - 0.5, z); c.castShadow = true; c.receiveShadow = true;
+      b3Scene.add(c);
+    }
+    cliff(0, -66, 150, 14, 17); cliff(0, 66, 150, 14, 17);
+    cliff(-40, 0, 16, 122, 15); cliff(40, 0, 16, 122, 15);
+    cliff(0, -70, 150, 10, 26, rockB); cliff(0, 70, 150, 10, 26, rockB);
+    cliff(-46, 0, 10, 122, 24, rockB); cliff(46, 0, 10, 122, 24, rockB);
+    // The two bases, red vs blue: two towers, a back wall and a roof
+    // deck you can shelter under, glowing trim lights.
+    function base(zc, colTrim, name){
+      var wallM = std(0xb9bcbe, 0.9), darkM = std(0x6f7276, 0.9);
+      var trimM = new THREE.MeshStandardMaterial({ color: colTrim, roughness: 0.4, emissive: colTrim, emissiveIntensity: 0.55 });
+      [-8.5, 8.5].forEach(function(off){
+        var tw = new THREE.Mesh(new THREE.BoxGeometry(4.4, 7.5, 4.4), wallM);
+        tw.position.set(off, 3.75, zc); tw.castShadow = true; tw.receiveShadow = true; b3Scene.add(tw);
+        var cap = new THREE.Mesh(new THREE.BoxGeometry(5.2, 0.5, 5.2), darkM);
+        cap.position.set(off, 7.7, zc); b3Scene.add(cap);
+        var lamp = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), trimM);
+        lamp.position.set(off, 8.2, zc); b3Scene.add(lamp);
+        b3.crates.push({ x: off, z: zc, r: 3.1 });
+      });
+      var back = new THREE.Mesh(new THREE.BoxGeometry(21.5, 6.4, 1.8), wallM);
+      back.position.set(0, 3.2, zc + (zc < 0 ? -3.4 : 3.4)); back.castShadow = true; back.receiveShadow = true; b3Scene.add(back);
+      b3.crates.push({ x: 0, z: zc + (zc < 0 ? -3.4 : 3.4), r: 3.4, w: 10.6, d: 1.6 });
+      var roof = new THREE.Mesh(new THREE.BoxGeometry(21.5, 0.6, 10.5), darkM);
+      roof.position.set(0, 6.7, zc + (zc < 0 ? -1.2 : 1.2)); roof.castShadow = true; b3Scene.add(roof);
+      var strip = new THREE.Mesh(new THREE.BoxGeometry(19, 0.35, 0.35), trimM);
+      strip.position.set(0, 5.6, zc + (zc < 0 ? 2.6 : -2.6)); b3Scene.add(strip);
+      var banner = new THREE.Mesh(new THREE.BoxGeometry(7, 1.5, 0.25), new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 48, function(g){
+        g.fillStyle = name === "RED" ? "#7d1a12" : "#123a7d"; g.fillRect(0, 0, 256, 48);
+        g.font = "800 30px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+        g.fillStyle = "#fff"; g.fillText(name + " BASE", 128, 25);
+      }), roughness: 0.7 }));
+      banner.position.set(0, 4.6, zc + (zc < 0 ? 2.75 : -2.75));
+      if(zc > 0) banner.rotation.y = Math.PI;
+      b3Scene.add(banner);
+    }
+    base(-52, 0xff4a3c, "RED");
+    base(52, 0x3c7dff, "BLUE");
+    // Cover: boulders, a few metal crates, and the Gulch's trees.
+    var rockM = std(0x8d7a5c, 1);
+    [[-14, -28], [13, -20], [-11, 4], [16, 14], [-17, 30], [9, 34], [0, -6], [-4, -38], [5, 22]].forEach(function(rc){
+      var r = 1.5 + (Math.abs(rc[0] * 3 + rc[1]) % 3) * 0.5;
+      var rock = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), rockM);
+      rock.position.set(rc[0], r * 0.55, rc[1]); rock.rotation.set(rc[0], rc[1], 0);
+      rock.castShadow = true; rock.receiveShadow = true; b3Scene.add(rock);
+      b3.crates.push({ x: rc[0], z: rc[1], r: r + 0.35 });
+    });
+    var crateM = std(0x707880, 0.7);
+    [[-7, -14], [7.5, 8], [-8, 18], [6, -32]].forEach(function(c){
+      var m = new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.1, 2.1), crateM);
+      m.position.set(c[0], 1.05, c[1]); m.rotation.y = (c[0] * 7 + c[1]) % 0.9;
+      m.castShadow = true; m.receiveShadow = true; b3Scene.add(m);
+      b3.crates.push({ x: c[0], z: c[1], r: 1.75 });
+    });
+    var trunkM = std(0x6b4a2b, 0.95), leafM = std(0x4a7a3a, 0.95);
+    [[-22, -12], [23, -34], [-24, 22], [21, 40], [-19, -44]].forEach(function(tp){
+      var tree = new THREE.Group();
+      var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.5, 3.4, 8), trunkM);
+      trunk.position.y = 1.7; trunk.castShadow = true; tree.add(trunk);
+      [[0, 4.6, 0, 2.3], [1.2, 3.9, 0.6, 1.7], [-1.1, 4.0, -0.5, 1.8]].forEach(function(b){
+        var blob = new THREE.Mesh(new THREE.SphereGeometry(b[3], 10, 8), leafM);
+        blob.position.set(b[0], b[1], b[2]); blob.castShadow = true; tree.add(blob);
+      });
+      tree.position.set(tp[0], 0, tp[1]);
+      b3Scene.add(tree);
+      b3.crates.push({ x: tp[0], z: tp[1], r: 1.0 });
+    });
+    // The blaster, riding in the lower right of the view.
+    b3Gun = new THREE.Group();
+    var gunBody = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.14, 0.52), std(0xdad4c4, 0.45));
+    b3Gun.add(gunBody);
+    var gunBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.028, 0.3, 8), std(0x8a8578, 0.4));
+    gunBarrel.rotation.x = Math.PI / 2; gunBarrel.position.set(0, 0.045, -0.36); b3Gun.add(gunBarrel);
+    var gunCell = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.16),
+      new THREE.MeshStandardMaterial({ color: 0x7dff8a, roughness: 0.3, emissive: 0x2e8b3a, emissiveIntensity: 0.9 }));
+    gunCell.position.set(0, -0.02, -0.05); b3Gun.add(gunCell);
+    b3Gun.position.set(0.26, -0.24, -0.55);
+    b3Cam.add(b3Gun);
+    b3Scene.add(b3Cam);
     // Enemy Spudtans: gold vs red, like the arena original
     var cols = [0xc1272d, 0xc1272d, 0x2456c8, 0x8b30c9];
     for(var i = 0; i < 4; i++){
       var mesh = makeSpud(0xb5793b, cols[i], 1.15);
+      mesh.traverse(function(o){ if(o.castShadow !== undefined) o.castShadow = true; });
       var sp = b3SpawnPoint(true);
       mesh.position.set(sp.x, 0, sp.z);
       b3Scene.add(mesh);
@@ -4030,31 +4168,34 @@
   }
   window.addEventListener("resize", function(){ b3Resize(); escResize(); kkResize(); });
   function b3Blocked(x, z){
-    if(Math.abs(x) > 17.6 || Math.abs(z) > 17.6) return true;
+    if(Math.abs(x) > 30.5 || Math.abs(z) > 57.5) return true;
     for(var i = 0; i < b3.crates.length; i++){
       var c = b3.crates[i], dx = x - c.x, dz = z - c.z;
-      if(dx * dx + dz * dz < (c.r + 0.55) * (c.r + 0.55)) return true;
+      if(c.w){ if(Math.abs(dx) < c.w + 0.55 && Math.abs(dz) < c.d + 0.55) return true; }
+      else if(dx * dx + dz * dz < (c.r + 0.55) * (c.r + 0.55)) return true;
     }
     return false;
   }
-  function b3Fire(fromEnemy, ex, ez, dirx, dirz){
-    var m = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8),
-      new THREE.MeshBasicMaterial({ color: fromEnemy ? 0xffb3a0 : 0xfff6da }));
-    m.position.set(ex, 1.05, ez);
+  function b3Fire(fromEnemy, ex, ey, ez, dirx, diry, dirz){
+    var m = new THREE.Mesh(new THREE.SphereGeometry(0.17, 10, 8),
+      new THREE.MeshBasicMaterial({ color: fromEnemy ? 0xff9a7a : 0xfff6da }));
+    m.position.set(ex, ey, ez);
     b3Scene.add(m);
-    b3.shots.push({ mesh: m, x: ex, z: ez, vx: dirx * (fromEnemy ? 15 : 32), vz: dirz * (fromEnemy ? 15 : 32), enemy: fromEnemy, life: 2.4 });
+    var sp = fromEnemy ? 21 : 46;
+    b3.shots.push({ mesh: m, x: ex, y: ey, z: ez, vx: dirx * sp, vy: diry * sp, vz: dirz * sp, enemy: fromEnemy, life: 2.6 });
   }
   function b3PlayerFire(){
     if(!b3.running || b3.over || b3.fireCd > 0) return;
-    b3.fireCd = 0.26;
-    var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
-    b3Fire(false, b3.px + fx * 0.8, b3.pz + fz * 0.8, fx, fz);
+    b3.fireCd = 0.22;
+    b3GunKick = 1;
+    var cp = Math.cos(b3.pitch), fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
+    b3Fire(false, b3.px + fx * 0.8, 1.35 + b3.py, b3.pz + fz * 0.8, fx, fy, fz);
   }
   function b3SplatPlayer(){
     if(b3.invuln > 0 || b3.over) return;
     b3.down++;
     $("b3Down").textContent = b3.down;
-    b3.px = 0; b3.pz = 14; b3.head = Math.PI; b3.invuln = 1.6;
+    b3.px = 0; b3.pz = 46; b3.head = Math.PI; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.invuln = 1.6;
     if(b3.down >= 5){
       b3.over = true;
       b3SetMsg("The Spudtans take Tate-lo 3D, " + b3.down + "–" + b3.splats + ". Rematch?");
@@ -4068,56 +4209,83 @@
     $("b3Time").textContent = b3.time.toFixed(1) + " s";
     if(b3.fireCd > 0) b3.fireCd -= dt;
     if(b3.invuln > 0) b3.invuln -= dt;
-    var turn = (b3.keys.left ? 1 : 0) - (b3.keys.right ? 1 : 0);
-    b3.head += turn * 2.3 * dt;
-    if(b3.keys.fwd){
-      var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
-      var nx = b3.px + fx * 6.4 * dt, nz = b3.pz + fz * 6.4 * dt;
-      if(!b3Blocked(nx, b3.pz)) b3.px = nx;
-      if(!b3Blocked(b3.px, nz)) b3.pz = nz;
+    b3PollPad();
+    if(b3Pad.startEdge && (b3.over || !b3.running)) b3Start();
+    if(b3Pad.jumpEdge) b3.jumpQ = true;
+    // ---- Halo movement: velocity-smoothed strafing, floaty jump ----
+    var turn = (b3.keys.tl ? 1 : 0) - (b3.keys.tr ? 1 : 0);
+    b3.head += turn * 2.4 * dt;
+    b3.head -= b3Pad.ax * 2.6 * dt;
+    b3.pitch -= b3Pad.ay * 1.9 * dt;
+    if(b3.pitch > 1.15) b3.pitch = 1.15; else if(b3.pitch < -1.15) b3.pitch = -1.15;
+    var fwdIn = (b3.keys.f ? 1 : 0) - (b3.keys.b ? 1 : 0) - b3.stick.y - b3Pad.my;
+    var strIn = (b3.keys.sr ? 1 : 0) - (b3.keys.sl ? 1 : 0) + b3.stick.x + b3Pad.mx;
+    var il = Math.sqrt(fwdIn * fwdIn + strIn * strIn);
+    if(il > 1){ fwdIn /= il; strIn /= il; }
+    var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
+    var rx = -fz, rz = fx; // right vector
+    var SPEED = 7.4;
+    var tvx = (fx * fwdIn + rx * strIn) * SPEED, tvz = (fz * fwdIn + rz * strIn) * SPEED;
+    var acc = b3.grounded ? 11 : 3.6; // Halo: planted on the ground, loose in the air
+    var k = 1 - Math.exp(-acc * dt);
+    b3.vx += (tvx - b3.vx) * k; b3.vz += (tvz - b3.vz) * k;
+    var nx = b3.px + b3.vx * dt, nz = b3.pz + b3.vz * dt;
+    if(!b3Blocked(nx, b3.pz)) b3.px = nx; else b3.vx = 0;
+    if(!b3Blocked(b3.px, nz)) b3.pz = nz; else b3.vz = 0;
+    // The famous floaty jump: strong lift, gentle gravity.
+    if(b3.jumpQ && b3.grounded){ b3.vy = 7.3; b3.grounded = false; }
+    b3.jumpQ = false;
+    if(!b3.grounded || b3.py > 0){
+      b3.py += b3.vy * dt;
+      b3.vy -= 15.2 * dt;
+      if(b3.py <= 0){ b3.py = 0; b3.vy = 0; b3.grounded = true; }
     }
-    // Enemies: wander, close in, fire back
+    if(b3.keys.fire || b3Touch.fire || b3Pad.fire) b3PlayerFire();
+    // Enemies: wander, close in, strafe a little, fire back
     b3.enemies.forEach(function(e){
       if(e.respawn > 0){ e.respawn -= dt; e.mesh.visible = e.respawn <= 0; return; }
       var dx = b3.px - e.x, dz = b3.pz - e.z;
       var dist = Math.sqrt(dx * dx + dz * dz) || 1;
       e.wanderT -= dt;
       if(e.wanderT <= 0){ e.wanderT = 1 + Math.random() * 1.6; e.head = Math.atan2(dx, dz) + (Math.random() - 0.5) * 1.4; }
-      if(dist > 6){
-        var mx = Math.sin(e.head) * 2.3 * dt, mz = Math.cos(e.head) * 2.3 * dt;
+      if(dist > 7){
+        var mx = Math.sin(e.head) * 3.4 * dt, mz = Math.cos(e.head) * 3.4 * dt;
         if(!b3Blocked(e.x + mx, e.z)) e.x += mx;
         if(!b3Blocked(e.x, e.z + mz)) e.z += mz;
       }
       e.mesh.position.set(e.x, 0, e.z);
       e.mesh.rotation.y = Math.atan2(dx, dz);
       e.fireCd -= dt;
-      if(e.fireCd <= 0 && dist < 19){
-        e.fireCd = 1.7 + Math.random() * 1.2;
-        b3Fire(true, e.x, e.z, dx / dist, dz / dist);
+      if(e.fireCd <= 0 && dist < 34){
+        e.fireCd = 1.6 + Math.random() * 1.1;
+        var aimY = (1.15 + b3.py) - 1.15;
+        var d3 = Math.sqrt(dist * dist + aimY * aimY) || 1;
+        b3Fire(true, e.x, 1.15, e.z, dx / d3, aimY / d3, dz / d3);
       }
     });
-    // Shots
+    // Shots (full 3D now — bolts fly where you aim, pitch included)
     for(var i = b3.shots.length - 1; i >= 0; i--){
       var s = b3.shots[i];
-      s.x += s.vx * dt; s.z += s.vz * dt; s.life -= dt;
-      s.mesh.position.set(s.x, 1.05, s.z);
-      var dead = s.life <= 0 || Math.abs(s.x) > 18.4 || Math.abs(s.z) > 18.4;
+      s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt; s.life -= dt;
+      s.mesh.position.set(s.x, s.y, s.z);
+      var dead = s.life <= 0 || Math.abs(s.x) > 33 || Math.abs(s.z) > 60 || s.y < 0.05 || s.y > 40;
       if(!dead){
         for(var ci = 0; ci < b3.crates.length; ci++){
           var c = b3.crates[ci], cdx = s.x - c.x, cdz = s.z - c.z;
-          if(cdx * cdx + cdz * cdz < c.r * c.r){ dead = true; break; }
+          if(c.w){ if(Math.abs(cdx) < c.w && Math.abs(cdz) < c.d && s.y < 6.4){ dead = true; break; } }
+          else if(cdx * cdx + cdz * cdz < c.r * c.r && s.y < 3.4){ dead = true; break; }
         }
       }
       if(!dead && s.enemy){
         var hx = s.x - b3.px, hz = s.z - b3.pz;
-        if(hx * hx + hz * hz < 1.0){ b3SplatPlayer(); dead = true; }
+        if(hx * hx + hz * hz < 1.0 && s.y > b3.py - 0.2 && s.y < b3.py + 1.9){ b3SplatPlayer(); dead = true; }
       }
       if(!dead && !s.enemy){
         for(var ei = 0; ei < b3.enemies.length; ei++){
           var en = b3.enemies[ei];
           if(en.respawn > 0) continue;
           var ex2 = s.x - en.x, ez2 = s.z - en.z;
-          if(ex2 * ex2 + ez2 * ez2 < 1.25){
+          if(ex2 * ex2 + ez2 * ez2 < 1.25 && s.y > -0.2 && s.y < 2.5){
             en.respawn = 1.4; en.mesh.visible = false;
             var sp = b3SpawnPoint(true);
             en.x = sp.x; en.z = sp.z;
@@ -4139,9 +4307,15 @@
   }
   function b3Frame(){
     if(!b3.ok) return;
-    var fx = Math.sin(b3.head), fz = Math.cos(b3.head);
-    b3Cam.position.set(b3.px, 1.62, b3.pz);
-    b3Cam.lookAt(b3.px + fx, 1.35, b3.pz + fz);
+    var cp = Math.cos(b3.pitch);
+    var fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
+    b3Cam.position.set(b3.px, 1.62 + b3.py, b3.pz);
+    b3Cam.lookAt(b3.px + fx, 1.62 + b3.py + fy, b3.pz + fz);
+    if(b3Gun){
+      if(b3GunKick > 0) b3GunKick = Math.max(0, b3GunKick - 0.09);
+      var bob = (b3.grounded && (Math.abs(b3.vx) + Math.abs(b3.vz)) > 1) ? Math.sin(b3.time * 9) * 0.008 : 0;
+      b3Gun.position.set(0.26, -0.24 + bob, -0.55 + b3GunKick * 0.07);
+    }
     b3Renderer.render(b3Scene, b3Cam);
   }
   function b3Loop(ts){
@@ -4158,7 +4332,7 @@
     if(!b3Init()) return;
     b3Resize();
     b3.splats = 0; b3.down = 0; b3.time = 0; b3.over = false;
-    b3.px = 0; b3.pz = 14; b3.head = Math.PI; b3.invuln = 0;
+    b3.px = 0; b3.pz = 46; b3.head = Math.PI; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.grounded = true; b3.invuln = 0;
     b3.shots.forEach(function(s){ b3Scene.remove(s.mesh); });
     b3.shots = [];
     b3.enemies.forEach(function(e){
@@ -4178,36 +4352,119 @@
     b3Raf = requestAnimationFrame(b3Loop);
   }
   $("b3Start").addEventListener("click", b3Start);
-  holdBtn($("b3Fire"), b3PlayerFire, null);
-  holdBtn($("b3Fwd"), function(){ b3.keys.fwd = true; }, function(){ b3.keys.fwd = false; });
-  holdBtn($("b3Left"), function(){ b3.keys.left = true; }, function(){ b3.keys.left = false; });
-  holdBtn($("b3Right"), function(){ b3.keys.right = true; }, function(){ b3.keys.right = false; });
+  /* Two-thumb controls: the left half of the view is a floating move
+     stick; the right half aims (drag), fires (hold still) and jumps
+     (double-tap). Mouse works the same way for desktop testing. */
   if(b3Mount){
-    var dragX = null;
-    b3Mount.addEventListener("pointerdown", function(e){ dragX = e.clientX; });
+    function b3Pt(e){ var r = b3Mount.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width }; }
+    b3Mount.addEventListener("pointerdown", function(e){
+      var p = b3Pt(e);
+      try{ b3Mount.setPointerCapture(e.pointerId); }catch(err){}
+      if(p.x < p.w / 2 && b3Touch.moveId === null){
+        b3Touch.moveId = e.pointerId; b3Touch.mx0 = p.x; b3Touch.my0 = p.y;
+        b3.stick.x = 0; b3.stick.y = 0;
+      }else if(b3Touch.aimId === null){
+        b3Touch.aimId = e.pointerId; b3Touch.ax = p.x; b3Touch.ay = p.y;
+        b3Touch.aimT = performance.now(); b3Touch.aimMoved = 0;
+        var now = performance.now();
+        if(now - b3Touch.lastTap < 320 && b3.running && !b3.over) b3.jumpQ = true;
+        b3Touch.lastTap = now;
+      }
+      e.preventDefault();
+    });
     b3Mount.addEventListener("pointermove", function(e){
-      if(dragX == null || !b3.running) return;
-      b3.head -= (e.clientX - dragX) * 0.006;
-      dragX = e.clientX;
-      if(!b3.running) b3Frame();
+      var p = b3Pt(e);
+      if(e.pointerId === b3Touch.moveId){
+        var dx = p.x - b3Touch.mx0, dy = p.y - b3Touch.my0;
+        var len = Math.sqrt(dx * dx + dy * dy), max = 52;
+        if(len > max){ dx *= max / len; dy *= max / len; }
+        b3.stick.x = dx / max; b3.stick.y = dy / max;
+      }else if(e.pointerId === b3Touch.aimId){
+        var mdx = p.x - b3Touch.ax, mdy = p.y - b3Touch.ay;
+        b3Touch.aimMoved += Math.abs(mdx) + Math.abs(mdy);
+        if(b3.running && !b3.over){
+          b3.head -= mdx * 0.0052;
+          b3.pitch -= mdy * 0.0052;
+          if(b3.pitch > 1.15) b3.pitch = 1.15; else if(b3.pitch < -1.15) b3.pitch = -1.15;
+        }
+        b3Touch.ax = p.x; b3Touch.ay = p.y;
+        if(!b3.running) b3Frame();
+      }
+      e.preventDefault();
     });
-    ["pointerup", "pointerleave", "pointercancel"].forEach(function(ev){
-      b3Mount.addEventListener(ev, function(){ dragX = null; });
-    });
+    function b3TouchEnd(e){
+      if(e.pointerId === b3Touch.moveId){ b3Touch.moveId = null; b3.stick.x = 0; b3.stick.y = 0; }
+      if(e.pointerId === b3Touch.aimId){ b3Touch.aimId = null; b3Touch.fire = false; }
+    }
+    b3Mount.addEventListener("pointerup", b3TouchEnd);
+    b3Mount.addEventListener("pointercancel", b3TouchEnd);
+    // Holding the aim thumb still = holding the trigger.
+    setInterval(function(){
+      b3Touch.fire = b3Touch.aimId !== null && b3.running && !b3.over &&
+        performance.now() - b3Touch.aimT > 170 && b3Touch.aimMoved < 14;
+    }, 60);
   }
+  /* Full screen + landscape for Tate-lo, same pattern as the Kart. */
+  var b3FullBtn = $("b3FullBtn");
+  if(b3FullBtn){
+    b3FullBtn.addEventListener("click", function(){
+      var stage = $("b3Stage");
+      if(document.fullscreenElement || document.webkitFullscreenElement){
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
+        return;
+      }
+      if(!stage || !(stage.requestFullscreen || stage.webkitRequestFullscreen)){
+        b3SetMsg("Full screen isn't available in this browser — rotate your phone sideways instead.");
+        return;
+      }
+      function lockLand(){
+        try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
+      }
+      var p = null;
+      try{ p = stage.requestFullscreen({ navigationUI: "hide" }); }
+      catch(e){ try{ p = stage.requestFullscreen(); }catch(e2){ try{ stage.webkitRequestFullscreen(); }catch(e3){} } }
+      if(p && p.then) p.then(lockLand, function(){});
+      else lockLand();
+      setTimeout(b3Resize, 120);
+    });
+    function b3FsChange(){
+      var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      b3FullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
+      if(!on && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+      setTimeout(b3Resize, 60); setTimeout(b3Resize, 350);
+    }
+    document.addEventListener("fullscreenchange", b3FsChange);
+    document.addEventListener("webkitfullscreenchange", b3FsChange);
+  }
+  window.addEventListener("gamepadconnected", function(e){
+    var el = $("b3PadStatus");
+    if(el) el.textContent = "Controller connected (" + String(e.gamepad.id || "gamepad").slice(0, 42) + ") — left stick moves, right stick aims, RT fires, A jumps, Start begins the match.";
+  });
+  window.addEventListener("gamepaddisconnected", function(){
+    var el = $("b3PadStatus");
+    if(el) el.textContent = "Controller disconnected — two-thumb controls are back. Reconnect any standard pad and press a button to use it again.";
+  });
   document.addEventListener("keydown", function(e){
-    if(!b3.running || b3.over) return;
     var tag = (document.activeElement && document.activeElement.tagName) || "";
     if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W"){ b3.keys.fwd = true; }
-    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A"){ b3.keys.left = true; }
-    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D"){ b3.keys.right = true; }
-    else if(e.key === " "){ e.preventDefault(); b3PlayerFire(); }
+    if(e.key === "w" || e.key === "W" || e.key === "ArrowUp") b3.keys.f = true;
+    else if(e.key === "s" || e.key === "S" || e.key === "ArrowDown") b3.keys.b = true;
+    else if(e.key === "a" || e.key === "A") b3.keys.sl = true;
+    else if(e.key === "d" || e.key === "D") b3.keys.sr = true;
+    else if(e.key === "ArrowLeft") b3.keys.tl = true;
+    else if(e.key === "ArrowRight") b3.keys.tr = true;
+    else if(e.key === "f" || e.key === "F") b3.keys.fire = true;
+    else if(e.key === " "){ if(b3.running && !b3.over){ b3.jumpQ = true; e.preventDefault(); } }
   });
   document.addEventListener("keyup", function(e){
-    if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") b3.keys.fwd = false;
-    else if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") b3.keys.left = false;
-    else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") b3.keys.right = false;
+    if(e.key === "w" || e.key === "W" || e.key === "ArrowUp") b3.keys.f = false;
+    else if(e.key === "s" || e.key === "S" || e.key === "ArrowDown") b3.keys.b = false;
+    else if(e.key === "a" || e.key === "A") b3.keys.sl = false;
+    else if(e.key === "d" || e.key === "D") b3.keys.sr = false;
+    else if(e.key === "ArrowLeft") b3.keys.tl = false;
+    else if(e.key === "ArrowRight") b3.keys.tr = false;
+    else if(e.key === "f" || e.key === "F") b3.keys.fire = false;
   });
 
   /* ---------------- Spud Escape 3D — the WebGL escape run ---------------- */
@@ -4506,6 +4763,37 @@
              shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
   var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
   var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null, kkGround = null;
+  var kkSkyMat = null, kkGlowSpr = null, kkHillGrp = null, kkStars = null, kkSpaceGrp = null;
+  /* Mario Kart Tour touch input: one drag on the canvas steers
+     (analog), a hard held drag drifts, a tap uses the item. */
+  var kkTouch = { on: false, id: null, x0: 0, y0: 0, dx: 0, dy: 0, t0: 0, steer: 0 };
+  /* Gamepad (Gamepad API, standard mapping — an Xbox controller or
+     any standard pad): left stick / D-pad steers, RT or A gas, LT or
+     B brake, LB/RB drift, X/Y item, Start starts the race. While a
+     pad is live it drives gas/brake directly (no auto-accelerate). */
+  var kkPad = { active: false, steer: 0, gas: false, brake: false, drift: false,
+                itemEdge: false, startEdge: false, wasItem: false, wasStart: false };
+  function kkPollPad(){
+    kkPad.itemEdge = false; kkPad.startEdge = false;
+    var gp = null;
+    try{
+      var gps = navigator.getGamepads ? navigator.getGamepads() : [];
+      for(var i = 0; i < gps.length; i++){ if(gps[i] && gps[i].connected){ gp = gps[i]; break; } }
+    }catch(e){}
+    kkPad.active = !!gp;
+    if(!gp){ kkPad.steer = 0; kkPad.gas = kkPad.brake = kkPad.drift = false; kkPad.wasItem = kkPad.wasStart = false; return; }
+    var ax = (gp.axes && gp.axes.length) ? gp.axes[0] : 0;
+    kkPad.steer = Math.abs(ax) < 0.15 ? 0 : kkClamp(-ax, -1, 1);
+    function btn(n){ return !!(gp.buttons && gp.buttons[n] && gp.buttons[n].pressed); }
+    if(btn(14)) kkPad.steer = 1; else if(btn(15)) kkPad.steer = -1;
+    kkPad.gas = btn(7) || btn(0);
+    kkPad.brake = btn(6) || btn(1);
+    kkPad.drift = btn(4) || btn(5);
+    var item = btn(2) || btn(3);
+    kkPad.itemEdge = item && !kkPad.wasItem; kkPad.wasItem = item;
+    var start = btn(9);
+    kkPad.startEdge = start && !kkPad.wasStart; kkPad.wasStart = start;
+  }
   /* ---- The tracks: 7 Grand Prix circuits. Six are imitations of
      Mario Kart 64 layouts — same corner character and flow, rebuilt
      from original control points with spud names/scenery (no Nintendo
@@ -4516,23 +4804,23 @@
       info: "<b>Spud Circuit</b> — the original house circuit. Wide and flowing; the one to learn powerslides on.",
       ctrl: [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]] },
     { id: "speedway", name: "Spudway Speedway", theme: "speedway", banner: "SPUDWAY SPEEDWAY", ground: 0xf2f7e8, fog: 0xdcecf7, road: 0xffffff,
-      info: "<b>Spudway Speedway</b> — after <b>Luigi Raceway</b> (Mario Kart 64): a long, wide speedway oval with gentle banked-feeling sweepers. Flat out, draft the straights, powerslide the ends.",
-      ctrl: [[0, -96], [52, -88], [84, -52], [90, 0], [84, 52], [52, 88], [0, 96], [-52, 88], [-84, 52], [-90, 0], [-84, -52], [-52, -88]] },
+      info: "<b>Spudway Speedway</b> — after <b>Luigi Raceway</b> (Mario Kart 64): the long stadium dogbone, just like the original — flat-out straights, a tunnel bored through the hill, grandstands, billboards and the big striped hot-air balloon floating over the back straight.",
+      ctrl: [[0, -100], [58, -92], [96, -58], [104, -6], [96, 50], [58, 88], [6, 98], [-52, 90], [-92, 56], [-102, 2], [-92, -52], [-54, -88]] },
     { id: "farm", name: "Moo Moo Tater Farm", theme: "farm", banner: "MOO MOO TATER FARM", ground: 0xd8ffc8, fog: 0xe4f2d8, road: 0xf5ead0,
-      info: "<b>Moo Moo Tater Farm</b> — after <b>Moo Moo Farm</b> (Mario Kart 64): rolling countryside S-bends past the barn, silo and hay bales. The dirt-toned road is narrower in feel — stay off the grass.",
+      info: "<b>Moo Moo Tater Farm</b> — after <b>Moo Moo Farm</b> (Mario Kart 64): rolling S-bends through fenced pasture, past the red barn, twin silos and the windmill — and watch the mole mounds by the roadside, just like the original. Stay off the grass.",
       ctrl: [[0, -70], [40, -68], [62, -38], [48, -8], [70, 22], [42, 48], [8, 40], [-18, 62], [-52, 44], [-68, 8], [-52, -32], [-28, -52]] },
     { id: "beach", name: "Troopa Tater Beach", theme: "beach", banner: "TROOPA TATER BEACH", ground: 0xffe9a8, fog: 0xd8f2f7, road: 0xfff2cf,
-      info: "<b>Troopa Tater Beach</b> — after <b>Koopa Troopa Beach</b> (Mario Kart 64): a sandy coastal loop with palms, umbrellas and the sea alongside. Sweep wide around the bay, cut the headland tight.",
+      info: "<b>Troopa Tater Beach</b> — after <b>Koopa Troopa Beach</b> (Mario Kart 64): a sand island in open sea, like the original — water all around and in the bay, palm trees, beach umbrellas and grey rock spires out in the surf. Sweep wide around the bay, cut the headland tight.",
       ctrl: [[0, -80], [48, -70], [78, -30], [60, 8], [78, 42], [38, 68], [0, 58], [-30, 72], [-68, 40], [-58, -6], [-72, -44], [-36, -62]] },
     { id: "choco", name: "Choco Tater Mountain", theme: "mountain", banner: "CHOCO TATER MTN", ground: 0xc99a68, fog: 0xf2e2cc, road: 0xe8d8c0,
-      info: "<b>Choco Tater Mountain</b> — after <b>Choco Mountain</b> (Mario Kart 64): tight hairpins and short straights under brown peaks. Brake early, drift everything, the walls of the valley punish greedy lines.",
-      ctrl: [[0, -78], [30, -70], [58, -48], [44, -18], [66, 6], [50, 36], [18, 30], [-6, 52], [-38, 58], [-62, 28], [-48, -2], [-66, -38], [-34, -58]] },
+      info: "<b>Choco Tater Mountain</b> — after <b>Choco Mountain</b> (Mario Kart 64): a dirt road walled in by brown rock, tight hairpins, boulders littering the slopes and chocolate-brown peaks all around, just like the original. Brake early, drift everything.",
+      ctrl: [[0, -80], [34, -72], [62, -46], [40, -16], [70, 8], [46, 38], [16, 28], [-8, 56], [-42, 60], [-66, 26], [-46, -4], [-70, -40], [-36, -60]] },
     { id: "royal", name: "Royal Russet Raceway", theme: "royal", banner: "ROYAL RUSSET RACEWAY", ground: 0xeaf2ff, fog: 0xdcecf7, road: 0xffffff,
-      info: "<b>Royal Russet Raceway</b> — after <b>Royal Raceway</b> (Mario Kart 64): a long castle straight, big sweeping bends and a proper grand-prix feel past the Russet Castle towers.",
-      ctrl: [[0, -88], [52, -78], [80, -38], [68, 2], [84, 38], [48, 70], [6, 62], [-22, 80], [-58, 56], [-76, 12], [-62, -34], [-30, -66]] },
-    { id: "rainbow", name: "Rainbow Spud Road", theme: "rainbow", banner: "RAINBOW SPUD ROAD", ground: 0x5a6fb8, fog: 0xc8d4ff, road: 0x9aa8ff,
-      info: "<b>Rainbow Spud Road</b> — after <b>Rainbow Road</b> (Mario Kart 64): the big one — a long, flowing, rainbow-curbed sweep high above everything. No shortcuts, just rhythm: hold the slide and don't lift.",
-      ctrl: [[0, -92], [62, -80], [92, -28], [74, 28], [92, 68], [40, 88], [-12, 72], [-48, 90], [-88, 48], [-74, -8], [-90, -52], [-44, -76]] }
+      info: "<b>Royal Russet Raceway</b> — after <b>Royal Raceway</b> (Mario Kart 64): long straights and big sweepers past the castle on its hill — pale walls, red roofs, four towers and flags, with the lake below, exactly the original's postcard view.",
+      ctrl: [[0, -92], [56, -82], [86, -40], [70, 4], [90, 42], [50, 76], [4, 64], [-26, 86], [-64, 58], [-82, 10], [-66, -38], [-32, -70]] },
+    { id: "rainbow", name: "Rainbow Spud Road", theme: "rainbow", banner: "RAINBOW SPUD ROAD", ground: 0x05050f, fog: 0x05050f, road: 0xffffff,
+      info: "<b>Rainbow Spud Road</b> — after <b>Rainbow Road</b> (Mario Kart 64): the big one, out in deep space like the original — no ground, no sky, just stars, a ringed planet, floating asteroids, giant neon signs and a long flowing road paved in rainbow tiles. No shortcuts, just rhythm: hold the slide and don't lift.",
+      ctrl: [[0, -108], [70, -96], [108, -40], [88, 30], [110, 78], [48, 104], [-16, 84], [-58, 106], [-104, 56], [-88, -12], [-106, -62], [-52, -92]] }
   ];
   var kkTrackIdx = 0;
   function kkTrack(){ return KK_TRACKS[kkTrackIdx] || KK_TRACKS[0]; }
@@ -4777,10 +5065,12 @@
         " vec3 c = h > 0.10 ? mix(mid, top, smoothstep(0.10, 0.65, h)) : mix(bot, mid, smoothstep(-0.06, 0.10, h));" +
         " gl_FragColor = vec4(c, 1.0); }"
     }));
+    kkSkyMat = sky.material;
     kkScene.add(sky);
     var glowTex = kkGetSoftTex();
     var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffe9a8, transparent: true, opacity: 0.9, depthWrite: false, fog: false }));
     glow.scale.set(190, 190, 1); glow.position.set(260, 330, 150);
+    kkGlowSpr = glow;
     kkScene.add(glow);
     // Lights: hemisphere fill + shadow-casting sun + warm bounce
     kkScene.add(new THREE.HemisphereLight(0xbfd9ff, 0x56743c, 0.85));
@@ -4807,13 +5097,15 @@
     kkGround = ground;
     kkScene.add(ground);
     // Distant hills + drifting clouds (shared by both tracks)
+    kkHillGrp = new THREE.Group();
     var hillM = std(0x6f9a58, 1);
     for(var hi = 0; hi < 8; hi++){
       var ha = hi / 8 * Math.PI * 2 + 0.4, hr = 330 + (hi % 3) * 60;
       var hill = new THREE.Mesh(new THREE.SphereGeometry(90 + (hi % 4) * 26, 18, 12), hillM);
       hill.scale.y = 0.32; hill.position.set(Math.cos(ha) * hr, -6, Math.sin(ha) * hr);
-      kkScene.add(hill);
+      kkHillGrp.add(hill);
     }
+    kkScene.add(kkHillGrp);
     var cloudM = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
     for(var ci = 0; ci < 9; ci++){
       var cg = new THREE.Group();
@@ -4826,6 +5118,47 @@
       cg.position.set((kkRand() - 0.5) * 560, 58 + kkRand() * 34, (kkRand() - 0.5) * 560);
       kkScene.add(cg); kk.clouds.push(cg);
     }
+    // Deep-space set (Rainbow Spud Road only, toggled by the theme):
+    // a starfield shell plus a ringed planet and a cratered moon.
+    (function(){
+      var n = 1500, pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+      var tints = [[1, 1, 1], [0.75, 0.85, 1], [1, 0.92, 0.75], [1, 0.8, 0.85]];
+      for(var si2 = 0; si2 < n; si2++){
+        var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1), rr = 690;
+        pos[si2 * 3] = rr * Math.sin(ph) * Math.cos(th); pos[si2 * 3 + 1] = Math.abs(rr * Math.cos(ph)) * (si2 % 5 === 0 ? -1 : 1); pos[si2 * 3 + 2] = rr * Math.sin(ph) * Math.sin(th);
+        var tc = tints[si2 % 4], br = 0.55 + Math.random() * 0.45;
+        col[si2 * 3] = tc[0] * br; col[si2 * 3 + 1] = tc[1] * br; col[si2 * 3 + 2] = tc[2] * br;
+      }
+      var sg = new THREE.BufferGeometry();
+      sg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      sg.setAttribute("color", new THREE.BufferAttribute(col, 3));
+      kkStars = new THREE.Points(sg, new THREE.PointsMaterial({ size: 2.4, sizeAttenuation: false, vertexColors: true, fog: false, depthWrite: false, transparent: true, opacity: 0.95 }));
+      kkStars.visible = false;
+      kkScene.add(kkStars);
+      kkSpaceGrp = new THREE.Group();
+      var planetTex = kkCanvasTex(256, 128, function(g){
+        var bands = ["#7a4fa3", "#c9a86a", "#5d8a7a", "#e3d3ae", "#8a5f9e", "#b98d54", "#6fa08a", "#d9c491"];
+        for(var bi2 = 0; bi2 < 8; bi2++){ g.fillStyle = bands[bi2]; g.fillRect(0, bi2 * 16, 256, 16); }
+        g.fillStyle = "rgba(255,255,255,.18)";
+        for(var ci3 = 0; ci3 < 26; ci3++) g.fillRect(Math.random() * 256, Math.random() * 128, 18 + Math.random() * 30, 3);
+      });
+      var planet = new THREE.Mesh(new THREE.SphereGeometry(58, 28, 20), new THREE.MeshBasicMaterial({ map: planetTex, fog: false }));
+      planet.position.set(-330, 130, -430); planet.rotation.z = 0.28;
+      kkSpaceGrp.add(planet);
+      var ring = new THREE.Mesh(new THREE.RingGeometry(74, 112, 40), new THREE.MeshBasicMaterial({ color: 0xd9c491, transparent: true, opacity: 0.5, side: THREE.DoubleSide, fog: false }));
+      ring.position.copy(planet.position); ring.rotation.x = Math.PI / 2.5; ring.rotation.y = 0.4;
+      kkSpaceGrp.add(ring);
+      var moonTex = kkCanvasTex(128, 128, function(g){
+        g.fillStyle = "#b9bdc4"; g.fillRect(0, 0, 128, 128);
+        g.fillStyle = "rgba(120,125,135,.55)";
+        for(var ci4 = 0; ci4 < 14; ci4++){ g.beginPath(); g.arc(Math.random() * 128, Math.random() * 128, 4 + Math.random() * 9, 0, 7); g.fill(); }
+      });
+      var moon = new THREE.Mesh(new THREE.SphereGeometry(17, 20, 14), new THREE.MeshBasicMaterial({ map: moonTex, fog: false }));
+      moon.position.set(310, 185, -390);
+      kkSpaceGrp.add(moon);
+      kkSpaceGrp.visible = false;
+      kkScene.add(kkSpaceGrp);
+    })();
     kkBuildCircuit();
     kkBuildOval();
     // Racers
@@ -4930,10 +5263,72 @@
       g.fillStyle = "#fff"; g.fillText(text, w / 2, h / 2 + 1);
     }), roughness: 0.6 });
   }
+  /* Sky palettes per theme: [top, horizon, low]. Rainbow Road's is
+     deep space — near-black, so the road floats among the stars. */
+  var KK_SKIES = {
+    def:      [0x2e63c8, 0x9fd0ff, 0xffe3b3],
+    spud:     [0x2e63c8, 0x9fd0ff, 0xffe3b3],
+    speedway: [0x2e63c8, 0x9fd0ff, 0xffe3b3],
+    farm:     [0x3a7bd0, 0xa8d8f0, 0xfff0c0],
+    beach:    [0x2e8fd0, 0xaee6f5, 0xfff3cf],
+    mountain: [0x7a9cc0, 0xd8e4ee, 0xf2e2cc],
+    royal:    [0x2e63c8, 0x9fd0ff, 0xffe3b3],
+    rainbow:  [0x01010a, 0x06061e, 0x0d0d2e]
+  };
+  function kkApplyTheme(theme, def){
+    var space = theme === "rainbow";
+    if(kkGround){ kkGround.material.color.setHex(def ? def.ground : 0xffffff); kkGround.visible = !space; }
+    if(kkScene && kkScene.fog){
+      kkScene.fog.color.setHex(space ? 0x05050f : (def ? def.fog : 0xdcecf7));
+      kkScene.fog.near = space ? 220 : 130;
+      kkScene.fog.far = space ? 980 : 520;
+    }
+    if(kkSkyMat){
+      var sk = KK_SKIES[theme] || KK_SKIES.def;
+      kkSkyMat.uniforms.top.value.setHex(sk[0]);
+      kkSkyMat.uniforms.mid.value.setHex(sk[1]);
+      kkSkyMat.uniforms.bot.value.setHex(sk[2]);
+    }
+    if(kkGlowSpr) kkGlowSpr.visible = !space;
+    if(kkHillGrp) kkHillGrp.visible = !space;
+    for(var ci = 0; ci < kk.clouds.length; ci++) kk.clouds[ci].visible = !space;
+    if(kkStars) kkStars.visible = space;
+    if(kkSpaceGrp) kkSpaceGrp.visible = space;
+  }
   function kkApplyTrackTheme(){
     var t = kkTrack();
-    if(kkGround && kkGround.material) kkGround.material.color.setHex(t.ground);
-    if(kkScene && kkScene.fog) kkScene.fog.color.setHex(t.fog);
+    kkApplyTheme(t.theme, t);
+  }
+  /* Neon sign face for Rainbow Road: dark board, glowing spud-crew
+     portrait drawn in neon strokes (original art, MK64-style signs). */
+  function kkNeonTex(kind, label, color){
+    return kkCanvasTex(256, 256, function(g){
+      g.fillStyle = "rgba(2,2,14,0.92)"; g.fillRect(0, 0, 256, 256);
+      g.strokeStyle = color; g.lineWidth = 5; g.shadowColor = color; g.shadowBlur = 18;
+      g.strokeRect(10, 10, 236, 236);
+      g.lineWidth = 6; g.beginPath();
+      if(kind === "carrot"){
+        g.moveTo(128, 96); g.lineTo(102, 196); g.quadraticCurveTo(128, 214, 154, 196); g.closePath(); g.stroke();
+        g.moveTo(128, 96); g.quadraticCurveTo(104, 58, 84, 48); g.moveTo(128, 96); g.quadraticCurveTo(128, 52, 128, 38); g.moveTo(128, 96); g.quadraticCurveTo(152, 58, 172, 48); g.stroke();
+      }else if(kind === "broccoli"){
+        g.arc(104, 108, 30, 0, 7); g.moveTo(158, 108); g.arc(128, 92, 32, 0, 7); g.moveTo(182, 108); g.arc(154, 108, 30, 0, 7); g.stroke();
+        g.beginPath(); g.moveTo(118, 128); g.lineTo(122, 192); g.lineTo(136, 192); g.lineTo(140, 128); g.stroke();
+      }else if(kind === "tomato"){
+        g.arc(128, 140, 56, 0, 7); g.stroke();
+        g.beginPath(); g.moveTo(96, 96); g.quadraticCurveTo(128, 74, 160, 96); g.quadraticCurveTo(128, 88, 96, 96); g.stroke();
+      }else if(kind === "star"){
+        var pts = [];
+        for(var si = 0; si < 10; si++){ var a = -Math.PI / 2 + si * Math.PI / 5, r = si % 2 ? 26 : 62; pts.push([128 + Math.cos(a) * r, 128 + Math.sin(a) * r]); }
+        g.moveTo(pts[0][0], pts[0][1]); for(var pi = 1; pi < 10; pi++) g.lineTo(pts[pi][0], pts[pi][1]); g.closePath(); g.stroke();
+      }else{
+        g.ellipse(128, 138, 52, 62, 0, 0, 7); g.stroke();
+        g.fillStyle = color;
+        [[106, 116], [140, 104], [122, 152], [148, 140]].forEach(function(e){ g.beginPath(); g.arc(e[0], e[1], 5, 0, 7); g.fill(); });
+      }
+      g.shadowBlur = 12; g.fillStyle = color;
+      g.font = "800 30px Verdana, sans-serif"; g.textAlign = "center";
+      g.fillText(label, 128, 240);
+    });
   }
   function kkBuildCircuit(){
     var def = kkTrack();
@@ -4948,12 +5343,23 @@
       var u = i / KK_N, p = curve.getPointAt(u), t = curve.getTangentAt(u);
       kk.samples.push({ x: p.x, z: p.z, tx: t.x, tz: t.z, nx: t.z, nz: -t.x, seg: kk.trackLen / KK_N });
     }
-    var asphalt = new THREE.MeshStandardMaterial({ color: def.road, map: kkCanvasTex(256, 256, function(g){
-      g.fillStyle = "#3c3f45"; g.fillRect(0, 0, 256, 256);
-      for(var i = 0; i < 1500; i++){ g.fillStyle = Math.random() < 0.5 ? "#34373d" : "#45484f"; g.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
-      g.fillStyle = "rgba(255,255,255,.5)";
-      for(var d = 0; d < 256; d += 32) g.fillRect(124, d, 8, 18);
-    }, 1, 1), roughness: 0.95 });
+    var asphalt = def.theme === "rainbow"
+      ? new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 256, function(g){
+          // Rainbow Road is paved in rainbow tiles, edge to edge.
+          var cols = ["#e0342c", "#e8762a", "#f5d301", "#2e8b3a", "#2456c8", "#8b30c9"];
+          for(var ty = 0; ty < 4; ty++) for(var tx = 0; tx < 6; tx++){
+            g.fillStyle = cols[(tx + ty * 2) % 6]; g.fillRect(tx * 43, ty * 64, 43, 64);
+            g.fillStyle = "rgba(255,255,255,.13)"; g.fillRect(tx * 43, ty * 64, 43, 5);
+            g.fillStyle = "rgba(0,0,0,.16)"; g.fillRect(tx * 43, ty * 64 + 59, 43, 5);
+          }
+        }, 1, 1), roughness: 0.55, emissive: 0xffffff, emissiveIntensity: 0.22 })
+      : new THREE.MeshStandardMaterial({ color: def.road, map: kkCanvasTex(256, 256, function(g){
+          g.fillStyle = "#3c3f45"; g.fillRect(0, 0, 256, 256);
+          for(var i = 0; i < 1500; i++){ g.fillStyle = Math.random() < 0.5 ? "#34373d" : "#45484f"; g.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
+          g.fillStyle = "rgba(255,255,255,.5)";
+          for(var d = 0; d < 256; d += 32) g.fillRect(124, d, 8, 18);
+        }, 1, 1), roughness: 0.95 });
+    if(def.theme === "rainbow") asphalt.emissiveMap = asphalt.map;
     asphalt.map.repeat.set(1, 1);
     var road = kkRibbon(kk.samples, -5.6, 5.6, asphalt, 7);
     road.material.map = asphalt.map;
@@ -4990,7 +5396,7 @@
       }
       return false;
     }
-    var treeCount = def.theme === "beach" ? 34 : def.theme === "mountain" ? 22 : def.theme === "rainbow" ? 14 : 52;
+    var treeCount = def.theme === "beach" ? 46 : def.theme === "mountain" ? 22 : def.theme === "rainbow" ? 0 : 52;
     for(var ti = 0; ti < treeCount; ti++){
       var tx2 = (kkRand() - 0.5) * 330, tz2 = (kkRand() - 0.5) * 300;
       if(nearRoad(tx2, tz2, 11.5)) continue;
@@ -5049,12 +5455,16 @@
       g.fillStyle = "#fff"; g.fillText("?", 64, 70);
     });
     var crateM = new THREE.MeshStandardMaterial({ map: crateTex, roughness: 0.5, emissive: 0x903c00, emissiveIntensity: 0.35 });
+    // Item rows, MK64-style: three crates across the road at each
+    // spot, so any line through the row clips one.
     [0.07, 0.24, 0.41, 0.58, 0.75, 0.9].forEach(function(u, i){
-      var lat = i % 2 ? 2.6 : -2.6, p = kkPosAt(u, lat);
-      var m = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), crateM);
-      m.position.set(p.x, 1.05, p.z); m.castShadow = true;
-      kkCircuit.add(m);
-      kk.boxes.push({ mesh: m, x: p.x, z: p.z, u: u, active: true, respawnT: 0, spin: i * 1.3 });
+      [-3.4, 0, 3.4].forEach(function(lat, j){
+        var p = kkPosAt(u, lat);
+        var m = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), crateM);
+        m.position.set(p.x, 1.05, p.z); m.castShadow = true;
+        kkCircuit.add(m);
+        kk.boxes.push({ mesh: m, x: p.x, z: p.z, u: u, active: true, respawnT: 0, spin: i * 1.3 + j * 2.1 });
+      });
     });
     // Spud Coin arcs
     var coinM = new THREE.MeshStandardMaterial({ color: 0xf5b301, roughness: 0.24, metalness: 1.0, emissive: 0x694d00, emissiveIntensity: 0.4 });
@@ -5091,19 +5501,99 @@
         var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), std(col, 0.85));
         m.position.set(x, y, z); if(ry) m.rotation.y = ry; m.castShadow = true; kkCircuit.add(m); return m;
       }
+      // A small grandstand facing the track.
+      function stand(u, lat, w){
+        var g = new THREE.Group(), sm = std(0xb9c2cc, 0.8), rm = std(0xc1272d, 0.7);
+        for(var row = 0; row < 4; row++){
+          var bench = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, 1.6), sm);
+          bench.position.set(0, 0.6 + row * 0.85, -row * 1.5); bench.castShadow = true; g.add(bench);
+        }
+        var rf = new THREE.Mesh(new THREE.BoxGeometry(w + 1, 0.25, 8), rm);
+        rf.position.set(0, 5.2, -2.4); rf.rotation.x = 0.16; rf.castShadow = true; g.add(rf);
+        var p = at(u, lat);
+        g.position.set(p.x, 0, p.z);
+        g.rotation.y = Math.atan2(p.tx, p.tz) + (lat < 0 ? Math.PI : 0);
+        kkCircuit.add(g);
+      }
+      // A run of segments between two lap points at a fixed lateral
+      // offset — fences, rock walls, guardrails. seg(u, p1, p2, i)
+      // builds each piece.
+      function railRun(u0, u1, step, lat, seg){
+        var prev = null, i = 0;
+        for(var u = u0; u <= u1 + 0.0001; u += step){
+          var p = at(u % 1, lat);
+          if(prev) seg(u, prev, p, i);
+          prev = p; i++;
+        }
+      }
+      function segBox(p1, p2, w, h, y, col){
+        var dx = p2.x - p1.x, dz = p2.z - p1.z, len = Math.sqrt(dx * dx + dz * dz) + 0.15;
+        var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, len), std(col, 0.9));
+        m.position.set((p1.x + p2.x) / 2, y, (p1.z + p2.z) / 2);
+        m.rotation.y = Math.atan2(dx, dz); m.castShadow = true; kkCircuit.add(m); return m;
+      }
       if(def.theme === "farm"){
-        var bp = at(0.52, -24);
-        box(10, 5, 7, 0xb03024, bp.x, 2.5, bp.z, Math.atan2(bp.tx, bp.tz));
-        var roof = box(11, 0.4, 8, 0x6b4a2b, bp.x, 5.4, bp.z, Math.atan2(bp.tx, bp.tz)); roof.rotation.x = 0.0;
-        var sp = at(0.52, -31);
-        var silo = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 9, 14), std(0xb9c2cc, 0.6));
-        silo.position.set(sp.x, 4.5, sp.z); silo.castShadow = true; kkCircuit.add(silo);
-        var cap2 = new THREE.Mesh(new THREE.SphereGeometry(1.8, 14, 8), std(0x8a8578, 0.7));
-        cap2.scale.y = 0.55; cap2.position.set(sp.x, 9, sp.z); kkCircuit.add(cap2);
+        // The red barn with white trim and a pitched roof, twin silos.
+        var bp = at(0.52, -24), bry = Math.atan2(bp.tx, bp.tz);
+        box(10, 5, 7, 0xb03024, bp.x, 2.5, bp.z, bry);
+        box(10.4, 0.5, 0.4, 0xf4f1e8, bp.x, 4.4, bp.z, bry);
+        var rf1 = box(11, 0.35, 4.6, 0x6b4a2b, bp.x, 6.1, bp.z, bry); rf1.rotation.x = 0.5;
+        var rf2 = box(11, 0.35, 4.6, 0x6b4a2b, bp.x, 6.1, bp.z, bry); rf2.rotation.x = -0.5;
+        [-31, -36.5].forEach(function(lat2, si3){
+          var sp = at(0.52, lat2);
+          var silo = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 9 + si3 * 1.5, 14), std(0xb9c2cc, 0.6));
+          silo.position.set(sp.x, (9 + si3 * 1.5) / 2, sp.z); silo.castShadow = true; kkCircuit.add(silo);
+          var cap2 = new THREE.Mesh(new THREE.SphereGeometry(1.8, 14, 8), std(0x8a8578, 0.7));
+          cap2.scale.y = 0.55; cap2.position.set(sp.x, 9 + si3 * 1.5, sp.z); kkCircuit.add(cap2);
+        });
+        // A second, smaller barn across the track.
+        var b2 = at(0.16, 22);
+        box(7, 3.6, 5, 0xa02820, b2.x, 1.8, b2.z, Math.atan2(b2.tx, b2.tz));
+        box(8, 0.3, 6, 0x6b4a2b, b2.x, 4.1, b2.z, Math.atan2(b2.tx, b2.tz));
+        // Windmill: tapered tower, hub and four blades.
+        var wp3 = at(0.8, -19), wm = new THREE.Group();
+        var tw = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.8, 9, 8), std(0x8a8578, 0.8));
+        tw.position.y = 4.5; tw.castShadow = true; wm.add(tw);
+        for(var bl = 0; bl < 4; bl++){
+          var blade = new THREE.Mesh(new THREE.BoxGeometry(0.55, 3.6, 0.08), std(0xd8dce2, 0.6));
+          blade.position.y = 1.9;
+          var holder = new THREE.Group(); holder.add(blade);
+          holder.position.y = 9; holder.rotation.z = bl * Math.PI / 2 + 0.4; wm.add(holder);
+        }
+        wm.position.set(wp3.x, 0, wp3.z); wm.rotation.y = Math.atan2(wp3.tx, wp3.tz);
+        kkCircuit.add(wm);
+        // Split-rail fences lining the pasture stretches, both sides.
+        [-7.7, 7.7].forEach(function(lat3){
+          [[0.05, 0.42], [0.58, 0.95]].forEach(function(span){
+            railRun(span[0], span[1], 0.011, lat3, function(u, p1, p2, i){
+              segBox(p1, p2, 0.16, 0.28, 0.95, 0x8a6b48);
+              segBox(p1, p2, 0.16, 0.28, 0.5, 0x8a6b48);
+              if(i % 3 === 0) box(0.24, 1.15, 0.24, 0x77572f, p1.x, 0.57, p1.z, 0);
+            });
+          });
+        });
+        // Mole mounds by the roadside — the original's Monty Moles
+        // live here; a few heads are up.
+        for(var mi = 0; mi < 9; mi++){
+          var mp2 = at(0.06 + mi * 0.105 + kkRand() * 0.03, (mi % 2 ? 1 : -1) * (8.8 + kkRand() * 1.6));
+          var mound = new THREE.Mesh(new THREE.ConeGeometry(1.05, 0.75, 10), std(0x6e4f30, 1));
+          mound.position.set(mp2.x, 0.3, mp2.z); mound.castShadow = true; kkCircuit.add(mound);
+          if(mi % 3 === 0){
+            var head = new THREE.Mesh(new THREE.SphereGeometry(0.42, 10, 8), std(0x8a6844, 0.95));
+            head.position.set(mp2.x, 0.78, mp2.z); head.castShadow = true; kkCircuit.add(head);
+          }
+        }
       }else if(def.theme === "beach"){
+        // The original is a sand island in open sea: water in every
+        // direction, and in the bay the loop wraps around.
+        var seaM = new THREE.MeshStandardMaterial({ color: 0x2e7fc8, roughness: 0.22, metalness: 0.1 });
+        var seaRing = new THREE.Mesh(new THREE.RingGeometry(97, 520, 48), seaM);
+        seaRing.rotation.x = -Math.PI / 2; seaRing.position.y = -0.03; kkCircuit.add(seaRing);
+        var bay = new THREE.Mesh(new THREE.CircleGeometry(38, 26), seaM);
+        bay.rotation.x = -Math.PI / 2; bay.position.set(2, -0.02, 2); kkCircuit.add(bay);
         [0.18, 0.46, 0.72].forEach(function(u, i){
           var wp = at(u, i % 2 ? 26 : -26);
-          var sea = new THREE.Mesh(new THREE.CircleGeometry(17 + i * 3, 22), new THREE.MeshStandardMaterial({ color: 0x2e7fc8, roughness: 0.25, metalness: 0.1 }));
+          var sea = new THREE.Mesh(new THREE.CircleGeometry(17 + i * 3, 22), seaM);
           sea.rotation.x = -Math.PI / 2; sea.position.set(wp.x, 0.01, wp.z); kkCircuit.add(sea);
           var up2 = at(u + 0.03, i % 2 ? 11 : -11);
           var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 2.2, 8), std(0x8a6b48, 0.8));
@@ -5111,37 +5601,147 @@
           var umb = new THREE.Mesh(new THREE.ConeGeometry(1.7, 0.7, 10), std(i % 2 ? 0xe8762a : 0xd0342c, 0.7));
           umb.position.set(up2.x, 2.3, up2.z); umb.castShadow = true; kkCircuit.add(umb);
         });
+        // Grey rock spires standing in the surf, like the original's.
+        [[0.08, -30], [0.3, 27], [0.55, -33], [0.68, 25], [0.88, -27]].forEach(function(rs, i){
+          var rp2 = at(rs[0], rs[1]);
+          var spire = new THREE.Mesh(new THREE.ConeGeometry(2.6 + (i % 3), 8 + (i % 3) * 2.5, 7), std(0x8a8d90, 1));
+          spire.position.set(rp2.x, 2.6, rp2.z); spire.rotation.y = i * 1.3; spire.castShadow = true; kkCircuit.add(spire);
+          var foam = new THREE.Mesh(new THREE.RingGeometry(3.2 + (i % 3), 4.6 + (i % 3), 18), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6, transparent: true, opacity: 0.75 }));
+          foam.rotation.x = -Math.PI / 2; foam.position.set(rp2.x, 0.03, rp2.z); kkCircuit.add(foam);
+        });
       }else if(def.theme === "mountain"){
+        // Brown peaks all around — Choco Mountain is rock end to end.
         [0.12, 0.34, 0.55, 0.76, 0.92].forEach(function(u, i){
-          var mp = at(u, i % 2 ? 30 : -30);
+          var mp = at(u, i % 2 ? 32 : -32);
           var peak = new THREE.Mesh(new THREE.ConeGeometry(11 + (i % 3) * 3, 17 + (i % 3) * 4, 7), std(i % 2 ? 0x8a6242 : 0x9a7250, 1));
           peak.position.set(mp.x, 7, mp.z); peak.castShadow = true; kkCircuit.add(peak);
-          var snow = new THREE.Mesh(new THREE.ConeGeometry(4.2, 6, 7), std(0xfff6da, 0.9));
-          snow.position.set(mp.x, 13.5 + (i % 3) * 1.3, mp.z); kkCircuit.add(snow);
         });
+        // Rock walls crowd the road on both sides, like the original's
+        // cut through the mountain — with gaps at the wider sweeps.
+        [-9.9, 9.9].forEach(function(lat4){
+          railRun(0.02, 0.98, 0.017, lat4, function(u, p1, p2, i){
+            if(i % 7 === 3) return;
+            var h = 2.4 + ((i * 37) % 10) / 3.2;
+            segBox(p1, p2, 2.3, h, h / 2 - 0.2, (i % 2) ? 0x8a6242 : 0x7d5638);
+          });
+        });
+        // Boulders littering the slopes (the original's fall from
+        // these hillsides).
+        for(var bo = 0; bo < 11; bo++){
+          var bp3 = at(0.05 + bo * 0.088 + kkRand() * 0.02, (bo % 2 ? 1 : -1) * (13 + kkRand() * 5));
+          var br2 = 1.1 + kkRand() * 1.5;
+          var boulder = new THREE.Mesh(new THREE.IcosahedronGeometry(br2, 0), std(0x86644a, 1));
+          boulder.position.set(bp3.x, br2 * 0.55, bp3.z); boulder.rotation.set(kkRand() * 3, kkRand() * 3, 0);
+          boulder.castShadow = true; kkCircuit.add(boulder);
+        }
       }else if(def.theme === "royal"){
-        var cp = at(0.02, -22);
+        // The castle on its hill, the original's postcard: pale pink
+        // walls, red roofs, four corner towers and a tall central
+        // keep, flags flying.
+        var cp = at(0.02, -24);
         var baseRy = Math.atan2(cp.tx, cp.tz);
-        box(14, 6, 5, 0xb9c2cc, cp.x, 3, cp.z, baseRy);
-        [-5.5, 0, 5.5].forEach(function(off, i){
-          var tp = at(0.02, -22 + off * 0); // towers share the castle front, offset in world X by tower index
-          var tower = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.9, 10 + i * 1.5, 12), std(0xc8cfd8, 0.8));
-          tower.position.set(cp.x + off * Math.cos(baseRy), 5 + i * 0.7, cp.z - off * Math.sin(baseRy)); tower.castShadow = true; kkCircuit.add(tower);
-          var cone = new THREE.Mesh(new THREE.ConeGeometry(2.3, 3.4, 12), std(0xc1272d, 0.7));
-          cone.position.set(tower.position.x, 11.5 + i * 1.4, tower.position.z); cone.castShadow = true; kkCircuit.add(cone);
-        });
+        box(20, 7, 6, 0xf3dce0, cp.x, 3.5, cp.z, baseRy);
+        box(20.6, 0.7, 6.6, 0xd9a7b0, cp.x, 7.2, cp.z, baseRy);
+        function towerAt(off, h, r){
+          var tx3 = cp.x + off * Math.cos(baseRy), tz3 = cp.z - off * Math.sin(baseRy);
+          var tower = new THREE.Mesh(new THREE.CylinderGeometry(r, r + 0.25, h, 12), std(0xf6e6e9, 0.8));
+          tower.position.set(tx3, h / 2, tz3); tower.castShadow = true; kkCircuit.add(tower);
+          var cone = new THREE.Mesh(new THREE.ConeGeometry(r + 0.65, 3.6, 12), std(0xc1272d, 0.7));
+          cone.position.set(tx3, h + 1.8, tz3); cone.castShadow = true; kkCircuit.add(cone);
+          var fin = new THREE.Mesh(new THREE.SphereGeometry(0.42, 8, 8), std(0xf5b301, 0.4));
+          fin.position.set(tx3, h + 3.8, tz3); kkCircuit.add(fin);
+          var flag = box(0.08, 1.6, 0.08, 0x8a8578, tx3, h + 4.6, tz3, 0);
+          box(1.3, 0.7, 0.06, 0xc1272d, tx3 + 0.68, h + 5.1, tz3, baseRy);
+        }
+        towerAt(-8.6, 11, 1.8); towerAt(8.6, 11, 1.8); towerAt(-4.2, 13, 1.6); towerAt(4.2, 13, 1.6);
+        var keep = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.9, 16, 14), std(0xf6e6e9, 0.8));
+        keep.position.set(cp.x, 8, cp.z); keep.castShadow = true; kkCircuit.add(keep);
+        var keepCone = new THREE.Mesh(new THREE.ConeGeometry(3.4, 4.6, 14), std(0xc1272d, 0.7));
+        keepCone.position.set(cp.x, 18.3, cp.z); keepCone.castShadow = true; kkCircuit.add(keepCone);
+        // The lake below the castle, and a stand on the far straight.
+        var lp = at(0.55, -26);
+        var lake = new THREE.Mesh(new THREE.CircleGeometry(15, 24), new THREE.MeshStandardMaterial({ color: 0x3a7fc8, roughness: 0.2, metalness: 0.1 }));
+        lake.rotation.x = -Math.PI / 2; lake.position.set(lp.x, 0.0, lp.z); kkCircuit.add(lake);
+        stand(0.55, 14, 15);
+        stand(0.86, -13, 13);
       }else if(def.theme === "rainbow"){
+        // Deep space: the road floats among the stars (the starfield,
+        // planet and moon live in the scene and switch on with this
+        // theme). Trackside, the original's giant neon character
+        // signs — here they carry the spud crew.
         var cols = [0xe0342c, 0xe8762a, 0xf5d301, 0x2e8b3a, 0x2456c8, 0x8b30c9];
-        for(var ri2 = 0; ri2 < 18; ri2++){
-          var rp = at(ri2 / 18, ri2 % 2 ? 10.5 : -10.5);
+        for(var ri2 = 0; ri2 < 24; ri2++){
+          var rp = at(ri2 / 24, ri2 % 2 ? 10.5 : -10.5);
           var orb = new THREE.Mesh(new THREE.SphereGeometry(0.65, 12, 10),
-            new THREE.MeshStandardMaterial({ color: cols[ri2 % 6], roughness: 0.3, emissive: cols[ri2 % 6], emissiveIntensity: 0.45 }));
+            new THREE.MeshStandardMaterial({ color: cols[ri2 % 6], roughness: 0.3, emissive: cols[ri2 % 6], emissiveIntensity: 0.5 }));
           orb.position.set(rp.x, 3.2 + (ri2 % 3), rp.z); kkCircuit.add(orb);
         }
+        var signs = [["spud", "SPUD", "#ff5da2"], ["carrot", "CARROT", "#ffa02e"], ["broccoli", "BROC LEE", "#51ff7a"],
+                     ["tomato", "TOM ATO", "#ff4747"], ["star", "STAR", "#ffe94d"], ["spud", "SPUD KART", "#4dd2ff"]];
+        signs.forEach(function(sg, i){
+          var np = at(i / 6 + 0.045, i % 2 ? 15 : -15);
+          var sign = new THREE.Mesh(new THREE.PlaneGeometry(9, 9),
+            new THREE.MeshBasicMaterial({ map: kkNeonTex(sg[0], sg[1], sg[2]), transparent: true, side: THREE.DoubleSide, fog: false }));
+          sign.position.set(np.x, 6.2, np.z);
+          sign.rotation.y = Math.atan2(np.tx, np.tz);
+          kkCircuit.add(sign);
+        });
+        // Asteroids drifting off the road's edge.
+        for(var as = 0; as < 10; as++){
+          var ap = at(0.04 + as * 0.098 + kkRand() * 0.03, (as % 2 ? 1 : -1) * (17 + kkRand() * 14));
+          var ar = 0.9 + kkRand() * 1.9;
+          var ast = new THREE.Mesh(new THREE.IcosahedronGeometry(ar, 0), std(0x7d7f88, 1));
+          ast.position.set(ap.x, 1.5 + kkRand() * 8, ap.z);
+          ast.rotation.set(kkRand() * 3, kkRand() * 3, kkRand() * 3);
+          kkCircuit.add(ast);
+        }
       }else if(def.theme === "speedway"){
-        var gp2 = at(0.48, 15);
-        box(18, 1.2, 5, 0xb9c2cc, gp2.x, 1.6, gp2.z, Math.atan2(gp2.tx, gp2.tz));
-        box(19, 0.3, 6.5, 0xc1272d, gp2.x, 3.6, gp2.z, Math.atan2(gp2.tx, gp2.tz));
+        // Luigi Raceway's tunnel, bored through its grassy hill:
+        // stone walls, a thick roof slab, grass on top, portal
+        // frames at both ends. You drive straight through it.
+        (function(){
+          var tp0 = at(0.3, 0), try_ = Math.atan2(tp0.tx, tp0.tz);
+          var tg = new THREE.Group();
+          var wallM = std(0x8a8578, 0.95), grassM = std(0x4d8a3d, 1);
+          [-7.7, 7.7].forEach(function(lx){
+            var wall = new THREE.Mesh(new THREE.BoxGeometry(1.4, 5.6, 17), wallM);
+            wall.position.set(lx, 2.8, 0); wall.castShadow = true; tg.add(wall);
+          });
+          var slab = new THREE.Mesh(new THREE.BoxGeometry(17.5, 1.1, 17.5), wallM);
+          slab.position.y = 6.1; slab.castShadow = true; tg.add(slab);
+          var top = new THREE.Mesh(new THREE.BoxGeometry(18.5, 1.4, 18.5), grassM);
+          top.position.y = 7.3; tg.add(top);
+          [-8.9, 8.9].forEach(function(pz){
+            var lintel = new THREE.Mesh(new THREE.BoxGeometry(17.5, 1.6, 0.7), wallM);
+            lintel.position.set(0, 6.4, pz); tg.add(lintel);
+          });
+          tg.position.set(tp0.x, 0, tp0.z); tg.rotation.y = try_;
+          kkCircuit.add(tg);
+        })();
+        // The big striped hot-air balloon that floats over the
+        // original's back straight.
+        (function(){
+          var bp4 = at(0.62, -36);
+          var balloonTex = kkCanvasTex(128, 64, function(g){
+            for(var sx = 0; sx < 8; sx++){ g.fillStyle = sx % 2 ? "#f4f1e8" : "#d0342c"; g.fillRect(sx * 16, 0, 16, 64); }
+          });
+          var bal = new THREE.Mesh(new THREE.SphereGeometry(4.6, 18, 14), new THREE.MeshStandardMaterial({ map: balloonTex, roughness: 0.6 }));
+          bal.scale.y = 1.15; bal.position.set(bp4.x, 27, bp4.z); bal.castShadow = true; kkCircuit.add(bal);
+          var basket = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.2, 1.3), std(0x8a6b48, 0.9));
+          basket.position.set(bp4.x, 20.6, bp4.z); kkCircuit.add(basket);
+        })();
+        // Stadium stands and a billboard, like the original's.
+        stand(0.48, -16, 18);
+        stand(0.9, 14, 14);
+        (function(){
+          var bp5 = at(0.76, -14), bry2 = Math.atan2(bp5.tx, bp5.tz);
+          [-3.4, 3.4].forEach(function(off){
+            var post = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 3.6, 8), std(0x8a8578, 0.8));
+            post.position.set(bp5.x + off * Math.cos(bry2), 1.8, bp5.z - off * Math.sin(bry2)); kkCircuit.add(post);
+          });
+          var board = new THREE.Mesh(new THREE.BoxGeometry(9.5, 2.6, 0.3), kkBannerTex("SPUDWAY SPEEDWAY"));
+          board.position.set(bp5.x, 4.4, bp5.z); board.rotation.y = bry2; board.castShadow = true; kkCircuit.add(board);
+        })();
       }
     })();
     kkApplyTrackTheme();
@@ -5375,8 +5975,9 @@
         }else if(r.v < 3.5){
           r.driftDir = 0; r.charge = 0;
         }else{
-          var counter = inp.steer === -r.driftDir ? 1 : 0;
-          var into = inp.steer === r.driftDir ? 1 : 0;
+          var sgn2 = inp.steer > 0.25 ? 1 : inp.steer < -0.25 ? -1 : 0;
+          var counter = sgn2 === -r.driftDir ? 1 : 0;
+          var into = sgn2 === r.driftDir ? 1 : 0;
           r.charge += dt * (counter ? 1.35 : 0.85);
           r.th += r.driftDir * (1.5 + counter * 0.55 - into * 0.25) * dt * Math.min(1, Math.abs(r.v) / 9);
           r.vth = r.th - r.driftDir * 0.46;
@@ -5448,21 +6049,21 @@
     kk.boxes.forEach(function(b){
       if(!b.active){ b.respawnT -= dt; if(b.respawnT <= 0){ b.active = true; b.mesh.visible = true; } return; }
       kk.racers.forEach(function(r){
-        if(!b.active || r.item || r.air || r.finished) return;
+        if(!b.active || r.item || r.finished) return;
         var dx = r.x - b.x, dz = r.z - b.z;
-        if(dx * dx + dz * dz < 3.1){
+        if(dx * dx + dz * dz < 5.0){
           r.item = kkRollItem(kkRankOf(r));
-          b.active = false; b.mesh.visible = false; b.respawnT = 5;
-          if(r.isPlayer){ kkSetMsg("Got: " + KK_ITEM_LABEL[r.item] + " — Use Item!"); kkBeep(1040, 0.1, "square"); kkHUD(); }
+          b.active = false; b.mesh.visible = false; b.respawnT = 3;
+          if(r.isPlayer){ kkSetMsg("Got: " + KK_ITEM_LABEL[r.item] + " — tap the track to use it!"); kkBig("GOT: " + KK_ITEM_LABEL[r.item].toUpperCase()); kk.bigT = 0.9; kkBeep(1040, 0.1, "square"); kkHUD(); }
         }
       });
     });
     kk.coins.forEach(function(c){
       if(c.taken) return;
       kk.racers.forEach(function(r){
-        if(c.taken || r.air) return;
+        if(c.taken) return;
         var dx = r.x - c.x, dz = r.z - c.z;
-        if(dx * dx + dz * dz < 1.7){
+        if(dx * dx + dz * dz < 2.6){
           c.taken = true; c.mesh.visible = false;
           if(r.coins < 10){ r.coins++; if(r.isPlayer){ kkBeep(1320, 0.07, "square"); kkBurst(kkSpark, c.x, 1, c.z, 6, 0xf5b301, 1.6, 2, 0.4); kkHUD(); } }
         }
@@ -5565,7 +6166,7 @@
     $("kkPos").textContent = (kk.phase === "race" || kk.phase === "done") ? kkOrdinal(kkRankOf(p)) : "—";
     $("kkTime").textContent = kk.raceT.toFixed(1) + " s";
     $("kkCoins").textContent = p.coins;
-    $("kkItem").textContent = p.item ? KK_ITEM_LABEL[p.item] + " — Use Item!"
+    $("kkItem").textContent = p.item ? KK_ITEM_LABEL[p.item] + " — tap the track to use it!"
       : p.driftDir ? (p.charge >= 1.55 ? "Drift: ORANGE — release for the big boost!" : p.charge >= 0.8 ? "Drift: blue — keep sliding…" : "Drift: sliding…")
       : "— hit a ? crate";
     $("kkSpeed").textContent = Math.round(Math.abs(p.v) * 3.6);
@@ -5577,30 +6178,42 @@
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
     kkResetGrid();
     kk.phase = "count"; kk.count = 3.6; kk.lastCount = 4; kk.gasAt = null; kk.raceT = 0; kk.bigT = 0;
-    kkBig(""); kkSetMsg(kkTrack().name + " — lights out in 3… hold Gas from the LAST light for a rocket start — from the first light, you burn out.");
+    kkBig(""); kkSetMsg(kkTrack().name + " — lights out in 3… touch and hold from the LAST light for a rocket start — from the first light, you burn out. Your kart accelerates by itself: just drag to steer.");
     $("kkStart").textContent = "Restart Race";
     kkHUD();
   }
   function kkStep(dt){
     if(kk.mode === "server"){ kkSrvStep(dt); return; }
+    kkPollPad();
+    if(kkPad.itemEdge && kk.phase === "race") kkUseItem(kk.racers[0]);
+    if(kkPad.startEdge && kk.phase !== "race" && kk.phase !== "count") kkStartRace();
     if(kk.phase === "count"){
       kk.count -= dt;
       var c = Math.ceil(kk.count);
       if(c !== kk.lastCount && c >= 1 && c <= 3){ kk.lastCount = c; kkBig(String(c)); kkBeep(440, 0.12, "square"); }
-      if(kk.keys.gas && kk.gasAt === null) kk.gasAt = kk.count;
+      var revving = kk.keys.gas || kkTouch.on || kkPad.gas;
+      if(revving && kk.gasAt === null) kk.gasAt = kk.count;
       if(kk.count <= 0){
         kk.phase = "race"; kk.raceT = 0; kkBig("GO!"); kk.bigT = 0.8; kkBeep(880, 0.3, "square");
         var p = kk.racers[0];
-        if(kk.keys.gas && kk.gasAt !== null){
-          if(kk.gasAt > 2.3){ p.spinT = 1.0; kkSetMsg("Burnout! Gas from the first light — you spun on the line."); }
-          else if(kk.gasAt <= 1.15){ p.boostT = 1.1; kkSetMsg("Rocket start! Perfect gas timing."); }
+        if(revving && kk.gasAt !== null){
+          if(kk.gasAt > 2.3){ p.spinT = 1.0; kkSetMsg("Burnout! Held from the first light — you spun on the line."); }
+          else if(kk.gasAt <= 1.15){ p.boostT = 1.1; kkSetMsg("Rocket start! Perfect timing."); }
         }
       }
       return;
     }
     if(kk.phase !== "race") return;
     kk.raceT += dt;
-    var pin = { gas: kk.keys.gas, brake: kk.keys.brake, steer: (kk.keys.left ? 1 : 0) - (kk.keys.right ? 1 : 0), drift: kk.keys.drift };
+    /* Mario Kart Tour scheme: the kart accelerates by itself (the
+       keyboard brake still cuts the gas); steering is the drag if a
+       drag is live, else the keys; a hard held drag is the drift. */
+    var kbSteer = (kk.keys.left ? 1 : 0) - (kk.keys.right ? 1 : 0);
+    var steerNow = kkPad.steer !== 0 ? kkPad.steer : (kbSteer !== 0 ? kbSteer : kkTouch.steer);
+    var pin = kkPad.active
+      ? { gas: kkPad.gas, brake: kkPad.brake, steer: steerNow, drift: kkPad.drift || kk.keys.drift }
+      : { gas: !kk.keys.brake, brake: kk.keys.brake, steer: steerNow,
+          drift: kk.keys.drift || (kkTouch.on && Math.abs(kkTouch.steer) >= 0.6) };
     kk.racers.forEach(function(r){ kkStepRacer(r, dt, r.isPlayer ? pin : kkAIInput(r, dt)); });
     kkWorldStep(dt);
     kkHUD();
@@ -5706,6 +6319,7 @@
   function kkSrvEnter(){
     if(!kkInit()) return;
     kk.mode = "server"; kk.phase = "idle";
+    kkApplyTheme("spud", KK_TRACKS[0]);
     kkCircuit.visible = false; kkOval.visible = true;
     kkSrv.slots = {}; kkSrv.nextSlot = 0; kkSrv.posted = false; kkSrv.lastBump = 0;
     kk.me = null;
@@ -5719,6 +6333,7 @@
   function kkSrvExit(){
     if(kk.mode === "server"){
       kk.mode = "idle"; kk.phase = "idle";
+      kkApplyTrackTheme();
       kkCircuit.visible = true; kkOval.visible = false;
       kk.me = null;
       kk.racers.forEach(function(r, i){
@@ -5868,7 +6483,7 @@
         ? "Your server room is live — when everyone's in, press Start Race (host). Karts are on the Oval grid."
         : "In the room — waiting for the host to start the race.");
     }else if(st.status === "countdown"){
-      kkSrvSetStatus("Race starts in " + Math.max(1, Math.ceil(((st.startAt || 0) - Date.now()) / 1000)) + "s — hold Gas!");
+      kkSrvSetStatus("Race starts in " + Math.max(1, Math.ceil(((st.startAt || 0) - Date.now()) / 1000)) + "s — get ready, your kart launches itself!");
       if(kkSrv.posted) kkSrv.posted = false;
     }else if(st.status === "racing"){
       kkSrvSetStatus("LIVE — the basement server is stepping every kart and calling the bumps.");
@@ -5910,7 +6525,15 @@
     if(!kkSrv.ws || kkSrv.ws.readyState !== 1) return;
     var st = kkSrv.state;
     if(!st || (st.status !== "racing" && st.status !== "countdown")) return;
-    var inp = { gas: !!kk.keys.gas, left: !!kk.keys.left, right: !!kk.keys.right };
+    /* Tour scheme on the server too: gas is automatic once racing
+       (a touch held through the countdown still counts as revving);
+       steering comes from the drag, the keys, or a gamepad — and a
+       live gamepad drives gas/brake directly there as well. */
+    kkPollPad();
+    var srvSteer = (kk.keys.left ? 1 : 0) - (kk.keys.right ? 1 : 0);
+    if(srvSteer === 0) srvSteer = kkTouch.steer;
+    if(kkPad.steer !== 0) srvSteer = kkPad.steer;
+    var inp = { gas: st.status === "racing" ? (kkPad.active ? kkPad.gas : true) : (kk.keys.gas || kkTouch.on || kkPad.gas), left: srvSteer > 0.25, right: srvSteer < -0.25 };
     var sig = (inp.gas ? "g" : "") + (inp.left ? "l" : "") + (inp.right ? "r" : "");
     kkSrv.inputT += dt;
     if(sig !== kkSrv.lastInput || kkSrv.inputT > 0.25){
@@ -5929,15 +6552,81 @@
       kkSyncMesh(r, dt);
     });
   }
-  /* ---------------- Kart input bindings ---------------- */
+  /* ---------------- Kart input bindings ----------------
+     Mario Kart Tour scheme: auto-accelerate, drag on the track to
+     steer (a hard, held drag drifts; releasing it fires the charged
+     mini-turbo), tap the track to use an item / do a mid-air trick.
+     No hold-buttons at all — one finger does everything. */
   $("kkStart").addEventListener("click", kkStartRace);
-  holdBtn($("kkGas"), function(){ kk.keys.gas = true; }, function(){ kk.keys.gas = false; });
-  holdBtn($("kkBrake"), function(){ kk.keys.brake = true; }, function(){ kk.keys.brake = false; });
-  holdBtn($("kkLeft"), function(){ kk.keys.left = true; }, function(){ kk.keys.left = false; });
-  holdBtn($("kkRight"), function(){ kk.keys.right = true; }, function(){ kk.keys.right = false; });
-  holdBtn($("kkDrift"), function(){ kk.keys.drift = true; }, function(){ kk.keys.drift = false; });
-  $("kkItemBtn").addEventListener("click", function(){
-    if(kk.mode === "solo" && kk.phase === "race") kkUseItem(kk.racers[0]);
+  if(kkMount){
+    kkMount.addEventListener("pointerdown", function(e){
+      if(kkTouch.on) return;
+      kkTouch.on = true; kkTouch.id = e.pointerId;
+      kkTouch.x0 = e.clientX; kkTouch.y0 = e.clientY; kkTouch.dx = 0; kkTouch.dy = 0; kkTouch.steer = 0;
+      kkTouch.t0 = performance.now();
+      try{ kkMount.setPointerCapture(e.pointerId); }catch(err){}
+      e.preventDefault();
+    });
+    kkMount.addEventListener("pointermove", function(e){
+      if(!kkTouch.on || e.pointerId !== kkTouch.id) return;
+      kkTouch.dx = e.clientX - kkTouch.x0; kkTouch.dy = e.clientY - kkTouch.y0;
+      kkTouch.steer = Math.abs(kkTouch.dx) < 6 ? 0 : kkClamp(-(kkTouch.dx / 55), -1, 1);
+      e.preventDefault();
+    });
+    function kkTouchEnd(e){
+      if(!kkTouch.on || e.pointerId !== kkTouch.id) return;
+      var quick = performance.now() - kkTouch.t0 < 260;
+      var still = Math.abs(kkTouch.dx) < 14 && Math.abs(kkTouch.dy) < 14;
+      kkTouch.on = false; kkTouch.id = null; kkTouch.steer = 0; kkTouch.dx = 0; kkTouch.dy = 0;
+      if(quick && still && kk.mode !== "server" && kk.phase === "race") kkUseItem(kk.racers[0]);
+    }
+    kkMount.addEventListener("pointerup", kkTouchEnd);
+    kkMount.addEventListener("pointercancel", kkTouchEnd);
+  }
+  /* Full screen + landscape: the stage fills the display and the
+     browser is asked to lock landscape while it's up (phones that
+     can't lock still fill the width sideways). The renderer resizes
+     to whatever the stage becomes. */
+  var kkFullBtn = $("kkFullBtn");
+  if(kkFullBtn){
+    kkFullBtn.addEventListener("click", function(){
+      var stage = $("kkStage");
+      if(document.fullscreenElement || document.webkitFullscreenElement){
+        if(document.exitFullscreen) document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+        return;
+      }
+      if(!stage || !(stage.requestFullscreen || stage.webkitRequestFullscreen)){
+        kkSetMsg("Full screen isn't available in this browser — rotate your phone sideways and the race fills the width instead.");
+        return;
+      }
+      function lockLand(){
+        try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
+      }
+      var p = null;
+      try{ p = stage.requestFullscreen({ navigationUI: "hide" }); }
+      catch(e){ try{ p = stage.requestFullscreen(); }catch(e2){ try{ stage.webkitRequestFullscreen(); }catch(e3){} } }
+      if(p && p.then) p.then(lockLand, function(){ kkSetMsg("Full screen was blocked there — the race still plays fine as-is."); });
+      else lockLand();
+      setTimeout(kkResize, 120);
+    });
+    function kkFsChange(){
+      var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      kkFullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
+      if(!on && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+      setTimeout(kkResize, 60); setTimeout(kkResize, 350);
+    }
+    document.addEventListener("fullscreenchange", kkFsChange);
+    document.addEventListener("webkitfullscreenchange", kkFsChange);
+  }
+  /* Controller connect/disconnect notes in the controls line. */
+  window.addEventListener("gamepadconnected", function(e){
+    var el = $("kkPadStatus");
+    if(el) el.textContent = "Controller connected (" + String(e.gamepad.id || "gamepad").slice(0, 42) + ") — left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.";
+  });
+  window.addEventListener("gamepaddisconnected", function(){
+    var el = $("kkPadStatus");
+    if(el) el.textContent = "Controller disconnected — drag controls are back on. Reconnect any standard pad and press a button to use it again.";
   });
   $("kkKartSel").addEventListener("change", function(){
     kk.racers[0].cls = KK_CLASSES[this.value] || KK_CLASSES.balanced;
@@ -5983,7 +6672,7 @@
     else if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") kk.keys.right = true;
     else if(e.key === "Shift" || e.key === "l" || e.key === "L") kk.keys.drift = true;
     else if(e.key === " "){
-      if(active && !e.repeat && kk.mode === "solo" && kk.phase === "race") kkUseItem(kk.racers[0]);
+      if(active && !e.repeat && kk.mode !== "server" && kk.phase === "race") kkUseItem(kk.racers[0]);
     }
     if(active && (e.key.indexOf("Arrow") === 0 || e.key === " ")) e.preventDefault();
   });
