@@ -606,32 +606,73 @@
          API (iPhone Safari) get a fixed, viewport-filling stage
          instead — same filled view, thumb pads stay on screen, and
          the in-stage button below is the way back out. */
-      #kkStage.kk-fakefs{ position:fixed; inset:0; z-index:2000; background:#000; }
+      #kkStage.kk-fakefs{ position:fixed; inset:0; height:100vh; height:100dvh; z-index:2000; background:#000; }
       #kkStage.kk-fakefs #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
       /* While the stage is full screen (real or fake) the thumb
          pads are forced on, whatever the media queries think. */
       #kkStage.kk-fs-on #kkTouchUI{ display:block; }
+      /* The pads are also forced on whenever the device can touch
+         at all (JS flags the stage — a single media query is too
+         easy for a real phone browser to get wrong: desktop-site
+         mode, vendor browsers and in-app webviews all report
+         different pointer/hover values) and while a race is live. */
+      #kkStage.kk-touch-on #kkTouchUI{ display:block; }
+      #kkStage.kk-racing #kkTouchUI{ display:block; }
+      /* In-page landscape on a phone: the 16/10 stage is taller
+         than the visible screen, so the bottom-anchored pads fell
+         below the fold — all Trisha could see was DRIFT, the top
+         button of the right stack. Cap the stage height to the
+         viewport (outside full screen) so every control stays on
+         screen; the renderer adapts to the box it is given. */
+      @media (pointer:coarse) and (orientation:landscape){
+        #kkStage:not(.kk-fs-on) #kkMount{ max-height:calc(100vh - 96px); max-height:calc(100dvh - 96px); }
+        #b3Stage:not(.b3-fs-on) #b3Mount{ max-height:calc(100vh - 96px); max-height:calc(100dvh - 96px); }
+      }
       /* In-stage full screen toggle: it lives inside the stage with
          the driving controls, so it is reachable before, during and
          after a race — including while full screen, when the Start
          and Full Screen buttons below the stage no longer exist
          on screen. */
-      #kkFsBtn{ position:absolute; top:8px; left:8px; z-index:6; width:42px; height:42px; border-radius:10px; border:2px solid rgba(255,255,255,.65); background:rgba(10,18,32,.5); color:#fff; font-size:19px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; box-shadow:0 4px 14px rgba(0,0,0,.35); }
+      #kkFsBtn{ position:absolute; top:8px; left:8px; top:max(8px, env(safe-area-inset-top)); left:max(8px, env(safe-area-inset-left)); z-index:6; width:42px; height:42px; border-radius:10px; border:2px solid rgba(255,255,255,.65); background:rgba(10,18,32,.5); color:#fff; font-size:19px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; box-shadow:0 4px 14px rgba(0,0,0,.35); }
       #kkFsBtn:active{ background:rgba(255,255,255,.75); color:#12233f; }
+      #kkMap{ top:max(8px, env(safe-area-inset-top)) !important; right:max(8px, env(safe-area-inset-right)) !important; }
+      /* In-stage Start Race: the below-stage Start button is not
+         part of the full screen element, so going full screen
+         first used to strand you with no way to start — the whole
+         "hit start, then hit full screen" dance. This pill lives
+         inside the stage, shows whenever no race is running
+         (Start Race, or Race Again after a finish), and starts
+         the race from right there. */
+      #kkStartInStage{ position:absolute; left:50%; bottom:104px; transform:translateX(-50%); z-index:6; min-height:52px; padding:10px 26px; border-radius:999px; border:2px solid rgba(255,220,170,.9); background:rgba(232,118,42,.94); color:#fff; font-family:inherit; font-size:17px; font-weight:800; letter-spacing:.02em; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.45); -webkit-tap-highlight-color:transparent; white-space:nowrap; }
+      #kkStartInStage[hidden]{ display:none; }
+      #kkStartInStage:active{ transform:translateX(-50%) scale(.96); }
+      #b3StartInStage{ position:absolute; left:14px; left:max(14px, env(safe-area-inset-left)); bottom:104px; z-index:4; min-height:52px; padding:10px 26px; border-radius:999px; border:2px solid rgba(255,220,170,.9); background:rgba(232,118,42,.94); color:#fff; font-family:Verdana,sans-serif; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.45); -webkit-tap-highlight-color:transparent; white-space:nowrap; }
+      #b3StartInStage[hidden]{ display:none; }
+      #b3StartInStage:active{ transform:scale(.96); }
       #b3Stage:fullscreen{ background:#000; }
       #b3Stage:fullscreen #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
       #b3Stage:-webkit-full-screen{ background:#000; }
       #b3Stage:-webkit-full-screen #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      /* Tate-lo fake full screen (iPhone Safari has no element
+         Fullscreen API): same filled view, combat buttons stay on
+         screen, the in-stage button is the way back out. */
+      #b3Stage.b3-fakefs{ position:fixed; inset:0; height:100vh; height:100dvh; z-index:2000; background:#000; }
+      #b3Stage.b3-fakefs #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      /* In-stage full screen toggle for Tate-lo, mirroring the
+         Kart's: reachable before, during and after a match,
+         including while full screen. */
+      #b3FsBtn{ position:absolute; top:8px; left:8px; top:max(8px, env(safe-area-inset-top)); left:max(8px, env(safe-area-inset-left)); z-index:6; width:42px; height:42px; border-radius:10px; border:2px solid rgba(255,255,255,.65); background:rgba(10,18,32,.5); color:#fff; font-size:19px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; box-shadow:0 4px 14px rgba(0,0,0,.35); font-family:inherit; }
+      #b3FsBtn:active{ background:rgba(255,255,255,.75); color:#12233f; }
       /* Spud Kart on-screen thumb controls: big translucent pads in
          the bottom corners — left thumb steers, right thumb works
          DRIFT and ITEM. Shown on touch screens, narrow windows and
          in full screen; the drag-to-steer scheme still works too. */
       #kkTouchUI{ position:absolute; inset:0; pointer-events:none; display:none; z-index:5; }
-      @media (pointer:coarse), (max-width:820px){ #kkTouchUI{ display:block; } }
+      @media (pointer:coarse), (hover:none), (max-width:820px){ #kkTouchUI{ display:block; } }
       #kkStage:fullscreen #kkTouchUI, #kkStage:-webkit-full-screen #kkTouchUI{ display:block; }
-      .kk-tctl{ position:absolute; bottom:14px; display:flex; gap:12px; align-items:flex-end; }
-      .kk-tctl.left{ left:14px; }
-      .kk-tctl.right{ right:14px; flex-direction:column; align-items:center; gap:10px; }
+      .kk-tctl{ position:absolute; bottom:14px; bottom:max(14px, env(safe-area-inset-bottom)); display:flex; gap:12px; align-items:flex-end; }
+      .kk-tctl.left{ left:14px; left:max(14px, env(safe-area-inset-left)); }
+      .kk-tctl.right{ right:14px; right:max(14px, env(safe-area-inset-right)); flex-direction:column; align-items:center; gap:10px; }
       .kk-tbtn{
         pointer-events:auto; touch-action:none; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;
         border:2px solid rgba(255,255,255,.65); background:rgba(10,18,32,.42); color:#fff;
@@ -644,7 +685,7 @@
       .kk-tbtn.drift{ width:64px; height:64px; border-radius:50%; font-size:12.5px; background:rgba(36,86,200,.5); }
       .kk-tbtn.on{ background:rgba(255,255,255,.75); color:#12233f; transform:scale(.94); }
       .kk-tbtn.item.on{ background:rgba(255,170,80,.9); color:#40230a; }
-      #kkSteerBar{ position:absolute; left:50%; bottom:16px; transform:translateX(-50%); width:150px; height:10px; border-radius:5px; background:rgba(10,18,32,.4); border:1px solid rgba(255,255,255,.4); }
+      #kkSteerBar{ position:absolute; left:50%; bottom:16px; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%); width:150px; height:10px; border-radius:5px; background:rgba(10,18,32,.4); border:1px solid rgba(255,255,255,.4); }
       #kkSteerNeedle{ position:absolute; top:1px; left:50%; width:16px; height:6px; margin-left:-8px; border-radius:3px; background:#ffd94d; box-shadow:0 0 6px rgba(255,217,77,.8); }
       @media (max-width:560px){ .kk-tbtn.steer{ width:64px; height:64px; font-size:26px; } .kk-tbtn.item{ width:76px; height:76px; } #kkSteerBar{ display:none; } }
       /* Spud Kart results: when you cross the line the race used to
@@ -981,6 +1022,8 @@
                   <div class="scoreline"><span>Splats <b id="b3Splats">0 / 5</b></span><span>Times splatted <b id="b3Down">0</b></span><span>Time <b id="b3Time">0.0 s</b></span><span id="b3Msg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <div id="b3Stage" style="position:relative;">
                     <div id="b3Mount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                    <button id="b3FsBtn" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button>
+                    <button id="b3StartInStage" type="button">▶ Start</button>
                     <div style="position:absolute; left:50%; top:50%; width:22px; height:22px; margin:-11px 0 0 -11px; pointer-events:none; opacity:.85;">
                       <div style="position:absolute; left:50%; top:0; width:2px; height:7px; margin-left:-1px; background:#7dff8a;"></div>
                       <div style="position:absolute; left:50%; bottom:0; width:2px; height:7px; margin-left:-1px; background:#7dff8a;"></div>
@@ -1037,7 +1080,7 @@
                     </select>
                   </div>
                   <p class="game-sub" id="b3MapInfo" style="margin-top:2px;"><b>Blood Gulch</b> — the box canyon: red base vs blue base, the dirt track running between them, boulders and trees for cover, and the great ring in the sky.</p>
-                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Full Screen</b> fills the display landscape. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Full Screen</b> fills the display landscape — on a phone, <b>Start 3D Match</b> goes full screen by itself in the same tap, and the <b>⛶</b> button in the corner of the match view gets you in or out any time without leaving the controls. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
                   <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade.</p>
                 </div>
               </div>
@@ -1078,6 +1121,7 @@
                         <button class="kk-tbtn item" id="kkBtnItem" type="button" aria-label="Use item">ITEM</button>
                       </div>
                     </div>
+                    <button id="kkStartInStage" type="button">▶ Start Race</button>
                     <div id="kkResults" hidden>
                       <div class="kk-res-card">
                         <div class="kk-res-flag"></div>
@@ -4925,6 +4969,7 @@
     if(b3.over) return;
     b3.over = true;
     $("b3Start").textContent = "Play Again";
+    b3SyncStartBtn();
     if(won){
       b3SetMsg("🏆 You win Tate-lo 3D, " + b3.splats + "–" + b3.down + " in " + b3.time.toFixed(1) + " s!");
       b3Snd("win");
@@ -5246,6 +5291,7 @@
     b3SetMsg("Match on — splat 5 Spudtans before they splat you 5 times!");
     $("b3Start").textContent = "Restart Match";
     b3.running = true;
+    b3SyncStartBtn();
     b3Last = performance.now();
     if(b3Raf) cancelAnimationFrame(b3Raf);
     b3Raf = requestAnimationFrame(b3Loop);
@@ -5263,7 +5309,7 @@
   var b3AgainBtn = $("b3Again");
   if(b3AgainBtn) b3AgainBtn.addEventListener("click", b3Start);
   var b3WatchBtn = $("b3Watch");
-  if(b3WatchBtn) b3WatchBtn.addEventListener("click", function(){ var c = $("b3Card"); if(c) c.style.display = "none"; });
+  if(b3WatchBtn) b3WatchBtn.addEventListener("click", function(){ var c = $("b3Card"); if(c) c.style.display = "none"; b3SyncStartBtn(); });
   /* Two-thumb controls: the left half of the view is a floating move
      stick; the right half aims (drag), fires (hold still) and jumps
      (double-tap). Mouse works the same way for desktop testing. */
@@ -5316,39 +5362,99 @@
         performance.now() - b3Touch.aimT > 170 && b3Touch.aimMoved < 14;
     }, 60);
   }
-  /* Full screen + landscape for Tate-lo, same pattern as the Kart. */
+  /* Full screen + landscape for Tate-lo, same pattern as the Kart:
+     Start 3D Match on a phone enters full screen in the same tap,
+     a ⛶ button inside the stage toggles it any time (so exiting
+     never means hunting for a button outside the view), and
+     browsers with no element Fullscreen API (iPhone Safari) get
+     the fake full screen — the stage fixed over the viewport with
+     the FIRE / JUMP / TOT / SWAP buttons still on screen — instead
+     of the old dead-end "isn't available" message. */
   var b3FullBtn = $("b3FullBtn");
-  if(b3FullBtn){
-    b3FullBtn.addEventListener("click", function(){
-      var stage = $("b3Stage");
-      if(document.fullscreenElement || document.webkitFullscreenElement){
-        if(document.exitFullscreen) document.exitFullscreen();
-        else if(document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
-        return;
-      }
-      if(!stage || !(stage.requestFullscreen || stage.webkitRequestFullscreen)){
-        b3SetMsg("Full screen isn't available in this browser — rotate your phone sideways instead.");
-        return;
-      }
-      function lockLand(){
-        try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
-      }
+  var b3FsBtn = $("b3FsBtn");
+  function b3FsOn(){
+    var stage = $("b3Stage");
+    return !!(document.fullscreenElement || document.webkitFullscreenElement) ||
+      !!(stage && stage.classList.contains("b3-fakefs"));
+  }
+  function b3LockLand(){
+    try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
+  }
+  function b3FsSync(){
+    var on = b3FsOn(), stage = $("b3Stage");
+    if(stage){ if(on) stage.classList.add("b3-fs-on"); else stage.classList.remove("b3-fs-on"); }
+    if(b3FullBtn) b3FullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
+    if(b3FsBtn){ b3FsBtn.textContent = on ? "✕" : "⛶"; b3FsBtn.title = on ? "Exit full screen" : "Full screen"; }
+  }
+  function b3FakeFullscreen(){
+    var stage = $("b3Stage"); if(!stage) return;
+    stage.classList.add("b3-fakefs");
+    document.documentElement.style.overflow = "hidden";
+    if(document.body) document.body.style.overflow = "hidden";
+    b3FsSync();
+    setTimeout(b3Resize, 60); setTimeout(b3Resize, 350);
+  }
+  function b3EnterFullscreen(quiet){
+    var stage = $("b3Stage"); if(!stage || b3FsOn()) return;
+    if(stage.requestFullscreen || stage.webkitRequestFullscreen){
       var p = null;
       try{ p = stage.requestFullscreen({ navigationUI: "hide" }); }
       catch(e){ try{ p = stage.requestFullscreen(); }catch(e2){ try{ stage.webkitRequestFullscreen(); }catch(e3){} } }
-      if(p && p.then) p.then(lockLand, function(){});
-      else lockLand();
-      setTimeout(b3Resize, 120);
-    });
-    function b3FsChange(){
-      var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
-      b3FullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
-      if(!on && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+      if(p && p.then) p.then(function(){ b3LockLand(); b3FsSync(); setTimeout(b3Resize, 120); }, function(){ b3FakeFullscreen(); });
+      else { b3LockLand(); b3FsSync(); setTimeout(b3Resize, 120); }
+    } else {
+      b3FakeFullscreen();
+      if(!quiet) b3SetMsg("This browser has no full screen of its own — the match view is stretched to fill the screen instead. Tap ✕ in the corner to shrink it back.");
+    }
+  }
+  function b3ExitFullscreen(){
+    var stage = $("b3Stage");
+    if(document.fullscreenElement || document.webkitFullscreenElement){
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
+    if(stage && stage.classList.contains("b3-fakefs")){
+      stage.classList.remove("b3-fakefs");
+      document.documentElement.style.overflow = "";
+      if(document.body) document.body.style.overflow = "";
+      b3FsSync();
       setTimeout(b3Resize, 60); setTimeout(b3Resize, 350);
     }
-    document.addEventListener("fullscreenchange", b3FsChange);
-    document.addEventListener("webkitfullscreenchange", b3FsChange);
   }
+  function b3ToggleFullscreen(){ if(b3FsOn()) b3ExitFullscreen(); else b3EnterFullscreen(false); }
+  function b3AutoFullscreen(){
+    if(b3FsOn()) return;
+    var coarse = false;
+    try{ coarse = !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }catch(e){}
+    var phoneUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+    if(!coarse && !phoneUA) return;
+    b3EnterFullscreen(true);
+  }
+  if(b3FullBtn) b3FullBtn.addEventListener("click", b3ToggleFullscreen);
+  if(b3FsBtn) b3FsBtn.addEventListener("click", b3ToggleFullscreen);
+  /* Registered after b3Start's own click handler (bound above), so
+     the match starts first and full screen rides the same tap. */
+  $("b3Start").addEventListener("click", function(){ b3AutoFullscreen(); });
+  /* The in-stage Start Match pill: visible whenever no match is
+     running, so full screen can be entered in either order — the
+     start control is always inside the view with the combat
+     buttons, never stranded below the stage. */
+  function b3SyncStartBtn(){
+    var b = $("b3StartInStage"); if(!b) return;
+    var show = !b3.running || b3.over;
+    b.hidden = !show;
+    if(show) b.textContent = b3.over ? "↻ Play Again" : "▶ Start";
+  }
+  var b3StartInBtn = $("b3StartInStage");
+  if(b3StartInBtn) b3StartInBtn.addEventListener("click", function(){ b3Start(); b3AutoFullscreen(); });
+  function b3FsChange(){
+    b3FsSync();
+    if(!b3FsOn() && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+    setTimeout(b3Resize, 60); setTimeout(b3Resize, 350);
+  }
+  document.addEventListener("fullscreenchange", b3FsChange);
+  document.addEventListener("webkitfullscreenchange", b3FsChange);
+  window.addEventListener("orientationchange", function(){ setTimeout(function(){ b3FsSync(); b3Resize(); }, 150); setTimeout(b3Resize, 450); });
   window.addEventListener("gamepadconnected", function(e){
     var el = $("b3PadStatus");
     if(el) el.textContent = "Controller connected (" + String(e.gamepad.id || "gamepad").slice(0, 42) + ") — left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.";
@@ -6999,7 +7105,8 @@
     kkTrackIdx = idx;
     kkUpdateTrackInfo();
     if(!kkRenderer) return;
-    kk.phase = "idle"; kk.count = 0; kk.over = false; kkHideResults();
+    var kkStageEl2 = $("kkStage"); if(kkStageEl2) kkStageEl2.classList.remove("kk-racing");
+    kk.phase = "idle"; kk.count = 0; kk.over = false; kkHideResults(); kkSyncStartBtn();
     kk.lastLap = 1; kk.wrongT = 0; kk.signT = 0; kk.signText = ""; kk.lastProg = null; kk.lakTarget = null;
     kkBuildCircuit();
     kkResetGrid();
@@ -7590,7 +7697,9 @@
     kkResize();
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
     kkResetGrid();
+    var kkStageEl = $("kkStage"); if(kkStageEl) kkStageEl.classList.add("kk-racing");
     kk.phase = "count"; kk.count = 3.6; kk.lastCount = 4; kk.gasAt = null; kk.raceT = 0; kk.bigT = 0;
+    kkSyncStartBtn();
     kkBig(""); kkSetMsg(kkTrack().name + " — lights out in 3… touch and hold from the LAST light for a rocket start — from the first light, you burn out. Your kart accelerates by itself: just drag to steer.");
     $("kkStart").textContent = "Restart Race";
     kkHUD();
@@ -7693,6 +7802,7 @@
       var allIn = kk.racers.every(function(r){ return r.finished; });
       if(allIn || kk.overT > 25){
         kk.phase = "done";
+        kkSyncStartBtn();
         kk.racers.forEach(function(r){ if(!r.finished) r.dnf = true; });
         if(kk.resShown) kkRenderResults();
       }
@@ -7812,7 +7922,7 @@
     kkApplyTheme("spud", KK_TRACKS[0]);
     kkCircuit.visible = false; kkOval.visible = true;
     kkSrv.slots = {}; kkSrv.nextSlot = 0; kkSrv.posted = false; kkSrv.resultsShown = false; kkSrv.lastBump = 0;
-    kkHideResults();
+    kkHideResults(); kkSyncStartBtn();
     kk.me = null;
     kk.racers.forEach(function(r){ r.srv = null; r.mesh.visible = false; });
     kkBig("");
@@ -7823,7 +7933,7 @@
   }
   function kkSrvExit(){
     if(kk.mode === "server"){
-      kk.mode = "idle"; kk.phase = "idle"; kkHideResults();
+      kk.mode = "idle"; kk.phase = "idle"; kkHideResults(); kkSyncStartBtn();
       kkApplyTrackTheme();
       kkCircuit.visible = true; kkOval.visible = false;
       kk.me = null;
@@ -8167,8 +8277,8 @@
       var p = null;
       try{ p = stage.requestFullscreen({ navigationUI: "hide" }); }
       catch(e){ try{ p = stage.requestFullscreen(); }catch(e2){ try{ stage.webkitRequestFullscreen(); }catch(e3){} } }
-      if(p && p.then) p.then(function(){ kkLockLand(); kkFsSync(); }, function(){ kkFakeFullscreen(); });
-      else { kkLockLand(); setTimeout(kkResize, 120); }
+      if(p && p.then) p.then(function(){ kkLockLand(); kkFsSync(); setTimeout(kkResize, 120); setTimeout(kkResize, 400); }, function(){ kkFakeFullscreen(); });
+      else { kkLockLand(); kkFsSync(); setTimeout(kkResize, 120); }
     } else {
       kkFakeFullscreen();
       if(!quiet) kkSetMsg("This browser has no full screen of its own — the race view is stretched to fill the screen instead. Tap ✕ in the corner to shrink it back.");
@@ -8197,9 +8307,40 @@
     if(kkFsOn()) return;
     var coarse = false;
     try{ coarse = !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }catch(e){}
-    if(!coarse && !("ontouchstart" in window)) return;
+    /* Desktop-site mode and vendor browsers can report a fine
+       pointer on a phone; the mobile UA is the backstop. A plain
+       touch laptop matches neither, so its Start clicks stay
+       windowed as before. */
+    var phoneUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+    if(!coarse && !phoneUA) return;
     kkEnterFullscreen(true);
   }
+  /* Flag touch-capable devices on the stage so the thumb pads are
+     shown by capability, not by any one media query (see the
+     .kk-touch-on rule) — the pads disappearing on a real phone was
+     the whole bug. */
+  (function(){
+    var st = $("kkStage"); if(!st) return;
+    var touchy = false;
+    try{
+      touchy = (navigator.maxTouchPoints > 0) || ("ontouchstart" in window) ||
+        !!(window.matchMedia && (window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(hover: none)").matches));
+    }catch(e){}
+    if(touchy) st.classList.add("kk-touch-on");
+  })();
+  /* The in-stage Start Race pill: visible whenever no local race
+     is running, so full screen can be entered in either order —
+     the start control is always inside the view with the pads. */
+  function kkSyncStartBtn(){
+    var b = $("kkStartInStage"); if(!b) return;
+    var show = kk.mode !== "server" && (kk.phase === "idle" || kk.phase === "done");
+    b.hidden = !show;
+    if(show) b.textContent = kk.phase === "done" ? "↻ Race Again" : "▶ Start Race";
+  }
+  var kkStartInBtn = $("kkStartInStage");
+  if(kkStartInBtn) kkStartInBtn.addEventListener("click", function(){
+    if(kk.mode !== "server"){ kkStartRace(); kkAutoFullscreen(); }
+  });
   if(kkFullBtn) kkFullBtn.addEventListener("click", kkToggleFullscreen);
   if(kkFsBtn) kkFsBtn.addEventListener("click", kkToggleFullscreen);
   function kkFsChange(){
@@ -8209,6 +8350,10 @@
   }
   document.addEventListener("fullscreenchange", kkFsChange);
   document.addEventListener("webkitfullscreenchange", kkFsChange);
+  /* Rotation mid-race: re-sync the fs state and the renderer size
+     once the turn settles, so the stage and pads track the new
+     orientation instead of the old one's dimensions. */
+  window.addEventListener("orientationchange", function(){ setTimeout(function(){ kkFsSync(); kkResize(); }, 150); setTimeout(kkResize, 450); });
   /* Controller connect/disconnect notes in the controls line. */
   window.addEventListener("gamepadconnected", function(e){
     var el = $("kkPadStatus");
