@@ -585,14 +585,34 @@
       .lb-list li b{ color:var(--blue); }
       .lb-list li.me{ background:#fff7d6; font-weight:bold; }
       .lb-empty{ font-size:11px; color:var(--muted); font-style:italic; }
-      .tate-board{ display:grid; grid-template-columns:repeat(3,84px); gap:6px; justify-content:center; margin:10px auto; }
+      /* Tate Tac Toe, overhauled: the board is a carved wooden mash
+         tray, the squares are glazed ceramic tiles, pieces pop in,
+         and the win gets a hand-drawn strike-through. */
+      .tate-board{ position:relative; display:grid; grid-template-columns:repeat(3,84px); gap:6px; justify-content:center; width:fit-content; margin:12px auto; padding:12px; border-radius:14px; border:2px solid #5d4126;
+        background:
+          radial-gradient(120% 90% at 50% 0%, rgba(255,220,150,.28), rgba(0,0,0,0) 55%),
+          repeating-linear-gradient(90deg, #8a6238 0 34px, #7d5830 34px 36px, #94683c 36px 70px, #7d5830 70px 72px),
+          #865f34;
+        box-shadow:0 10px 24px rgba(43,26,4,.4), inset 0 2px 0 rgba(255,226,160,.5), inset 0 -6px 14px rgba(30,16,0,.45); }
       @media (max-width:380px){ .tate-board{ grid-template-columns:repeat(3,72px); } }
-      .tate-cell{ height:84px; font-size:40px; font-weight:800; font-family:inherit; background:#fff; border:2px solid var(--blue-strip); border-radius:8px; cursor:pointer; color:var(--blue); padding:0; }
+      .tate-cell{ height:84px; font-size:40px; font-weight:800; font-family:inherit; padding:0; cursor:pointer; color:var(--blue);
+        background:linear-gradient(155deg, #fffdf6 0%, #f6ecd4 55%, #ecd9b4 100%);
+        border:2px solid #a98f66; border-radius:10px;
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.95), inset 0 -4px 0 rgba(122,90,40,.22), 0 3px 6px rgba(40,20,0,.35);
+        transition:transform .12s ease, box-shadow .12s ease, filter .12s ease; }
       @media (max-width:380px){ .tate-cell{ height:72px; font-size:34px; } }
-      .tate-cell:disabled{ cursor:default; opacity:.85; }
-      .tate-cell.x{ color:#c78f00; background:#fff8d6; }
-      .tate-cell.o{ color:var(--blue); background:#eef3fb; }
-      .tate-cell.win{ background:#d9f2d9 !important; border-color:var(--green); }
+      .tate-cell:not(:disabled):hover{ transform:translateY(-2px); filter:brightness(1.05); box-shadow:inset 0 2px 0 rgba(255,255,255,.95), inset 0 -4px 0 rgba(122,90,40,.22), 0 7px 12px rgba(40,20,0,.4); }
+      .tate-cell:disabled{ cursor:default; }
+      .tate-cell.x{ color:#d9930d; background:linear-gradient(155deg, #fffbe8 0%, #ffedb5 60%, #f7d774 100%); border-color:#c79a2e; text-shadow:0 2px 0 rgba(122,70,0,.3), 0 0 16px rgba(245,179,1,.5); }
+      .tate-cell.o{ color:#2456c8; background:linear-gradient(155deg, #f4f9ff 0%, #dbe9fb 60%, #bcd4f5 100%); border-color:#7d9cc9; text-shadow:0 2px 0 rgba(20,50,120,.25), 0 0 16px rgba(80,140,255,.4); }
+      .tate-cell.placed{ animation:tatePop .34s cubic-bezier(.2,1.9,.4,1); }
+      @keyframes tatePop{ 0%{ transform:scale(.4) rotate(-7deg); } 100%{ transform:scale(1) rotate(0); } }
+      .tate-cell.win{ background:linear-gradient(155deg, #eefbe8 0%, #c9efc0 60%, #a5dd97 100%) !important; border-color:var(--green); animation:tateWinPulse .8s ease-in-out infinite alternate; }
+      @keyframes tateWinPulse{ from{ box-shadow:inset 0 2px 0 rgba(255,255,255,.9), 0 0 4px rgba(46,139,58,.35); } to{ box-shadow:inset 0 2px 0 rgba(255,255,255,.9), 0 0 20px rgba(46,139,58,.75); } }
+      .tate-strike{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+      .tate-strike line{ stroke:#2e8b3a; stroke-width:4.5; stroke-linecap:round; filter:drop-shadow(0 1px 2px rgba(0,60,0,.45)); stroke-dasharray:170; stroke-dashoffset:170; animation:tateStrike .45s .12s ease-out forwards; }
+      @keyframes tateStrike{ to{ stroke-dashoffset:0; } }
+      @media (prefers-reduced-motion: reduce){ .tate-cell.placed, .tate-cell.win{ animation:none; } .tate-strike line{ animation:none; stroke-dashoffset:0; } }
       .game-canvas{ width:100%; height:auto; display:block; background:#1d2b45; border:2px solid #333; border-radius:6px; touch-action:none; }
       .touchrow{ display:flex; gap:8px; margin-top:8px; }
       .touchrow .btn{ flex:1; min-height:48px; font-size:14px; user-select:none; -webkit-user-select:none; touch-action:none; }
@@ -923,31 +943,31 @@
                 <div class="game-card">
                   <span class="game-tag live">LIVE · HEAD-TO-HEAD</span>
                   <h4>Tate Tac Toe</h4>
-                  <p>Potato tic-tac-toe. Three in a row wins the mash. Open a table for anyone, or challenge a friend directly — turns sync live through Firebase.</p>
+                  <p>Potato tic-tac-toe. Three in a row wins the mash. Open a table for anyone, or challenge a friend directly — turns sync live through Firebase. Now on a carved wooden mash tray with glazed ceramic tiles, pop-in pieces, a strike-through win line and wooden pop sounds.</p>
                   <button class="btn primary" type="button" data-goto="tatePanel">Play Tate Tac Toe</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag live">LIVE DUELS · LEADERBOARD · CHALLENGES</span>
                   <h4>SuperSpud Runner — Maxed Out</h4>
-                  <p>The SpudMaps build of the Runner: the actual SpudMan sprite, animated — stride bob, forward rock, and his white cape streaming and flapping behind him while the world scrolls past in parallax layers. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups.</p>
+                  <p>The SpudMaps build of the Runner: the actual SpudMan sprite, animated — stride bob, forward rock, and his white cape streaming and flapping behind him while the world scrolls past in parallax layers. Double-jump the wide hazard pairs, slide under the Hover Peeler, load up on seven toppings, and grab the Magnet, Shield and Double-Loaded ×2 power-ups. Now with textured stone ledges, lit windows in the skyline, brushed-steel cutlery, collect sparkles, a cinematic light pool and vignette — and a full synthesized sound kit: jump blips, and topping dings that climb a scale as you chain collects.</p>
                   <button class="btn primary" type="button" data-goto="runnerPanel">Play Runner</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
                   <h4>Tate-lo 3D — WebGL</h4>
-                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump. Now with recharging energy shields, health packs, two swap-able weapons, Tater Tot grenades, and five Spudtans who strafe, rush and snipe in squads. Splat five before they splat you. Two-thumb touch controls with real FIRE / JUMP / grenade buttons, full-screen landscape, and Xbox controller support.</p>
+                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump. Now with recharging energy shields, health packs, two swap-able weapons, Tater Tot grenades, and five Spudtans who strafe, rush and snipe in squads. Splat five before they splat you. Two-thumb touch controls with real FIRE / JUMP / grenade buttons, full-screen landscape, and Xbox controller support. Graphics overhaul: PMREM image-based sky lighting, textured concrete bases and bump-mapped ground — and Battle Creek's creek and Sidewinder's ice pond mirror the arenas with live reflection probes — the scene re-rendered from the surface's point of view, several times a second.</p>
                   <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · ESCAPE RUN</span>
                   <h4>Spud Escape 3D — WebGL</h4>
-                  <p>The WebGL escape run: SpudMan drives the Tater Buggy out of a collapsing structure on a countdown — launch ramps over gaps, boost pads, checkpoint arches for more time, and the extraction pad at the end.</p>
+                  <p>The WebGL escape run: SpudMan drives the Tater Buggy out of a collapsing structure on a countdown — launch ramps over gaps, boost pads, checkpoint arches for more time, and the extraction pad at the end. Fully overhauled: textured asphalt and concrete, clearcoat buggy paint with working headlights and steering, spinning treaded tyres, a synthesized engine that growls with your speed, dust/flame/debris particles, a live mirror reflection on the extraction pad — and where your browser supports WebGPU, the collapse wall's embers are simulated by a GPU compute shader.</p>
                   <button class="btn primary" type="button" data-goto="escapePanel">Play Escape 3D</button>
                 </div>
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · GRAND PRIX · BASEMENT SERVER</span>
                   <h4>Spud Kart 3D — WebGL</h4>
-                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus faithful recreations of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64, layouts and scenery matched to the originals (Rainbow Road races through deep space) with only the racers and names swapped for spuds — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics. Mario Kart Tour controls (auto-accelerate, Smart Steering, visible thumb pads — ◀ ▶ steer, DRIFT and ITEM buttons — or drag to steer), widened tracks, full-screen landscape play, and Xbox controller support. And now the race-day crew is complete: <b>Cam Spud</b>, the camera guy on his cloud, runs the start lights, holds the lap and wrong-way boards, waves the finish flag and fishes you back onto the road when you leave it — and <b>every track hides two secret routes</b>, full-speed corner cuts marked only by a sign and a line of coins.</p>
+                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus faithful recreations of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64, layouts and scenery matched to the originals (Rainbow Road races through deep space) with only the racers and names swapped for spuds — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics. Mario Kart Tour controls (auto-accelerate, Smart Steering, visible thumb pads — ◀ ▶ steer, DRIFT and ITEM buttons — or drag to steer), widened tracks, full-screen landscape play, and Xbox controller support. And now the race-day crew is complete: <b>Cam Spud</b>, the camera guy on his cloud, runs the start lights, holds the lap and wrong-way boards, waves the finish flag and fishes you back onto the road when you leave it — and <b>every track hides two secret routes</b>, full-speed corner cuts marked only by a sign and a line of coins. Graphics overhaul on top: the sky lighting is now PMREM-convolved image-based light, the asphalt carries bump-mapped aggregate and tyre wear, and the beach sea and the castle lake mirror the world with live reflection probes, re-rendered from the water's point of view several times a second.</p>
                   <button class="btn primary" type="button" data-goto="kart3dPanel">Play Spud Kart 3D</button>
                 </div>
               </div>
@@ -1081,7 +1101,7 @@
                   </div>
                   <p class="game-sub" id="b3MapInfo" style="margin-top:2px;"><b>Blood Gulch</b> — the box canyon: red base vs blue base, the dirt track running between them, boulders and trees for cover, and the great ring in the sky.</p>
                   <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Full Screen</b> fills the display landscape — on a phone, <b>Start 3D Match</b> goes full screen by itself in the same tap, and the <b>⛶</b> button in the corner of the match view gets you in or out any time without leaving the controls. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
-                  <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade.</p>
+                  <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade. The graphics overhaul adds PMREM image-based sky lighting over everything, bump-mapped arena floors, textured concrete bases and strata rock — and the creek in Battle Creek and the ice pond in Sidewinder reflect the arenas live, rendered from the surface's point of view by a reflection probe.</p>
                 </div>
               </div>
 
@@ -1097,7 +1117,7 @@
                     <button class="btn" id="escGas" type="button">Gas ▲</button>
                     <button class="btn" id="escRight" type="button">▶</button>
                   </div>
-                  <p class="game-sub">Real WebGL (three.js): SpudMan at the wheel of the Tater Buggy, a collapsing structure, and a countdown that does not care about your feelings. Steer with ◀ ▶ (or A / D), hold Gas to roll. Orange <b>ramps</b> launch you over the gaps — fall and you lose 3 seconds getting fished back. Gold <b>boost pads</b> surge you forward, and every <b>checkpoint arch</b> adds +6 seconds. Cross all three levels and land on the glowing <b>extraction pad</b> before the clock dies.</p>
+                  <p class="game-sub">Real WebGL (three.js): SpudMan at the wheel of the Tater Buggy, a collapsing structure, and a countdown that does not care about your feelings. Steer with ◀ ▶ (or A / D), hold Gas to roll. Orange <b>ramps</b> launch you over the gaps — fall and you lose 3 seconds getting fished back. Gold <b>boost pads</b> surge you forward, and every <b>checkpoint arch</b> adds +6 seconds — its lamp strip turns green as you pass. Cross all three levels and land on the glowing <b>extraction pad</b> before the clock dies. The overhaul: procedural asphalt, concrete and rock textures with bump mapping, dusk image-based lighting with real shadows, a clearcoat Tater Buggy (headlights on, tyres treaded and spinning, body rolling into corners and pitching off ramps), tyre dust, boost flames, wall debris and embers — GPU-computed over WebGPU where your browser has it — a speed-stretching camera, hard-landing shakes, and a synthesized engine, chime and thud soundtrack.</p>
                 </div>
               </div>
 
@@ -2877,6 +2897,39 @@
     return board.indexOf(".") === -1 ? { mark: "draw", line: null } : null;
   }
   function myMark(g){ return g && uid ? (g.hostUid === uid ? "X" : g.guestUid === uid ? "O" : null) : null; }
+  /* Board sound + change tracking for the pop-in animation: a soft
+     wooden pop when a mark lands, a little jingle at the win. */
+  var tatePrevBoard = ".........", tatePrevStatus = "", tateSyncFirst = true;
+  var tateSfx = { ctx: null,
+    ensure: function(){
+      if(this.ctx){ if(this.ctx.state === "suspended") this.ctx.resume(); return !!this.ctx; }
+      try{
+        var C = window.AudioContext || window.webkitAudioContext; if(!C) return false;
+        this.ctx = new C();
+        return true;
+      }catch(e){ return false; }
+    },
+    tone: function(f0, f1, dur, type, vol, delay){
+      if(!this.ensure()) return;
+      try{
+        var ctx = this.ctx, t = ctx.currentTime + (delay || 0);
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type || "triangle";
+        o.frequency.setValueAtTime(f0, t);
+        o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(vol || 0.14, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(t); o.stop(t + dur + 0.05);
+      }catch(e){}
+    },
+    pop: function(){ this.tone(520, 260, 0.1, "triangle", 0.16); },
+    win: function(draw){
+      if(draw){ this.tone(392, 392, 0.14, "triangle", 0.13); this.tone(330, 330, 0.2, "triangle", 0.13, 0.13); }
+      else { var s = this; [523, 659, 784].forEach(function(f, i){ s.tone(f, f, 0.16, "triangle", 0.14, i * 0.08); }); }
+    }
+  };
 
   if(NET) tateRef.on("value", function(snap){ renderLobby(snap.val() || {}); });
   function renderLobby(all){
@@ -2952,6 +3005,7 @@
   }
   function enterGame(id){
     leaveGameView();
+    tateSyncFirst = true; // first render syncs silently — no pops for marks already down
     currentGameId = id;
     currentGameRef = tateRef.child(id);
     $("tateLobby").hidden = true;
@@ -2971,6 +3025,7 @@
   }
   function exitToLobby(msg){
     leaveGameView();
+    tatePrevBoard = "........."; tatePrevStatus = "";
     $("tateGame").hidden = true;
     $("tateLobby").hidden = false;
     setConn();
@@ -2981,6 +3036,7 @@
     var g = currentGame; if(!g) return;
     var mark = myMark(g);
     var board = String(g.board || ".........");
+    if(tateSyncFirst){ tatePrevBoard = board; tatePrevStatus = g.status; tateSyncFirst = false; }
     var players = $("tatePlayers"), status = $("tateStatus");
     var xName = g.hostName || "Host", oName = g.guestName || "…";
     players.innerHTML = "<b>✕ " + esc(xName) + "</b> vs <b>○ " + esc(oName) + "</b>" +
@@ -3011,6 +3067,7 @@
         var v = board[i];
         cell.className = "tate-cell" + (v === "X" ? " x" : v === "O" ? " o" : "");
         cell.textContent = v === "X" ? "✕" : v === "O" ? "○" : "";
+        if(v !== "." && tatePrevBoard[i] === ".") cell.classList.add("placed"); // the mark that just landed pops in
         if(win && win.line && win.line.indexOf(i) !== -1) cell.classList.add("win");
         var playable = g.status === "playing" && mark && g.turn === mark && v === ".";
         cell.disabled = !playable;
@@ -3018,6 +3075,29 @@
         boardEl.appendChild(cell);
       })(i);
     }
+    // The strike-through: an SVG line drawn across the winning three.
+    if(win && win.line){
+      var NS = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(NS, "svg");
+      svg.setAttribute("class", "tate-strike");
+      svg.setAttribute("viewBox", "0 0 100 100");
+      svg.setAttribute("preserveAspectRatio", "none");
+      var ln = document.createElementNS(NS, "line");
+      var ctr = function(idx){ return { x: (idx % 3) * 33.33 + 16.67, y: Math.floor(idx / 3) * 33.33 + 16.67 }; };
+      var pa = ctr(win.line[0]), pb = ctr(win.line[2]);
+      var dx = pb.x - pa.x, dy = pb.y - pa.y;
+      ln.setAttribute("x1", pa.x - dx * 0.34); ln.setAttribute("y1", pa.y - dy * 0.34);
+      ln.setAttribute("x2", pb.x + dx * 0.34); ln.setAttribute("y2", pb.y + dy * 0.34);
+      svg.appendChild(ln);
+      boardEl.appendChild(svg);
+    }
+    // Sound + change tracking (the pop fires for either player's move).
+    if(tatePrevBoard !== board){
+      if(board.replace(/\./g, "").length > tatePrevBoard.replace(/\./g, "").length) tateSfx.pop();
+      tatePrevBoard = board;
+    }
+    if(g.status === "done" && tatePrevStatus !== "done") tateSfx.win(g.winner === "draw");
+    tatePrevStatus = g.status;
   }
   function makeMove(i){
     var g = currentGame, mark = myMark(g);
@@ -3134,7 +3214,7 @@
   function resetRun(){
     run = { t: 0, distPx: 0, bonus: 0, x: 78, y: 0, vy: 0, jumps: 0, slideT: 0, squash: 0,
             runPhase: 0, capePhase: 0, chives: [], chiveTimer: 0,
-            ents: [], rings: [], floats: [], dust: [], spawnIn: 520, lastObsEnd: -1e9, lastGroupEnd: -1e9,
+            ents: [], rings: [], floats: [], dust: [], sparks: [], spawnIn: 520, lastObsEnd: -1e9, lastGroupEnd: -1e9,
             magnetT: 0, multT: 0, shieldOn: false, invulnT: 0, powerCd: 6,
             milestones: 0, nextMilestone: 250, worldIdx: 0, banner: null,
             counts: {}, over: false, startedAt: Date.now(), phase: 0 };
@@ -3382,10 +3462,49 @@
       rctx.restore();
     }
   }
+  /* Per-world ground texture: a speckled, stony pattern tile drawn
+     once per world and scrolled with the run, so the ledge reads as
+     a real surface instead of a flat colour band. */
+  var runTexCache = {};
+  function runGroundPattern(wi){
+    if(runTexCache[wi]) return runTexCache[wi];
+    var w = WORLDS[wi];
+    var c = document.createElement("canvas"); c.width = c.height = 128;
+    var g = c.getContext("2d");
+    for(var i = 0; i < 340; i++){
+      g.fillStyle = Math.random() < 0.5 ? w.groundTop : "rgba(0,0,0,0.16)";
+      g.globalAlpha = 0.12 + Math.random() * 0.3;
+      g.fillRect(Math.random() * 128, Math.random() * 128, 1 + Math.random() * 3, 1 + Math.random() * 2);
+    }
+    g.globalAlpha = 0.5; g.fillStyle = "rgba(0,0,0,0.25)";
+    for(var s2 = 0; s2 < 12; s2++){
+      g.beginPath(); g.ellipse(Math.random() * 128, Math.random() * 128, 3 + Math.random() * 5, 1.6 + Math.random() * 2, 0, 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+    runTexCache[wi] = c;
+    return c;
+  }
+  /* Cinematic vignette, pre-rendered once. */
+  var runVinCanvas = null;
+  function runVignette(){
+    if(runVinCanvas) return runVinCanvas;
+    var c = document.createElement("canvas"); c.width = RW; c.height = RH;
+    var g = c.getContext("2d");
+    var gr = g.createRadialGradient(RW / 2, RH / 2, RH * 0.42, RW / 2, RH / 2, RW * 0.62);
+    gr.addColorStop(0, "rgba(8,4,18,0)");
+    gr.addColorStop(1, "rgba(8,4,18,0.42)");
+    g.fillStyle = gr; g.fillRect(0, 0, RW, RH);
+    runVinCanvas = c;
+    return c;
+  }
   function drawEnt(e){
     var cx = e.x + e.w / 2, cy = GROUND - e.cy, top = cy - e.h / 2;
     var isFood = !!POINTS[e.kind], isPow = e.kind === "magnet" || e.kind === "shield" || e.kind === "mult";
     rctx.save();
+    // Soft contact shadow on the ground, fading as the item rides higher
+    var shA = Math.max(0.04, 0.30 - e.cy * 0.0009);
+    rctx.fillStyle = "rgba(15,5,20," + shA + ")";
+    rctx.beginPath(); rctx.ellipse(cx, GROUND + 7, e.w * 0.52, 5, 0, 0, Math.PI * 2); rctx.fill();
     if(isFood || isPow){
       rctx.strokeStyle = "rgba(255,217,77,0.75)"; rctx.lineWidth = 2;
       rctx.beginPath(); rctx.ellipse(cx, cy, e.w / 2 + 7, e.h / 2 + 7, 0, 0, Math.PI * 2); rctx.stroke();
@@ -3395,18 +3514,29 @@
     }
     switch(e.kind){
       case "fork":
-        rctx.fillStyle = "#d9d9d9"; rctx.fillRect(cx - 2.5, top + 14, 5, e.h - 14);
+        var fkG = rctx.createLinearGradient(e.x, 0, e.x + e.w, 0);
+        fkG.addColorStop(0, "#f4f4f6"); fkG.addColorStop(0.45, "#b9bcc2"); fkG.addColorStop(0.55, "#e8e9ec"); fkG.addColorStop(1, "#a8abb2");
+        rctx.fillStyle = fkG; rctx.fillRect(cx - 2.5, top + 14, 5, e.h - 14);
         rctx.fillRect(e.x, top, e.w, 4);
         [0, 7, 14].forEach(function(o){ rctx.fillRect(e.x + o, top, 3, 14); });
+        rctx.fillStyle = "rgba(255,255,255,0.75)"; rctx.fillRect(cx - 2.5, top + 14, 1.6, e.h - 14);
         break;
       case "knife":
-        rctx.fillStyle = "#e8e8e8";
+        var knG = rctx.createLinearGradient(cx - 4, 0, cx + 8, 0);
+        knG.addColorStop(0, "#fbfbfc"); knG.addColorStop(0.5, "#cfd2d8"); knG.addColorStop(1, "#f0f1f3");
+        rctx.fillStyle = knG;
         rctx.beginPath(); rctx.moveTo(cx, top); rctx.lineTo(cx + 8, top + 34); rctx.lineTo(cx + 8, top + 52); rctx.lineTo(cx - 4, top + 52); rctx.lineTo(cx - 4, top + 20); rctx.closePath(); rctx.fill();
-        rctx.fillStyle = "#7a4a2b"; rctx.fillRect(cx - 3, top + 52, 7, e.h - 52);
+        rctx.strokeStyle = "rgba(255,255,255,0.9)"; rctx.lineWidth = 1.4;
+        rctx.beginPath(); rctx.moveTo(cx - 2, top + 22); rctx.lineTo(cx - 2, top + 50); rctx.stroke();
+        var hdG = rctx.createLinearGradient(cx - 3, 0, cx + 4, 0);
+        hdG.addColorStop(0, "#96683e"); hdG.addColorStop(1, "#66401f");
+        rctx.fillStyle = hdG; rctx.fillRect(cx - 3, top + 52, 7, e.h - 52);
         break;
       case "masher":
         rctx.fillStyle = "#8a8a8a"; rctx.fillRect(cx - 3, top, 6, 16);
-        rctx.fillStyle = "#c0c0c0"; rctx.fillRect(e.x, top + 16, e.w, e.h - 16);
+        var msG = rctx.createLinearGradient(e.x, 0, e.x + e.w, 0);
+        msG.addColorStop(0, "#d7d9dd"); msG.addColorStop(0.5, "#a9adb4"); msG.addColorStop(1, "#cfd1d6");
+        rctx.fillStyle = msG; rctx.fillRect(e.x, top + 16, e.w, e.h - 16);
         rctx.strokeStyle = "#7a7a7a"; rctx.lineWidth = 2;
         for(var gx = e.x + 8; gx < e.x + e.w - 4; gx += 10){ rctx.beginPath(); rctx.moveTo(gx, top + 18); rctx.lineTo(gx, top + e.h - 2); rctx.stroke(); }
         for(var gy = top + 24; gy < top + e.h - 2; gy += 9){ rctx.beginPath(); rctx.moveTo(e.x + 2, gy); rctx.lineTo(e.x + e.w - 2, gy); rctx.stroke(); }
@@ -3423,7 +3553,14 @@
         break;
       case "rollingPin":
         rctx.save(); rctx.translate(cx, cy); rctx.rotate(e.rot);
-        rctx.fillStyle = "#c98d54"; rctx.fillRect(-e.w / 2, -13, e.w, 26);
+        var rpG = rctx.createLinearGradient(0, -13, 0, 13);
+        rpG.addColorStop(0, "#e0aa6c"); rpG.addColorStop(0.5, "#c98d54"); rpG.addColorStop(1, "#a06a38");
+        rctx.fillStyle = rpG; rctx.fillRect(-e.w / 2, -13, e.w, 26);
+        rctx.strokeStyle = "rgba(122,76,36,0.5)"; rctx.lineWidth = 1.4;
+        [-8, 0, 8].forEach(function(gy2){
+          rctx.beginPath(); rctx.moveTo(-e.w / 2 + 2, gy2); rctx.lineTo(e.w / 2 - 2, gy2 + 1.5); rctx.stroke();
+        });
+        rctx.fillStyle = "rgba(255,230,190,0.35)"; rctx.fillRect(-e.w / 2, -11, e.w, 3.4);
         rctx.fillStyle = "#a06a38"; rctx.fillRect(-e.w / 2 - 8, -4, 8, 8); rctx.fillRect(e.w / 2, -4, 8, 8);
         rctx.strokeStyle = "#96602a"; rctx.lineWidth = 2;
         rctx.beginPath(); rctx.moveTo(-e.w / 2, 0); rctx.lineTo(e.w / 2, 0); rctx.stroke();
@@ -3448,7 +3585,9 @@
         rctx.quadraticCurveTo(cx + 5, cy - 8, cx - 6, cy); rctx.stroke();
         break;
       case "cheese":
-        rctx.fillStyle = "#f5a623";
+        var chG = rctx.createLinearGradient(cx, cy - 9, cx, cy + 9);
+        chG.addColorStop(0, "#ffc44d"); chG.addColorStop(1, "#e8930c");
+        rctx.fillStyle = chG;
         rctx.beginPath(); rctx.moveTo(cx - e.w / 2, cy + 9); rctx.lineTo(cx + e.w / 2, cy + 9); rctx.lineTo(cx + e.w / 2, cy - 9); rctx.closePath(); rctx.fill();
         rctx.fillStyle = "#d98c0a"; [[-8, 4], [6, 2], [13, -3]].forEach(function(hd){ rctx.beginPath(); rctx.arc(cx + hd[0], cy + hd[1], 2.6, 0, Math.PI * 2); rctx.fill(); });
         break;
@@ -3461,8 +3600,12 @@
         rctx.fillStyle = "#57b25e"; rctx.fillRect(cx - 2, cy - 6, 3, 11);
         break;
       case "butter":
-        rctx.fillStyle = "#ffd94d"; rctx.fillRect(cx - 17, cy - 8, 34, 17);
-        rctx.fillStyle = "#ffe98a"; rctx.fillRect(cx - 13, cy - 12, 24, 6);
+        var btG = rctx.createLinearGradient(cx - 17, cy - 12, cx + 17, cy + 9);
+        btG.addColorStop(0, "#ffe98a"); btG.addColorStop(0.55, "#ffd94d"); btG.addColorStop(1, "#f0b92e");
+        rctx.fillStyle = btG; rctx.fillRect(cx - 17, cy - 8, 34, 17);
+        rctx.fillStyle = "#fff3b0"; rctx.fillRect(cx - 13, cy - 12, 24, 6);
+        rctx.fillStyle = "rgba(255,255,255,0.85)";
+        rctx.beginPath(); rctx.ellipse(cx - 7, cy - 9.5, 5, 1.8, -0.2, 0, Math.PI * 2); rctx.fill();
         break;
       case "broccoli":
         rctx.fillStyle = "#7a9a4d"; rctx.fillRect(cx - 4, cy + 2, 8, 14);
@@ -3569,7 +3712,7 @@
       rctx.fill();
     }
     // Backdrop, two parallax layers, tinted per world
-    function skylineLayer(off, color, minH, maxH, bw){
+    function skylineLayer(off, color, minH, maxH, bw, windows){
       rctx.fillStyle = color;
       var start = Math.floor(off / bw);
       for(var k = -1; k < RW / bw + 2; k++){
@@ -3578,13 +3721,33 @@
         var bx = idx * bw - off;
         rctx.fillRect(bx, GROUND - bh, bw - 3, bh);
         if(bh > (minH + maxH) / 2) rctx.fillRect(bx + bw * 0.3, GROUND - bh - 7, bw * 0.34, 7);
+        // Lit windows in the near layer — somebody's home in every
+        // tower, flickering on a deterministic hash so they scroll
+        // with the buildings instead of swimming.
+        if(windows && bh > 22){
+          var rows = Math.floor((bh - 10) / 11), cols = Math.floor((bw - 11) / 9);
+          for(var wr = 0; wr < rows; wr++) for(var wc = 0; wc < cols; wc++){
+            var hash = (idx * 31 + wr * 7 + wc * 13) % 9;
+            if(hash < 3){
+              rctx.fillStyle = hash === 0 ? "rgba(255,216,140,0.9)" : "rgba(190,220,255,0.75)";
+              rctx.fillRect(bx + 5 + wc * 9, GROUND - bh + 6 + wr * 11, 4, 5.5);
+            }
+          }
+          rctx.fillStyle = color;
+        }
       }
     }
-    skylineLayer(scroll * 0.1, w.far, 26, 74, 46);
-    skylineLayer(scroll * 0.28, w.near, 14, 52, 34);
+    skylineLayer(scroll * 0.1, w.far, 26, 74, 46, false);
+    skylineLayer(scroll * 0.28, w.near, 14, 52, 34, true);
     // Ground ledge in the world's colors, with its bright rim
     rctx.fillStyle = w.ground; rctx.fillRect(0, GROUND, RW, RH - GROUND);
     rctx.fillStyle = w.groundTop; rctx.fillRect(0, GROUND, RW, 7);
+    // The ledge's stone texture, scrolling at full speed
+    var pat = runGroundPattern(run ? run.worldIdx : 0);
+    var poff = -(scroll % 128);
+    rctx.globalAlpha = 0.55;
+    for(var px2 = poff; px2 < RW; px2 += 128) rctx.drawImage(pat, px2, GROUND);
+    rctx.globalAlpha = 1;
     rctx.strokeStyle = w.rim; rctx.lineWidth = 2.5;
     rctx.beginPath(); rctx.moveTo(0, GROUND + 1); rctx.lineTo(RW, GROUND + 1); rctx.stroke();
     rctx.fillStyle = w.detail;
@@ -3646,6 +3809,21 @@
       rctx.fillText(f.text, f.x, f.y - f.life * 34);
       rctx.restore();
     });
+    // Collect sparkles: four-point stars that pop and tumble
+    run.sparks.forEach(function(s){
+      var a = Math.max(0, 1 - s.life / s.max);
+      rctx.save();
+      rctx.translate(s.x, s.y);
+      rctx.rotate(s.life * 5);
+      rctx.globalAlpha = a;
+      rctx.fillStyle = s.color;
+      rctx.beginPath();
+      rctx.moveTo(0, -s.r * 2.2); rctx.lineTo(s.r * 0.6, -s.r * 0.6); rctx.lineTo(s.r * 2.2, 0);
+      rctx.lineTo(s.r * 0.6, s.r * 0.6); rctx.lineTo(0, s.r * 2.2); rctx.lineTo(-s.r * 0.6, s.r * 0.6);
+      rctx.lineTo(-s.r * 2.2, 0); rctx.lineTo(-s.r * 0.6, -s.r * 0.6);
+      rctx.closePath(); rctx.fill();
+      rctx.restore();
+    });
     // World / milestone banner
     if(run.banner){
       var bl = run.banner.life, ba = bl < 0.25 ? bl / 0.25 : (bl > 1.9 ? Math.max(0, (2.3 - bl) / 0.4) : 1);
@@ -3668,6 +3846,15 @@
       else { rctx.strokeStyle = "rgba(255,255,255,0.7)"; rctx.lineWidth = 2; rctx.stroke(); }
     }
     rctx.restore();
+    // Cinematic light: a warm pool that follows SpudMan, then the
+    // vignette settles over the whole frame.
+    var lpx = run.x + 46, lpy = GROUND - run.y - 44;
+    var lgr = rctx.createRadialGradient(lpx, lpy, 10, lpx, lpy, 260);
+    lgr.addColorStop(0, "rgba(255,240,200,0.13)");
+    lgr.addColorStop(1, "rgba(255,240,200,0)");
+    rctx.fillStyle = lgr;
+    rctx.fillRect(0, 0, RW, RH);
+    rctx.drawImage(runVignette(), 0, 0);
   }
   function runStep(ts){
     if(!run || run.over) return;
@@ -3717,6 +3904,8 @@
     if(dm >= run.nextMilestone){
       run.bonus += 50; run.milestones++;
       run.floats.push({ x: run.x + 130, y: GROUND - 190, text: "+50 · " + run.nextMilestone + " m!", life: 0 });
+      runSparkle(run.x + 46, GROUND - run.y - 60, "#ffe98a", 16);
+      rsfx.mile();
       run.nextMilestone += 250;
     }
     // Worlds rotate every 400 m
@@ -3756,6 +3945,13 @@
     run.dust = run.dust.filter(function(d){ return d.life < 0.6; });
     run.rings.forEach(function(rg){ rg.life += dt; rg.r += dt * 130; });
     run.rings = run.rings.filter(function(rg){ return rg.life < 0.5; });
+    run.sparks.forEach(function(s){
+      s.life += dt;
+      s.x += (s.vx - spd * 0.55) * dt;
+      s.y += s.vy * dt;
+      s.vy += 260 * dt;
+    });
+    run.sparks = run.sparks.filter(function(s){ return s.life < s.max; });
     run.floats.forEach(function(f){ f.life += dt; });
     run.floats = run.floats.filter(function(f){ return f.life < 1.15; });
     // Player hitbox
@@ -3786,17 +3982,23 @@
         var pts = POINTS[e.kind] * (run.multT > 0 ? 2 : 1);
         run.bonus += pts; run.counts[e.kind]++;
         run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "+" + pts, life: 0 });
+        runSparkle(e.x + e.w / 2, GROUND - e.cy, "#ffd94d", 9);
+        rsfx.collect();
         run.ents.splice(i, 1); i--;
       }else if(isPow){
         if(e.kind === "magnet"){ run.magnetT = 8; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "SPUD MAGNET!", life: 0 }); }
         else if(e.kind === "shield"){ run.shieldOn = true; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "SHIELD UP!", life: 0 }); }
         else { run.multT = 10; run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 8, text: "DOUBLE-LOADED ×2!", life: 0 }); }
+        runSparkle(e.x + e.w / 2, GROUND - e.cy, "#aef2ff", 14);
+        rsfx.power();
         run.ents.splice(i, 1); i--;
       }else{
         if(run.invulnT > 0) continue;
         if(run.shieldOn){
           run.shieldOn = false; run.invulnT = 1.2;
           run.floats.push({ x: e.x + e.w / 2, y: ebox.y - 10, text: "SHIELD ATE IT!", life: 0 });
+          runSparkle(e.x + e.w / 2, GROUND - e.cy, "#fff6da", 16);
+          rsfx.shield();
           run.ents.splice(i, 1); i--;
         }else{
           return endRun(e.kind);
@@ -3825,6 +4027,7 @@
   function endRun(killer){
     if(!run) return;
     run.over = true;
+    rsfx.die();
     if(runRaf) cancelAnimationFrame(runRaf);
     drawRun();
     startRunIdle();
@@ -3842,6 +4045,59 @@
     settleChallenges("runner", finalScore);
     if(myRunBest == null || finalScore > myRunBest) $("runBest").textContent = finalScore;
   }
+  /* Runner sound kit: all synthesized, no audio files. Jump and
+     double-jump blips, topping dings that climb a scale as you chain
+     collects, power-up arpeggios, a shield crack, milestone chimes
+     and the death slide. Starts on the Start Run tap. */
+  var rsfx = { ctx: null, master: null, combo: 0,
+    init: function(){
+      if(this.ctx){ if(this.ctx.state === "suspended") this.ctx.resume(); return; }
+      try{
+        var C = window.AudioContext || window.webkitAudioContext; if(!C) return;
+        this.ctx = new C();
+        this.master = this.ctx.createGain(); this.master.gain.value = 0.4;
+        this.master.connect(this.ctx.destination);
+      }catch(e){}
+    },
+    tone: function(f0, f1, dur, type, vol, delay){
+      if(!this.ctx) return;
+      try{
+        var ctx = this.ctx, t = ctx.currentTime + (delay || 0);
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type || "square";
+        o.frequency.setValueAtTime(f0, t);
+        o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(vol || 0.12, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        o.connect(g); g.connect(this.master);
+        o.start(t); o.stop(t + dur + 0.05);
+      }catch(e){}
+    },
+    jump: function(){ this.tone(280, 560, 0.14, "square", 0.10); },
+    djump: function(){ this.tone(420, 880, 0.16, "square", 0.11); this.tone(840, 1240, 0.12, "sine", 0.08, 0.03); },
+    slide: function(){ this.tone(300, 120, 0.12, "sawtooth", 0.05); },
+    collect: function(){
+      this.combo = Math.min(16, this.combo + 1);
+      var f = 620 * Math.pow(1.045, this.combo);
+      this.tone(f, f * 1.35, 0.11, "sine", 0.13);
+      this.tone(f * 2, f * 2, 0.07, "sine", 0.05);
+    },
+    power: function(){ var s = this; [523, 659, 784].forEach(function(f, i){ s.tone(f, f, 0.13, "triangle", 0.13, i * 0.05); }); },
+    shield: function(){ this.tone(1200, 220, 0.2, "sawtooth", 0.14); this.tone(180, 60, 0.22, "square", 0.1); },
+    mile: function(){ this.tone(784, 784, 0.1, "sine", 0.12); this.tone(1046, 1046, 0.16, "sine", 0.12, 0.08); },
+    die: function(){ this.tone(420, 55, 0.65, "sawtooth", 0.15); this.combo = 0; }
+  };
+  // Collect sparkles: little star bursts where a topping lands.
+  function runSparkle(x, y, color, n){
+    if(!run) return;
+    for(var i = 0; i < (n || 8); i++){
+      var a = Math.random() * 6.28, sp = 40 + Math.random() * 130;
+      run.sparks.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 40,
+        life: 0, max: 0.4 + Math.random() * 0.3, color: color, r: 1.6 + Math.random() * 2.2 });
+    }
+    if(run.sparks.length > 220) run.sparks.splice(0, run.sparks.length - 220);
+  }
   function doJump(){
     if(!run || run.over) return;
     run.slideT = 0; // jumping cancels a slide
@@ -3849,6 +4105,7 @@
       run.jumps = 1;
       run.vy = 950;
       run.y = 0.5;
+      rsfx.jump();
     }else if(run.y > 0.01 && run.jumps === 1){
       // DOUBLE JUMP: one mid-air second jump, earned back on landing.
       run.jumps = 2;
@@ -3857,10 +4114,12 @@
       run.rings.push({ x: run.x + 46, y: GROUND - run.y - 2, r: 10, life: 0 });
       for(var dp = 0; dp < 5; dp++) run.dust.push({ x: run.x + 22 + Math.random() * 48, y: GROUND - run.y + 2, r: 2.5 + Math.random() * 3, life: 0 });
       run.floats.push({ x: run.x + 46, y: GROUND - run.y - 130, text: "DOUBLE JUMP!", life: 0 });
+      rsfx.djump();
     }
   }
   function doSlide(){
     if(!run || run.over) return;
+    rsfx.slide();
     if(run.y > 0.01) run.vy = Math.min(run.vy, -1500); // slam down, slide on touchdown
     run.slideT = 0.62;
   }
@@ -3877,6 +4136,7 @@
   function startRun(){
     if(runIdleRaf){ cancelAnimationFrame(runIdleRaf); runIdleRaf = null; }
     resetRun();
+    rsfx.init(); rsfx.combo = 0;
     $("runMsg").textContent = "";
     $("runFx").textContent = "";
     $("runWorld").textContent = WORLDS[0].name;
@@ -4161,6 +4421,200 @@
     scene.add(fill);
   }
 
+  /* ================= Graphics overhaul core (all 3D games) =========
+     Realistic procedural textures, PMREM image-based lighting, and
+     live reflection probes: a cube camera sits at each reflective
+     surface and re-renders the world into a cube map a few times a
+     second, so water, ice, chrome and clearcoat paint mirror the
+     actual scene — sun, sky and scenery — instead of a painted
+     fake. (True path-traced ray tracing needs a WebGPU renderer;
+     the bundled three.js is the WebGL build, so reflections are
+     probe-rendered and WebGPU is used for compute instead — see
+     the Escape embers.) =========================================== */
+  function rtxSpeckle(g, w, h, colors, n, sMin, sMax){
+    for(var i = 0; i < n; i++){
+      g.fillStyle = colors[(Math.random() * colors.length) | 0];
+      var s = sMin + Math.random() * (sMax - sMin);
+      g.fillRect(Math.random() * w, Math.random() * h, s, s);
+    }
+  }
+  function rtxGrime(g, w, h, n, alpha){
+    for(var i = 0; i < n; i++){
+      var x = Math.random() * w, y = Math.random() * h, r = 12 + Math.random() * 42;
+      var gr = g.createRadialGradient(x, y, 2, x, y, r);
+      gr.addColorStop(0, "rgba(18,14,8," + (alpha * (0.4 + Math.random() * 0.6)) + ")");
+      gr.addColorStop(1, "rgba(18,14,8,0)");
+      g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+  }
+  /* A texture pair: the colour map plus a matching bump map drawn
+     from the same features, so surfaces catch light like the real
+     material — asphalt aggregate, cracked concrete, rock strata. */
+  function rtxSurface(kind, size, rx, ry){
+    size = size || 256;
+    var c = document.createElement("canvas"); c.width = c.height = size;
+    var g = c.getContext("2d");
+    var b = document.createElement("canvas"); b.width = b.height = size;
+    var bg = b.getContext("2d");
+    bg.fillStyle = "#808080"; bg.fillRect(0, 0, size, size);
+    function both(fn){ fn(g, false); fn(bg, true); }
+    if(kind === "asphalt"){
+      g.fillStyle = "#3c3f46"; g.fillRect(0, 0, size, size);
+      rtxSpeckle(g, size, size, ["#33363d", "#45484f", "#2f3238", "#4d5058", "#585b62"], 5200, 1, 2.6);
+      rtxSpeckle(bg, size, size, ["#5a5a5a", "#a8a8a8", "#6e6e6e"], 5200, 1, 2.6);
+      rtxGrime(g, size, size, 7, 0.20);
+      g.strokeStyle = "rgba(16,16,20,.5)"; bg.strokeStyle = "rgba(30,30,30,.8)";
+      for(var cr = 0; cr < 5; cr++){
+        g.lineWidth = 1 + Math.random(); bg.lineWidth = 2;
+        g.beginPath(); bg.beginPath();
+        var cx0 = Math.random() * size, cy0 = Math.random() * size;
+        g.moveTo(cx0, cy0); bg.moveTo(cx0, cy0);
+        for(var cs = 0; cs < 4; cs++){ cx0 += (Math.random() - 0.5) * 60; cy0 += (Math.random() - 0.5) * 60; g.lineTo(cx0, cy0); bg.lineTo(cx0, cy0); }
+        g.stroke(); bg.stroke();
+      }
+    }else if(kind === "concrete"){
+      g.fillStyle = "#9a9da2"; g.fillRect(0, 0, size, size);
+      rtxSpeckle(g, size, size, ["#8b8e94", "#a8abb1", "#7f8288", "#b2b5ba"], 3800, 1, 3);
+      rtxSpeckle(bg, size, size, ["#666", "#999", "#777"], 2600, 1, 3);
+      rtxGrime(g, size, size, 9, 0.16);
+      g.strokeStyle = "rgba(52,54,60,.65)"; g.lineWidth = 3;
+      bg.strokeStyle = "rgba(40,40,40,.9)"; bg.lineWidth = 4;
+      var step = size / 2;
+      for(var t = 0; t <= size; t += step){
+        g.beginPath(); g.moveTo(t, 0); g.lineTo(t, size); g.stroke();
+        g.beginPath(); g.moveTo(0, t); g.lineTo(size, t); g.stroke();
+        bg.beginPath(); bg.moveTo(t, 0); bg.lineTo(t, size); bg.stroke();
+        bg.beginPath(); bg.moveTo(0, t); bg.lineTo(size, t); bg.stroke();
+      }
+      g.fillStyle = "rgba(60,62,68,.5)";
+      for(var bt = 0; bt < 10; bt++){ g.beginPath(); g.arc(Math.random() * size, Math.random() * size, 2.2, 0, 7); g.fill(); }
+    }else if(kind === "rock"){
+      g.fillStyle = "#8a715a"; g.fillRect(0, 0, size, size);
+      for(var band = 0; band < 7; band++){
+        g.fillStyle = ["#7d6248", "#967c60", "#6e563e", "#a08664"][(Math.random() * 4) | 0];
+        g.fillRect(0, band * size / 7 + Math.random() * 5, size, size / 7 - 2 - Math.random() * 4);
+        bg.fillStyle = band % 2 ? "#5c5c5c" : "#a2a2a2";
+        bg.fillRect(0, band * size / 7, size, size / 14);
+      }
+      rtxSpeckle(g, size, size, ["#5f4832", "#ab8f6b", "#77603f"], 2400, 1, 3.4);
+      rtxSpeckle(bg, size, size, ["#4a4a4a", "#b5b5b5"], 2400, 1, 3.4);
+      rtxGrime(g, size, size, 8, 0.22);
+    }else if(kind === "dirt"){
+      g.fillStyle = "#7a5c3e"; g.fillRect(0, 0, size, size);
+      rtxSpeckle(g, size, size, ["#6b4e33", "#8a6a48", "#5d422a", "#96754f"], 4200, 1, 3.6);
+      rtxSpeckle(bg, size, size, ["#5a5a5a", "#a0a0a0"], 3000, 1, 3.6);
+      for(var pk = 0; pk < 26; pk++){
+        g.fillStyle = ["#9c8468", "#87755c"][(Math.random() * 2) | 0];
+        g.beginPath(); g.arc(Math.random() * size, Math.random() * size, 1.6 + Math.random() * 2.6, 0, 7); g.fill();
+      }
+      rtxGrime(g, size, size, 6, 0.18);
+    }else if(kind === "sand"){
+      g.fillStyle = "#d9bd8a"; g.fillRect(0, 0, size, size);
+      rtxSpeckle(g, size, size, ["#cdb07c", "#e6cc97", "#c2a26e", "#efdcab"], 5200, 1, 2.2);
+      g.strokeStyle = "rgba(160,128,78,.35)"; bg.strokeStyle = "rgba(90,90,90,.5)";
+      for(var wv = 0; wv < size; wv += 14){
+        g.lineWidth = 2; bg.lineWidth = 2.4;
+        g.beginPath(); bg.beginPath();
+        for(var wx = 0; wx <= size; wx += 8){
+          var wy = wv + Math.sin(wx * 0.09 + wv) * 3;
+          if(wx === 0){ g.moveTo(wx, wy); bg.moveTo(wx, wy); } else { g.lineTo(wx, wy); bg.lineTo(wx, wy); }
+        }
+        g.stroke(); bg.stroke();
+      }
+    }else if(kind === "metal"){
+      var grd = g.createLinearGradient(0, 0, size, size);
+      grd.addColorStop(0, "#aeb4bc"); grd.addColorStop(0.5, "#9298a0"); grd.addColorStop(1, "#a6acb4");
+      g.fillStyle = grd; g.fillRect(0, 0, size, size);
+      for(var br = 0; br < 130; br++){
+        g.strokeStyle = "rgba(255,255,255," + (0.03 + Math.random() * 0.06) + ")";
+        g.lineWidth = 1;
+        var by = Math.random() * size;
+        g.beginPath(); g.moveTo(0, by); g.lineTo(size, by + (Math.random() - 0.5) * 8); g.stroke();
+      }
+      rtxSpeckle(bg, size, size, ["#6a6a6a", "#909090"], 900, 1, 2);
+      g.fillStyle = "rgba(52,55,60,.85)";
+      [[10, 10], [size - 10, 10], [10, size - 10], [size - 10, size - 10]].forEach(function(rv){
+        g.beginPath(); g.arc(rv[0], rv[1], 4.5, 0, 7); g.fill();
+        g.fillStyle = "rgba(230,235,240,.9)"; g.beginPath(); g.arc(rv[0] - 1.4, rv[1] - 1.4, 1.6, 0, 7); g.fill();
+        g.fillStyle = "rgba(52,55,60,.85)";
+      });
+      g.strokeStyle = "rgba(52,55,60,.5)"; g.lineWidth = 3; g.strokeRect(1, 1, size - 2, size - 2);
+    }else if(kind === "tread"){
+      g.fillStyle = "#17181a"; g.fillRect(0, 0, size, size);
+      bg.fillStyle = "#3a3a3a"; bg.fillRect(0, 0, size, size);
+      for(var tr = 0; tr < size; tr += 32){
+        g.fillStyle = "#232529";
+        g.save(); g.translate(size / 2, tr + 16); g.rotate(0.5); g.fillRect(-size / 2, -7, size / 2, 14); g.restore();
+        g.save(); g.translate(size / 2, tr + 16); g.rotate(-0.5); g.fillRect(0, -7, size / 2, 14); g.restore();
+        bg.fillStyle = "#c8c8c8";
+        bg.save(); bg.translate(size / 2, tr + 16); bg.rotate(0.5); bg.fillRect(-size / 2, -7, size / 2, 14); bg.restore();
+        bg.save(); bg.translate(size / 2, tr + 16); bg.rotate(-0.5); bg.fillRect(0, -7, size / 2, 14); bg.restore();
+        bg.fillStyle = "#3a3a3a";
+      }
+      rtxSpeckle(g, size, size, ["#101114", "#26282c"], 700, 1, 2.4);
+    }else{ // hazard stripes
+      g.fillStyle = "#e8762a"; g.fillRect(0, 0, size, size);
+      g.fillStyle = "#f4f1e8";
+      for(var hz = -size; hz < size * 2; hz += 44){
+        g.beginPath(); g.moveTo(hz, size); g.lineTo(hz + 22, size); g.lineTo(hz + 22 + size, 0); g.lineTo(hz + size, 0); g.closePath(); g.fill();
+      }
+      rtxGrime(g, size, size, 10, 0.28);
+      rtxSpeckle(bg, size, size, ["#666", "#999"], 500, 1, 3);
+    }
+    function fin(cv){
+      var t = new THREE.CanvasTexture(cv);
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      if(rx) t.repeat.set(rx, ry == null ? rx : ry);
+      t.anisotropy = 4;
+      return t;
+    }
+    var map = fin(c); map.colorSpace = THREE.SRGBColorSpace;
+    return { map: map, bump: fin(b) };
+  }
+  /* Image-based lighting: paint a little sky on an equirect canvas,
+     PMREM-convolve it, and every standard material in the scene
+     picks up real sky/sun/ground reflections, blurred by roughness
+     exactly like a photographed environment. */
+  function rtxEnv(renderer, scene, stops, sunX, sunY, sunColor){
+    try{
+      var c = document.createElement("canvas"); c.width = 512; c.height = 256;
+      var g = c.getContext("2d");
+      var grad = g.createLinearGradient(0, 0, 0, 256);
+      stops.forEach(function(s){ grad.addColorStop(s[0], s[1]); });
+      g.fillStyle = grad; g.fillRect(0, 0, 512, 256);
+      var sg = g.createRadialGradient(sunX, sunY, 4, sunX, sunY, 74);
+      sg.addColorStop(0, sunColor || "rgba(255,246,200,1)");
+      sg.addColorStop(1, "rgba(255,246,200,0)");
+      g.fillStyle = sg; g.fillRect(sunX - 80, sunY - 80, 160, 160);
+      var tex = new THREE.CanvasTexture(c);
+      tex.mapping = THREE.EquirectangularReflectionMapping;
+      tex.colorSpace = THREE.SRGBColorSpace;
+      var pm = new THREE.PMREMGenerator(renderer);
+      scene.environment = pm.fromEquirectangular(tex).texture;
+      pm.dispose();
+      return tex;
+    }catch(e){ return null; }
+  }
+  /* The probe reflection probe: a cube camera that re-renders
+     the scene from the surface's point of view. Materials handed
+     probe.tex mirror the live world. Throttled by the caller. */
+  function rtxProbe(size){
+    var rt = new THREE.WebGLCubeRenderTarget(size || 128, { generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
+    var cam = new THREE.CubeCamera(0.4, 900, rt);
+    return { cam: cam, tex: rt.texture, rt: rt,
+      update: function(renderer, scene, x, y, z){
+        cam.position.set(x, y, z);
+        cam.update(renderer, scene);
+      } };
+  }
+  function rtxReflect(mat, probe, rough, metal, intensity){
+    mat.envMap = probe.tex;
+    mat.roughness = rough; mat.metalness = metal;
+    mat.envMapIntensity = intensity == null ? 1.25 : intensity;
+    mat.needsUpdate = true;
+    return mat;
+  }
+
   /* ---------------- Tate-lo 3D — first-person Spudball (WebGL) ---------------- */
   var b3 = { ok: false, running: false, over: false, splats: 0, down: 0, time: 0,
              px: 0, pz: 46, head: Math.PI, pitch: 0, py: 0, vy: 0, vx: 0, vz: 0, grounded: true,
@@ -4180,6 +4634,7 @@
   ];
   var b3Mount = $("b3Mount"), b3Renderer = null, b3Scene = null, b3Cam = null, b3Last = 0, b3Raf = 0, b3Gun = null, b3GunKick = 0;
   var b3Composer = null, b3Fx = null, b3Guns = [], b3Muzzle = null, b3MuzzleLight = null, b3PackGroup = null;
+  var b3Probe = null, b3ProbePos = null, b3Tick = 0;
   /* Synthesized sound: one shared context, tiny oscillators + noise.
      Created/resumed only on a user gesture (Start tap, FIRE tap). */
   var b3AC = null;
@@ -4297,7 +4752,7 @@
     { id: "hangem", name: "Hang 'Em High", info: "<b>Hang 'Em High</b> — the tomb yard: stone walls, tomb blocks and pillars in a grid, torchlight on the walls. Pure close-quarters spudball." }
   ];
   function b3GroundPlane(w, d, tex){
-    var g = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshStandardMaterial({ map: tex, roughness: 1 }));
+    var g = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshStandardMaterial({ map: tex, bumpMap: tex, bumpScale: 0.6, roughness: 1 }));
     g.rotation.x = -Math.PI / 2; g.receiveShadow = true; b3Arena.add(g); return g;
   }
   function b3Block(x, z, w, h, d, mat, opt){
@@ -4310,8 +4765,13 @@
     else if(opt.collide !== false) b3.crates.push({ x: x, z: z, r: Math.max(w, d) / 2, w: w / 2, d: d / 2 });
     return m;
   }
+  var b3RockTexMat = null;
   function b3Rock(x, z, r, mat){
-    var rock = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), mat || std(0x8d7a5c, 1));
+    if(!mat && !b3RockTexMat){
+      var rk = rtxSurface("rock", 256, 1, 1);
+      b3RockTexMat = new THREE.MeshStandardMaterial({ map: rk.map, bumpMap: rk.bump, bumpScale: 0.9, roughness: 1 });
+    }
+    var rock = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 0), mat || b3RockTexMat);
     rock.position.set(x, r * 0.55, z); rock.rotation.set(x * 1.7, z * 2.3, 0);
     rock.castShadow = true; rock.receiveShadow = true; b3Arena.add(rock);
     b3.crates.push({ x: x, z: z, r: r + 0.35 });
@@ -4339,7 +4799,9 @@
      roof deck, glowing trim — centred on x0 at depth zc, scaled s. */
   function b3BaseX(x0, zc, colTrim, name, s){
     s = s || 1;
-    var wallM = std(0xb9bcbe, 0.9), darkM = std(0x6f7276, 0.9);
+    var conc = rtxSurface("concrete", 256, 2, 2);
+    var wallM = new THREE.MeshStandardMaterial({ map: conc.map, bumpMap: conc.bump, bumpScale: 0.5, roughness: 0.92 });
+    var darkM = std(0x6f7276, 0.9);
     var trimM = new THREE.MeshStandardMaterial({ color: colTrim, roughness: 0.4, emissive: colTrim, emissiveIntensity: 0.55 });
     [-8.5, 8.5].forEach(function(off){
       var tw = new THREE.Mesh(new THREE.BoxGeometry(4.4 * s, 7.5 * s, 4.4 * s), wallM);
@@ -4375,7 +4837,9 @@
     }, 14, 22);
     b3GroundPlane(58, 90, gtex);
     // The creek itself, with dirt banks and two plank bridges.
-    var water = new THREE.Mesh(new THREE.PlaneGeometry(5, 76), new THREE.MeshStandardMaterial({ color: 0x3d74b8, roughness: 0.18, metalness: 0.25, emissive: 0x0d2c4d, emissiveIntensity: 0.5 }));
+    var water = new THREE.Mesh(new THREE.PlaneGeometry(5, 76), new THREE.MeshStandardMaterial({ color: 0x2a5d96, roughness: 0.18, metalness: 0.25, emissive: 0x0d2c4d, emissiveIntensity: 0.35 }));
+    if(b3Probe) rtxReflect(water.material, b3Probe, 0.06, 0.9, 1.35); // probe creek reflections
+    b3ProbePos = { x: 0, y: 1.4, z: 0 };
     water.rotation.x = -Math.PI / 2; water.position.y = 0.03; water.receiveShadow = true; b3Arena.add(water);
     var bankM = std(0x9a7d55, 1);
     [-3.1, 3.1].forEach(function(bx){
@@ -4428,6 +4892,8 @@
     b3Block(-14, 34, 5, 6, 10, ridgeM, {}); b3Block(14, -38, 5, 7, 11, ridgeM, {});
     // Ice pond in the west lane.
     var ice = new THREE.Mesh(new THREE.PlaneGeometry(21, 27), new THREE.MeshStandardMaterial({ color: 0xaed6ee, roughness: 0.12, metalness: 0.3, emissive: 0x1c3d55, emissiveIntensity: 0.35 }));
+    if(b3Probe) rtxReflect(ice.material, b3Probe, 0.05, 0.85, 1.3); // probe ice reflections
+    b3ProbePos = { x: -28, y: 1.4, z: -16 };
     ice.rotation.x = -Math.PI / 2; ice.position.set(-28, 0.03, -16); ice.receiveShadow = true; b3Arena.add(ice);
     // Perimeter cliffs, snow over rock.
     var rockA = std(0x97826a, 1), rockB = std(0x87755c, 1);
@@ -4516,6 +4982,7 @@
   }
   function b3BuildMap(){
     b3.crates = [];
+    b3ProbePos = null; // builders with reflective surfaces set their own
     var id = B3_MAPS[b3MapIdx].id;
     if(id === "creek"){
       b3Scene.background.setHex(0x9fd0e8); b3Scene.fog.color.setHex(0xbcd8ea); b3Scene.fog.near = 55; b3Scene.fog.far = 210;
@@ -4669,6 +5136,10 @@
     b3Scene = new THREE.Scene();
     b3Scene.background = new THREE.Color(0x8fb8dd);
     b3Scene.fog = new THREE.Fog(0xa8c4de, 70, 260);
+    // Image-based lighting + the probe reflection probe: water,
+    // ice, gunmetal and base trim mirror the live arena.
+    rtxEnv(b3Renderer, b3Scene, [[0, "#2e63c8"], [0.42, "#9fd0ff"], [0.55, "#ffe3b3"], [0.62, "#8a7a56"], [1, "#5e4c30"]], 360, 92);
+    b3Probe = rtxProbe(128);
     b3Cam = new THREE.PerspectiveCamera(72, 1.6, 0.1, 900);
     // Halo daylight: bright sun with real shadows + sky bounce
     b3Scene.add(new THREE.HemisphereLight(0xbfd9ff, 0x8a7a56, 0.9));
@@ -5242,6 +5713,11 @@
       if(b3MuzzleLight && b3MuzzleLight.intensity > 0) b3MuzzleLight.intensity *= 0.45;
       if(b3Guns[1] && b3Guns[1].userData.cell) b3Guns[1].userData.cell.material.emissiveIntensity = 0.35 + 1.3 * (b3.mag[1] / B3_WEAPONS[1].magSize);
     }
+    // Probe reflections: refresh the probe a few times a second
+    // from the reflective surface's point of view.
+    if(b3Probe && b3ProbePos && (b3Tick++ % 4 === 0)){
+      try{ b3Probe.update(b3Renderer, b3Scene, b3ProbePos.x, b3ProbePos.y, b3ProbePos.z); }catch(e){}
+    }
     if(b3Composer){
       try{ b3Composer.render(); }
       catch(e){ b3Composer = null; b3Renderer.render(b3Scene, b3Cam); }
@@ -5494,7 +5970,174 @@
               keys: { gas: false, brake: false, left: false, right: false },
               checkpoints: [], pads: [], lastCpZ: 4 };
   var escMount = $("escMount"), escRenderer = null, escScene = null, escCam = null, escBuggy = null, escWall = null, escLast = 0, escRaf = 0;
+  var escProbe = null, escFx = null, escWheels = [], escWheelsF = [], escArchMats = [], escPadMats = [], escRingMat = null, escWallLight = null, escTick = 0, escShake = 0, escFxLast = 0, escSun = null;
   var ESC_END = -292, ESC_GAPS = [[-95, -103], [-195, -203]];
+  /* Escape sound: a synthesized engine (saw + sub through a lowpass,
+     pitch and growl follow speed and boost), checkpoint chimes, boost
+     rush, landing thuds and win/lose stingers. No audio files. */
+  var escSfx = { ctx: null, master: null, eng: null, sub: null, engFilter: null, engGain: null,
+    init: function(){
+      if(this.ctx){ if(this.ctx.state === "suspended") this.ctx.resume(); return; }
+      try{
+        var C = window.AudioContext || window.webkitAudioContext; if(!C) return;
+        var ctx = this.ctx = new C();
+        this.master = ctx.createGain(); this.master.gain.value = 0.5; this.master.connect(ctx.destination);
+        var osc = ctx.createOscillator(); osc.type = "sawtooth"; osc.frequency.value = 52;
+        var sub = ctx.createOscillator(); sub.type = "square"; sub.frequency.value = 26;
+        var f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 300; f.Q.value = 2;
+        var g = ctx.createGain(); g.gain.value = 0;
+        osc.connect(f); sub.connect(f); f.connect(g); g.connect(this.master);
+        osc.start(); sub.start();
+        this.eng = osc; this.sub = sub; this.engFilter = f; this.engGain = g;
+      }catch(e){}
+    },
+    engine: function(speed, boost, running){
+      if(!this.ctx || !this.eng) return;
+      var t = this.ctx.currentTime;
+      this.engGain.gain.setTargetAtTime(running ? 0.045 + Math.min(0.05, speed * 0.0022) : 0, t, 0.12);
+      var fr = 52 + speed * 4.6 + (boost ? 26 : 0);
+      this.eng.frequency.setTargetAtTime(fr, t, 0.06);
+      this.sub.frequency.setTargetAtTime(fr * 0.5, t, 0.06);
+      this.engFilter.frequency.setTargetAtTime(280 + speed * 22 + (boost ? 320 : 0), t, 0.08);
+    },
+    tone: function(f0, f1, dur, type, vol, delay){
+      if(!this.ctx) return;
+      try{
+        var ctx = this.ctx, t = ctx.currentTime + (delay || 0);
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type || "sine";
+        o.frequency.setValueAtTime(f0, t);
+        o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(vol || 0.18, t + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        o.connect(g); g.connect(this.master);
+        o.start(t); o.stop(t + dur + 0.05);
+      }catch(e){}
+    },
+    thud: function(vol){
+      if(!this.ctx) return;
+      try{
+        var ctx = this.ctx, len = Math.floor(ctx.sampleRate * 0.16);
+        var buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+        for(var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+        var src = ctx.createBufferSource(); src.buffer = buf;
+        var f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 300;
+        var g = ctx.createGain(); g.gain.value = vol || 0.3;
+        src.connect(f); f.connect(g); g.connect(this.master);
+        src.start();
+      }catch(e){}
+    },
+    chime: function(){ this.tone(740, 1180, 0.16, "sine", 0.20); this.tone(1180, 1560, 0.22, "sine", 0.16, 0.07); },
+    boost: function(){ this.tone(180, 920, 0.35, "sawtooth", 0.07); this.thud(0.10); },
+    win: function(){ var s = this; [523, 659, 784, 1046].forEach(function(f, i){ s.tone(f, f, 0.22, "triangle", 0.2, i * 0.09); }); },
+    lose: function(){ this.tone(320, 70, 0.7, "sawtooth", 0.16); this.thud(0.3); }
+  };
+  /* Collapse-wall embers. Where WebGPU is available the particle
+     simulation runs as a compute shader on the GPU and the positions
+     stream back into the WebGL points cloud; everywhere else the
+     same simulation runs on the CPU. Either way the render is the
+     same three.js scene — WebGPU does the physics, WebGL draws. */
+  var escEmbers = null;
+  function escEmbersMake(){
+    var N = 240;
+    var geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(N * 3);
+    for(var i = 0; i < N; i++){ pos[i * 3] = (Math.random() - 0.5) * 13; pos[i * 3 + 1] = Math.random() * 8; pos[i * 3 + 2] = (Math.random() - 0.5) * 0.8; }
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    var mat = new THREE.PointsMaterial({ size: 0.3, map: kkGetSoftTex(), transparent: true, depthWrite: false,
+      color: 0xffa03c, blending: THREE.AdditiveBlending, opacity: 0.85 });
+    var points = new THREE.Points(geo, mat);
+    points.frustumCulled = false;
+    escScene.add(points);
+    escEmbers = { n: N, points: points, pos: pos, life: new Float32Array(N), mode: "cpu", gpu: null, busy: false };
+    for(var j = 0; j < N; j++) escEmbers.life[j] = Math.random() * 4;
+    try{
+      if(!navigator.gpu || !navigator.gpu.requestAdapter) return;
+      navigator.gpu.requestAdapter().then(function(adapter){
+        if(!adapter) return null;
+        return adapter.requestDevice();
+      }).then(function(device){
+        if(!device || !escEmbers) return;
+        var E = escEmbers, bytes = E.n * 16;
+        var init = new Float32Array(E.n * 4);
+        for(var i = 0; i < E.n; i++){ init[i * 4] = E.pos[i * 3]; init[i * 4 + 1] = E.pos[i * 3 + 1]; init[i * 4 + 2] = E.pos[i * 3 + 2]; init[i * 4 + 3] = E.life[i]; }
+        var storage = device.createBuffer({ size: bytes, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST | GPUBufferUsage.COPY_SRC });
+        device.queue.writeBuffer(storage, 0, init);
+        var staging = device.createBuffer({ size: bytes, usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+        var uniform = device.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+        var module = device.createShaderModule({ code:
+          "@group(0) @binding(0) var<storage, read_write> ps: array<vec4f>;" +
+          "@group(0) @binding(1) var<uniform> U: vec4f;" +
+          "fn hash(i: u32, s: f32) -> f32 { var x = f32(i) * 0.1031 + s * 17.17; x = fract(x); x = x + x * (x + 33.33); return fract(x * x); }" +
+          "@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) gid: vec3u){" +
+          " let i = gid.x; if(i >= u32(U.z)){ return; }" +
+          " var p = ps[i];" +
+          " let h1 = hash(i, 1.0); let h2 = hash(i, 2.0); let h3 = hash(i, 3.0);" +
+          " p.w = p.w - U.x;" +
+          " p.y = p.y + (0.7 + h2 * 1.5) * U.x;" +
+          " p.x = p.x + sin(U.y * (2.0 + h1 * 2.0) + f32(i)) * 0.35 * U.x;" +
+          " if(p.w <= 0.0 || p.y > 8.5){" +
+          "   p.x = (h1 - 0.5) * 13.0; p.y = h3 * 1.2; p.z = (h2 - 0.5) * 0.8;" +
+          "   p.w = 1.5 + fract(h3 * 7.0 + U.y * 0.131) * 3.0;" +
+          " }" +
+          " ps[i] = p; }" });
+        var pipeline = device.createComputePipeline({ layout: "auto", compute: { module: module, entryPoint: "main" } });
+        var bind = device.createBindGroup({ layout: pipeline.getBindGroupLayout(0), entries: [
+          { binding: 0, resource: { buffer: storage } },
+          { binding: 1, resource: { buffer: uniform } }
+        ]});
+        E.gpu = { device: device, storage: storage, staging: staging, uniform: uniform, pipeline: pipeline, bind: bind, bytes: bytes };
+        E.mode = "gpu";
+        device.lost.then(function(){ if(escEmbers) escEmbers.mode = "cpu"; });
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function escEmbersDispatch(dt){
+    var E = escEmbers, G = E.gpu;
+    if(!G || E.busy) return;
+    E.busy = true;
+    try{
+      var dev = G.device;
+      dev.queue.writeBuffer(G.uniform, 0, new Float32Array([Math.min(0.05, dt), performance.now() / 1000, E.n, 0]));
+      var enc = dev.createCommandEncoder();
+      var pass = enc.beginComputePass();
+      pass.setPipeline(G.pipeline);
+      pass.setBindGroup(0, G.bind);
+      pass.dispatchWorkgroups(Math.ceil(E.n / 64));
+      pass.end();
+      enc.copyBufferToBuffer(G.storage, 0, G.staging, 0, G.bytes);
+      dev.queue.submit([enc.finish()]);
+      G.staging.mapAsync(GPUMapMode.READ).then(function(){
+        var src = new Float32Array(G.staging.getMappedRange().slice(0));
+        for(var i = 0; i < E.n; i++){
+          E.pos[i * 3] = src[i * 4]; E.pos[i * 3 + 1] = src[i * 4 + 1]; E.pos[i * 3 + 2] = src[i * 4 + 2];
+        }
+        G.staging.unmap();
+        E.points.geometry.attributes.position.needsUpdate = true;
+        E.busy = false;
+      }).catch(function(){ E.busy = false; E.mode = "cpu"; });
+    }catch(e){ E.busy = false; E.mode = "cpu"; }
+  }
+  function escEmbersFrame(dt){
+    if(!escScene) return;
+    if(!escEmbers) escEmbersMake();
+    var E = escEmbers; if(!E) return;
+    E.points.position.set(esc.x * 0.4, 0.4, esc.z + 12.4);
+    if(E.mode === "gpu"){ escEmbersDispatch(dt); return; }
+    for(var i = 0; i < E.n; i++){
+      E.life[i] -= dt;
+      E.pos[i * 3 + 1] += (0.7 + (i % 7) * 0.22) * dt;
+      E.pos[i * 3] += Math.sin(performance.now() / 300 + i) * 0.35 * dt;
+      if(E.life[i] <= 0 || E.pos[i * 3 + 1] > 8.5){
+        E.pos[i * 3] = (Math.random() - 0.5) * 13;
+        E.pos[i * 3 + 1] = Math.random() * 1.2;
+        E.pos[i * 3 + 2] = (Math.random() - 0.5) * 0.8;
+        E.life[i] = 1.5 + Math.random() * 3;
+      }
+    }
+    E.points.geometry.attributes.position.needsUpdate = true;
+  }
   function escSetMsg(t){ var el = $("escMsg"); if(el) el.textContent = t; }
   function escInGap(z){
     for(var i = 0; i < ESC_GAPS.length; i++){
@@ -5505,21 +6148,43 @@
   function escInit(){
     if(escRenderer) return true;
     try{
-      escRenderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+      escRenderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
     }catch(e){ escSetMsg("WebGL isn't available in this browser."); return false; }
     escRenderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    escRenderer.shadowMap.enabled = true;
+    escRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    escRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    escRenderer.toneMappingExposure = 1.1;
+    escRenderer.outputColorSpace = THREE.SRGBColorSpace;
     escMount.appendChild(escRenderer.domElement);
     escScene = new THREE.Scene();
     escScene.background = new THREE.Color(0x2b1846);
     escScene.fog = new THREE.Fog(0x2b1846, 30, 95);
     escCam = new THREE.PerspectiveCamera(64, 1.6, 0.1, 200);
     lights(escScene, 0xcfb0ff, 0x1c2440, 0xffd9a0);
+    // Dusk image-based lighting + a low shadow-casting sun, and the
+    // probe reflection probe that lives on the extraction pad.
+    rtxEnv(escRenderer, escScene, [[0, "#1c1038"], [0.4, "#4a2560"], [0.55, "#b34a5e"], [0.62, "#3a2030"], [1, "#171126"]], 130, 96, "rgba(255,170,110,1)");
+    escSun = new THREE.DirectionalLight(0xffb37a, 1.5);
+    escSun.position.set(-12, 20, 10);
+    escSun.castShadow = true;
+    escSun.shadow.mapSize.set(1024, 1024);
+    escSun.shadow.camera.left = -16; escSun.shadow.camera.right = 16;
+    escSun.shadow.camera.top = 20; escSun.shadow.camera.bottom = -20;
+    escSun.shadow.camera.near = 2; escSun.shadow.camera.far = 70;
+    escSun.shadow.bias = -0.0004; escSun.shadow.normalBias = 0.03;
+    escScene.add(escSun); escScene.add(escSun.target);
+    escSun.target.position.set(0, 0, -20);
+    escProbe = rtxProbe(128);
     // Road: three level slabs with gaps between (ramps sit at each gap)
-    var roadMat = std(0x3a3f55, 0.9), edgeMat = new THREE.MeshBasicMaterial({ color: 0xffd94d });
+    var asph = rtxSurface("asphalt", 256, 1, 14);
+    var roadMat = new THREE.MeshStandardMaterial({ map: asph.map, bumpMap: asph.bump, bumpScale: 0.7, roughness: 0.94 });
+    var edgeMat = new THREE.MeshBasicMaterial({ color: 0xffd94d });
     [[6, -95], [-103, -195], [-203, -300]].forEach(function(seg){
       var len = seg[0] - seg[1];
       var m = new THREE.Mesh(new THREE.BoxGeometry(10, 0.6, len), roadMat);
       m.position.set(0, -0.3, seg[1] + len / 2);
+      m.receiveShadow = true;
       escScene.add(m);
       [-5.15, 5.15].forEach(function(x){
         var e = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.25, len), edgeMat);
@@ -5528,10 +6193,22 @@
       });
     });
     // The void floor far below + structure silhouettes along the course
-    var floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 420), std(0x171126, 1));
+    var rockT = rtxSurface("rock", 256, 18, 24);
+    var floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 420),
+      new THREE.MeshStandardMaterial({ map: rockT.map, bumpMap: rockT.bump, bumpScale: 1.2, color: 0x5a4862, roughness: 1 }));
     floor.rotation.x = -Math.PI / 2; floor.position.set(0, -14, -150);
     escScene.add(floor);
-    var silMat = std(0x241233, 1);
+    // Collapsing-structure towers: grimy concrete with lit windows
+    // still glowing as the place comes down around the course.
+    var concT = rtxSurface("concrete", 256, 1, 2);
+    var winTex = kkCanvasTex(128, 256, function(g){
+      g.fillStyle = "#000"; g.fillRect(0, 0, 128, 256);
+      for(var wy = 8; wy < 244; wy += 16) for(var wx = 8; wx < 118; wx += 15){
+        if(Math.random() < 0.34){ g.fillStyle = Math.random() < 0.8 ? "#ffb45e" : "#bfe0ff"; g.fillRect(wx, wy, 8, 10); }
+      }
+    }, 1, 2);
+    var silMat = new THREE.MeshStandardMaterial({ map: concT.map, bumpMap: concT.bump, bumpScale: 0.5,
+      color: 0x4a3a58, roughness: 0.95, emissive: 0xffffff, emissiveMap: winTex, emissiveIntensity: 0.85 });
     for(var i = 0; i < 26; i++){
       var h = 6 + ((i * 37) % 11);
       [-1, 1].forEach(function(side){
@@ -5541,66 +6218,126 @@
       });
     }
     // Ramps at the gaps
-    var rampMat = std(0xe8762a, 0.7);
+    var hzT = rtxSurface("hazard", 256, 2, 1);
+    var rampMat = new THREE.MeshStandardMaterial({ map: hzT.map, bumpMap: hzT.bump, bumpScale: 0.4, roughness: 0.6, metalness: 0.25 });
     ESC_GAPS.forEach(function(g){
       var r = new THREE.Mesh(new THREE.BoxGeometry(9, 0.5, 6), rampMat);
       r.position.set(0, 0.55, g[0] + 2.6);
       r.rotation.x = 0.30;
       escScene.add(r);
     });
-    // Checkpoint arches (+6 s each)
-    var archMat = std(0xe8a91c, 0.5);
+    // Checkpoint arches (+6 s each): brushed-metal posts, and a top
+    // beam whose lamp strip burns orange until you pass, then green.
+    var metT = rtxSurface("metal", 256, 1, 3);
+    var archMat = new THREE.MeshStandardMaterial({ map: metT.map, bumpMap: metT.bump, bumpScale: 0.3, roughness: 0.45, metalness: 0.7 });
     [-50, -145, -245].forEach(function(cz){
       var grp = new THREE.Group();
       [-5, 5].forEach(function(x){
         var post = new THREE.Mesh(new THREE.BoxGeometry(0.5, 5.4, 0.5), archMat);
         post.position.set(x, 2.7, 0);
+        post.castShadow = true;
         grp.add(post);
       });
-      var top = new THREE.Mesh(new THREE.BoxGeometry(10.5, 0.5, 0.5), archMat);
+      var topMat = new THREE.MeshStandardMaterial({ map: metT.map, roughness: 0.4, metalness: 0.7,
+        emissive: 0xff8c1a, emissiveIntensity: 0.9 });
+      var top = new THREE.Mesh(new THREE.BoxGeometry(10.5, 0.5, 0.5), topMat);
       top.position.set(0, 5.4, 0);
+      top.castShadow = true;
       grp.add(top);
       grp.position.z = cz;
       escScene.add(grp);
-      esc.checkpoints.push({ z: cz, hit: false });
+      escArchMats.push(topMat);
+      esc.checkpoints.push({ z: cz, hit: false, mat: topMat });
     });
-    // Boost pads
-    var padMat = new THREE.MeshBasicMaterial({ color: 0xff7f24 });
+    // Boost pads: glowing chevrons that pulse while they wait.
+    var chevTex = kkCanvasTex(64, 64, function(g){
+      g.fillStyle = "#1a0d02"; g.fillRect(0, 0, 64, 64);
+      g.strokeStyle = "#ffb03a"; g.lineWidth = 9; g.lineCap = "round";
+      [16, 36].forEach(function(y){
+        g.beginPath(); g.moveTo(12, y + 12); g.lineTo(32, y); g.lineTo(52, y + 12); g.stroke();
+      });
+    }, 1, 1);
     [[-30, -1.8], [-120, 1.8], [-230, 0]].forEach(function(p){
-      var m = new THREE.Mesh(new THREE.PlaneGeometry(3, 4), padMat);
+      var pm2 = new THREE.MeshStandardMaterial({ color: 0x140a02, roughness: 0.35, metalness: 0.3,
+        emissive: 0xffffff, emissiveMap: chevTex, emissiveIntensity: 1.3 });
+      var m = new THREE.Mesh(new THREE.PlaneGeometry(3, 4), pm2);
       m.rotation.x = -Math.PI / 2;
       m.position.set(p[1], 0.02, p[0]);
       escScene.add(m);
+      escPadMats.push(pm2);
       esc.pads.push({ z: p[0], x: p[1], hit: false });
     });
-    // Extraction pad
-    var pad = new THREE.Mesh(new THREE.CircleGeometry(4.4, 28),
-      new THREE.MeshBasicMaterial({ color: 0x39d353, transparent: true, opacity: 0.75 }));
+    // Extraction pad: a polished disc with probe reflections of
+    // the dusk sky and the towers, ringed by a pulsing green light.
+    var padMat2 = new THREE.MeshStandardMaterial({ color: 0x1d5c2e, roughness: 0.15, metalness: 0.85,
+      emissive: 0x1d7a33, emissiveIntensity: 0.35, transparent: true, opacity: 0.96 });
+    if(escProbe) rtxReflect(padMat2, escProbe, 0.08, 0.9, 1.4);
+    var pad = new THREE.Mesh(new THREE.CircleGeometry(4.4, 28), padMat2);
     pad.rotation.x = -Math.PI / 2;
     pad.position.set(0, 0.03, -295);
     escScene.add(pad);
-    // Collapse wall behind
+    escRingMat = new THREE.MeshStandardMaterial({ color: 0x39d353, emissive: 0x2bd45a, emissiveIntensity: 1.4, roughness: 0.4 });
+    var ring = new THREE.Mesh(new THREE.RingGeometry(4.5, 5.1, 36), escRingMat);
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.set(0, 0.04, -295);
+    escScene.add(ring);
+    // Collapse wall behind: a slab of broken rock lit from inside by
+    // firelight, shedding dust and debris as it comes.
+    var wallT = rtxSurface("rock", 256, 3, 2);
     escWall = new THREE.Mesh(new THREE.BoxGeometry(15, 9, 0.8),
-      new THREE.MeshBasicMaterial({ color: 0xff3b30, transparent: true, opacity: 0.4 }));
+      new THREE.MeshStandardMaterial({ map: wallT.map, bumpMap: wallT.bump, bumpScale: 1.1,
+        color: 0xd86a5a, roughness: 1, transparent: true, opacity: 0.88,
+        emissive: 0xff2d16, emissiveIntensity: 0.22 }));
     escWall.position.set(0, 4, 13);
     escScene.add(escWall);
-    // The Tater Buggy with SpudMan at the wheel
+    escWallLight = new THREE.PointLight(0xff5a30, 60, 34, 1.7);
+    escWallLight.position.set(0, 4, 13);
+    escScene.add(escWallLight);
+    // One particle pool for wheel dust, boost flame and wall debris.
+    escFx = kkMakeParticles(420, 0.42, false, 0.9);
+    escFx.grav = 2.4;
+    escScene.add(escFx.points);
+    // The Tater Buggy with SpudMan at the wheel: clearcoat burnt-
+    // orange paint over the dusk env light, chrome cage, treaded
+    // tyres that spin with the road and steer with the front axle,
+    // and real headlights cutting the gloom ahead.
     escBuggy = new THREE.Group();
-    var bodyMat = std(0xb5651d, 0.55);
-    var body = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.55, 2.7), bodyMat);
+    var bodyMat = new THREE.MeshPhysicalMaterial({ color: 0xc2611c, roughness: 0.34, metalness: 0.25,
+      clearcoat: 1.0, clearcoatRoughness: 0.22, envMapIntensity: 1.1 });
+    var body = new THREE.Mesh(kkRBox(1.9, 0.55, 2.7, 0.09), bodyMat);
     body.position.y = 0.62;
+    body.castShadow = true;
     escBuggy.add(body);
-    var nose = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.4, 0.8), bodyMat);
+    var nose = new THREE.Mesh(kkRBox(1.6, 0.4, 0.8, 0.07), bodyMat);
     nose.position.set(0, 0.5, -1.65);
+    nose.castShadow = true;
     escBuggy.add(nose);
-    var wheelMat = std(0x1c1c1c, 0.9);
-    [[-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]].forEach(function(w){
-      var wh = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.3, 14), wheelMat);
+    var treadT = rtxSurface("tread", 128, 3, 1);
+    var tyreM = new THREE.MeshStandardMaterial({ map: treadT.map, bumpMap: treadT.bump, bumpScale: 0.8, roughness: 0.95 });
+    var hubM = new THREE.MeshStandardMaterial({ color: 0xc8ccd2, roughness: 0.25, metalness: 1.0 });
+    [[-1.0, -1.0, true], [1.0, -1.0, true], [-1.0, 1.0, false], [1.0, 1.0, false]].forEach(function(w){
+      var pivot = new THREE.Group();
+      pivot.position.set(w[0], 0.42, w[1]);
+      var wh = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.3, 18), [tyreM, hubM, hubM]);
       wh.rotation.z = Math.PI / 2;
-      wh.position.set(w[0], 0.42, w[1]);
-      escBuggy.add(wh);
+      wh.castShadow = true;
+      pivot.add(wh);
+      escBuggy.add(pivot);
+      escWheels.push({ pivot: pivot, tyre: wh });
+      if(w[2]) escWheelsF.push(pivot);
     });
-    var cageMat = std(0x333333, 0.5);
+    var lampM = new THREE.MeshStandardMaterial({ color: 0xfff2c4, emissive: 0xffdf8a, emissiveIntensity: 2.4, roughness: 0.3 });
+    [-0.55, 0.55].forEach(function(lx){
+      var lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.13, 0.08, 12), lampM);
+      lamp.rotation.x = Math.PI / 2;
+      lamp.position.set(lx, 0.58, -2.06);
+      escBuggy.add(lamp);
+    });
+    var beam = new THREE.SpotLight(0xffe2a8, 90, 42, 0.46, 0.65, 1.2);
+    beam.position.set(0, 0.7, -1.9);
+    beam.target.position.set(0, 0, -18);
+    escBuggy.add(beam); escBuggy.add(beam.target);
+    var cageMat = new THREE.MeshStandardMaterial({ color: 0xd8dde3, roughness: 0.22, metalness: 1.0 });
     [[-0.85, -0.4], [0.85, -0.4], [-0.85, 0.7], [0.85, 0.7]].forEach(function(c){
       var post = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.85, 0.09), cageMat);
       post.position.set(c[0], 1.3, c[1]);
@@ -5632,12 +6369,78 @@
   }
   function escFrame(){
     if(!esc.ok) return;
+    var now = performance.now();
+    var dt = Math.min(0.05, escFxLast ? (now - escFxLast) / 1000 : 0.016);
+    escFxLast = now;
+    escTick++;
+    var steer = (esc.keys.right ? 1 : 0) - (esc.keys.left ? 1 : 0);
     escBuggy.position.set(esc.x, esc.y, esc.z);
-    escBuggy.rotation.y = 0;
+    // Body physics: yaw and roll into a steer, pitch off the ramps.
+    escBuggy.rotation.y = -steer * 0.10 * Math.min(1, esc.speed / 10 + 0.2);
+    escBuggy.rotation.z = -steer * 0.055 * Math.min(1, esc.speed / 16);
+    escBuggy.rotation.x = esc.air ? Math.max(-0.34, Math.min(0.3, -esc.vy * 0.016)) : (esc.keys.gas && esc.speed > 2 ? -0.02 : 0);
+    // Wheels spin from distance travelled; the front pair steers.
+    var spin = -esc.z / 0.42;
+    for(var wi = 0; wi < escWheels.length; wi++) escWheels[wi].tyre.rotation.x = spin;
+    for(var fi = 0; fi < escWheelsF.length; fi++) escWheelsF[fi].rotation.y = steer * 0.38;
+    // The shadow-casting sun follows the buggy down the course.
+    if(escSun){
+      escSun.position.set(esc.x - 12, 20, esc.z + 10);
+      escSun.target.position.set(esc.x, 0, esc.z - 12);
+      escSun.target.updateMatrixWorld();
+    }
+    // Collapse wall: firelight flicker, hotter as the clock dies.
     escWall.position.z = esc.z + 13;
-    escWall.material.opacity = esc.timeLeft < 10 && esc.running ? 0.45 + 0.25 * Math.sin(performance.now() / 120) : 0.35;
+    var danger = esc.running && esc.timeLeft < 10;
+    escWall.material.emissiveIntensity = 0.2 + 0.08 * Math.sin(now / 90) + (danger ? 0.2 + 0.12 * Math.sin(now / 55) : 0);
+    if(escWallLight){
+      escWallLight.position.set(esc.x * 0.4, 4, esc.z + 12.2);
+      escWallLight.intensity = 52 + Math.sin(now / 47) * 10 + Math.random() * 7;
+    }
+    var pulse = 1.15 + Math.sin(now / 160) * 0.45;
+    for(var pm3 = 0; pm3 < escPadMats.length; pm3++) escPadMats[pm3].emissiveIntensity = pulse;
+    if(escRingMat) escRingMat.emissiveIntensity = 1.2 + Math.sin(now / 200) * 0.6;
+    // Particles: dust off the tyres, flame on boost, debris off the wall.
+    if(escFx){
+      if(esc.running && !esc.over){
+        if(esc.speed > 5 && !esc.air && Math.random() < 0.75){
+          kkSpawn(escFx, esc.x + (Math.random() < 0.5 ? -0.9 : 0.9), 0.25, esc.z + 1.3,
+            (Math.random() - 0.5) * 1.4, 1 + Math.random() * 1.6, 2.2 + Math.random() * 1.6,
+            0.55 + Math.random() * 0.4, 0.62, 0.52, 0.4);
+        }
+        if(esc.boostT > 0){
+          for(var bf = 0; bf < 2; bf++){
+            kkSpawn(escFx, esc.x + (Math.random() - 0.5) * 0.5, 0.55, esc.z + 2.1,
+              (Math.random() - 0.5) * 0.8, 0.4 + Math.random(), 5 + Math.random() * 3,
+              0.3 + Math.random() * 0.2, 1.0, 0.5 + Math.random() * 0.25, 0.12);
+          }
+        }
+        if(Math.random() < 0.5){
+          kkSpawn(escFx, esc.x + (Math.random() - 0.5) * 11, 6 + Math.random() * 3, esc.z + 12.4,
+            (Math.random() - 0.5) * 0.7, -0.5 - Math.random(), (Math.random() - 0.5) * 0.7,
+            1.1 + Math.random() * 0.6, 0.75, 0.42, 0.3);
+        }
+      }
+      kkUpdateParticles(escFx, dt);
+    }
+    escEmbersFrame(dt);
+    // Probe reflections on the extraction pad, refreshed as
+    // the buggy closes on it.
+    if(escProbe && esc.z < -235 && escTick % 5 === 0){
+      try{ escProbe.update(escRenderer, escScene, 0, 1.3, -295); }catch(e){}
+    }
+    // Camera: the FOV stretches with speed; hard landings shake it.
+    var targetFov = 64 + Math.min(10, esc.speed * 0.32) + (esc.boostT > 0 ? 4 : 0);
+    if(Math.abs(escCam.fov - targetFov) > 0.1){ escCam.fov += (targetFov - escCam.fov) * 0.12; escCam.updateProjectionMatrix(); }
+    var shX = 0, shY = 0;
+    if(escShake > 0.003){
+      shX = (Math.random() - 0.5) * escShake;
+      shY = (Math.random() - 0.5) * escShake * 0.7;
+      escShake *= Math.pow(0.001, dt);
+      if(escShake < 0.003) escShake = 0;
+    }
     var tx = esc.x * 0.55;
-    escCam.position.set(tx, 5.4 + esc.y * 0.4, esc.z + 10.5);
+    escCam.position.set(tx + shX, 5.4 + esc.y * 0.4 + shY, esc.z + 10.5);
     escCam.lookAt(esc.x, 1.1 + esc.y * 0.5, esc.z - 9);
     escRenderer.render(escScene, escCam);
   }
@@ -5646,6 +6449,7 @@
     if(esc.timeLeft <= 0){
       esc.timeLeft = 0;
       esc.over = true;
+      escSfx.lose();
       escSetMsg("Time! The collapse wall got the buggy — " + Math.round(-esc.z) + " m in. Try again?");
       $("escStart").textContent = "Try Again";
     }
@@ -5686,6 +6490,17 @@
           escSetMsg("Down the gap! Fished back to the checkpoint — 3 s gone.");
         }
       }else if(esc.y <= 0){
+        // Landing: the harder the fall, the bigger the shake, thud
+        // and dust burst when the tyres bite again.
+        if(esc.vy < -6){
+          escShake = Math.min(0.55, -esc.vy * 0.035);
+          escSfx.thud(Math.min(0.4, -esc.vy * 0.03));
+          if(escFx) for(var ld2 = 0; ld2 < 10; ld2++){
+            kkSpawn(escFx, esc.x + (Math.random() - 0.5) * 1.8, 0.25, esc.z + (Math.random() - 0.5) * 2.4,
+              (Math.random() - 0.5) * 3.4, 1 + Math.random() * 2, (Math.random() - 0.5) * 3.4,
+              0.5 + Math.random() * 0.4, 0.62, 0.52, 0.4);
+          }
+        }
         esc.y = 0; esc.vy = 0; esc.air = false;
       }
     }else{
@@ -5697,6 +6512,13 @@
         c.hit = true;
         esc.lastCpZ = c.z + 3;
         esc.timeLeft += 6;
+        if(c.mat){ c.mat.emissive.setHex(0x2bd45a); c.mat.emissiveIntensity = 1.5; }
+        escSfx.chime();
+        if(escFx) for(var cp2 = 0; cp2 < 12; cp2++){
+          kkSpawn(escFx, esc.x + (Math.random() - 0.5) * 2, 1 + Math.random() * 2.4, esc.z,
+            (Math.random() - 0.5) * 3, 1.5 + Math.random() * 2.4, (Math.random() - 0.5) * 3,
+            0.6 + Math.random() * 0.3, 0.25, 0.95, 0.4);
+        }
         escSetMsg("Checkpoint! +6 s — the collapse is still coming.");
       }
     });
@@ -5706,6 +6528,7 @@
       if(Math.abs(esc.z - p.z) < 2.2 && Math.abs(esc.x - p.x) < 1.7 && esc.y <= 0.1){
         p.hit = true;
         esc.boostT = 1.6;
+        escSfx.boost();
         escSetMsg("Boost pad! Surge!");
         setTimeout(function(){ p.hit = false; }, 4000);
       }
@@ -5714,9 +6537,11 @@
     $("escLevel").textContent = lvl + " / 3";
     if(esc.z <= ESC_END && !esc.over){
       esc.over = true; esc.won = true;
+      escSfx.win();
       escSetMsg("🏆 EXTRACTION! SpudMan is out with " + esc.timeLeft.toFixed(1) + " s to spare.");
       $("escStart").textContent = "Run It Again";
     }
+    escSfx.engine(esc.speed, esc.boostT > 0, !esc.over);
   }
   function escLoop(ts){
     if(!esc.running) return;
@@ -5730,11 +6555,15 @@
   }
   function escStart(){
     if(!escInit()) return;
+    escSfx.init();
     escResize();
     esc.x = 0; esc.y = 0; esc.z = 4; esc.vy = 0; esc.speed = 0;
     esc.timeLeft = 45; esc.boostT = 0; esc.air = false;
     esc.over = false; esc.won = false; esc.lastCpZ = 4;
-    esc.checkpoints.forEach(function(c){ c.hit = false; });
+    esc.checkpoints.forEach(function(c){
+      c.hit = false;
+      if(c.mat){ c.mat.emissive.setHex(0xff8c1a); c.mat.emissiveIntensity = 0.9; }
+    });
     esc.pads.forEach(function(p){ p.hit = false; });
     $("escTime").textContent = "45.0 s";
     $("escLevel").textContent = "1 / 3";
@@ -5789,6 +6618,7 @@
              signT: 0, signText: "", lastProg: null, progChkT: 0, lakTarget: null,
              shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
   var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
+  var kkProbe = null, kkProbePos = null, kkTick = 0;
   var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null, kkGround = null;
   /* Cam Spud — the camera guy on the cloud (this game's Lakitu):
      runs the start lights, holds the lap / wrong-way signs, waves
@@ -6285,7 +7115,15 @@
       var envTex = new THREE.CanvasTexture(envC);
       envTex.mapping = THREE.EquirectangularReflectionMapping;
       envTex.colorSpace = THREE.SRGBColorSpace;
-      kkScene.environment = envTex;
+      // PMREM-convolved: reflections blur correctly with roughness,
+      // mirror-sharp on the gold coins, satin on the kart paint.
+      try{
+        var pmrem = new THREE.PMREMGenerator(kkRenderer);
+        kkScene.environment = pmrem.fromEquirectangular(envTex).texture;
+        pmrem.dispose();
+      }catch(e2){ kkScene.environment = envTex; }
+      // The probe reflection probe for the water surfaces.
+      kkProbe = rtxProbe(128);
     }catch(e){}
     kkCam = new THREE.PerspectiveCamera(64, 1.6, 0.1, 1600);
     // Sky dome: gradient shader + sun glow sprite
@@ -6599,6 +7437,7 @@
     var def = kkTrack();
     if(kkCircuit && kkScene) kkScene.remove(kkCircuit);
     kk.samples = []; kk.boxes = []; kk.coins = []; kk.ramps = [];
+    kkProbePos = null; // water builders set their own reflection point
     kkCircuit = new THREE.Group();
     var ctrl = def.ctrl
       .map(function(p){ return new THREE.Vector3(p[0], 0, p[1]); });
@@ -6631,6 +7470,7 @@
           for(var d = 0; d < 256; d += 32) g.fillRect(125, d, 6, 18);
         }, 1, 1), roughness: 0.82, envMapIntensity: 0.55 });
     if(def.theme === "rainbow") asphalt.emissiveMap = asphalt.map;
+    else { asphalt.bumpMap = asphalt.map; asphalt.bumpScale = 0.5; } // aggregate + tyre wear catch the light
     asphalt.map.repeat.set(1, 1);
     var road = kkRibbon(kk.samples, -KK_ROAD_HALF, KK_ROAD_HALF, asphalt, 7);
     road.material.map = asphalt.map;
@@ -6935,6 +7775,7 @@
         // The original is a sand island in open sea: water in every
         // direction, and in the bay the loop wraps around.
         var seaM = new THREE.MeshStandardMaterial({ color: 0x2e7fc8, roughness: 0.22, metalness: 0.1 });
+        if(kkProbe){ rtxReflect(seaM, kkProbe, 0.07, 0.88, 1.35); kkProbePos = { x: 2, y: 1.6, z: 2 }; } // probe sea
         var seaRing = new THREE.Mesh(new THREE.RingGeometry(97, 520, 48), seaM);
         seaRing.rotation.x = -Math.PI / 2; seaRing.position.y = -0.03; kkCircuit.add(seaRing);
         var bay = new THREE.Mesh(new THREE.CircleGeometry(38, 26), seaM);
@@ -7008,7 +7849,9 @@
         keepCone.position.set(cp.x, 18.3, cp.z); keepCone.castShadow = true; kkCircuit.add(keepCone);
         // The lake below the castle, and a stand on the far straight.
         var lp = at(0.55, -26);
-        var lake = new THREE.Mesh(new THREE.CircleGeometry(15, 24), new THREE.MeshStandardMaterial({ color: 0x3a7fc8, roughness: 0.2, metalness: 0.1 }));
+        var lakeM = new THREE.MeshStandardMaterial({ color: 0x3a7fc8, roughness: 0.2, metalness: 0.1 });
+        if(kkProbe){ rtxReflect(lakeM, kkProbe, 0.06, 0.88, 1.35); kkProbePos = { x: lp.x, y: 1.6, z: lp.z }; } // probe lake
+        var lake = new THREE.Mesh(new THREE.CircleGeometry(15, 24), lakeM);
         lake.rotation.x = -Math.PI / 2; lake.position.set(lp.x, 0.0, lp.z); kkCircuit.add(lake);
         stand(0.55, 14, 15);
         stand(0.86, -13, 13);
@@ -7850,6 +8693,11 @@
     if(kk.bigT > 0){ kk.bigT -= dt; if(kk.bigT <= 0) kkBig(""); }
     kk.mapT -= dt;
     if(kk.mapT <= 0){ kk.mapT = 0.12; kkDrawMap(); }
+    // Probe reflections: refresh the water probe a few times
+    // a second from the surface's point of view.
+    if(kkProbe && kkProbePos && (kkTick++ % 4 === 0)){
+      try{ kkProbe.update(kkRenderer, kkScene, kkProbePos.x, kkProbePos.y, kkProbePos.z); }catch(e){}
+    }
     if(kkComposer) kkComposer.render(); else kkRenderer.render(kkScene, kkCam);
   }
   function kkDrawMap(){
