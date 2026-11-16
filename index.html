@@ -890,7 +890,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · GRAND PRIX · BASEMENT SERVER</span>
                   <h4>Spud Kart 3D — WebGL</h4>
-                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus faithful recreations of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64, layouts and scenery matched to the originals (Rainbow Road races through deep space) with only the racers and names swapped for spuds — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics. Mario Kart Tour controls (auto-accelerate, Smart Steering, visible thumb pads — ◀ ▶ steer, DRIFT and ITEM buttons — or drag to steer), widened tracks, full-screen landscape play, and Xbox controller support.</p>
+                  <p>The WebGL Kart: a real 3D Grand Prix with Mario Kart 64 handling — hop into a powerslide, charge the mini-turbo from blue sparks to orange, and boost out. <b>7 Grand Prix tracks</b> — Spud Circuit plus faithful recreations of Luigi Raceway, Moo Moo Farm, Koopa Troopa Beach, Choco Mountain, Royal Raceway and Rainbow Road from Mario Kart 64, layouts and scenery matched to the originals (Rainbow Road races through deep space) with only the racers and names swapped for spuds — potato and veggie racers, carrot rockets, butter slicks, Spud Coins, ramps and tricks, three laps against three rivals — plus basement-server races on the Oval (an 8th layout) with real server-side bump physics. Mario Kart Tour controls (auto-accelerate, Smart Steering, visible thumb pads — ◀ ▶ steer, DRIFT and ITEM buttons — or drag to steer), widened tracks, full-screen landscape play, and Xbox controller support. And now the race-day crew is complete: <b>Cam Spud</b>, the camera guy on his cloud, runs the start lights, holds the lap and wrong-way boards, waves the finish flag and fishes you back onto the road when you leave it — and <b>every track hides two secret routes</b>, full-speed corner cuts marked only by a sign and a line of coins.</p>
                   <button class="btn primary" type="button" data-goto="kart3dPanel">Play Spud Kart 3D</button>
                 </div>
               </div>
@@ -1007,7 +1007,7 @@
               </div>
 
               <div class="game-panel" id="kart3dPanel">
-                <h4>Spud Kart 3D — WebGL Grand Prix · 7 Tracks (Mario Kart 64 handling, spuds at the wheel)</h4>
+                <h4>Spud Kart 3D — WebGL Grand Prix · 7 Tracks (Mario Kart 64 handling, Cam Spud the camera guy, two secret routes on every track)</h4>
                 <div class="gbody">
                   <div class="scoreline"><span>Track <b id="kkTrackName">Spud Circuit</b></span><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <div id="kkStage" style="position:relative;">
@@ -1044,7 +1044,7 @@
                     <button class="btn orange" id="kkStart" type="button">Start Race</button>
                     <button class="btn" id="kkFullBtn" type="button">Full Screen</button>
                   </div>
-                  <p class="game-sub" style="margin-top:4px;"><b>Mario Kart Tour controls, now with visible thumb pads:</b> your kart <b>accelerates by itself</b>, and <b>Smart Steering</b> gently keeps you on the road — the tracks are wider now, too. <b>Left thumb:</b> hold the <b>◀ ▶ pads</b> (or just <b>drag on the track</b>) to steer. <b>Right thumb:</b> hold <b>DRIFT</b> with a steer to hop into a drift, then let go for the mini-turbo; tap <b>ITEM</b> to use what you're carrying — or tap mid-air off a ramp for a trick. At the lights, <b>hold any pad from the last light</b> for a rocket start. <b>Full Screen</b> fills the display and turns the race landscape. <span id="kkPadStatus">An Xbox or any standard controller works too — pair it and press any button: left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.</span></p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Mario Kart Tour controls, now with visible thumb pads:</b> your kart <b>accelerates by itself</b>, and <b>Smart Steering</b> gently keeps you on the road — the tracks are wider now, too. <b>Cam Spud</b> — the camera guy on the cloud — runs the start lights, holds the lap and WRONG WAY boards, and <b>fishes you back</b> when you leave the road for good (or fall off Rainbow Spud Road entirely). Every track hides <b>secret routes</b>: full-speed cuts marked only by a wooden sign and a line of coins, drawn as dashed gold lines on the minimap. <b>Left thumb:</b> hold the <b>◀ ▶ pads</b> (or just <b>drag on the track</b>) to steer. <b>Right thumb:</b> hold <b>DRIFT</b> with a steer to hop into a drift, then let go for the mini-turbo; tap <b>ITEM</b> to use what you're carrying — or tap mid-air off a ramp for a trick. At the lights, <b>hold any pad from the last light</b> for a rocket start. <b>Full Screen</b> fills the display and turns the race landscape. <span id="kkPadStatus">An Xbox or any standard controller works too — pair it and press any button: left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.</span></p>
                   <div class="chal-row">
                     <select id="kkTrackSel" aria-label="Choose your track">
                       <option value="0">1 · Spud Circuit — the original house circuit</option>
@@ -1064,7 +1064,7 @@
                       <option value="heavy">King Russet · heavy — slow off the line, fastest top end</option>
                     </select>
                   </div>
-                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint, textured asphalt with tyre-worn racing lines and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, and the powerslide is the whole game. The controls are Mario Kart Tour's: the kart <b>accelerates by itself</b> on <b>widened tracks</b> with <b>Smart Steering</b> lending a hand, you steer with the <b>on-screen ◀ ▶ pads</b> or a <b>drag</b>, <b>hold DRIFT and steer</b> to hop and slide — keep the slide going and the rear sparks turn <b>blue, then orange</b> — and <b>let go</b> at orange for the big <b>mini-turbo</b>. <b>Touch and hold from the last light</b> for a rocket start; hold from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — <b>tap mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts, on whichever of the <b>7 tracks</b> you pick above — and the MK64 ones are faithful to the originals, not just inspired: Luigi Raceway's stadium dogbone with its hill tunnel and hot-air balloon, Moo Moo Farm's fenced pastures, barn, silos, windmill and mole mounds, Koopa Troopa Beach as a sand island in open sea with rock spires in the surf, Choco Mountain's rock-walled dirt road and boulder-strewn brown peaks, Royal Raceway sweeping past the castle and its lake — and Rainbow Road where it belongs, <b>out in deep space</b>: no ground, no sky, just stars, a ringed planet, asteroids, giant neon signs and a road paved in rainbow tiles. Only the racers and the names are spuds. Keyboard: ← → / A D steer, Shift / L drift-hop, Space item, ↓ / S brake. Controller: left stick, RT, LT, LB/RB, X.</p>
+                  <p class="game-sub">Real WebGL (three.js) with dynamic shadows, clearcoat kart paint, textured asphalt with tyre-worn racing lines and full trackside scenery — and the handling is Mario Kart 64's: the engine pulls hard off the line and tapers as you near top speed, and the powerslide is the whole game. The controls are Mario Kart Tour's: the kart <b>accelerates by itself</b> on <b>widened tracks</b> with <b>Smart Steering</b> lending a hand, you steer with the <b>on-screen ◀ ▶ pads</b> or a <b>drag</b>, <b>hold DRIFT and steer</b> to hop and slide — keep the slide going and the rear sparks turn <b>blue, then orange</b> — and <b>let go</b> at orange for the big <b>mini-turbo</b>. <b>Touch and hold from the last light</b> for a rocket start; hold from the first light and you'll burn out and spin. <b>? crates</b> hand out a Golden Butter Boost, a homing Carrot Rocket, a Butter Slick to drop behind you (spin-out for whoever finds it — grass is worse), or a Sour Cream Star that makes you invincible and lets you spin rivals by bumping them. Gold <b>Spud Coins</b> each nudge your top speed up. Orange <b>ramps</b> launch you — <b>tap mid-air</b> for a trick and a landing boost. Bumping a rival shoves you both apart and halves your speed. Three laps, four karts, on whichever of the <b>7 tracks</b> you pick above — and the MK64 ones are faithful to the originals, not just inspired: Luigi Raceway's stadium dogbone with its hill tunnel and hot-air balloon, Moo Moo Farm's fenced pastures, barn, silos, windmill and mole mounds, Koopa Troopa Beach as a sand island in open sea with rock spires in the surf, Choco Mountain's rock-walled dirt road and boulder-strewn brown peaks, Royal Raceway sweeping past the castle and its lake — and Rainbow Road where it belongs, <b>out in deep space</b>: no ground, no sky, just stars, a ringed planet, asteroids, giant neon signs and a road paved in rainbow tiles. Only the racers and the names are spuds. And the full race-day crew is here now: <b>Cam Spud</b>, the camera guy, hovers over the grid on his cloud holding the <b>start-light rig</b> — the lamps light red one by one and flip green at GO — then flies camera duty ahead of you, holds up the <b>LAP 2</b> and <b>FINAL LAP</b> boards, flashes <b>WRONG WAY</b> if you turn around, waves the <b>checkered flag</b> at your finish, and if you leave the road for good — or drop clean off Rainbow Spud Road, where there is no ground — he swoops down on his <b>fishing rod</b>, hooks your kart and carries it back to the racing line (it costs you seconds, exactly like it should). Every Grand Prix track also hides <b>two secret routes</b>: chord cuts across the corners — dirt on the farm and the mountain, a sandbar across the bay at the beach, violet tile in space — that run at <b>full speed with no grass penalty</b> and bank their whole shortcut in your lap progress. A wooden sign names each entrance, a line of Spud Coins strings along it, the track notes below drop a hint, and the minimap draws every cut as a dashed gold line. Keyboard: ← → / A D steer, Shift / L drift-hop, Space item, ↓ / S brake. Controller: left stick, RT, LT, LB/RB, X.</p>
                   <div style="border-top:1px dotted #bbb; margin-top:10px; padding-top:8px;">
                     <p class="game-sub" style="font-weight:bold; color:var(--blue); margin-top:0;">Multiplayer — basement server races (real bump physics)</p>
                     <p class="game-status" id="kkSrvStatus">Multiplayer runs on the basement server: the PC steps every kart, decides the bumps, and calls the finish times. There's no connect step — tap the race button and you're in; the connecting happens by itself, invisibly.</p>
@@ -5128,9 +5128,15 @@
              samples: [], trackLen: 0, racers: [], boxes: [], coins: [], ramps: [],
              slicks: [], rockets: [], clouds: [], count: 0, raceT: 0, last: 0, acc: 0,
              over: false, overT: 0, resShown: false, raceId: 0,
+             cuts: [], foundCuts: {}, lastLap: 1, wrongT: 0, wrongMsgT: 0,
+             signT: 0, signText: "", lastProg: null, progChkT: 0, lakTarget: null,
              shake: 0, mapT: 0, gasAt: null, keys: { gas: false, brake: false, left: false, right: false, drift: false } };
   var kkMount = $("kkMount"), kkRenderer = null, kkScene = null, kkCam = null, kkComposer = null;
   var kkSun = null, kkCircuit = null, kkOval = null, kkSpark = null, kkDust = null, kkGround = null;
+  /* Cam Spud — the camera guy on the cloud (this game's Lakitu):
+     runs the start lights, holds the lap / wrong-way signs, waves
+     the finish flag and fishes karts back onto the road. */
+  var kkLak = null;
   var kkSkyMat = null, kkGlowSpr = null, kkHillGrp = null, kkStars = null, kkSpaceGrp = null;
   /* Mario Kart Tour touch input: one drag on the canvas steers
      (analog), a hard held drag drifts, a tap uses the item. */
@@ -5175,31 +5181,45 @@
   var KK_TRACKS = [
     { id: "spud", name: "Spud Circuit", theme: "spud", banner: "SPUD KART 3D", ground: 0xffffff, fog: 0xdcecf7, road: 0xffffff,
       info: "<b>Spud Circuit</b> — the original house circuit. Wide and flowing; the one to learn powerslides on.",
-      ctrl: [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]] },
+      ctrl: [[0, -78], [38, -74], [66, -52], [80, -18], [72, 22], [48, 44], [18, 38], [-2, 58], [-34, 52], [-58, 30], [-70, -6], [-58, -44], [-30, -62]],
+      cuts: [{ u0: 0.315, u1: 0.465, name: "Tater Cut" }, { u0: 0.775, u1: 0.915, name: "Backfield Cut" }],
+      hint: "Psst — two secret cuts hide here: one slices the infield hairpin, one crosses the back field." },
     { id: "speedway", name: "Spudway Speedway", theme: "speedway", banner: "SPUDWAY SPEEDWAY", ground: 0xf2f7e8, fog: 0xdcecf7, road: 0xffffff,
       info: "<b>Spudway Speedway</b> — after <b>Luigi Raceway</b> (Mario Kart 64): the long stadium dogbone, just like the original — flat-out straights, a tunnel bored through the hill, grandstands, billboards and the big striped hot-air balloon floating over the back straight.",
-      ctrl: [[0, -100], [58, -92], [96, -58], [104, -6], [96, 50], [58, 88], [6, 98], [-52, 90], [-92, 56], [-102, 2], [-92, -52], [-54, -88]] },
+      ctrl: [[0, -100], [58, -92], [96, -58], [104, -6], [96, 50], [58, 88], [6, 98], [-52, 90], [-92, 56], [-102, 2], [-92, -52], [-54, -88]],
+      cuts: [{ u0: 0.345, u1: 0.495, name: "Dogbone Cut" }, { u0: 0.845, u1: 0.985, name: "Stadium Cut" }],
+      hint: "Psst — the dogbone's two ends are closer than the road admits: check the bottom bend and the stadium end." },
     { id: "farm", name: "Moo Moo Tater Farm", theme: "farm", banner: "MOO MOO TATER FARM", ground: 0xd8ffc8, fog: 0xe4f2d8, road: 0xf5ead0,
       info: "<b>Moo Moo Tater Farm</b> — after <b>Moo Moo Farm</b> (Mario Kart 64): rolling S-bends through fenced pasture, past the red barn, twin silos and the windmill — and watch the mole mounds by the roadside, just like the original. Stay off the grass.",
-      ctrl: [[0, -70], [40, -68], [62, -38], [48, -8], [70, 22], [42, 48], [8, 40], [-18, 62], [-52, 44], [-68, 8], [-52, -32], [-28, -52]] },
+      ctrl: [[0, -70], [40, -68], [62, -38], [48, -8], [70, 22], [42, 48], [8, 40], [-18, 62], [-52, 44], [-68, 8], [-52, -32], [-28, -52]],
+      cuts: [{ u0: 0.175, u1: 0.325, name: "Mole Cut" }, { u0: 0.675, u1: 0.825, name: "Pasture Cut" }],
+      hint: "Psst — the moles know two ways across the pasture that the fences never mention." },
     { id: "beach", name: "Troopa Tater Beach", theme: "beach", banner: "TROOPA TATER BEACH", ground: 0xffe9a8, fog: 0xd8f2f7, road: 0xfff2cf,
       info: "<b>Troopa Tater Beach</b> — after <b>Koopa Troopa Beach</b> (Mario Kart 64): a sand island in open sea, like the original — water all around and in the bay, palm trees, beach umbrellas and grey rock spires out in the surf. Sweep wide around the bay, cut the headland tight.",
-      ctrl: [[0, -80], [48, -70], [78, -30], [60, 8], [78, 42], [38, 68], [0, 58], [-30, 72], [-68, 40], [-58, -6], [-72, -44], [-36, -62]] },
+      ctrl: [[0, -80], [48, -70], [78, -30], [60, 8], [78, 42], [38, 68], [0, 58], [-30, 72], [-68, 40], [-58, -6], [-72, -44], [-36, -62]],
+      cuts: [{ u0: 0.345, u1: 0.495, name: "Bay Cut" }, { u0: 0.76, u1: 0.905, name: "Headland Cut" }],
+      hint: "Psst — the bay is shallower than it looks, and the headland isn't solid all the way through." },
     { id: "choco", name: "Choco Tater Mountain", theme: "mountain", banner: "CHOCO TATER MTN", ground: 0xc99a68, fog: 0xf2e2cc, road: 0xe8d8c0,
       info: "<b>Choco Tater Mountain</b> — after <b>Choco Mountain</b> (Mario Kart 64): a dirt road walled in by brown rock, tight hairpins, boulders littering the slopes and chocolate-brown peaks all around, just like the original. Brake early, drift everything.",
-      ctrl: [[0, -80], [34, -72], [62, -46], [40, -16], [70, 8], [46, 38], [16, 28], [-8, 56], [-42, 60], [-66, 26], [-46, -4], [-70, -40], [-36, -60]] },
+      ctrl: [[0, -80], [34, -72], [62, -46], [40, -16], [70, 8], [46, 38], [16, 28], [-8, 56], [-42, 60], [-66, 26], [-46, -4], [-70, -40], [-36, -60]],
+      cuts: [{ u0: 0.165, u1: 0.30, name: "Hairpin Cut" }, { u0: 0.47, u1: 0.61, name: "Boulder Cut" }],
+      hint: "Psst — the rock walls end where the hairpins begin: two lines through this mountain aren't on the road." },
     { id: "royal", name: "Royal Russet Raceway", theme: "royal", banner: "ROYAL RUSSET RACEWAY", ground: 0xeaf2ff, fog: 0xdcecf7, road: 0xffffff,
       info: "<b>Royal Russet Raceway</b> — after <b>Royal Raceway</b> (Mario Kart 64): long straights and big sweepers past the castle on its hill — pale walls, red roofs, four towers and flags, with the lake below, exactly the original's postcard view.",
-      ctrl: [[0, -92], [56, -82], [86, -40], [70, 4], [90, 42], [50, 76], [4, 64], [-26, 86], [-64, 58], [-82, 10], [-66, -38], [-32, -70]] },
+      ctrl: [[0, -92], [56, -82], [86, -40], [70, 4], [90, 42], [50, 76], [4, 64], [-26, 86], [-64, 58], [-82, 10], [-66, -38], [-32, -70]],
+      cuts: [{ u0: 0.26, u1: 0.41, name: "Castle Cut" }, { u0: 0.76, u1: 0.905, name: "Lake Cut" }],
+      hint: "Psst — the castle grounds and the lake shore both hide a faster line." },
     { id: "rainbow", name: "Rainbow Spud Road", theme: "rainbow", banner: "RAINBOW SPUD ROAD", ground: 0x05050f, fog: 0x05050f, road: 0xffffff,
-      info: "<b>Rainbow Spud Road</b> — after <b>Rainbow Road</b> (Mario Kart 64): the big one, out in deep space like the original — no ground, no sky, just stars, a ringed planet, floating asteroids, giant neon signs and a long flowing road paved in rainbow tiles. No shortcuts, just rhythm: hold the slide and don't lift.",
-      ctrl: [[0, -108], [70, -96], [108, -40], [88, 30], [110, 78], [48, 104], [-16, 84], [-58, 106], [-104, 56], [-88, -12], [-106, -62], [-52, -92]] }
+      info: "<b>Rainbow Spud Road</b> — after <b>Rainbow Road</b> (Mario Kart 64): the big one, out in deep space like the original — no ground, no sky, just stars, a ringed planet, floating asteroids, giant neon signs and a long flowing road paved in rainbow tiles. Just rhythm: hold the slide and don't lift — unless you spot the two cuts, which are very much shortcuts.",
+      ctrl: [[0, -108], [70, -96], [108, -40], [88, 30], [110, 78], [48, 104], [-16, 84], [-58, 106], [-104, 56], [-88, -12], [-106, -62], [-52, -92]],
+      cuts: [{ u0: 0.015, u1: 0.16, name: "Rainbow Drop" }, { u0: 0.345, u1: 0.49, name: "Starlight Cut" }],
+      hint: "Psst — right after the start the road's edge is a suggestion, and mid-track the stars line up straighter than the road." }
   ];
   var kkTrackIdx = 0;
   function kkTrack(){ return KK_TRACKS[kkTrackIdx] || KK_TRACKS[0]; }
   function kkUpdateTrackInfo(){
     var t = kkTrack();
-    var info = $("kkTrackInfo"); if(info) info.innerHTML = t.info + " <i>Plus the basement-server Oval below makes 8 layouts in total.</i>";
+    var info = $("kkTrackInfo"); if(info) info.innerHTML = t.info + (t.hint ? " <i>" + t.hint + "</i>" : "") + " <i>Plus the basement-server Oval below makes 8 layouts in total.</i>";
     var nm = $("kkTrackName"); if(nm) nm.textContent = t.name;
     var sel = $("kkTrackSel"); if(sel && String(sel.value) !== String(kkTrackIdx)) sel.value = String(kkTrackIdx);
   }
@@ -5389,6 +5409,188 @@
     grp.traverse(function(m){ if(m.isMesh && m !== flame) m.castShadow = true; });
     return { grp: grp, tilt: tilt, wheels: wheels, flame: flame, paint: paint };
   }
+  /* ---------------- Secret routes ----------------
+     Each Grand Prix track hides chord cuts across its corners
+     (built in kkBuildCircuit). A kart inside a cut corridor is ON
+     a surface — full speed, no grass penalty — and its progress is
+     mapped along the cut, so the shorter line counts in full. */
+  function kkCutAt(x, z){
+    for(var ci = 0; ci < kk.cuts.length; ci++){
+      var cut = kk.cuts[ci], best = 1e18, bf = 0;
+      for(var si = 0; si < cut.pts.length - 1; si++){
+        var a = cut.pts[si], b = cut.pts[si + 1];
+        var abx = b.x - a.x, abz = b.z - a.z;
+        var L2 = abx * abx + abz * abz || 1;
+        var tt = kkClamp(((x - a.x) * abx + (z - a.z) * abz) / L2, 0, 1);
+        var px = a.x + abx * tt, pz = a.z + abz * tt;
+        var d = (x - px) * (x - px) + (z - pz) * (z - pz);
+        if(d < best){ best = d; bf = (cut.cum[si] + Math.sqrt(L2) * tt) / cut.len; }
+      }
+      if(best < Math.pow(cut.w / 2 + 1.4, 2)) return { cut: cut, frac: bf };
+    }
+    return null;
+  }
+  /* ---------------- Cam Spud, the camera guy ----------------
+     The Lakitu job, done by a spud: he hovers over the start line
+     holding the start-light rig for the countdown (lamps light red
+     one by one, green at GO), flies camera duty ahead of the leader
+     (you) during the race, holds up the LAP 2 / FINAL LAP and
+     WRONG WAY boards, waves the checkered flag at the finish, and
+     when a kart leaves the road for good he swoops in with the
+     fishing rod and carries it back to the racing line. */
+  function kkStartRescue(r){
+    if(r.rescueT > 0) return;
+    r.rescueT = 2.3; r.driftDir = 0; r.charge = 0; r.air = false; r.hop = false; r.tricked = false;
+    kk.lakTarget = r;
+    if(r.isPlayer){
+      kkSetMsg(kkTrack().theme === "rainbow" ? "Off the edge! Cam Spud fishes you back onto Rainbow Spud Road." : "Too far off the road — Cam Spud fishes you back to the racing line.");
+      kkBeep(392, 0.16, "triangle");
+    }
+  }
+  function kkSetLakSign(text){
+    if(!kkLak || kkLak.signText === text) return;
+    kkLak.signText = text;
+    var g = kkLak.signCanvas.getContext("2d");
+    g.fillStyle = "#14213d"; g.fillRect(0, 0, 256, 96);
+    g.strokeStyle = "#f5b301"; g.lineWidth = 6; g.strokeRect(4, 4, 248, 88);
+    g.font = "800 37px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "#ffe94d"; g.fillText(text, 128, 50);
+    kkLak.signTex.needsUpdate = true;
+  }
+  function kkSetLamps(mode){
+    if(!kkLak) return;
+    kkLak.lampMats.forEach(function(m, i){
+      if(mode === "green"){ m.emissive.setHex(0x2eff5a); m.emissiveIntensity = 1.7; m.color.setHex(0x1d7a34); }
+      else if(typeof mode === "number" && i < mode){ m.emissive.setHex(0xff2a1a); m.emissiveIntensity = 1.7; m.color.setHex(0x7a1408); }
+      else { m.emissive.setHex(0x000000); m.emissiveIntensity = 0; m.color.setHex(0x3a3f45); }
+    });
+  }
+  function kkBuildLakitu(){
+    if(kkLak) return;
+    var g = new THREE.Group();
+    var cloudM = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1 });
+    [[0, 0, 0, 1.15], [0.95, -0.14, 0.2, 0.8], [-0.95, -0.12, -0.15, 0.85], [0.3, -0.28, -0.55, 0.68], [-0.35, -0.26, 0.5, 0.62]].forEach(function(s){
+      var m = new THREE.Mesh(new THREE.SphereGeometry(s[3], 14, 10), cloudM);
+      m.position.set(s[0], s[1], s[2]); m.scale.y = 0.62; g.add(m);
+    });
+    var rider = kkMakeDriver("spud", 0xf5b301);
+    rider.position.y = 0.5; g.add(rider);
+    /* The camera: black box + lens + red tally light, on a short
+       pole at the front of the cloud, aimed where he faces. */
+    var camG = new THREE.Group();
+    var camBody = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.42, 0.8), std(0x1c1e24, 0.5));
+    camG.add(camBody);
+    var lens = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.16, 0.3, 12), std(0x0a0a0c, 0.3));
+    lens.rotation.x = Math.PI / 2; lens.position.z = 0.52; camG.add(lens);
+    var tally = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8),
+      new THREE.MeshStandardMaterial({ color: 0x7a1408, emissive: 0xff2a1a, emissiveIntensity: 1.4 }));
+    tally.position.set(0.2, 0.28, 0.1); camG.add(tally);
+    var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.7, 8), std(0x8a8578, 0.7));
+    pole.position.y = -0.5; camG.add(pole);
+    camG.position.set(0, 0.55, 1.05);
+    g.add(camG);
+    /* Fishing rod, angled out to his right. The line itself is a
+       world-space mesh so it can stretch down to a rescued kart. */
+    var rod = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.045, 2.4, 8), std(0x6b4a2b, 0.8));
+    rod.position.set(1.15, 1.15, 0.3); rod.rotation.z = -0.85; rod.rotation.x = 0.25;
+    g.add(rod);
+    /* Start-light rig: a bar with three lamps, held out front. */
+    var rig = new THREE.Group();
+    var bar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.2, 0.2), std(0x24262b, 0.7));
+    rig.add(bar);
+    var lampMats = [];
+    [-0.58, 0, 0.58].forEach(function(x){
+      var lm = new THREE.MeshStandardMaterial({ color: 0x3a3f45, roughness: 0.4 });
+      var lamp = new THREE.Mesh(new THREE.SphereGeometry(0.17, 12, 10), lm);
+      lamp.position.set(x, -0.05, 0.14); rig.add(lamp); lampMats.push(lm);
+    });
+    var rigPole = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8), std(0x8a8578, 0.7));
+    rigPole.position.y = 0.45; rig.add(rigPole);
+    rig.position.set(0, -0.55, 1.0);
+    g.add(rig);
+    /* The sign board (LAP 2 / FINAL LAP / WRONG WAY / FINISH). */
+    var signCanvas = document.createElement("canvas"); signCanvas.width = 256; signCanvas.height = 96;
+    var signTex = new THREE.CanvasTexture(signCanvas); signTex.colorSpace = THREE.SRGBColorSpace;
+    var sign = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.0),
+      new THREE.MeshBasicMaterial({ map: signTex, transparent: true, side: THREE.DoubleSide }));
+    sign.position.set(0, -0.75, 1.02); sign.visible = false;
+    g.add(sign);
+    /* Checkered flag on a stick, waved at the finish. */
+    var flagG = new THREE.Group();
+    var stick = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.5, 8), std(0x8a8578, 0.7));
+    stick.rotation.z = 0.5; flagG.add(stick);
+    var flagTex = kkCanvasTex(128, 80, function(fg){
+      for(var y = 0; y < 5; y++) for(var x = 0; x < 8; x++){ fg.fillStyle = (x + y) % 2 ? "#111" : "#fff"; fg.fillRect(x * 16, y * 16, 16, 16); }
+    });
+    var flag = new THREE.Mesh(new THREE.PlaneGeometry(1.35, 0.85),
+      new THREE.MeshBasicMaterial({ map: flagTex, side: THREE.DoubleSide }));
+    flag.position.set(0.62, 0.55, 0); flagG.add(flag);
+    flagG.position.set(-1.15, 0.9, 0.2); flagG.visible = false;
+    g.add(flagG);
+    g.traverse(function(m){ if(m.isMesh) m.castShadow = false; });
+    var s0 = kkPosAt(0.015, 0);
+    g.position.set(s0.x, 6.4, s0.z);
+    kkScene.add(g);
+    var line = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 1, 6),
+      new THREE.MeshBasicMaterial({ color: 0xf4f1e8 }));
+    line.visible = false; kkScene.add(line);
+    var hook = new THREE.Mesh(new THREE.SphereGeometry(0.14, 10, 8), std(0xd8dde3, 0.3));
+    hook.visible = false; kkScene.add(hook);
+    kkLak = { grp: g, rig: rig, lampMats: lampMats, sign: sign, signCanvas: signCanvas,
+              signTex: signTex, signText: "", flagG: flagG, line: line, hook: hook };
+    kkSetLakSign("READY");
+  }
+  function kkUpdateLakitu(dt){
+    if(!kkLak) return;
+    var L = kkLak, p = kk.racers[0];
+    if(kk.mode === "server" || !p){ L.grp.visible = false; L.line.visible = false; L.hook.visible = false; return; }
+    L.grp.visible = true;
+    var t = performance.now() / 1000;
+    var bob = Math.sin(t * 1.7) * 0.25;
+    var tx, ty, tz, face, rescuing = p.rescueT > 0 && kk.lakTarget === p;
+    if(kk.phase === "count" || kk.phase === "idle"){
+      var s0 = kk.samples[10] || kk.samples[0];
+      tx = s0.x; tz = s0.z; ty = 6.4 + bob;
+      face = Math.atan2(s0.tx, s0.tz) + Math.PI;
+    }else if(rescuing){
+      tx = p.x; tz = p.z; ty = p.y + 5.4 + bob * 0.3; face = p.th;
+    }else{
+      tx = p.x + Math.sin(p.th) * 13; tz = p.z + Math.cos(p.th) * 13;
+      ty = 6.8 + bob; face = p.th + Math.PI;
+    }
+    var k = dt ? 1 - Math.exp(-3.5 * dt) : 1;
+    L.grp.position.x += (tx - L.grp.position.x) * k;
+    L.grp.position.y += (ty - L.grp.position.y) * k;
+    L.grp.position.z += (tz - L.grp.position.z) * k;
+    L.grp.rotation.y += kkAngDiff(face, L.grp.rotation.y) * (dt ? Math.min(1, 4 * dt) : 1);
+    /* Lamps: lit red one by one through the countdown, green at GO. */
+    var showRig = kk.phase === "count" || kk.phase === "idle" || (kk.phase === "race" && kk.raceT < 1.2);
+    L.rig.visible = showRig;
+    if(kk.phase === "count") kkSetLamps(kk.count > 2.55 ? 1 : kk.count > 1.55 ? 2 : 3);
+    else if(kk.phase === "race" && kk.raceT < 1.2) kkSetLamps("green");
+    else kkSetLamps(0);
+    /* Sign board: wrong way outranks the lap board; the flag comes
+       out once you've finished. */
+    var showSign = null;
+    if(kk.wrongT > 0) showSign = "WRONG WAY!";
+    else if(kk.signT > 0 && kk.signText) showSign = kk.signText;
+    else if(p.finished) showSign = "FINISH!";
+    if(showSign){ kkSetLakSign(showSign); L.sign.visible = true; } else L.sign.visible = false;
+    L.flagG.visible = !!p.finished;
+    if(L.flagG.visible) L.flagG.rotation.z = Math.sin(t * 9) * 0.45;
+    /* The fishing line runs from his cloud down to a kart being
+       rescued, hook on the kart's roof. */
+    if(rescuing){
+      var from = L.grp.position, to = { x: p.x, y: p.y + 1.1, z: p.z };
+      var dx = to.x - from.x, dy = to.y - from.y, dz = to.z - from.z;
+      var len = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
+      L.line.visible = true; L.hook.visible = true;
+      L.line.position.set((from.x + to.x) / 2, (from.y + to.y) / 2, (from.z + to.z) / 2);
+      L.line.scale.set(1, len, 1);
+      L.line.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(dx / len, dy / len, dz / len));
+      L.hook.position.set(to.x, to.y, to.z);
+    }else{ L.line.visible = false; L.hook.visible = false; }
+  }
   function kkPosAt(u, lat){
     var f = ((u % 1) + 1) % 1, fi = f * KK_N, i0 = Math.floor(fi) % KK_N, fr = fi - Math.floor(fi);
     var a = kk.samples[i0], b = kk.samples[(i0 + 1) % KK_N];
@@ -5559,10 +5761,12 @@
         x: 0, z: 0, y: 0, th: 0, vth: 0, v: 0, vy: 0, air: false, hop: false, tricked: false, trickT: 0,
         driftDir: 0, charge: 0, boostT: 0, starT: 0, spinT: 0, item: null, coins: 0,
         prog: 0, prevIdxF: 0, nearIdx: 0, startProg: 0, lat: 0, offroad: false,
+        rescueT: 0, onCut: false,
         finished: false, finishTime: 0, pairCd: {}, srv: null,
         ai: { offset: [-2.4, 0.4, 2.5][ri - 1] || 0, skill: [0, 0.945, 0.972, 1.0][ri], phase: ri * 2.1, itemT: 6 + ri * 3.5, driftHeld: false } });
     }
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
+    kkBuildLakitu();
     // Slick + rocket pools
     var slickM = new THREE.MeshStandardMaterial({ color: 0xf7d154, roughness: 0.25, metalness: 0.05 });
     for(var si = 0; si < 12; si++){
@@ -5620,6 +5824,25 @@
       pos.push(p.x + p.nx * w0, 0, p.z + p.nz * w0, p.x + p.nx * w1, 0, p.z + p.nz * w1);
       uv.push(0, dist / uvScale, 1, dist / uvScale);
       if(i < n){ var a = i * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(idx); geo.computeVertexNormals();
+    var m = new THREE.Mesh(geo, mat);
+    m.receiveShadow = true;
+    return m;
+  }
+  /* Open (non-looping) ribbon for the secret-route surfaces: same
+     construction as kkRibbon but the path does not wrap. */
+  function kkOpenRibbon(pts, w0, w1, mat, uvScale){
+    var n = pts.length, pos = [], uv = [], idx = [], dist = 0;
+    for(var i = 0; i < n; i++){
+      var p = pts[i];
+      if(i > 0){ var q = pts[i - 1]; dist += Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.z - q.z) * (p.z - q.z)); }
+      pos.push(p.x + p.nx * w0, 0, p.z + p.nz * w0, p.x + p.nx * w1, 0, p.z + p.nz * w1);
+      uv.push(0, dist / uvScale, 1, dist / uvScale);
+      if(i < n - 1){ var a = i * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
     }
     var geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
@@ -5766,6 +5989,83 @@
     var curbM = new THREE.MeshStandardMaterial({ map: curbTex, roughness: 0.8 });
     kkCircuit.add(kkRibbon(kk.samples, -8.5, -KK_ROAD_HALF, curbM, 4));
     kkCircuit.add(kkRibbon(kk.samples, KK_ROAD_HALF, 8.5, curbM, 4));
+    // ---- Secret routes: a chord cut across a corner, per stretch.
+    // The path is a quadratic Bezier from the road at u0 to the road
+    // at u1, its control point the arc's own midpoint pulled most of
+    // the way toward the chord — so every cut hugs the inside of its
+    // corner and is genuinely shorter than the road it skips. Dirt,
+    // sand or violet tile by theme; a wooden sign and a line of
+    // coins mark the entrance, nothing else does.
+    kk.cuts = [];
+    (def.cuts || []).forEach(function(cd){
+      var A = kkPosAt(cd.u0, 0), B = kkPosAt(cd.u1, 0);
+      var midU = cd.u0 + (cd.u1 - cd.u0) / 2; if(midU > 1) midU -= 1;
+      var M = kkPosAt(midU, 0);
+      var cx = M.x + ((A.x + B.x) / 2 - M.x) * 0.82, cz = M.z + ((A.z + B.z) / 2 - M.z) * 0.82;
+      var pts = [], SEG = 26;
+      for(var si4 = 0; si4 <= SEG; si4++){
+        var t4 = si4 / SEG, mt = 1 - t4;
+        pts.push({ x: mt * mt * A.x + 2 * mt * t4 * cx + t4 * t4 * B.x,
+                   z: mt * mt * A.z + 2 * mt * t4 * cz + t4 * t4 * B.z });
+      }
+      var cum = [0];
+      for(var ci5 = 1; ci5 < pts.length; ci5++) cum.push(cum[ci5 - 1] + Math.sqrt((pts[ci5].x - pts[ci5 - 1].x) * (pts[ci5].x - pts[ci5 - 1].x) + (pts[ci5].z - pts[ci5 - 1].z) * (pts[ci5].z - pts[ci5 - 1].z)));
+      var cut = { name: cd.name, u0: cd.u0, u1: cd.u1, pts: pts, cum: cum, len: cum[cum.length - 1], w: 6.4 };
+      kk.cuts.push(cut);
+      var rpts = pts.map(function(p, i2){
+        var q = pts[Math.min(pts.length - 1, i2 + 1)], q0 = pts[Math.max(0, i2 - 1)];
+        var tx5 = q.x - q0.x, tz5 = q.z - q0.z, l5 = Math.sqrt(tx5 * tx5 + tz5 * tz5) || 1;
+        return { x: p.x, z: p.z, nx: tz5 / l5, nz: -tx5 / l5 };
+      });
+      var cutMat = def.theme === "rainbow"
+        ? new THREE.MeshStandardMaterial({ color: 0x8b30c9, roughness: 0.5, emissive: 0x8b30c9, emissiveIntensity: 0.4 })
+        : def.theme === "beach"
+        ? new THREE.MeshStandardMaterial({ color: 0xe8d9a0, roughness: 0.95 })
+        : new THREE.MeshStandardMaterial({ color: 0x9a7a52, roughness: 1 });
+      var rib = kkOpenRibbon(rpts, -cut.w / 2, cut.w / 2, cutMat, 6);
+      rib.position.y = 0.03;
+      kkCircuit.add(rib);
+      // Edge markers: glowing orbs in space, wooden posts elsewhere.
+      for(var mi2 = 2; mi2 < rpts.length - 1; mi2 += 4){
+        [-1, 1].forEach(function(sd){
+          var ep = rpts[mi2];
+          var ex = ep.x + ep.nx * sd * (cut.w / 2 + 0.5), ez = ep.z + ep.nz * sd * (cut.w / 2 + 0.5);
+          if(def.theme === "rainbow"){
+            var orb = new THREE.Mesh(new THREE.SphereGeometry(0.34, 10, 8),
+              new THREE.MeshStandardMaterial({ color: 0xf5d301, roughness: 0.3, emissive: 0xf5d301, emissiveIntensity: 0.7 }));
+            orb.position.set(ex, 0.8, ez); kkCircuit.add(orb);
+          }else{
+            var post = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 1.1, 8), std(0x77572f, 0.9));
+            post.position.set(ex, 0.55, ez); post.castShadow = true; kkCircuit.add(post);
+          }
+        });
+      }
+      // Coins strung along the cut — the tell, and the reward.
+      var cutCoinM = new THREE.MeshStandardMaterial({ color: 0xf5b301, roughness: 0.24, metalness: 1.0, emissive: 0x694d00, emissiveIntensity: 0.4 });
+      [0.22, 0.42, 0.62, 0.82].forEach(function(fr){
+        var cp2 = pts[Math.round(fr * (pts.length - 1))];
+        var cm2 = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.12, 18), cutCoinM);
+        cm2.rotation.x = Math.PI / 2;
+        cm2.position.set(cp2.x, 0.95, cp2.z);
+        kkCircuit.add(cm2);
+        kk.coins.push({ mesh: cm2, x: cp2.x, z: cp2.z, taken: false, spin: fr * 5 });
+      });
+      // The entrance sign: a wooden board naming the cut.
+      var sgn = new THREE.Group();
+      var spost = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 1.7, 8), std(0x77572f, 0.9));
+      spost.position.y = 0.85; sgn.add(spost);
+      var sboard = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.95, 0.12), new THREE.MeshStandardMaterial({ map: kkCanvasTex(256, 80, function(g){
+        g.fillStyle = "#6e4f30"; g.fillRect(0, 0, 256, 80);
+        g.strokeStyle = "#4a341e"; g.lineWidth = 5; g.strokeRect(3, 3, 250, 74);
+        g.font = "800 30px Verdana, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+        g.fillStyle = "#ffe9a8"; g.fillText(cd.name.toUpperCase() + " →", 128, 42);
+      }), roughness: 0.9 }));
+      sboard.position.y = 1.75; sboard.castShadow = true; sgn.add(sboard);
+      var sp0 = rpts[0];
+      sgn.position.set(sp0.x + sp0.nx * (cut.w / 2 + 2.2), 0, sp0.z + sp0.nz * (cut.w / 2 + 2.2));
+      sgn.rotation.y = Math.atan2(A.tx, A.tz);
+      kkCircuit.add(sgn);
+    });
     // Start line + arch
     var s0 = kkPosAt(0, 0);
     var line = new THREE.Mesh(new THREE.PlaneGeometry(15.2, 2.6), new THREE.MeshStandardMaterial({ map: kkCanvasTex(128, 32, function(g){
@@ -6149,6 +6449,7 @@
     kkUpdateTrackInfo();
     if(!kkRenderer) return;
     kk.phase = "idle"; kk.count = 0; kk.over = false; kkHideResults();
+    kk.lastLap = 1; kk.wrongT = 0; kk.signT = 0; kk.signText = ""; kk.lastProg = null; kk.lakTarget = null;
     kkBuildCircuit();
     kkResetGrid();
     kkFrame();
@@ -6229,6 +6530,7 @@
       r.driftDir = 0; r.charge = 0; r.boostT = 0; r.starT = 0; r.spinT = 0; r.item = null; r.coins = 0;
       r.nearIdx = ((idxF % KK_N) + KK_N) % KK_N; r.prevIdxF = idxF; r.prog = 0; r.startProg = 0;
       r.finished = false; r.finishTime = 0; r.dnf = false; r.pairCd = {}; r.srv = null;
+      r.rescueT = 0; r.onCut = false;
       r.mesh.visible = true;
       kkSyncMesh(r, 0);
     });
@@ -6313,19 +6615,63 @@
     var sm = kk.samples[bi];
     var along = (r.x - sm.x) * sm.tx + (r.z - sm.z) * sm.tz;
     var idxF = bi + kkClamp(along / sm.seg, -0.6, 1.4);
+    /* On a secret cut, progress follows the cut itself: the mapped
+       index runs from u0 to u1 by distance along the chord, so the
+       shorter line banks its full advantage (and the window search
+       above never has to leap the corner). */
+    var cutHit = kkCutAt(r.x, r.z);
+    r.onCut = !!cutHit;
+    if(cutHit){
+      var span = cutHit.cut.u1 - cutHit.cut.u0; if(span < 0) span += 1;
+      var cu = cutHit.cut.u0 + cutHit.frac * span; if(cu >= 1) cu -= 1;
+      idxF = cu * KK_N;
+      bi = ((Math.round(idxF) % KK_N) + KK_N) % KK_N;
+      r.nearIdx = bi;
+      sm = kk.samples[bi];
+      if(r.isPlayer && kk.phase === "race" && !kk.foundCuts[cutHit.cut.name]){
+        kk.foundCuts[cutHit.cut.name] = true;
+        kkSetMsg("Secret route found: " + cutHit.cut.name + "! That line is pure profit — full speed, no grass.");
+        kkBig("SECRET ROUTE!"); kk.bigT = 1.1; kkBeep(1318, 0.16, "square");
+      }
+    }
     var dF = idxF - r.prevIdxF;
     while(dF > KK_N / 2) dF -= KK_N;
     while(dF < -KK_N / 2) dF += KK_N;
     r.prog += dF; r.prevIdxF = idxF;
     r.lat = (r.x - sm.x) * sm.nx + (r.z - sm.z) * sm.nz;
-    r.offroad = Math.abs(r.lat) > KK_ROAD_HALF;
-    if(Math.abs(r.lat) > 30){
+    r.offroad = !r.onCut && Math.abs(r.lat) > KK_ROAD_HALF;
+    if(!r.onCut && Math.abs(r.lat) > 30){
       var push = (Math.abs(r.lat) - 30) * (r.lat > 0 ? 1 : -1);
       r.x -= sm.nx * push; r.z -= sm.nz * push;
       r.v *= 0.72;
     }
   }
   function kkStepRacer(r, dt, inp){
+    /* Cam Spud rescue in progress: the kart hangs from the fishing
+       line — a beat dangling (dropping, over Rainbow Road's edge),
+       then carried back to the racing line at its nearest point and
+       set down facing the right way. No input, no items, ~2.3 s. */
+    if(r.rescueT > 0){
+      r.rescueT -= dt;
+      var rt2 = 2.3 - r.rescueT;
+      var tgt2 = kk.samples[r.nearIdx];
+      r.v = 0;
+      if(rt2 < 0.7){
+        if(kkTrack().theme === "rainbow") r.y -= 6 * dt;
+      }else if(rt2 < 1.85){
+        var kk2 = Math.min(1, dt * 3.4);
+        r.x += (tgt2.x - r.x) * kk2; r.z += (tgt2.z - r.z) * kk2;
+        r.y += (3.4 - r.y) * Math.min(1, dt * 5);
+        r.th += kkAngDiff(Math.atan2(tgt2.tx, tgt2.tz), r.th) * Math.min(1, dt * 4);
+        r.vth = r.th;
+      }else{
+        r.y += (0 - r.y) * Math.min(1, dt * 8);
+        if(r.y < 0.02) r.y = 0;
+      }
+      kkProgress(r);
+      if(r.rescueT <= 0){ r.rescueT = 0; r.y = 0; }
+      return;
+    }
     if(r.boostT > 0) r.boostT -= dt;
     if(r.starT > 0) r.starT -= dt;
     if(r.finished) inp = { gas: false, brake: true, steer: 0, drift: false };
@@ -6403,6 +6749,14 @@
       }
     }
     kkProgress(r);
+    /* Left the world: off Rainbow Road's edge there's no ground at
+       all, and anywhere else, 24 units out is past every fence and
+       wall — either way Cam Spud comes and gets you. On a secret
+       cut you're on a surface, however far from the road you look. */
+    if(!r.onCut && r.rescueT <= 0 && kk.phase === "race"){
+      var lim = kkTrack().theme === "rainbow" ? 12.5 : 24;
+      if(Math.abs(r.lat) > lim) kkStartRescue(r);
+    }
     if(!r.air && r.v > 11 && r.spinT <= 0){
       for(var i = 0; i < kk.ramps.length; i++){
         var rp = kk.ramps[i], dx = r.x - rp.x, dz = r.z - rp.z;
@@ -6587,7 +6941,8 @@
       head.textContent = rank === 1 ? "YOU WIN!" : "YOU FINISHED " + kkOrdinal(rank).toUpperCase() + "!";
       head.className = "kk-res-head place" + rank;
     }
-    if(sub) sub.textContent = kkTrack().name + " · your time " + p.finishTime.toFixed(1) + " s · " + p.coins + " Spud Coins";
+    if(sub) sub.textContent = kkTrack().name + " · your time " + p.finishTime.toFixed(1) + " s · " + p.coins + " Spud Coins" +
+      (kk.cuts.length ? " · secret routes found " + kk.cuts.filter(function(c){ return kk.foundCuts[c.name]; }).length + " / " + kk.cuts.length : "");
     if(list){
       list.innerHTML = "";
       kk.racers.slice().sort(function(a, b){ return kkScoreOf(b) - kkScoreOf(a); }).forEach(function(r, i){
@@ -6680,6 +7035,7 @@
     if(kk.mode === "server"){ kkSetMsg("You're in a basement-server race — that one runs from the server section in this panel."); return; }
     if(!kkInit()) return;
     kk.raceId++; kk.over = false; kk.overT = 0; kkHideResults();
+    kk.lastLap = 1; kk.wrongT = 0; kk.wrongMsgT = 0; kk.signT = 0; kk.signText = ""; kk.lastProg = null; kk.progChkT = 0; kk.lakTarget = null;
     kkResize();
     kk.racers[0].cls = KK_CLASSES[($("kkKartSel") || {}).value] || KK_CLASSES.balanced;
     kkResetGrid();
@@ -6745,6 +7101,38 @@
     kk.racers.forEach(function(r){ kkStepRacer(r, dt, r.isPlayer ? pin : kkAIInput(r, dt)); });
     kkWorldStep(dt);
     kkHUD();
+    /* Cam Spud's boards: a big announcement + his sign on every lap
+       change, and the WRONG WAY board while your progress runs
+       backwards at speed. */
+    if(kk.signT > 0) kk.signT -= dt;
+    if(kk.wrongT > 0) kk.wrongT -= dt;
+    if(kk.wrongMsgT > 0) kk.wrongMsgT -= dt;
+    if(!pl.finished && pl.rescueT <= 0){
+      var lapNow = kkClamp(Math.floor((pl.prog - pl.startProg) / KK_N) + 1, 1, 3);
+      if(lapNow !== kk.lastLap){
+        kk.lastLap = lapNow;
+        kk.signText = lapNow === 3 ? "FINAL LAP" : "LAP " + lapNow;
+        kk.signT = 2.6;
+        kkBig(lapNow === 3 ? "FINAL LAP!" : "LAP " + lapNow);
+        kk.bigT = 1.2;
+        kkBeep(659, 0.12, "square");
+        setTimeout(function(){ kkBeep(880, 0.16, "square"); }, 140);
+      }
+      kk.progChkT += dt;
+      if(kk.progChkT > 0.5){
+        var pv = kk.lastProg == null ? 0 : (pl.prog - kk.lastProg) / kk.progChkT;
+        kk.lastProg = pl.prog; kk.progChkT = 0;
+        if(pv < -6 && Math.abs(pl.v) > 6 && pl.spinT <= 0){
+          kk.wrongT = 0.7;
+          if(kk.wrongMsgT <= 0){
+            kk.wrongMsgT = 2.5;
+            kkBig("WRONG WAY!"); kk.bigT = 0.9;
+            kkSetMsg("Wrong way! Cam Spud's board says it all — turn around.");
+            kkBeep(220, 0.18, "sawtooth");
+          }
+        }
+      }
+    }
     /* Post-finish wind-down: you've crossed the line (kk.over) but
        the field is still racing to post real times for the results
        card. Once everyone's finished — or 25 s have passed — the
@@ -6774,6 +7162,7 @@
     kkUpdateParticles(kkDust, dt);
     if(kk.mode === "server") kkSrvRender(dt);
     else kk.racers.forEach(function(r){ kkSyncMesh(r, dt); });
+    kkUpdateLakitu(dt);
     var p = (kk.mode === "server" && kk.me) ? kk.me : kk.racers[0];
     if(kk.mode === "idle" && kk.phase === "idle"){
       var c0 = kk.samples[KK_N - 16], ang = t * 0.1;
@@ -6821,6 +7210,15 @@
     pts.forEach(function(q, qi){ if(qi === 0) g.moveTo(mx(q[0]), mz(q[1])); else g.lineTo(mx(q[0]), mz(q[1])); });
     g.closePath();
     g.strokeStyle = "rgba(255,255,255,.75)"; g.lineWidth = 2; g.stroke();
+    if(kk.mode !== "server" && kk.cuts.length){
+      g.strokeStyle = "rgba(245,179,1,.85)"; g.lineWidth = 1.4; g.setLineDash([4, 3]);
+      kk.cuts.forEach(function(cut){
+        g.beginPath();
+        cut.pts.forEach(function(q, qi){ if(qi === 0) g.moveTo(mx(q.x), mz(q.z)); else g.lineTo(mx(q.x), mz(q.z)); });
+        g.stroke();
+      });
+      g.setLineDash([]);
+    }
     kk.racers.forEach(function(r, ri){
       if(!r.mesh.visible) return;
       if(kk.mode === "server" && !r.srv) return;
