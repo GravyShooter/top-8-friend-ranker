@@ -955,7 +955,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
                   <h4>Tate-lo 3D — WebGL</h4>
-                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump. Now with recharging energy shields, health packs, two swap-able weapons, Tater Tot grenades, and five Spudtans who strafe, rush and snipe in squads. Splat five before they splat you. Two-thumb touch controls with real FIRE / JUMP / grenade buttons, full-screen landscape, and Xbox controller support. Graphics overhaul: PMREM image-based sky lighting, textured concrete bases and bump-mapped ground — and Battle Creek's creek and Sidewinder's ice pond mirror the arenas with live reflection probes — the scene re-rendered from the surface's point of view, several times a second.</p>
+                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump. Now with recharging energy shields, health packs, two swap-able weapons, Tater Tot grenades, and five Spudtans who strafe, rush and snipe in squads. <b>New: drivable vehicles</b> — first-person Spud Hogs and Spud Ghosts by each base, with a speed/hull HUD, a turret you aim with your look thumb, free-look, head sway and terrain bob, and road-splats at speed. Splat five before they splat you. Two-thumb touch controls with real FIRE / JUMP / grenade buttons, full-screen landscape, and Xbox controller support. Graphics overhaul: PMREM image-based sky lighting, textured concrete bases and bump-mapped ground — and Battle Creek's creek and Sidewinder's ice pond mirror the arenas with live reflection probes — the scene re-rendered from the surface's point of view, several times a second.</p>
                   <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
                 </div>
                 <div class="game-card">
@@ -1075,6 +1075,16 @@
                     <button type="button" id="b3BtnJump" aria-label="Jump" style="position:absolute; right:116px; bottom:18px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(20,40,70,.5); color:#fff; font:800 11px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">JUMP</button>
                     <button type="button" id="b3BtnNade" aria-label="Throw Tater Tot grenade" style="position:absolute; right:20px; bottom:114px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(120,70,16,.55); color:#fff; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">TOT <span id="b3NadeBadge">×2</span></button>
                     <button type="button" id="b3BtnSwap" aria-label="Swap weapon" style="position:absolute; right:96px; bottom:100px; width:56px; height:56px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(40,40,60,.55); color:#fff; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">SWAP</button>
+                    <div id="b3VehHud" style="position:absolute; left:50%; bottom:10px; transform:translateX(-50%); width:min(320px,58%); pointer-events:none; display:none; background:rgba(7,13,22,.62); border:1px solid rgba(140,190,255,.4); border-radius:6px; padding:6px 12px 8px; color:#eaf2fb; text-align:center;">
+                      <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;"><span id="b3VehName" style="font:800 11px Verdana,sans-serif; letter-spacing:.12em; color:#ffd94d;">SPUD HOG</span><span style="font:800 20px Verdana,sans-serif; line-height:1;"><span id="b3VehSpeed">0</span><span style="font-size:10px; color:#a9bdd4;"> MPH</span></span></div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-top:5px;"><span style="font:700 9px Verdana,sans-serif; letter-spacing:.12em; color:#ffb27a; width:40px; text-align:left;">HULL</span><div style="flex:1; height:8px; background:rgba(255,255,255,.14); border-radius:2px; overflow:hidden;"><div id="b3VehHullFill" style="height:100%; width:100%; background:#e8a33c;"></div></div></div>
+                      <div id="b3VehBoostRow" style="display:none; align-items:center; gap:6px; margin-top:4px;"><span style="font:700 9px Verdana,sans-serif; letter-spacing:.12em; color:#c9a6ff; width:40px; text-align:left;">BOOST</span><div style="flex:1; height:7px; background:rgba(255,255,255,.14); border-radius:2px; overflow:hidden;"><div id="b3VehBoostFill" style="height:100%; width:100%; background:#a678ff;"></div></div></div>
+                      <div id="b3VehLook" style="display:none; font:700 9px Verdana,sans-serif; letter-spacing:.18em; color:#7dff8a; margin-top:4px;">◉ FREE-LOOK</div>
+                    </div>
+                    <div id="b3VehPrompt" style="position:absolute; left:50%; bottom:64px; transform:translateX(-50%); pointer-events:none; display:none; background:rgba(7,13,22,.72); border:1px solid rgba(255,217,77,.55); border-radius:999px; padding:7px 16px; color:#ffe9a8; font:700 12px Verdana,sans-serif; white-space:nowrap;">Press E or tap ENTER</div>
+                    <button type="button" id="b3BtnEnter" aria-label="Enter or exit vehicle" style="position:absolute; left:14px; bottom:118px; width:74px; height:56px; border-radius:14px; border:2px solid rgba(255,217,77,.8); background:rgba(90,70,10,.6); color:#ffe9a8; font:800 12px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none; display:none; z-index:4;">ENTER</button>
+                    <button type="button" id="b3BtnBoost" aria-label="Boost or brake" style="position:absolute; right:116px; bottom:18px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(200,166,255,.75); background:rgba(70,40,120,.55); color:#fff; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none; display:none; z-index:4;">BOOST</button>
+                    <button type="button" id="b3BtnLook" aria-label="Hold to free-look" style="position:absolute; right:20px; bottom:114px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(125,255,138,.6); background:rgba(16,60,30,.55); color:#dfffe2; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none; display:none; z-index:4;">LOOK</button>
                     <div id="b3Card" style="position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,10,18,.58); z-index:5;">
                       <div style="background:rgba(13,20,32,.96); border:1px solid #41597a; border-radius:8px; padding:20px 26px; text-align:center; color:#eaf2fb; max-width:min(420px,88%); box-shadow:0 14px 44px rgba(0,0,0,.55);">
                         <div id="b3CardTitle" style="font:800 34px Verdana,sans-serif; letter-spacing:.05em; color:#ffd94d;">VICTORY</div>
@@ -1100,8 +1110,8 @@
                     </select>
                   </div>
                   <p class="game-sub" id="b3MapInfo" style="margin-top:2px;"><b>Blood Gulch</b> — the box canyon: red base vs blue base, the dirt track running between them, boulders and trees for cover, and the great ring in the sky.</p>
-                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Full Screen</b> fills the display landscape — on a phone, <b>Start 3D Match</b> goes full screen by itself in the same tap, and the <b>⛶</b> button in the corner of the match view gets you in or out any time without leaving the controls. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
-                  <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade. The graphics overhaul adds PMREM image-based sky lighting over everything, bump-mapped arena floors, textured concrete bases and strata rock — and the creek in Battle Creek and the ice pond in Sidewinder reflect the arenas live, rendered from the surface's point of view by a reflection probe.</p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Vehicles — new:</b> two <b>Spud Hogs</b> and two <b>Spud Ghosts</b> sit by the bases on every arena. Walk up and tap <b>ENTER</b> (or press <b>E</b>) to drive first-person: the <b>left thumb becomes your wheel</b> — push up to drive, pull back to reverse, tilt to steer — while the <b>right thumb aims the turret / cannons</b> and <b>FIRE</b> shoots them. Hold <b>LOOK</b> and drag to <b>free-look</b> around the cab while your aim stays locked (desktop: hold the <b>right mouse button</b> and drag; controller: hold <b>LT</b>). The Ghost gets a <b>BOOST</b> button; the Hog's is a handbrake. The cab sways with your steering and bobs over the ground, the HUD tracks speed and hull, and a fast vehicle splats whatever it hits. Tap <b>EXIT</b> (or <b>E</b>) to bail out.</p> <b>Full Screen</b> fills the display landscape — on a phone, <b>Start 3D Match</b> goes full screen by itself in the same tap, and the <b>⛶</b> button in the corner of the match view gets you in or out any time without leaving the controls. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
+                  <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade, E enter/exit a vehicle, Shift boosts the Ghost (handbrake in the Hog), right-mouse-drag free-looks while driving. Controller in a vehicle: left stick drives, right stick aims the turret, X gets in/out, LT free-looks. The graphics overhaul adds PMREM image-based sky lighting over everything, bump-mapped arena floors, textured concrete bases and strata rock — and the creek in Battle Creek and the ice pond in Sidewinder reflect the arenas live, rendered from the surface's point of view by a reflection probe.</p>
                 </div>
               </div>
 
@@ -4624,8 +4634,10 @@
              nades: 2, nadeCd: 0, streak: 0, bestStreak: 0, lastSplatT: -99,
              fired: 0, hits: 0, hitmarkT: 0, hitmarkKill: false, shake: 0, freezeT: 0,
              dmgVinT: 0, dmgDirT: 0, dmgDirRot: 0, shieldFxT: 0, landDip: 0, cardShown: false,
-             keys: { f: false, b: false, sl: false, sr: false, tl: false, tr: false, fire: false },
-             stick: { x: 0, y: 0 }, enemies: [], shots: [], crates: [], nadesLive: [], packs: [] };
+             keys: { f: false, b: false, sl: false, sr: false, tl: false, tr: false, fire: false, boost: false },
+             stick: { x: 0, y: 0 }, enemies: [], shots: [], crates: [], nadesLive: [], packs: [],
+             veh: null, vehicles: [], vehFireCd: 0, vehAlt: false, vehBob: 0, vehSway: 0,
+             fl: { yaw: 0, pitch: 0, held: false, btn: false, freeId: null }, nearVeh: null };
   /* The two guns. Magnum: slow, heavy, accurate. Blaster: full-auto
      cream hose. Damage is tuned against shield 45 + health 55 spuds. */
   var B3_WEAPONS = [
@@ -4695,19 +4707,19 @@
   }
   /* Two-thumb touch: left half is a floating move stick, right half
      aims by dragging, holds to fire, double-taps to jump. */
-  var b3Touch = { moveId: null, mx0: 0, my0: 0, aimId: null, ax: 0, ay: 0, aimT: 0, aimMoved: 0, fire: false, fireBtn: false, lastTap: 0 };
+  var b3Touch = { moveId: null, mx0: 0, my0: 0, aimId: null, ax: 0, ay: 0, aimT: 0, aimMoved: 0, fire: false, fireBtn: false, lastTap: 0, boostBtn: false };
   /* Gamepad, Halo layout: left stick moves, right stick aims, RT
      fires, A jumps, Start starts. */
-  var b3Pad = { active: false, mx: 0, my: 0, ax: 0, ay: 0, fire: false, jumpEdge: false, startEdge: false, swapEdge: false, nadeEdge: false, reloadEdge: false, wasJump: false, wasStart: false, wasSwap: false, wasNade: false, wasReload: false };
+  var b3Pad = { active: false, mx: 0, my: 0, ax: 0, ay: 0, fire: false, jumpEdge: false, startEdge: false, swapEdge: false, nadeEdge: false, reloadEdge: false, wasJump: false, wasStart: false, wasSwap: false, wasNade: false, wasReload: false, flHeld: false, boost: false, enterEdge: false, wasEnter: false };
   function b3PollPad(){
-    b3Pad.jumpEdge = false; b3Pad.startEdge = false; b3Pad.swapEdge = false; b3Pad.nadeEdge = false; b3Pad.reloadEdge = false;
+    b3Pad.jumpEdge = false; b3Pad.startEdge = false; b3Pad.swapEdge = false; b3Pad.nadeEdge = false; b3Pad.reloadEdge = false; b3Pad.enterEdge = false;
     var gp = null;
     try{
       var gps = navigator.getGamepads ? navigator.getGamepads() : [];
       for(var i = 0; i < gps.length; i++){ if(gps[i] && gps[i].connected){ gp = gps[i]; break; } }
     }catch(e){}
     b3Pad.active = !!gp;
-    if(!gp){ b3Pad.mx = b3Pad.my = b3Pad.ax = b3Pad.ay = 0; b3Pad.fire = false; b3Pad.wasJump = b3Pad.wasStart = b3Pad.wasSwap = b3Pad.wasNade = b3Pad.wasReload = false; return; }
+    if(!gp){ b3Pad.mx = b3Pad.my = b3Pad.ax = b3Pad.ay = 0; b3Pad.fire = false; b3Pad.flHeld = false; b3Pad.boost = false; b3Pad.wasJump = b3Pad.wasStart = b3Pad.wasSwap = b3Pad.wasNade = b3Pad.wasReload = b3Pad.wasEnter = false; return; }
     function dz(v){ return Math.abs(v) < 0.16 ? 0 : v; }
     function btn(n){ return !!(gp.buttons && gp.buttons[n] && gp.buttons[n].pressed); }
     b3Pad.mx = dz(gp.axes[0] || 0); b3Pad.my = dz(gp.axes[1] || 0);
@@ -4725,6 +4737,10 @@
     b3Pad.nadeEdge = nd && !b3Pad.wasNade; b3Pad.wasNade = nd;
     var rl = btn(1);
     b3Pad.reloadEdge = rl && !b3Pad.wasReload; b3Pad.wasReload = rl;
+    b3Pad.flHeld = btn(6); // LT held: free-look while driving
+    b3Pad.boost = btn(0);  // A held while driving: Ghost boost / Hog brake (jump on foot)
+    var en = btn(2);       // X: enter / exit vehicle
+    b3Pad.enterEdge = en && !b3Pad.wasEnter; b3Pad.wasEnter = en;
   }
   function b3SetMsg(t){ var el = $("b3Msg"); if(el) el.textContent = t; }
   function b3SpawnPoint(far){
@@ -4980,6 +4996,468 @@
       b3.packs.push({ x: sp[0], z: sp[1], mesh: g, active: true, respawnT: 0 });
     });
   }
+  /* ================= Vehicles — Spud Hog & Spud Ghost ============
+     First-person drivable vehicles in the Halo: UE spirit: a
+     Warthog-style Spud Hog (wheeled, rear turret) and a Ghost-style
+     Spud Ghost (hover, twin plasma, boost) parked by each base on
+     every arena. Two-thumb driving: the left thumb stick becomes
+     throttle + wheel, the right thumb aims the vehicle weapon,
+     FIRE shoots it, LOOK (or right-mouse drag, or LT) free-looks
+     round the cab while the aim stays locked. The camera rides in
+     the driver's seat with steering sway and terrain bob sampled
+     from the ground under the vehicle. ============================ */
+  var B3_VEH = {
+    hog:   { name: "SPUD HOG",   hullMax: 240, top: 16.5, rev: 6.5, accel: 11, turn: 1.55, eye: 1.52, rad: 1.75,
+             wepName: "HOG TURRET", cd: 0.115, dmg: 9, boltSpd: 58, boltRad: 0.15, boltCol: 0xffd9a0 },
+    ghost: { name: "SPUD GHOST", hullMax: 170, top: 19, rev: 7, accel: 15, turn: 1.9, eye: 1.34, rad: 1.45,
+             wepName: "GHOST CANNONS", cd: 0.17, dmg: 13, boltSpd: 50, boltRad: 0.2, boltCol: 0xc9a6ff }
+  };
+  function b3VehBlockedAt(x, z, r){
+    if(Math.abs(x) > b3Bounds.x - 1.2 || Math.abs(z) > b3Bounds.z - 1.2) return true;
+    for(var i = 0; i < b3.crates.length; i++){
+      var c = b3.crates[i], dx = x - c.x, dz = z - c.z;
+      if(c.w){ if(Math.abs(dx) < c.w + r && Math.abs(dz) < c.d + r) return true; }
+      else if(dx * dx + dz * dz < (c.r + r) * (c.r + r)) return true;
+    }
+    return false;
+  }
+  function b3FindVehSpot(cx, cz, r){
+    if(!b3VehBlockedAt(cx, cz, r)) return { x: cx, z: cz };
+    for(var ring = 1; ring <= 6; ring++){
+      for(var a = 0; a < 10; a++){
+        var x = cx + Math.cos(a / 10 * 6.283) * ring * 2.2, z = cz + Math.sin(a / 10 * 6.283) * ring * 2.2;
+        if(!b3VehBlockedAt(x, z, r)) return { x: x, z: z };
+      }
+    }
+    return { x: cx, z: cz };
+  }
+  function b3BuildHogMesh(){
+    var g = new THREE.Group();
+    var paint = new THREE.MeshStandardMaterial({ color: 0x5f6c38, roughness: 0.42, metalness: 0.35 });
+    if(b3Probe) rtxReflect(paint, b3Probe, 0.3, 0.55, 1.0);
+    var dark = std(0x2c2f26, 0.6), seatM = std(0x3a3f31, 0.8);
+    var hood = new THREE.Mesh(kkRBox(1.7, 0.42, 1.6, 0.1), paint); hood.position.set(0, 0.78, 1.05); hood.castShadow = true; g.add(hood);
+    var cab = new THREE.Mesh(kkRBox(1.8, 0.5, 1.5, 0.08), paint); cab.position.set(0, 0.82, -0.35); cab.castShadow = true; g.add(cab);
+    var bed = new THREE.Mesh(kkRBox(1.8, 0.34, 1.1, 0.06), paint); bed.position.set(0, 0.72, -1.45); bed.castShadow = true; g.add(bed);
+    var shield = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.62, 0.07), new THREE.MeshStandardMaterial({ color: 0x9fd4e8, roughness: 0.12, metalness: 0.4, transparent: true, opacity: 0.4 }));
+    shield.position.set(0, 1.32, 0.42); shield.rotation.x = -0.24; g.add(shield);
+    // Roll cage: two hoops + top bars.
+    var cageM = std(0x22241e, 0.45);
+    [-0.95, 0.35].forEach(function(cz){
+      var hoop = new THREE.Mesh(new THREE.TorusGeometry(0.92, 0.055, 8, 18, Math.PI), cageM);
+      hoop.position.set(0, 1.05, cz); hoop.castShadow = true; g.add(hoop);
+    });
+    [-0.9, 0.9].forEach(function(cx){
+      var bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.4, 8), cageM);
+      bar.rotation.x = Math.PI / 2; bar.position.set(cx, 1.97, -0.3); g.add(bar);
+    });
+    [-0.55, 0.55].forEach(function(sx){
+      var seat = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.55, 0.5), seatM);
+      seat.position.set(sx, 0.95, -0.3); g.add(seat);
+    });
+    var tread = rtxSurface("tread", 128, 3, 1);
+    var wheelM = new THREE.MeshStandardMaterial({ map: tread.map, bumpMap: tread.bump, bumpScale: 0.5, roughness: 0.95 });
+    var hubM = std(0x8b8f7a, 0.4);
+    var wheels = [], fronts = [];
+    [[-0.98, 1.15, 1], [0.98, 1.15, 1], [-0.98, -1.25, 0], [0.98, -1.25, 0]].forEach(function(wp){
+      var pivot = new THREE.Group(); pivot.position.set(wp[0], 0.52, wp[1]);
+      var tyre = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.52, 0.34, 18), wheelM);
+      tyre.rotation.z = Math.PI / 2; tyre.castShadow = true; pivot.add(tyre);
+      var hub = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.37, 10), hubM);
+      hub.rotation.z = Math.PI / 2; pivot.add(hub);
+      g.add(pivot); wheels.push(tyre);
+      if(wp[2]) fronts.push(pivot);
+    });
+    // Rear turret on a pintle — it tracks your aim, Halo-style.
+    var turret = new THREE.Group(); turret.position.set(0, 1.15, -1.5);
+    var tBase = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.36, 0.3, 10), dark); turret.add(tBase);
+    var tGun = new THREE.Group(); tGun.position.y = 0.28;
+    var tBody = new THREE.Mesh(kkRBox(0.24, 0.26, 0.7, 0.05), dark); tBody.castShadow = true; tGun.add(tBody);
+    var tBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.62, 8), std(0x14161a, 0.3));
+    tBarrel.rotation.x = Math.PI / 2; tBarrel.position.set(0, 0.05, 0.6); tGun.add(tBarrel);
+    var tShieldP = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.4, 0.05), paint); tShieldP.position.set(0, 0.02, 0.28); tGun.add(tShieldP);
+    turret.add(tGun); g.add(turret);
+    var lightM = new THREE.MeshStandardMaterial({ color: 0xfff3cf, emissive: 0xffedb5, emissiveIntensity: 1.6, roughness: 0.3 });
+    [-0.6, 0.6].forEach(function(lx){
+      var hl = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.14, 0.06), lightM);
+      hl.position.set(lx, 0.86, 1.87); g.add(hl);
+    });
+    g.userData = { wheels: wheels, fronts: fronts, turret: turret, turretGun: tGun };
+    return g;
+  }
+  function b3BuildGhostMesh(){
+    var g = new THREE.Group();
+    var paint = new THREE.MeshStandardMaterial({ color: 0x6d28b8, roughness: 0.22, metalness: 0.5 });
+    if(b3Probe) rtxReflect(paint, b3Probe, 0.14, 0.8, 1.3);
+    var darkP = new THREE.MeshStandardMaterial({ color: 0x3b1566, roughness: 0.35, metalness: 0.5 });
+    var hull = new THREE.Mesh(new THREE.SphereGeometry(1.05, 20, 14), paint);
+    hull.scale.set(0.95, 0.42, 1.55); hull.position.y = 0.72; hull.castShadow = true; g.add(hull);
+    var spine = new THREE.Mesh(kkRBox(0.62, 0.34, 2.2, 0.12), darkP);
+    spine.position.set(0, 0.95, -0.25); spine.castShadow = true; g.add(spine);
+    var seat = new THREE.Mesh(kkRBox(0.66, 0.3, 0.9, 0.1), std(0x241233, 0.7));
+    seat.position.set(0, 1.06, -0.75); g.add(seat);
+    var fin = new THREE.Mesh(kkRBox(0.1, 0.62, 0.7, 0.04), paint);
+    fin.position.set(0, 1.32, -1.35); fin.rotation.x = 0.35; g.add(fin);
+    var tips = [];
+    [-0.62, 0.62].forEach(function(px){
+      var prong = new THREE.Mesh(kkRBox(0.3, 0.26, 1.25, 0.08), paint);
+      prong.position.set(px, 0.66, 1.35); prong.rotation.y = px > 0 ? -0.1 : 0.1; prong.castShadow = true; g.add(prong);
+      var tip = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.13, 0.2),
+        new THREE.MeshStandardMaterial({ color: 0xd9b8ff, emissive: 0x9a4dff, emissiveIntensity: 1.7, roughness: 0.3 }));
+      tip.position.set(px * 0.94, 0.66, 1.98); g.add(tip);
+      tips.push(tip);
+    });
+    var glowStrip = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.07, 0.07),
+      new THREE.MeshStandardMaterial({ color: 0x7de8ff, emissive: 0x38b6d8, emissiveIntensity: 1.8, roughness: 0.3 }));
+    glowStrip.position.set(0, 0.82, 0.95); g.add(glowStrip);
+    var under = new THREE.Sprite(new THREE.SpriteMaterial({ map: kkGetSoftTex(), color: 0x8a4dff, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
+    under.scale.set(3.4, 1.6, 1); under.position.y = 0.22; g.add(under);
+    g.userData = { tips: tips, under: under };
+    return g;
+  }
+  /* Cockpit dressing attached to the camera while driving: the
+     Hog's hood + cage bars, or the Ghost's prongs, in the lower
+     frame — that's what makes it feel first-person. */
+  var b3HogPit = null, b3GhostPit = null;
+  function b3BuildPits(){
+    b3HogPit = new THREE.Group();
+    var paint = new THREE.MeshStandardMaterial({ color: 0x5f6c38, roughness: 0.45, metalness: 0.3 });
+    var hood = new THREE.Mesh(kkRBox(1.5, 0.16, 0.85, 0.06), paint);
+    hood.position.set(0, -0.52, -1.05); hood.rotation.x = 0.1; b3HogPit.add(hood);
+    var dash = new THREE.Mesh(kkRBox(1.35, 0.2, 0.3, 0.05), std(0x24261f, 0.6));
+    dash.position.set(0, -0.42, -0.55); b3HogPit.add(dash);
+    var wheel = new THREE.Mesh(new THREE.TorusGeometry(0.21, 0.028, 8, 20), std(0x191b16, 0.5));
+    wheel.position.set(-0.34, -0.3, -0.62); wheel.rotation.x = -0.5; b3HogPit.add(wheel);
+    b3HogPit.userData.wheel = wheel;
+    [-0.82, 0.82].forEach(function(bx){
+      var bar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 8), std(0x22241e, 0.45));
+      bar.position.set(bx, 0.28, -0.75); bar.rotation.x = 0.5; b3HogPit.add(bar);
+    });
+    var topBar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.66, 8), std(0x22241e, 0.45));
+    topBar.rotation.z = Math.PI / 2; topBar.position.set(0, 0.68, -1.12); b3HogPit.add(topBar);
+    var pitLight = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.05),
+      new THREE.MeshStandardMaterial({ color: 0x7dff8a, emissive: 0x2e8b3a, emissiveIntensity: 1.5, roughness: 0.3 }));
+    pitLight.position.set(0.2, -0.33, -0.68); b3HogPit.add(pitLight);
+    b3HogPit.visible = false; b3Cam.add(b3HogPit);
+    b3GhostPit = new THREE.Group();
+    var gp = new THREE.MeshStandardMaterial({ color: 0x6d28b8, roughness: 0.25, metalness: 0.5 });
+    [-0.52, 0.52].forEach(function(px){
+      var prong = new THREE.Mesh(kkRBox(0.24, 0.18, 1.0, 0.06), gp);
+      prong.position.set(px, -0.5, -1.0); prong.rotation.y = px > 0 ? 0.08 : -0.08; b3GhostPit.add(prong);
+      var tip = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.14),
+        new THREE.MeshStandardMaterial({ color: 0xd9b8ff, emissive: 0x9a4dff, emissiveIntensity: 1.6, roughness: 0.3 }));
+      tip.position.set(px * 0.92, -0.48, -1.5); b3GhostPit.add(tip);
+    });
+    var holo = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.2),
+      new THREE.MeshBasicMaterial({ color: 0x7de8ff, transparent: true, opacity: 0.35, depthWrite: false }));
+    holo.position.set(0, -0.28, -0.72); holo.rotation.x = -0.35; b3GhostPit.add(holo);
+    b3GhostPit.visible = false; b3Cam.add(b3GhostPit);
+  }
+  /* Two of each, parked by the two bases, on every arena. */
+  function b3PlaceVehicles(){
+    b3.vehicles = [];
+    var defs = [
+      { kind: "hog",   dx: 6.5,  dz: -7 },
+      { kind: "ghost", dx: -6.5, dz: -7 },
+      { kind: "hog",   dx: -6.5, dz: 7, far: true },
+      { kind: "ghost", dx: 6.5,  dz: 7, far: true }
+    ];
+    defs.forEach(function(d){
+      var def = B3_VEH[d.kind];
+      var cx = (d.far ? -b3Spawn.x : b3Spawn.x) + d.dx;
+      var cz = (d.far ? -b3Spawn.z : b3Spawn.z) + d.dz;
+      var spot = b3FindVehSpot(cx, cz, def.rad);
+      var mesh = d.kind === "hog" ? b3BuildHogMesh() : b3BuildGhostMesh();
+      var head = d.far ? 0 : Math.PI;
+      mesh.position.set(spot.x, d.kind === "ghost" ? 0.55 : 0, spot.z);
+      mesh.rotation.y = head;
+      b3Arena.add(mesh);
+      b3.vehicles.push({ kind: d.kind, def: def, mesh: mesh, x: spot.x, z: spot.z, y: d.kind === "ghost" ? 0.55 : 0,
+        head: head, speed: 0, steer: 0, hull: def.hullMax, dead: false, respawnT: 0,
+        home: { x: spot.x, z: spot.z, head: head }, boost: 100, wheelSpin: 0, seed: Math.random() * 10 });
+    });
+  }
+  function b3ResetVehicles(){
+    b3ExitVehicle(true);
+    b3.vehicles.forEach(function(v){
+      v.x = v.home.x; v.z = v.home.z; v.head = v.home.head; v.speed = 0; v.steer = 0;
+      v.hull = v.def.hullMax; v.dead = false; v.respawnT = 0; v.boost = 100;
+      v.mesh.visible = true;
+      v.mesh.position.set(v.x, v.kind === "ghost" ? 0.55 : 0, v.z);
+      v.mesh.rotation.set(0, v.head, 0);
+    });
+    b3VehSyncUi();
+  }
+  function b3WrapPi(a){ while(a > Math.PI) a -= Math.PI * 2; while(a < -Math.PI) a += Math.PI * 2; return a; }
+  /* Engine note: one oscillator pair whose pitch follows speed,
+     started on the mount tap (a user gesture) and stopped on exit. */
+  var b3Eng = null;
+  function b3EngStart(kind){
+    var ac = b3Audio(); if(!ac) return;
+    b3EngStop();
+    try{
+      var o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+      o.type = kind === "ghost" ? "sine" : "sawtooth";
+      o2.type = kind === "ghost" ? "triangle" : "square";
+      o.frequency.value = kind === "ghost" ? 82 : 55; o2.frequency.value = kind === "ghost" ? 164 : 28;
+      f.type = "lowpass"; f.frequency.value = kind === "ghost" ? 900 : 320;
+      g.gain.value = 0.0;
+      o.connect(f); o2.connect(f); f.connect(g); g.connect(ac.destination);
+      o.start(); o2.start();
+      b3Eng = { o: o, o2: o2, g: g, f: f, kind: kind };
+    }catch(e){ b3Eng = null; }
+  }
+  function b3EngStop(){
+    if(!b3Eng) return;
+    try{ b3Eng.o.stop(); b3Eng.o2.stop(); b3Eng.g.disconnect(); }catch(e){}
+    b3Eng = null;
+  }
+  function b3EngUpdate(speedNorm, boosting){
+    if(!b3Eng || !b3AC) return;
+    try{
+      var t = b3AC.currentTime, gh = b3Eng.kind === "ghost";
+      var fr = gh ? 82 + speedNorm * 130 + (boosting ? 60 : 0) : 55 + speedNorm * 95;
+      b3Eng.o.frequency.setTargetAtTime(fr, t, 0.08);
+      b3Eng.o2.frequency.setTargetAtTime(gh ? fr * 2 : fr * 0.5, t, 0.08);
+      b3Eng.f.frequency.setTargetAtTime((gh ? 900 : 320) + speedNorm * 700, t, 0.1);
+      b3Eng.g.gain.setTargetAtTime(0.028 + speedNorm * 0.03, t, 0.1);
+    }catch(e){}
+  }
+  function b3EnterVehicle(v){
+    if(!b3.running || b3.over || b3.veh || !v || v.dead) return;
+    b3.veh = v;
+    b3.vx = 0; b3.vz = 0; b3.vy = 0; b3.py = 0; b3.grounded = true;
+    b3.head = v.head; b3.pitch = 0;
+    b3.fl.yaw = 0; b3.fl.pitch = 0;
+    b3.px = v.x; b3.pz = v.z;
+    b3Audio(); b3EngStart(v.kind);
+    b3Snd("pickup");
+    b3Announce(v.def.name);
+    b3SetMsg(v.kind === "hog"
+      ? "You're driving the Spud Hog — left thumb drives, right thumb works the turret. Run 'em down!"
+      : "You're driving the Spud Ghost — left thumb drives, right thumb fires the cannons. BOOST when you need legs!");
+    b3VehSyncUi();
+  }
+  function b3ExitVehicle(silent){
+    if(!b3.veh) return;
+    var v = b3.veh;
+    b3.veh = null;
+    b3EngStop();
+    // Step out on the vehicle's left, if there's room.
+    var lx = v.x + Math.cos(v.head) * -2.6, lz = v.z + Math.sin(v.head) * 2.6;
+    var rx = v.x + Math.cos(v.head) * 2.6, rz = v.z - Math.sin(v.head) * 2.6;
+    if(!b3Blocked(lx, lz)){ b3.px = lx; b3.pz = lz; }
+    else if(!b3Blocked(rx, rz)){ b3.px = rx; b3.pz = rz; }
+    b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.grounded = true;
+    b3.fl.yaw = 0; b3.fl.pitch = 0;
+    if(!silent) b3Snd("click");
+    b3VehSyncUi();
+  }
+  function b3VehExplode(v){
+    var wasMine = b3.veh === v;
+    v.dead = true; v.respawnT = 20; v.speed = 0;
+    v.mesh.visible = false;
+    if(wasMine){
+      // Clear the mount BEFORE the blast so its damage lands on
+      // the driver (once), not back into the hull.
+      b3.veh = null;
+      b3EngStop();
+      b3.px = v.x; b3.pz = v.z; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.grounded = true;
+      b3.invuln = 0;
+    }
+    b3Explode(v.x, 1, v.z);
+    if(wasMine) b3SetMsg("Your " + v.def.name + " blew up — you're on foot!");
+    b3VehSyncUi();
+  }
+  /* Which vehicle (if any) is close enough to mount right now. */
+  function b3VehNear(){
+    if(b3.veh || !b3.running || b3.over) return null;
+    var best = null, bd = 16.2;
+    b3.vehicles.forEach(function(v){
+      if(v.dead) return;
+      var dx = b3.px - v.x, dz = b3.pz - v.z, d = dx * dx + dz * dz;
+      if(d < bd){ bd = d; best = v; }
+    });
+    return best;
+  }
+  function b3VehSyncUi(){
+    var driving = !!b3.veh;
+    var hud = $("b3VehHud"); if(hud) hud.style.display = driving ? "block" : "none";
+    var boost = $("b3BtnBoost");
+    if(boost){
+      boost.style.display = driving ? "block" : "none";
+      boost.textContent = driving && b3.veh.kind === "ghost" ? "BOOST" : "BRAKE";
+      boost.style.background = driving && b3.veh.kind === "ghost" ? "rgba(70,40,120,.55)" : "rgba(120,40,30,.55)";
+      boost.style.borderColor = driving && b3.veh.kind === "ghost" ? "rgba(200,166,255,.75)" : "rgba(255,150,130,.7)";
+    }
+    var look = $("b3BtnLook"); if(look) look.style.display = driving ? "block" : "none";
+    ["b3BtnJump", "b3BtnNade", "b3BtnSwap"].forEach(function(id){
+      var el = $(id); if(el) el.style.display = driving ? "none" : "";
+    });
+    var enter = $("b3BtnEnter");
+    if(enter){
+      if(driving){ enter.style.display = "block"; enter.textContent = "EXIT"; }
+      else if(b3.nearVeh){ enter.style.display = "block"; enter.textContent = "ENTER"; }
+      else enter.style.display = "none";
+    }
+    var prompt = $("b3VehPrompt");
+    if(prompt){
+      if(!driving && b3.nearVeh){ prompt.style.display = "block"; prompt.textContent = "Tap ENTER or press E — " + b3.nearVeh.def.name; }
+      else prompt.style.display = "none";
+    }
+    var br = $("b3VehBoostRow");
+    if(br) br.style.display = driving && b3.veh.kind === "ghost" ? "flex" : "none";
+    var wn = $("b3VehName"); if(wn && driving) wn.textContent = b3.veh.def.name;
+  }
+  function b3VehFire(){
+    var v = b3.veh; if(!v || v.dead) return;
+    var def = v.def;
+    b3.fired++;
+    b3GunKick = 1;
+    if(b3Muzzle){ b3Muzzle.material.opacity = 0.9; b3Muzzle.material.rotation = Math.random() * 3; }
+    if(b3MuzzleLight) b3MuzzleLight.intensity = 10;
+    b3Snd(v.kind === "hog" ? "blast" : "eshot");
+    var cp = Math.cos(b3.pitch), fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
+    var ox, oy, oz;
+    if(v.kind === "hog"){
+      // From the turret, over the cab.
+      ox = v.x - Math.sin(v.head) * 1.5; oz = v.z - Math.cos(v.head) * 1.5; oy = 1.75;
+    }else{
+      b3.vehAlt = !b3.vehAlt;
+      var side = b3.vehAlt ? 0.6 : -0.6;
+      ox = v.x + Math.cos(v.head) * side + fx * 1.6;
+      oz = v.z - Math.sin(v.head) * side + fz * 1.6;
+      oy = 0.75 + v.y;
+    }
+    b3Fire(false, ox, oy, oz, fx, fy, fz, { dmg: def.dmg, speed: def.boltSpd, rad: def.boltRad, col: def.boltCol });
+  }
+  /* Pseudo-terrain: the arenas are flat, so the bob is sampled
+     from a gentle noise field over position — wheels and hover
+     both ride it, harder the faster you go. */
+  function b3Terrain(x, z){
+    return Math.sin(x * 0.55 + z * 0.23) * Math.cos(z * 0.48 - x * 0.17) * 0.5
+         + Math.sin(x * 1.7) * Math.sin(z * 1.45) * 0.22;
+  }
+  function b3VehStep(dt){
+    var v = b3.veh;
+    // Free-look offsets snap back when the hold ends.
+    if(!b3.fl.held && !b3.fl.btn && !b3Pad.flHeld){
+      var back = 1 - Math.exp(-7 * dt);
+      b3.fl.yaw -= b3.fl.yaw * back;
+      b3.fl.pitch -= b3.fl.pitch * back;
+      if(Math.abs(b3.fl.yaw) < 0.002) b3.fl.yaw = 0;
+      if(Math.abs(b3.fl.pitch) < 0.002) b3.fl.pitch = 0;
+    }
+    if(!v) return;
+    var def = v.def;
+    if(b3.vehFireCd > 0) b3.vehFireCd -= dt;
+    // Right stick aims the turret — or free-looks while LT is held.
+    if(b3Pad.flHeld){
+      b3.fl.yaw -= b3Pad.ax * 2.6 * dt;
+      b3.fl.pitch -= b3Pad.ay * 1.9 * dt;
+      if(b3.fl.pitch > 1.0) b3.fl.pitch = 1.0; else if(b3.fl.pitch < -1.0) b3.fl.pitch = -1.0;
+    }else{
+      b3.head -= b3Pad.ax * 2.6 * dt;
+      b3.pitch -= b3Pad.ay * 1.9 * dt;
+      if(b3.pitch > 1.15) b3.pitch = 1.15; else if(b3.pitch < -1.15) b3.pitch = -1.15;
+    }
+    // --- two-thumb driving inputs (same scheme as on foot) ---
+    var thr = (b3.keys.f ? 1 : 0) - (b3.keys.b ? 1 : 0) - b3.stick.y - b3Pad.my;
+    var str = (b3.keys.sr ? 1 : 0) - (b3.keys.sl ? 1 : 0) + b3.stick.x + b3Pad.mx;
+    if(b3.keys.tl) str -= 1; if(b3.keys.tr) str += 1;
+    thr = Math.max(-1, Math.min(1, thr)); str = Math.max(-1, Math.min(1, str));
+    v.steer += (str - v.steer) * (1 - Math.exp(-10 * dt));
+    var boosting = v.kind === "ghost" && (b3.keys.boost || b3Touch.boostBtn || b3Pad.boost) && thr > 0.1 && v.boost > 0;
+    var braking = v.kind === "hog" && (b3.keys.boost || b3Touch.boostBtn);
+    if(boosting) v.boost = Math.max(0, v.boost - 34 * dt);
+    else v.boost = Math.min(100, v.boost + (thr > 0.1 ? 4 : 11) * dt);
+    var top = def.top * (boosting ? 1.45 : 1);
+    var target = thr >= 0 ? thr * top : thr * def.rev; // thr<0 → reverse (thr is negative)
+    var rate = braking ? 26 : def.accel * (boosting ? 1.7 : 1);
+    if(Math.abs(target) < Math.abs(v.speed) && thr === 0) rate = 7; // coast-down
+    if(v.speed < target) v.speed = Math.min(target, v.speed + rate * dt);
+    else v.speed = Math.max(target, v.speed - rate * dt);
+    // Steering bites harder with speed, and flips in reverse.
+    var spdN = Math.min(1, Math.abs(v.speed) / def.top);
+    if(Math.abs(v.speed) > 0.25){
+      v.head -= v.steer * def.turn * (0.35 + 0.65 * spdN) * (v.speed >= 0 ? 1 : -1) * dt * (v.kind === "ghost" ? 1 : Math.min(1, Math.abs(v.speed) / 4 + 0.25));
+    } else if(v.kind === "ghost"){
+      v.head -= v.steer * def.turn * 0.5 * dt; // a Ghost can pivot on its hover cushion
+    }
+    var fx = Math.sin(v.head), fz = Math.cos(v.head);
+    var nx = v.x + fx * v.speed * dt, nz = v.z + fz * v.speed * dt;
+    if(!b3VehBlockedAt(nx, v.z, def.rad * 0.8)) v.x = nx; else { if(Math.abs(v.speed) > 5){ b3.shake = Math.max(b3.shake, 0.2); b3Snd("hurt"); } v.speed *= -0.25; }
+    if(!b3VehBlockedAt(v.x, nz, def.rad * 0.8)) v.z = nz; else { if(Math.abs(v.speed) > 5){ b3.shake = Math.max(b3.shake, 0.2); b3Snd("hurt"); } v.speed *= -0.25; }
+    // Ride height: wheels follow the noise field, the Ghost floats.
+    var terr = b3Terrain(v.x, v.z);
+    if(v.kind === "ghost"){
+      v.y = 0.55 + Math.sin(b3.time * 2.1 + v.seed) * 0.07 + terr * 0.1 * spdN;
+    }else{
+      v.y = terr * 0.16 * Math.min(1, Math.abs(v.speed) / 6);
+    }
+    b3.vehBob = terr * Math.abs(v.speed);
+    b3.vehSway = v.steer * spdN;
+    v.mesh.position.set(v.x, v.y, v.z);
+    var pitchM = v.kind === "ghost" ? (thr * -0.05 - (boosting ? 0.05 : 0)) : terr * 0.05 * spdN;
+    var rollM = v.kind === "ghost" ? v.steer * -0.14 * spdN : v.steer * 0.06 * spdN + terr * 0.03 * spdN;
+    v.mesh.rotation.set(pitchM, v.head, rollM);
+    // Wheels spin, front wheels steer, turret tracks your aim.
+    var ud = v.mesh.userData;
+    if(ud.wheels){
+      v.wheelSpin += v.speed * dt / 0.52;
+      ud.wheels.forEach(function(w){ w.rotation.x = v.wheelSpin; });
+      ud.fronts.forEach(function(p){ p.rotation.y = -v.steer * 0.42; });
+      if(ud.turret) ud.turret.rotation.y = b3WrapPi(b3.head - v.head);
+      if(ud.turretGun) ud.turretGun.rotation.x = -b3.pitch * 0.8;
+    }
+    if(ud.under) ud.under.material.opacity = 0.35 + spdN * 0.3 + Math.sin(b3.time * 6 + v.seed) * 0.06;
+    // The player rides at the vehicle's position.
+    b3.px = v.x; b3.pz = v.z; b3.py = 0;
+    b3.jumpQ = false; // no bunny-hopping out of the driver's seat
+    b3EngUpdate(spdN, boosting);
+    // Road splats: at speed, whatever you hit is done.
+    if(Math.abs(v.speed) > 5.5){
+      b3.enemies.forEach(function(e){
+        if(e.respawn > 0) return;
+        var dx = e.x - v.x, dz = e.z - v.z;
+        if(dx * dx + dz * dz < (def.rad + 0.9) * (def.rad + 0.9)){
+          b3SplatEnemy(e);
+          b3Announce("ROAD SPUD!");
+          b3Snd("boom");
+          b3.shake = Math.max(b3.shake, 0.22);
+          v.speed *= 0.82;
+        }
+      });
+    }
+    // Vehicle weapons: FIRE button / F / RT, aimed by the look thumb.
+    if((b3.keys.fire || b3Touch.fire || b3Touch.fireBtn || b3Pad.fire) && b3.vehFireCd <= 0){
+      b3.vehFireCd = def.cd;
+      b3VehFire();
+    }
+  }
+  /* Parked vehicles idle: Ghosts hover-bob, wrecks count down to
+     respawn, and the mount prompt tracks what's nearby. */
+  function b3VehIdle(dt){
+    b3.vehicles.forEach(function(v){
+      if(v.dead){
+        v.respawnT -= dt;
+        if(v.respawnT <= 0 && b3.veh !== v){
+          v.dead = false; v.hull = v.def.hullMax; v.speed = 0; v.boost = 100;
+          v.x = v.home.x; v.z = v.home.z; v.head = v.home.head;
+          v.mesh.visible = true;
+          kkBurst(b3Fx, v.x, 1.2, v.z, 14, 0x7dff8a, 3, 3, 0.5);
+        }
+        return;
+      }
+      if(b3.veh === v) return;
+      if(v.kind === "ghost"){
+        v.mesh.position.y = 0.55 + Math.sin(b3.time * 2.1 + v.seed) * 0.07;
+      }
+    });
+    var near = b3VehNear();
+    if(near !== b3.nearVeh){ b3.nearVeh = near; b3VehSyncUi(); }
+  }
+
   function b3BuildMap(){
     b3.crates = [];
     b3ProbePos = null; // builders with reflective surfaces set their own
@@ -4999,9 +5477,11 @@
       b3BuildGulch();
     }
     b3PlacePacks();
+    b3PlaceVehicles();
     var info = $("b3MapInfo"); if(info) info.innerHTML = B3_MAPS[b3MapIdx].info;
   }
   function b3SetMap(idx){
+    b3ExitVehicle(true);
     b3MapIdx = Math.max(0, Math.min(B3_MAPS.length - 1, idx | 0));
     var sel = $("b3MapSel"); if(sel) sel.value = String(b3MapIdx);
     if(!b3Renderer){ var inf = $("b3MapInfo"); if(inf) inf.innerHTML = B3_MAPS[b3MapIdx].info; return; }
@@ -5203,6 +5683,7 @@
     b3Gun.position.set(0.26, -0.24, -0.55);
     b3Cam.add(b3Gun);
     b3Scene.add(b3Cam);
+    b3BuildPits();
     // Bloom composer — bolts, trim lights and the ring pop. Any
     // failure here falls back to the plain renderer in b3Frame.
     try{
@@ -5270,6 +5751,16 @@
       if(c.w){ if(Math.abs(dx) < c.w + 0.55 && Math.abs(dz) < c.d + 0.55) return true; }
       else if(dx * dx + dz * dz < (c.r + 0.55) * (c.r + 0.55)) return true;
     }
+    // Parked vehicles are solid on foot (your own ride isn't — you
+    // step out beside it, already clear).
+    if(!b3.veh){
+      for(var vi = 0; vi < b3.vehicles.length; vi++){
+        var vv = b3.vehicles[vi];
+        if(vv.dead) continue;
+        var vdx = x - vv.x, vdz = z - vv.z, vr = vv.def.rad + 0.45;
+        if(vdx * vdx + vdz * vdz < vr * vr) return true;
+      }
+    }
     return false;
   }
   function b3Fire(fromEnemy, ex, ey, ez, dirx, diry, dirz, opt){
@@ -5288,6 +5779,7 @@
     b3.shots.push({ mesh: grp, x: ex, y: ey, z: ez, vx: dirx * sp, vy: diry * sp, vz: dirz * sp, enemy: fromEnemy, dmg: opt.dmg || 9, life: 2.6 });
   }
   function b3PlayerFire(){
+    if(b3.veh) return; // vehicle weapons fire from b3VehStep on their own cooldown
     if(!b3.running || b3.over || b3.fireCd > 0 || b3.reloading > 0 || b3.swapT > 0) return;
     var w = B3_WEAPONS[b3.wep];
     if(b3.mag[b3.wep] <= 0){ b3Snd("click"); b3Reload(); b3.fireCd = 0.3; return; }
@@ -5399,6 +5891,22 @@
   }
   function b3DamagePlayer(dmg, srcAngle){
     if(b3.invuln > 0 || b3.over || !b3.running) return;
+    if(b3.veh){
+      // In a vehicle the hull takes the hit, not you.
+      var v = b3.veh;
+      v.hull -= dmg;
+      b3.dmgVinT = 0.5; b3.shieldFxT = 0.3;
+      b3.shake = Math.max(b3.shake, 0.15);
+      if(srcAngle != null){
+        var relV = srcAngle - b3.head;
+        b3.dmgDirRot = -relV * 180 / Math.PI;
+        b3.dmgDirT = 0.8;
+      }
+      b3Snd("hurt");
+      if(v.hull <= 0){ v.hull = 0; b3VehExplode(v); }
+      else if(v.hull < v.def.hullMax * 0.3) b3SetMsg(v.def.name + " hull critical — bail or break contact!");
+      return;
+    }
     b3.lastHurt = b3.time;
     b3.recharging = false;
     b3.dmgVinT = 0.55;
@@ -5439,6 +5947,7 @@
   function b3EndMatch(won){
     if(b3.over) return;
     b3.over = true;
+    b3EngStop();
     $("b3Start").textContent = "Play Again";
     b3SyncStartBtn();
     if(won){
@@ -5491,6 +6000,15 @@
       dd.style.opacity = b3.dmgDirT > 0 ? String(Math.min(1, b3.dmgDirT * 1.4)) : "0";
       dd.style.transform = "rotate(" + b3.dmgDirRot.toFixed(1) + "deg)";
     }
+    if(b3.veh){
+      var vs = $("b3VehSpeed"); if(vs) vs.textContent = String(Math.round(Math.abs(b3.veh.speed) * 2.4));
+      var vh = $("b3VehHullFill");
+      if(vh){ var hp = Math.max(0, b3.veh.hull / b3.veh.def.hullMax * 100); vh.style.width = hp + "%"; vh.style.background = hp > 50 ? "#e8a33c" : hp > 25 ? "#ff8a3c" : "#ff5a4d"; }
+      var vb = $("b3VehBoostFill"); if(vb) vb.style.width = b3.veh.boost + "%";
+      var wn2 = $("b3WepName"); if(wn2) wn2.textContent = b3.veh.def.wepName;
+      var at2 = $("b3AmmoTxt"); if(at2) at2.textContent = "∞";
+      var rt2 = $("b3ReserveTxt"); if(rt2) rt2.textContent = "";
+    }
   }
   function b3Step(dt){
     b3.time += dt;
@@ -5522,9 +6040,13 @@
     b3PollPad();
     if(b3Pad.startEdge && (b3.over || !b3.running)) b3Start();
     if(b3Pad.jumpEdge) b3.jumpQ = true;
+    if(b3Pad.enterEdge){ if(b3.veh) b3ExitVehicle(false); else { var nv = b3VehNear(); if(nv) b3EnterVehicle(nv); } }
     if(b3Pad.swapEdge) b3SwapWeapon();
     if(b3Pad.nadeEdge) b3ThrowNade();
     if(b3Pad.reloadEdge) b3Reload();
+    // ---- Driving replaces foot movement while you're mounted ----
+    if(b3.veh){ b3VehStep(dt); }
+    else{
     // ---- Halo movement: velocity-smoothed strafing, floaty jump ----
     var turn = (b3.keys.tl ? 1 : 0) - (b3.keys.tr ? 1 : 0);
     b3.head += turn * 2.4 * dt;
@@ -5556,6 +6078,8 @@
     }
     if(b3.grounded && !wasGrounded) b3.landDip = 1;
     if(b3.keys.fire || b3Touch.fire || b3Touch.fireBtn || b3Pad.fire) b3PlayerFire();
+    }
+    b3VehIdle(dt);
     // Enemies: hold a range band for their role, strafe across the
     // player's view, hop, and fire bursts that get truer as you score.
     var ramp = Math.min(1, b3.splats * 0.09);
@@ -5645,7 +6169,9 @@
       if(hitWall) kkBurst(b3Fx, s.x, s.y, s.z, 4, 0xffd9a0, 2.5, 2, 0.25);
       if(!dead && s.enemy){
         var hx = s.x - b3.px, hz = s.z - b3.pz;
-        if(hx * hx + hz * hz < 1.0 && s.y > b3.py - 0.2 && s.y < b3.py + 1.9){
+        var hitR = b3.veh ? (b3.veh.def.rad + 0.6) * (b3.veh.def.rad + 0.6) : 1.0;
+        var hitTop = b3.veh ? 3.0 : b3.py + 1.9;
+        if(hx * hx + hz * hz < hitR && s.y > b3.py - 0.2 && s.y < hitTop){
           b3DamagePlayer(s.dmg, Math.atan2(s.x - b3.px, s.z - b3.pz));
           dead = true;
         }
@@ -5686,14 +6212,40 @@
   }
   function b3Frame(){
     if(!b3.ok) return;
-    var cp = Math.cos(b3.pitch);
-    var fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
+    var lookHead = b3.head + b3.fl.yaw, lookPitch = b3.pitch + b3.fl.pitch;
+    if(lookPitch > 1.3) lookPitch = 1.3; else if(lookPitch < -1.3) lookPitch = -1.3;
+    var cp = Math.cos(lookPitch);
+    var fx = Math.sin(lookHead) * cp, fz = Math.cos(lookHead) * cp, fy = Math.sin(lookPitch);
     var shx = b3.shake > 0 ? (Math.random() - 0.5) * b3.shake * 0.13 : 0;
     var shy = b3.shake > 0 ? (Math.random() - 0.5) * b3.shake * 0.13 : 0;
     if(b3.landDip > 0) b3.landDip = Math.max(0, b3.landDip - 0.07);
     var dip = -b3.landDip * 0.085;
-    b3Cam.position.set(b3.px + shx, 1.62 + b3.py + dip + shy, b3.pz);
-    b3Cam.lookAt(b3.px + fx + shx * 2, 1.62 + b3.py + fy + dip + shy * 2, b3.pz + fz);
+    if(b3.veh){
+      // First-person in the driver's seat: eye over the vehicle,
+      // head sway from steering, terrain bob from the ground field,
+      // and the cockpit dressing (hood / prongs) in the lower frame.
+      var v = b3.veh;
+      var spdN = Math.min(1, Math.abs(v.speed) / v.def.top);
+      var bobY = Math.sin(b3.time * 11) * 0.02 * spdN + b3.vehBob * 0.012;
+      var bobP = Math.sin(b3.time * 9.3 + 1) * 0.006 * spdN + b3.vehBob * 0.004;
+      var eyeY = v.def.eye + v.y + bobY;
+      var ex = v.x - Math.sin(v.head) * 0.25, ez = v.z - Math.cos(v.head) * 0.25;
+      b3Cam.position.set(ex + shx, eyeY + shy, ez);
+      b3Cam.lookAt(ex + fx + shx * 2, eyeY + fy + bobP + shy * 2, ez + fz);
+      b3Cam.rotateZ(-b3.vehSway * 0.055 + Math.sin(b3.time * 7.7) * 0.004 * spdN + (b3.shake > 0 ? (Math.random() - 0.5) * b3.shake * 0.05 : 0));
+      if(b3Gun) b3Gun.visible = false;
+      if(b3HogPit) b3HogPit.visible = v.kind === "hog";
+      if(b3GhostPit) b3GhostPit.visible = v.kind === "ghost";
+      if(b3HogPit && b3HogPit.userData.wheel) b3HogPit.userData.wheel.rotation.z = -v.steer * 1.1;
+      var lk = $("b3VehLook");
+      if(lk) lk.style.display = (Math.abs(b3.fl.yaw) > 0.03 || Math.abs(b3.fl.pitch) > 0.03) ? "block" : "none";
+    }else{
+      b3Cam.position.set(b3.px + shx, 1.62 + b3.py + dip + shy, b3.pz);
+      b3Cam.lookAt(b3.px + fx + shx * 2, 1.62 + b3.py + fy + dip + shy * 2, b3.pz + fz);
+      if(b3Gun) b3Gun.visible = true;
+      if(b3HogPit) b3HogPit.visible = false;
+      if(b3GhostPit) b3GhostPit.visible = false;
+    }
     if(b3Gun){
       if(b3GunKick > 0) b3GunKick = Math.max(0, b3GunKick - 0.09);
       var bob = (b3.grounded && (Math.abs(b3.vx) + Math.abs(b3.vz)) > 1) ? Math.sin(b3.time * 9) * 0.008 : 0;
@@ -5750,6 +6302,8 @@
     b3Guns.forEach(function(g, gi){ g.visible = gi === 0; });
     b3.packs.forEach(function(p){ p.active = true; p.mesh.visible = true; p.respawnT = 0; });
     b3.px = b3Spawn.x; b3.pz = b3Spawn.z; b3.head = b3Spawn.head; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.grounded = true; b3.invuln = 0;
+    b3.fl.yaw = 0; b3.fl.pitch = 0; b3.vehFireCd = 0;
+    b3ResetVehicles();
     b3.shots.forEach(function(s){ b3Scene.remove(s.mesh); });
     b3.shots = [];
     b3.enemies.forEach(function(e){
@@ -5779,6 +6333,16 @@
      JUMP / TOT / SWAP are taps. They live outside b3Mount so they
      never turn into aim drags. */
   holdBtn($("b3BtnFire"), function(){ b3Audio(); b3Touch.fireBtn = true; }, function(){ b3Touch.fireBtn = false; });
+  /* Vehicle thumb buttons: ENTER/EXIT is a tap, BOOST is a hold
+     (Ghost boost / Hog handbrake), LOOK is a hold that turns the
+     right-thumb drag into free-look instead of aim. */
+  holdBtn($("b3BtnEnter"), function(){
+    b3Audio();
+    if(b3.veh) b3ExitVehicle(false);
+    else { var nv = b3VehNear(); if(nv) b3EnterVehicle(nv); }
+  });
+  holdBtn($("b3BtnBoost"), function(){ b3Audio(); b3Touch.boostBtn = true; }, function(){ b3Touch.boostBtn = false; });
+  holdBtn($("b3BtnLook"), function(){ b3Audio(); b3.fl.btn = true; }, function(){ b3.fl.btn = false; });
   holdBtn($("b3BtnJump"), function(){ b3Audio(); if(b3.running && !b3.over) b3.jumpQ = true; });
   holdBtn($("b3BtnNade"), function(){ b3Audio(); b3ThrowNade(); });
   holdBtn($("b3BtnSwap"), function(){ b3Audio(); b3SwapWeapon(); });
@@ -5791,10 +6355,15 @@
      (double-tap). Mouse works the same way for desktop testing. */
   if(b3Mount){
     function b3Pt(e){ var r = b3Mount.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width }; }
+    b3Mount.addEventListener("contextmenu", function(e){ e.preventDefault(); });
     b3Mount.addEventListener("pointerdown", function(e){
       var p = b3Pt(e);
       try{ b3Mount.setPointerCapture(e.pointerId); }catch(err){}
-      if(p.x < p.w / 2 && b3Touch.moveId === null){
+      if(e.button === 2 && b3.veh){
+        // Right-mouse drag while driving: free-look — the camera
+        // roams, the turret aim stays locked where it was.
+        b3.fl.freeId = e.pointerId; b3.fl.held = true; b3.fl.ax = p.x; b3.fl.ay = p.y;
+      }else if(p.x < p.w / 2 && b3Touch.moveId === null){
         b3Touch.moveId = e.pointerId; b3Touch.mx0 = p.x; b3Touch.my0 = p.y;
         b3.stick.x = 0; b3.stick.y = 0;
       }else if(b3Touch.aimId === null){
@@ -5808,7 +6377,16 @@
     });
     b3Mount.addEventListener("pointermove", function(e){
       var p = b3Pt(e);
-      if(e.pointerId === b3Touch.moveId){
+      if(e.pointerId === b3.fl.freeId){
+        var fdx = p.x - b3.fl.ax, fdy = p.y - b3.fl.ay;
+        b3.fl.ax = p.x; b3.fl.ay = p.y;
+        if(b3.running && !b3.over){
+          b3.fl.yaw -= fdx * 0.0052;
+          b3.fl.pitch -= fdy * 0.0052;
+          if(b3.fl.pitch > 1.0) b3.fl.pitch = 1.0; else if(b3.fl.pitch < -1.0) b3.fl.pitch = -1.0;
+        }
+        if(!b3.running) b3Frame();
+      }else if(e.pointerId === b3Touch.moveId){
         var dx = p.x - b3Touch.mx0, dy = p.y - b3Touch.my0;
         var len = Math.sqrt(dx * dx + dy * dy), max = 52;
         if(len > max){ dx *= max / len; dy *= max / len; }
@@ -5817,9 +6395,16 @@
         var mdx = p.x - b3Touch.ax, mdy = p.y - b3Touch.ay;
         b3Touch.aimMoved += Math.abs(mdx) + Math.abs(mdy);
         if(b3.running && !b3.over){
-          b3.head -= mdx * 0.0052;
-          b3.pitch -= mdy * 0.0052;
-          if(b3.pitch > 1.15) b3.pitch = 1.15; else if(b3.pitch < -1.15) b3.pitch = -1.15;
+          if(b3.veh && b3.fl.btn){
+            // LOOK held: this drag free-looks, aim stays locked.
+            b3.fl.yaw -= mdx * 0.0052;
+            b3.fl.pitch -= mdy * 0.0052;
+            if(b3.fl.pitch > 1.0) b3.fl.pitch = 1.0; else if(b3.fl.pitch < -1.0) b3.fl.pitch = -1.0;
+          }else{
+            b3.head -= mdx * 0.0052;
+            b3.pitch -= mdy * 0.0052;
+            if(b3.pitch > 1.15) b3.pitch = 1.15; else if(b3.pitch < -1.15) b3.pitch = -1.15;
+          }
         }
         b3Touch.ax = p.x; b3Touch.ay = p.y;
         if(!b3.running) b3Frame();
@@ -5829,6 +6414,7 @@
     function b3TouchEnd(e){
       if(e.pointerId === b3Touch.moveId){ b3Touch.moveId = null; b3.stick.x = 0; b3.stick.y = 0; }
       if(e.pointerId === b3Touch.aimId){ b3Touch.aimId = null; b3Touch.fire = false; }
+      if(e.pointerId === b3.fl.freeId){ b3.fl.freeId = null; b3.fl.held = false; }
     }
     b3Mount.addEventListener("pointerup", b3TouchEnd);
     b3Mount.addEventListener("pointercancel", b3TouchEnd);
@@ -5952,6 +6538,13 @@
     else if(e.key === "q" || e.key === "Q"){ if(b3.running && !b3.over) b3SwapWeapon(); }
     else if(e.key === "r" || e.key === "R"){ if(b3.running && !b3.over) b3Reload(); }
     else if(e.key === "g" || e.key === "G"){ if(b3.running && !b3.over) b3ThrowNade(); }
+    else if(e.key === "e" || e.key === "E"){
+      if(b3.running && !b3.over){
+        if(b3.veh) b3ExitVehicle(false);
+        else { var nv2 = b3VehNear(); if(nv2) b3EnterVehicle(nv2); }
+      }
+    }
+    else if(e.key === "Shift"){ b3.keys.boost = true; }
     else if(e.key === " "){ if(b3.running && !b3.over){ b3.jumpQ = true; e.preventDefault(); } }
   });
   document.addEventListener("keyup", function(e){
@@ -5962,6 +6555,7 @@
     else if(e.key === "ArrowLeft") b3.keys.tl = false;
     else if(e.key === "ArrowRight") b3.keys.tr = false;
     else if(e.key === "f" || e.key === "F") b3.keys.fire = false;
+    else if(e.key === "Shift") b3.keys.boost = false;
   });
 
   /* ---------------- Spud Escape 3D — the WebGL escape run ---------------- */
