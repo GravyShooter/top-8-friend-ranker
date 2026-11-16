@@ -602,6 +602,22 @@
       #kkStage:fullscreen #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
       #kkStage:-webkit-full-screen{ background:#000; }
       #kkStage:-webkit-full-screen #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      /* Kart fake full screen: browsers with no element Fullscreen
+         API (iPhone Safari) get a fixed, viewport-filling stage
+         instead — same filled view, thumb pads stay on screen, and
+         the in-stage button below is the way back out. */
+      #kkStage.kk-fakefs{ position:fixed; inset:0; z-index:2000; background:#000; }
+      #kkStage.kk-fakefs #kkMount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
+      /* While the stage is full screen (real or fake) the thumb
+         pads are forced on, whatever the media queries think. */
+      #kkStage.kk-fs-on #kkTouchUI{ display:block; }
+      /* In-stage full screen toggle: it lives inside the stage with
+         the driving controls, so it is reachable before, during and
+         after a race — including while full screen, when the Start
+         and Full Screen buttons below the stage no longer exist
+         on screen. */
+      #kkFsBtn{ position:absolute; top:8px; left:8px; z-index:6; width:42px; height:42px; border-radius:10px; border:2px solid rgba(255,255,255,.65); background:rgba(10,18,32,.5); color:#fff; font-size:19px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; box-shadow:0 4px 14px rgba(0,0,0,.35); }
+      #kkFsBtn:active{ background:rgba(255,255,255,.75); color:#12233f; }
       #b3Stage:fullscreen{ background:#000; }
       #b3Stage:fullscreen #b3Mount{ aspect-ratio:auto; width:100%; height:100%; border:0; border-radius:0; }
       #b3Stage:-webkit-full-screen{ background:#000; }
@@ -1048,6 +1064,7 @@
                   <div class="scoreline"><span>Track <b id="kkTrackName">Spud Circuit</b></span><span>Lap <b id="kkLap">— / 3</b></span><span>Position <b id="kkPos">—</b></span><span>Time <b id="kkTime">0.0 s</b></span><span>Spud Coins <b id="kkCoins">0</b></span><span>Item <b id="kkItem">— hit a ? crate</b></span><span>Speed <b id="kkSpeed">0</b></span><span>Best <b id="kartBest">—</b></span><span id="kkMsg" style="font-weight:bold; color:var(--orange);"></span></div>
                   <div id="kkStage" style="position:relative;">
                     <div id="kkMount" style="width:100%; aspect-ratio:16/10; background:#1d2b45; border:2px solid #333; border-radius:6px; overflow:hidden; touch-action:none;"></div>
+                    <button id="kkFsBtn" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button>
                     <canvas id="kkMap" width="150" height="110" style="position:absolute; top:8px; right:8px; background:rgba(10,18,32,.55); border:1px solid rgba(255,255,255,.35); border-radius:6px; pointer-events:none;"></canvas>
                     <div id="kkBig" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:46px; font-weight:800; color:#fff; text-shadow:0 3px 12px rgba(0,0,0,.6); pointer-events:none; letter-spacing:1px;"></div>
                     <div id="kkTouchUI" aria-hidden="false">
@@ -1080,7 +1097,7 @@
                     <button class="btn orange" id="kkStart" type="button">Start Race</button>
                     <button class="btn" id="kkFullBtn" type="button">Full Screen</button>
                   </div>
-                  <p class="game-sub" style="margin-top:4px;"><b>Mario Kart Tour controls, now with visible thumb pads:</b> your kart <b>accelerates by itself</b>, and <b>Smart Steering</b> gently keeps you on the road — the tracks are wider now, too. <b>Cam Spud</b> — the camera guy on the cloud — runs the start lights, holds the lap and WRONG WAY boards, and <b>fishes you back</b> when you leave the road for good (or fall off Rainbow Spud Road entirely). Every track hides <b>secret routes</b>: full-speed cuts marked only by a wooden sign and a line of coins, drawn as dashed gold lines on the minimap. <b>Left thumb:</b> hold the <b>◀ ▶ pads</b> (or just <b>drag on the track</b>) to steer. <b>Right thumb:</b> hold <b>DRIFT</b> with a steer to hop into a drift, then let go for the mini-turbo; tap <b>ITEM</b> to use what you're carrying — or tap mid-air off a ramp for a trick. At the lights, <b>hold any pad from the last light</b> for a rocket start. <b>Full Screen</b> fills the display and turns the race landscape. <span id="kkPadStatus">An Xbox or any standard controller works too — pair it and press any button: left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.</span></p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Mario Kart Tour controls, now with visible thumb pads:</b> your kart <b>accelerates by itself</b>, and <b>Smart Steering</b> gently keeps you on the road — the tracks are wider now, too. <b>Cam Spud</b> — the camera guy on the cloud — runs the start lights, holds the lap and WRONG WAY boards, and <b>fishes you back</b> when you leave the road for good (or fall off Rainbow Spud Road entirely). Every track hides <b>secret routes</b>: full-speed cuts marked only by a wooden sign and a line of coins, drawn as dashed gold lines on the minimap. <b>Left thumb:</b> hold the <b>◀ ▶ pads</b> (or just <b>drag on the track</b>) to steer. <b>Right thumb:</b> hold <b>DRIFT</b> with a steer to hop into a drift, then let go for the mini-turbo; tap <b>ITEM</b> to use what you're carrying — or tap mid-air off a ramp for a trick. At the lights, <b>hold any pad from the last light</b> for a rocket start. <b>Full Screen</b> fills the display and turns the race landscape — and on a phone you don't have to hunt for it: <b>Start Race</b> goes full screen by itself in the same tap, and the <b>⛶</b> button in the corner of the race view gets you in or out any time without leaving the controls. <span id="kkPadStatus">An Xbox or any standard controller works too — pair it and press any button: left stick steers, RT accelerates, LT brakes, LB/RB drift, X uses your item, Start begins the race.</span></p>
                   <div class="chal-row">
                     <select id="kkTrackSel" aria-label="Choose your track">
                       <option value="0">1 · Spud Circuit — the original house circuit</option>
@@ -8034,7 +8051,11 @@
      steer (a hard, held drag drifts; releasing it fires the charged
      mini-turbo), tap the track to use an item / do a mid-air trick.
      No hold-buttons at all — one finger does everything. */
-  $("kkStart").addEventListener("click", kkStartRace);
+  /* Start Race is one tap on a phone: the same tap that starts the
+     race also takes the stage full screen (kkAutoFullscreen, below),
+     so nobody has to start, then go hunting for the separate Full
+     Screen button while the countdown is already running. */
+  $("kkStart").addEventListener("click", function(){ kkStartRace(); kkAutoFullscreen(); });
   if(kkMount){
     kkMount.addEventListener("pointerdown", function(e){
       if(kkTouch.on) return;
@@ -8097,45 +8118,97 @@
   var kkResAgainBtn = $("kkResAgain"), kkResCloseBtn = $("kkResClose");
   if(kkResAgainBtn) kkResAgainBtn.addEventListener("click", function(){
     kkHideResults();
-    if(kk.mode !== "server") kkStartRace();
+    if(kk.mode !== "server"){ kkStartRace(); kkAutoFullscreen(); }
   });
   if(kkResCloseBtn) kkResCloseBtn.addEventListener("click", function(){ kkHideResults(); });
-  /* Full screen + landscape: the stage fills the display and the
-     browser is asked to lock landscape while it's up (phones that
-     can't lock still fill the width sideways). The renderer resizes
-     to whatever the stage becomes. */
+  /* Full screen + landscape, without the two-tap dance. The old
+     flow made you tap Start Race, then tap a separate Full Screen
+     button below the stage — and if you went full screen first,
+     the Start button wasn't in the full screen element at all, so
+     it was gone until you backed out. Now:
+       - Start Race / Race Again on a touch device enter full
+         screen as part of the same tap (kkAutoFullscreen).
+       - A ⛶ button inside the stage toggles it any time, so
+         entering and exiting never means leaving the race view
+         or losing the thumb pads.
+       - Browsers with no element Fullscreen API (iPhone Safari)
+         get a fake full screen: the stage is fixed over the whole
+         viewport with the pads forced on, ⛶ shrinks it back.
+     The browser is asked to lock landscape while real full screen
+     is up (phones that can't lock still fill the width sideways),
+     and the renderer resizes to whatever the stage becomes. */
   var kkFullBtn = $("kkFullBtn");
-  if(kkFullBtn){
-    kkFullBtn.addEventListener("click", function(){
-      var stage = $("kkStage");
-      if(document.fullscreenElement || document.webkitFullscreenElement){
-        if(document.exitFullscreen) document.exitFullscreen();
-        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
-        return;
-      }
-      if(!stage || !(stage.requestFullscreen || stage.webkitRequestFullscreen)){
-        kkSetMsg("Full screen isn't available in this browser — rotate your phone sideways and the race fills the width instead.");
-        return;
-      }
-      function lockLand(){
-        try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
-      }
+  var kkFsBtn = $("kkFsBtn");
+  function kkFsOn(){
+    var stage = $("kkStage");
+    return !!(document.fullscreenElement || document.webkitFullscreenElement) ||
+      !!(stage && stage.classList.contains("kk-fakefs"));
+  }
+  function kkLockLand(){
+    try{ if(screen.orientation && screen.orientation.lock){ var lp = screen.orientation.lock("landscape"); if(lp && lp.catch) lp.catch(function(){}); } }catch(e){}
+  }
+  function kkFsSync(){
+    var on = kkFsOn(), stage = $("kkStage");
+    if(stage){ if(on) stage.classList.add("kk-fs-on"); else stage.classList.remove("kk-fs-on"); }
+    if(kkFullBtn) kkFullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
+    if(kkFsBtn){ kkFsBtn.textContent = on ? "✕" : "⛶"; kkFsBtn.title = on ? "Exit full screen" : "Full screen"; }
+  }
+  function kkFakeFullscreen(){
+    var stage = $("kkStage"); if(!stage) return;
+    stage.classList.add("kk-fakefs");
+    document.documentElement.style.overflow = "hidden";
+    if(document.body) document.body.style.overflow = "hidden";
+    kkFsSync();
+    setTimeout(kkResize, 60); setTimeout(kkResize, 350);
+  }
+  function kkEnterFullscreen(quiet){
+    var stage = $("kkStage"); if(!stage || kkFsOn()) return;
+    if(stage.requestFullscreen || stage.webkitRequestFullscreen){
       var p = null;
       try{ p = stage.requestFullscreen({ navigationUI: "hide" }); }
       catch(e){ try{ p = stage.requestFullscreen(); }catch(e2){ try{ stage.webkitRequestFullscreen(); }catch(e3){} } }
-      if(p && p.then) p.then(lockLand, function(){ kkSetMsg("Full screen was blocked there — the race still plays fine as-is."); });
-      else lockLand();
-      setTimeout(kkResize, 120);
-    });
-    function kkFsChange(){
-      var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
-      kkFullBtn.textContent = on ? "Exit Full Screen" : "Full Screen";
-      if(!on && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+      if(p && p.then) p.then(function(){ kkLockLand(); kkFsSync(); }, function(){ kkFakeFullscreen(); });
+      else { kkLockLand(); setTimeout(kkResize, 120); }
+    } else {
+      kkFakeFullscreen();
+      if(!quiet) kkSetMsg("This browser has no full screen of its own — the race view is stretched to fill the screen instead. Tap ✕ in the corner to shrink it back.");
+    }
+  }
+  function kkExitFullscreen(){
+    var stage = $("kkStage");
+    if(document.fullscreenElement || document.webkitFullscreenElement){
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
+    if(stage && stage.classList.contains("kk-fakefs")){
+      stage.classList.remove("kk-fakefs");
+      document.documentElement.style.overflow = "";
+      if(document.body) document.body.style.overflow = "";
+      kkFsSync();
       setTimeout(kkResize, 60); setTimeout(kkResize, 350);
     }
-    document.addEventListener("fullscreenchange", kkFsChange);
-    document.addEventListener("webkitfullscreenchange", kkFsChange);
   }
+  function kkToggleFullscreen(){ if(kkFsOn()) kkExitFullscreen(); else kkEnterFullscreen(false); }
+  /* Auto full screen rides along on a real tap (Start Race / Race
+     Again) on touch devices only — desktop keeps the buttons, and
+     a gamepad start press can't grant the gesture full screen
+     needs, so it simply isn't attempted there. */
+  function kkAutoFullscreen(){
+    if(kkFsOn()) return;
+    var coarse = false;
+    try{ coarse = !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }catch(e){}
+    if(!coarse && !("ontouchstart" in window)) return;
+    kkEnterFullscreen(true);
+  }
+  if(kkFullBtn) kkFullBtn.addEventListener("click", kkToggleFullscreen);
+  if(kkFsBtn) kkFsBtn.addEventListener("click", kkToggleFullscreen);
+  function kkFsChange(){
+    kkFsSync();
+    if(!kkFsOn() && screen.orientation && screen.orientation.unlock){ try{ screen.orientation.unlock(); }catch(e){} }
+    setTimeout(kkResize, 60); setTimeout(kkResize, 350);
+  }
+  document.addEventListener("fullscreenchange", kkFsChange);
+  document.addEventListener("webkitfullscreenchange", kkFsChange);
   /* Controller connect/disconnect notes in the controls line. */
   window.addEventListener("gamepadconnected", function(e){
     var el = $("kkPadStatus");
