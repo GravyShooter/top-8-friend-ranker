@@ -878,7 +878,7 @@
                 <div class="game-card">
                   <span class="game-tag">WEBGL 3D · FIRST-PERSON</span>
                   <h4>Tate-lo 3D — WebGL</h4>
-                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump, gold and red Spudtans trading sour-cream shots. Splat five before they splat you. Two-thumb touch controls, full-screen landscape, and Xbox controller support.</p>
+                  <p>The WebGL Tate-lo 3D: first-person Spudball on four arenas after Halo CE — Blood Gulch's box canyon, Battle Creek, snowy Sidewinder and the Hang 'Em High tomb yard — two bases, the great ring in the sky, Halo movement and that floaty jump. Now with recharging energy shields, health packs, two swap-able weapons, Tater Tot grenades, and five Spudtans who strafe, rush and snipe in squads. Splat five before they splat you. Two-thumb touch controls with real FIRE / JUMP / grenade buttons, full-screen landscape, and Xbox controller support.</p>
                   <button class="btn primary" type="button" data-goto="ball3dPanel">Play Tate-lo 3D</button>
                 </div>
                 <div class="game-card">
@@ -971,6 +971,42 @@
                       <div style="position:absolute; top:50%; left:0; height:2px; width:7px; margin-top:-1px; background:#7dff8a;"></div>
                       <div style="position:absolute; top:50%; right:0; height:2px; width:7px; margin-top:-1px; background:#7dff8a;"></div>
                     </div>
+                    <div id="b3Hitmark" style="position:absolute; left:50%; top:50%; width:30px; height:30px; margin:-15px 0 0 -15px; pointer-events:none; opacity:0;">
+                      <div style="position:absolute; left:2px; top:2px; width:9px; height:2.5px; background:#fff; transform:rotate(45deg); border-radius:2px;"></div>
+                      <div style="position:absolute; right:2px; top:2px; width:9px; height:2.5px; background:#fff; transform:rotate(-45deg); border-radius:2px;"></div>
+                      <div style="position:absolute; left:2px; bottom:2px; width:9px; height:2.5px; background:#fff; transform:rotate(-45deg); border-radius:2px;"></div>
+                      <div style="position:absolute; right:2px; bottom:2px; width:9px; height:2.5px; background:#fff; transform:rotate(45deg); border-radius:2px;"></div>
+                    </div>
+                    <div id="b3Vin" style="position:absolute; inset:0; pointer-events:none; opacity:0; box-shadow:inset 0 0 90px 34px rgba(214,32,24,.55);"></div>
+                    <div id="b3ShieldGlow" style="position:absolute; inset:0; pointer-events:none; opacity:0; box-shadow:inset 0 0 70px 22px rgba(70,170,255,.5);"></div>
+                    <div id="b3DmgDir" style="position:absolute; left:50%; top:50%; width:150px; height:150px; margin:-75px 0 0 -75px; pointer-events:none; opacity:0;">
+                      <div style="position:absolute; left:50%; top:-4px; width:66px; height:66px; margin-left:-33px; border-top:6px solid rgba(255,60,40,.95); border-radius:50%;"></div>
+                    </div>
+                    <div style="position:absolute; left:50%; top:8px; transform:translateX(-50%); width:min(300px,62%); pointer-events:none; background:rgba(7,13,22,.55); border:1px solid rgba(140,190,255,.35); border-radius:4px; padding:5px 9px 6px;">
+                      <div style="display:flex; align-items:center; gap:6px;"><span style="font:700 9px Verdana,sans-serif; letter-spacing:.12em; color:#9fd4ff; width:44px;">SHIELD</span><div style="flex:1; height:9px; background:rgba(255,255,255,.14); border-radius:2px; overflow:hidden;"><div id="b3ShieldFill" style="height:100%; width:100%; background:#57c8ff;"></div></div></div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-top:4px;"><span style="font:700 9px Verdana,sans-serif; letter-spacing:.12em; color:#b9e6a5; width:44px;">HEALTH</span><div style="flex:1; height:7px; background:rgba(255,255,255,.14); border-radius:2px; overflow:hidden;"><div id="b3HealthFill" style="height:100%; width:100%; background:#7dd069;"></div></div></div>
+                    </div>
+                    <div style="position:absolute; left:10px; bottom:10px; pointer-events:none; background:rgba(7,13,22,.55); border:1px solid rgba(140,190,255,.3); border-radius:4px; padding:5px 10px; color:#eaf2fb;">
+                      <div id="b3WepName" style="font:700 10px Verdana,sans-serif; letter-spacing:.1em; color:#ffd94d;">SPUD MAGNUM</div>
+                      <div style="font:800 22px Verdana,sans-serif; line-height:1.05;"><span id="b3AmmoTxt">8</span><span id="b3ReserveTxt" style="font-size:12px; color:#a9bdd4;"> / 64</span></div>
+                      <div id="b3NadeTxt" style="font:700 10px Verdana,sans-serif; color:#ffb27a;">TATER TOTS × 2</div>
+                    </div>
+                    <div id="b3Ann" style="position:absolute; left:0; right:0; top:21%; text-align:center; pointer-events:none; opacity:0; transition:opacity .3s ease; font:800 30px Verdana,sans-serif; color:#ffd94d; text-shadow:0 2px 10px rgba(0,0,0,.75); letter-spacing:.04em;"></div>
+                    <button type="button" id="b3BtnFire" aria-label="Fire" style="position:absolute; right:14px; bottom:14px; width:86px; height:86px; border-radius:50%; border:2px solid rgba(255,255,255,.55); background:rgba(190,40,28,.5); color:#fff; font:800 15px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">FIRE</button>
+                    <button type="button" id="b3BtnJump" aria-label="Jump" style="position:absolute; right:116px; bottom:18px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(20,40,70,.5); color:#fff; font:800 11px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">JUMP</button>
+                    <button type="button" id="b3BtnNade" aria-label="Throw Tater Tot grenade" style="position:absolute; right:20px; bottom:114px; width:60px; height:60px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(120,70,16,.55); color:#fff; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">TOT <span id="b3NadeBadge">×2</span></button>
+                    <button type="button" id="b3BtnSwap" aria-label="Swap weapon" style="position:absolute; right:96px; bottom:100px; width:56px; height:56px; border-radius:50%; border:2px solid rgba(255,255,255,.45); background:rgba(40,40,60,.55); color:#fff; font:800 10px Verdana,sans-serif; touch-action:none; user-select:none; -webkit-user-select:none;">SWAP</button>
+                    <div id="b3Card" style="position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,10,18,.58); z-index:5;">
+                      <div style="background:rgba(13,20,32,.96); border:1px solid #41597a; border-radius:8px; padding:20px 26px; text-align:center; color:#eaf2fb; max-width:min(420px,88%); box-shadow:0 14px 44px rgba(0,0,0,.55);">
+                        <div id="b3CardTitle" style="font:800 34px Verdana,sans-serif; letter-spacing:.05em; color:#ffd94d;">VICTORY</div>
+                        <div id="b3CardScore" style="font:700 15px Verdana,sans-serif; color:#a9bdd4; margin-top:2px;">5 – 0</div>
+                        <div id="b3CardStats" style="font:600 13px Verdana,sans-serif; line-height:1.65; margin:10px 0 14px; color:#d7e4f2;"></div>
+                        <div style="display:flex; gap:10px; justify-content:center;">
+                          <button type="button" class="btn primary" id="b3Again">Play Again</button>
+                          <button type="button" class="btn" id="b3Watch">Keep Watching</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="touchrow">
                     <button class="btn orange" id="b3Start" type="button">Start 3D Match</button>
@@ -985,8 +1021,8 @@
                     </select>
                   </div>
                   <p class="game-sub" id="b3MapInfo" style="margin-top:2px;"><b>Blood Gulch</b> — the box canyon: red base vs blue base, the dirt track running between them, boulders and trees for cover, and the great ring in the sky.</p>
-                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim; <b>hold it down</b> to fire, and a quick <b>double-tap on the right side</b> jumps. <b>Full Screen</b> fills the display landscape. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Start begins the match.</span></p>
-                  <p class="game-sub">Real WebGL (three.js) doing Halo (original Xbox) the spud way, across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. The physics are Halo's too: quick, weighty strafing movement, that famous <b>floaty jump</b>, and fast sour-cream bolts you can dodge. Gold and red Spudtans hunt you and fire back; one hit splats either way, and a splat respawns the spud at the far base. First to 5 splats wins. Keyboard: W A S D move/strafe, drag or ← → to aim, F hold to fire, Space jump.</p>
+                  <p class="game-sub" style="margin-top:4px;"><b>Two thumbs, like a mobile shooter:</b> <b>left thumb</b> is your move stick — push it to run and strafe. <b>Right thumb</b> drags to aim, the big <b>FIRE</b> button shoots, <b>JUMP</b> jumps (or double-tap the right side), <b>TOT</b> lobs a Tater Tot grenade and <b>SWAP</b> changes weapon. <b>Full Screen</b> fills the display landscape. <span id="b3PadStatus">An Xbox or any standard controller works too: left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.</span></p>
+                  <p class="game-sub">Real WebGL (three.js) doing Halo the spud way — and then some — across <b>four arenas</b> picked above: <b>Blood Gulch</b>'s box canyon, <b>Battle Creek</b>'s creek and plank bridges, <b>Sidewinder</b>'s snowy U split by a rock spine, and <b>Hang 'Em High</b>'s tomb yard — red base vs blue base, the great ring hanging in the sky. Now with the full Halo combat loop: an <b>energy shield</b> that soaks hits and recharges when you break contact, <b>health</b> underneath it, and <b>sour-cream packs</b> by each base to patch up. Two weapons — the heavy <b>Spud Magnum</b> and the full-auto <b>Cream Blaster</b> — plus <b>Tater Tot grenades</b> that arc, bounce and clear a room. Five Spudtans hunt in squads now: they strafe, hop, rush or hang back and snipe, their shield bubbles flare as you chew through them, and they aim better the more you splat. Bloom-lit bolts, splat bursts, hitmarkers, a damage-direction ring and a proper victory card finish the job. First to 5 splats wins. Keyboard: W A S D move/strafe, drag to aim, F or mouse-hold to fire, Space jump, Q swap, R reload, G grenade.</p>
                 </div>
               </div>
 
@@ -4068,35 +4104,111 @@
   var b3 = { ok: false, running: false, over: false, splats: 0, down: 0, time: 0,
              px: 0, pz: 46, head: Math.PI, pitch: 0, py: 0, vy: 0, vx: 0, vz: 0, grounded: true,
              invuln: 0, fireCd: 0, jumpQ: false,
+             shield: 100, health: 100, lastHurt: -99, recharging: false,
+             wep: 0, mag: [8, 50], reserve: [64, 200], reloading: 0, swapT: 0,
+             nades: 2, nadeCd: 0, streak: 0, bestStreak: 0, lastSplatT: -99,
+             fired: 0, hits: 0, hitmarkT: 0, hitmarkKill: false, shake: 0, freezeT: 0,
+             dmgVinT: 0, dmgDirT: 0, dmgDirRot: 0, shieldFxT: 0, landDip: 0, cardShown: false,
              keys: { f: false, b: false, sl: false, sr: false, tl: false, tr: false, fire: false },
-             stick: { x: 0, y: 0 }, enemies: [], shots: [], crates: [] };
+             stick: { x: 0, y: 0 }, enemies: [], shots: [], crates: [], nadesLive: [], packs: [] };
+  /* The two guns. Magnum: slow, heavy, accurate. Blaster: full-auto
+     cream hose. Damage is tuned against shield 45 + health 55 spuds. */
+  var B3_WEAPONS = [
+    { name: "SPUD MAGNUM", cd: 0.26, dmg: 34, speed: 62, spread: 0.004, magSize: 8, reloadT: 1.0, bolt: 0.19, col: 0xfff3cf, auto: false },
+    { name: "CREAM BLASTER", cd: 0.085, dmg: 11, speed: 48, spread: 0.03, magSize: 50, reloadT: 1.3, bolt: 0.13, col: 0xaef2ff, auto: true }
+  ];
   var b3Mount = $("b3Mount"), b3Renderer = null, b3Scene = null, b3Cam = null, b3Last = 0, b3Raf = 0, b3Gun = null, b3GunKick = 0;
+  var b3Composer = null, b3Fx = null, b3Guns = [], b3Muzzle = null, b3MuzzleLight = null, b3PackGroup = null;
+  /* Synthesized sound: one shared context, tiny oscillators + noise.
+     Created/resumed only on a user gesture (Start tap, FIRE tap). */
+  var b3AC = null;
+  function b3Audio(){
+    try{
+      if(!b3AC) b3AC = new (window.AudioContext || window.webkitAudioContext)();
+      if(b3AC.state === "suspended") b3AC.resume();
+    }catch(e){}
+    return b3AC;
+  }
+  function b3Tone(f0, f1, dur, type, vol){
+    var ac = b3AC; if(!ac) return;
+    try{
+      var t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+      o.type = type; o.frequency.setValueAtTime(f0, t);
+      o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t + dur);
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + dur + 0.02);
+    }catch(e){}
+  }
+  function b3Noise(dur, vol, f0, f1){
+    var ac = b3AC; if(!ac) return;
+    try{
+      var t = ac.currentTime, len = Math.max(1, (ac.sampleRate * dur) | 0);
+      var buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+      for(var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      var src = ac.createBufferSource(); src.buffer = buf;
+      var fl = ac.createBiquadFilter(); fl.type = "lowpass";
+      fl.frequency.setValueAtTime(f0, t); fl.frequency.exponentialRampToValueAtTime(Math.max(40, f1), t + dur);
+      var g = ac.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      src.connect(fl); fl.connect(g); g.connect(ac.destination); src.start(t); src.stop(t + dur + 0.02);
+    }catch(e){}
+  }
+  function b3Snd(kind){
+    if(!b3AC) return;
+    if(kind === "mag") b3Tone(740, 170, 0.09, "square", 0.10);
+    else if(kind === "blast") b3Tone(1050, 320, 0.06, "sawtooth", 0.05);
+    else if(kind === "eshot") b3Tone(320, 130, 0.1, "triangle", 0.06);
+    else if(kind === "hit") b3Tone(2100, 1900, 0.035, "sine", 0.13);
+    else if(kind === "break"){ b3Noise(0.22, 0.2, 2600, 300); b3Tone(1250, 180, 0.24, "sawtooth", 0.1); }
+    else if(kind === "recharge") b3Tone(280, 760, 0.3, "sine", 0.05);
+    else if(kind === "splat"){ b3Tone(520, 65, 0.2, "sine", 0.22); b3Noise(0.14, 0.14, 1500, 300); }
+    else if(kind === "hurt") b3Tone(150, 70, 0.14, "sine", 0.2);
+    else if(kind === "boom"){ b3Noise(0.5, 0.4, 950, 90); b3Tone(120, 38, 0.45, "sine", 0.3); }
+    else if(kind === "click") b3Tone(1400, 900, 0.03, "square", 0.06);
+    else if(kind === "reload"){ b3Tone(900, 500, 0.04, "square", 0.07); setTimeout(function(){ b3Tone(1200, 700, 0.04, "square", 0.07); }, 110); }
+    else if(kind === "pickup"){ b3Tone(520, 520, 0.07, "sine", 0.1); setTimeout(function(){ b3Tone(780, 780, 0.09, "sine", 0.1); }, 80); }
+    else if(kind === "win"){ [523, 659, 784, 1046].forEach(function(f, i){ setTimeout(function(){ b3Tone(f, f, 0.16, "triangle", 0.12); }, i * 110); }); }
+    else if(kind === "lose"){ [392, 330, 262, 196].forEach(function(f, i){ setTimeout(function(){ b3Tone(f, f * 0.94, 0.18, "triangle", 0.12); }, i * 120); }); }
+  }
+  var b3AnnTimer = 0;
+  function b3Announce(txt){
+    var el = $("b3Ann"); if(!el) return;
+    el.textContent = txt; el.style.opacity = "1"; el.style.transform = "scale(1.06)";
+    setTimeout(function(){ el.style.transform = "scale(1)"; }, 60);
+    if(b3AnnTimer) clearTimeout(b3AnnTimer);
+    b3AnnTimer = setTimeout(function(){ el.style.opacity = "0"; }, 1150);
+  }
   /* Two-thumb touch: left half is a floating move stick, right half
      aims by dragging, holds to fire, double-taps to jump. */
-  var b3Touch = { moveId: null, mx0: 0, my0: 0, aimId: null, ax: 0, ay: 0, aimT: 0, aimMoved: 0, fire: false, lastTap: 0 };
+  var b3Touch = { moveId: null, mx0: 0, my0: 0, aimId: null, ax: 0, ay: 0, aimT: 0, aimMoved: 0, fire: false, fireBtn: false, lastTap: 0 };
   /* Gamepad, Halo layout: left stick moves, right stick aims, RT
      fires, A jumps, Start starts. */
-  var b3Pad = { active: false, mx: 0, my: 0, ax: 0, ay: 0, fire: false, jumpEdge: false, startEdge: false, wasJump: false, wasStart: false };
+  var b3Pad = { active: false, mx: 0, my: 0, ax: 0, ay: 0, fire: false, jumpEdge: false, startEdge: false, swapEdge: false, nadeEdge: false, reloadEdge: false, wasJump: false, wasStart: false, wasSwap: false, wasNade: false, wasReload: false };
   function b3PollPad(){
-    b3Pad.jumpEdge = false; b3Pad.startEdge = false;
+    b3Pad.jumpEdge = false; b3Pad.startEdge = false; b3Pad.swapEdge = false; b3Pad.nadeEdge = false; b3Pad.reloadEdge = false;
     var gp = null;
     try{
       var gps = navigator.getGamepads ? navigator.getGamepads() : [];
       for(var i = 0; i < gps.length; i++){ if(gps[i] && gps[i].connected){ gp = gps[i]; break; } }
     }catch(e){}
     b3Pad.active = !!gp;
-    if(!gp){ b3Pad.mx = b3Pad.my = b3Pad.ax = b3Pad.ay = 0; b3Pad.fire = false; b3Pad.wasJump = b3Pad.wasStart = false; return; }
+    if(!gp){ b3Pad.mx = b3Pad.my = b3Pad.ax = b3Pad.ay = 0; b3Pad.fire = false; b3Pad.wasJump = b3Pad.wasStart = b3Pad.wasSwap = b3Pad.wasNade = b3Pad.wasReload = false; return; }
     function dz(v){ return Math.abs(v) < 0.16 ? 0 : v; }
     function btn(n){ return !!(gp.buttons && gp.buttons[n] && gp.buttons[n].pressed); }
     b3Pad.mx = dz(gp.axes[0] || 0); b3Pad.my = dz(gp.axes[1] || 0);
     if(btn(14)) b3Pad.mx = -1; else if(btn(15)) b3Pad.mx = 1;
     if(btn(12)) b3Pad.my = -1; else if(btn(13)) b3Pad.my = 1;
     b3Pad.ax = dz(gp.axes[2] || 0); b3Pad.ay = dz(gp.axes[3] || 0);
-    b3Pad.fire = btn(7); // RT fires; A (below) jumps
-    var j = btn(0) || btn(1);
+    b3Pad.fire = btn(7) || btn(5); // RT (or RB) fires; A jumps, Y swaps, LB lobs a Tot, B reloads
+    var j = btn(0);
     b3Pad.jumpEdge = j && !b3Pad.wasJump; b3Pad.wasJump = j;
     var st = btn(9);
     b3Pad.startEdge = st && !b3Pad.wasStart; b3Pad.wasStart = st;
+    var sw = btn(3);
+    b3Pad.swapEdge = sw && !b3Pad.wasSwap; b3Pad.wasSwap = sw;
+    var nd = btn(4);
+    b3Pad.nadeEdge = nd && !b3Pad.wasNade; b3Pad.wasNade = nd;
+    var rl = btn(1);
+    b3Pad.reloadEdge = rl && !b3Pad.wasReload; b3Pad.wasReload = rl;
   }
   function b3SetMsg(t){ var el = $("b3Msg"); if(el) el.textContent = t; }
   function b3SpawnPoint(far){
@@ -4319,6 +4431,28 @@
     var lid = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.7, 3.9), tombM);
     lid.position.set(0, 1.95, -11); lid.castShadow = true; lid.receiveShadow = true; b3Arena.add(lid);
   }
+  /* Sour-cream packs: one near each base, +50 health, respawn 18 s. */
+  function b3PlacePacks(){
+    b3.packs = [];
+    if(b3PackGroup){ b3Arena.remove(b3PackGroup); }
+    b3PackGroup = new THREE.Group(); b3Arena.add(b3PackGroup);
+    var id = B3_MAPS[b3MapIdx].id;
+    var spots = id === "creek" ? [[13, -22], [-13, 22]]
+      : id === "sidewinder" ? [[-25, 42], [25, -42]]
+      : id === "hangem" ? [[21, 0], [-21, 0]]
+      : [[11, -40], [-11, 40]];
+    var boxM = std(0xf4f6f8, 0.5), crossM = new THREE.MeshStandardMaterial({ color: 0xd42a20, roughness: 0.5, emissive: 0x7d130c, emissiveIntensity: 0.5 });
+    spots.forEach(function(sp){
+      var g = new THREE.Group();
+      var box = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.62, 0.95), boxM);
+      box.castShadow = true; g.add(box);
+      var c1 = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.16, 0.99), crossM); g.add(c1);
+      var c2 = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.52, 0.99), crossM); g.add(c2);
+      g.position.set(sp[0], 0.85, sp[1]);
+      b3PackGroup.add(g);
+      b3.packs.push({ x: sp[0], z: sp[1], mesh: g, active: true, respawnT: 0 });
+    });
+  }
   function b3BuildMap(){
     b3.crates = [];
     var id = B3_MAPS[b3MapIdx].id;
@@ -4336,6 +4470,7 @@
       b3Scene.background.setHex(0x8fb8dd); b3Scene.fog.color.setHex(0xa8c4de); b3Scene.fog.near = 70; b3Scene.fog.far = 260;
       b3BuildGulch();
     }
+    b3PlacePacks();
     var info = $("b3MapInfo"); if(info) info.innerHTML = B3_MAPS[b3MapIdx].info;
   }
   function b3SetMap(idx){
@@ -4350,9 +4485,11 @@
     b3.shots = [];
     b3.enemies.forEach(function(e){
       var sp = b3SpawnPoint(true);
-      e.x = sp.x; e.z = sp.z; e.respawn = 0; e.mesh.visible = true;
+      e.x = sp.x; e.z = sp.z; e.y = 0; e.vy = 0; e.grounded = true; e.respawn = 0; e.mesh.visible = true;
+      e.shield = 45; e.health = 55; e.flare = 0;
       e.mesh.position.set(e.x, 0, e.z);
     });
+    b3.shield = 100; b3.health = 100; b3.lastHurt = -99;
     if(b3.running && !b3.over){ b3Start(); }
     else{
       b3.px = b3Spawn.x; b3.pz = b3Spawn.z; b3.head = b3Spawn.head; b3.pitch = 0; b3.py = 0; b3.vy = 0;
@@ -4494,27 +4631,91 @@
     b3Arena = new THREE.Group();
     b3Scene.add(b3Arena);
     b3BuildMap();
-    // The blaster, riding in the lower right of the view.
+    // Two view guns riding in the lower right: the chunky Magnum and
+    // the pronged Cream Blaster, swapped by the SWAP control.
     b3Gun = new THREE.Group();
-    var gunBody = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.14, 0.52), std(0xdad4c4, 0.45));
-    b3Gun.add(gunBody);
-    var gunBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.028, 0.3, 8), std(0x8a8578, 0.4));
-    gunBarrel.rotation.x = Math.PI / 2; gunBarrel.position.set(0, 0.045, -0.36); b3Gun.add(gunBarrel);
-    var gunCell = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.16),
-      new THREE.MeshStandardMaterial({ color: 0x7dff8a, roughness: 0.3, emissive: 0x2e8b3a, emissiveIntensity: 0.9 }));
-    gunCell.position.set(0, -0.02, -0.05); b3Gun.add(gunCell);
+    var mag = new THREE.Group();
+    var magBody = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.17, 0.36), std(0x4c5158, 0.35));
+    magBody.position.z = -0.08; mag.add(magBody);
+    var magSlide = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.07, 0.42), std(0x2f3338, 0.3));
+    magSlide.position.set(0, 0.1, -0.12); mag.add(magSlide);
+    var magBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, 0.16, 10), std(0x191c1f, 0.3));
+    magBarrel.rotation.x = Math.PI / 2; magBarrel.position.set(0, 0.1, -0.4); mag.add(magBarrel);
+    var magGrip = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.24, 0.13), std(0x3a2e22, 0.6));
+    magGrip.position.set(0, -0.17, 0.05); magGrip.rotation.x = 0.28; mag.add(magGrip);
+    var magDot = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.03, 0.03),
+      new THREE.MeshStandardMaterial({ color: 0x7dff8a, emissive: 0x2e8b3a, emissiveIntensity: 1.6, roughness: 0.3 }));
+    magDot.position.set(0, 0.16, -0.2); mag.add(magDot);
+    b3Gun.add(mag); b3Guns.push(mag);
+    var bl = new THREE.Group();
+    var blBody = new THREE.Mesh(kkRBox(0.14, 0.19, 0.44, 0.04), std(0x5d4d85, 0.4));
+    blBody.position.z = -0.1; bl.add(blBody);
+    [-0.055, 0.055].forEach(function(px){
+      var prong = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.05, 0.24), std(0x3c3358, 0.4));
+      prong.position.set(px, 0.05, -0.42); bl.add(prong);
+    });
+    var blCell = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, 0.2),
+      new THREE.MeshStandardMaterial({ color: 0xaef2ff, emissive: 0x2b7ea8, emissiveIntensity: 1.5, roughness: 0.3 }));
+    blCell.position.set(0, -0.03, -0.08); bl.add(blCell);
+    bl.userData.cell = blCell;
+    var blGrip = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.22, 0.12), std(0x2e2742, 0.6));
+    blGrip.position.set(0, -0.17, 0.04); blGrip.rotation.x = 0.25; bl.add(blGrip);
+    bl.visible = false;
+    b3Gun.add(bl); b3Guns.push(bl);
+    b3Muzzle = new THREE.Sprite(new THREE.SpriteMaterial({ map: kkGetSoftTex(), color: 0xd8f6ff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+    b3Muzzle.scale.set(0.34, 0.34, 1); b3Muzzle.position.set(0, 0.08, -0.52);
+    b3Gun.add(b3Muzzle);
+    b3MuzzleLight = new THREE.PointLight(0x9fdcff, 0, 11, 1.8);
+    b3MuzzleLight.position.set(0, 0.1, -0.55);
+    b3Gun.add(b3MuzzleLight);
     b3Gun.position.set(0.26, -0.24, -0.55);
     b3Cam.add(b3Gun);
     b3Scene.add(b3Cam);
-    // Enemy Spudtans: gold vs red, like the arena original
-    var cols = [0xc1272d, 0xc1272d, 0x2456c8, 0x8b30c9];
-    for(var i = 0; i < 4; i++){
+    // Bloom composer — bolts, trim lights and the ring pop. Any
+    // failure here falls back to the plain renderer in b3Frame.
+    try{
+      if(THREE.EffectComposer && THREE.RenderPass && THREE.UnrealBloomPass && THREE.OutputPass){
+        b3Composer = new THREE.EffectComposer(b3Renderer);
+        b3Composer.addPass(new THREE.RenderPass(b3Scene, b3Cam));
+        var bloom = new THREE.UnrealBloomPass(new THREE.Vector2(640, 400), 0.55, 0.55, 0.62);
+        b3Composer.addPass(bloom);
+        b3Composer.addPass(new THREE.OutputPass());
+      }
+    }catch(e){ b3Composer = null; }
+    // One shared spark pool for splats, shield pops and explosions.
+    b3Fx = kkMakeParticles(560, 0.4, true, 0.95);
+    b3Fx.grav = 3.2;
+    b3Scene.add(b3Fx.points);
+    // Enemy Spudtans: a five-spud squad — three regulars, one rusher
+    // (fast, close, weak bolts) and one marksman (hangs back, slow
+    // heavy bolts). Each wears a visor + team plate and carries a
+    // shield bubble that flares as you chew through it.
+    var cols = [0xc1272d, 0xc1272d, 0x2456c8, 0xe8762a, 0x8b30c9];
+    var roles = ["std", "std", "std", "rush", "snipe"];
+    for(var i = 0; i < 5; i++){
       var mesh = makeSpud(0xb5793b, cols[i], 1.15);
       mesh.traverse(function(o){ if(o.castShadow !== undefined) o.castShadow = true; });
+      var visor = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.13, 0.1), std(0x14181d, 0.25));
+      visor.position.set(0, 0.8, 0.52); mesh.add(visor);
+      var plate = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.42, 0.12), std(cols[i], 0.5));
+      plate.position.set(0, 0.52, 0.5); mesh.add(plate);
+      var bubble = new THREE.Mesh(new THREE.SphereGeometry(0.82, 18, 14),
+        new THREE.MeshBasicMaterial({ color: 0x6fd2ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+      bubble.position.y = 0.62; bubble.scale.set(1, 1.12, 1);
+      mesh.add(bubble);
       var sp = b3SpawnPoint(true);
       mesh.position.set(sp.x, 0, sp.z);
       b3Scene.add(mesh);
-      b3.enemies.push({ mesh: mesh, x: sp.x, z: sp.z, head: Math.random() * 6.28, fireCd: 1.5 + Math.random() * 1.5, respawn: 0, wanderT: 0 });
+      var role = roles[i];
+      b3.enemies.push({ mesh: mesh, bubble: bubble, bodyMat: mesh.children[0].material,
+        x: sp.x, z: sp.z, y: 0, vy: 0, grounded: true, head: Math.random() * 6.28,
+        fireCd: 1.5 + Math.random() * 1.5, burstLeft: 0, burstPause: 0.8 + Math.random(),
+        respawn: 0, wanderT: 0, strafeDir: Math.random() < 0.5 ? -1 : 1, strafeT: 1 + Math.random() * 1.5, hopT: 2 + Math.random() * 3,
+        shield: 45, health: 55, flare: 0, role: role,
+        range: role === "rush" ? 6.5 : role === "snipe" ? 21 : 12.5,
+        speed: role === "rush" ? 4.7 : role === "snipe" ? 3.1 : 3.7,
+        dmg: role === "rush" ? 7 : role === "snipe" ? 15 : 9,
+        boltSpd: role === "snipe" ? 17 : 22 });
     }
     b3.ok = true;
     b3Resize();
@@ -4525,6 +4726,7 @@
     if(!b3Renderer) return;
     var w = b3Mount.clientWidth || 640, h = b3Mount.clientHeight || 400;
     b3Renderer.setSize(w, h);
+    if(b3Composer) b3Composer.setSize(w, h);
     b3Cam.aspect = w / h;
     b3Cam.updateProjectionMatrix();
   }
@@ -4538,32 +4740,223 @@
     }
     return false;
   }
-  function b3Fire(fromEnemy, ex, ey, ez, dirx, diry, dirz){
-    var m = new THREE.Mesh(new THREE.SphereGeometry(0.17, 10, 8),
-      new THREE.MeshBasicMaterial({ color: fromEnemy ? 0xff9a7a : 0xfff6da }));
-    m.position.set(ex, ey, ez);
-    b3Scene.add(m);
-    var sp = fromEnemy ? 21 : 46;
-    b3.shots.push({ mesh: m, x: ex, y: ey, z: ez, vx: dirx * sp, vy: diry * sp, vz: dirz * sp, enemy: fromEnemy, life: 2.6 });
+  function b3Fire(fromEnemy, ex, ey, ez, dirx, diry, dirz, opt){
+    opt = opt || {};
+    var rad = opt.rad || 0.17;
+    var grp = new THREE.Group();
+    var core = new THREE.Mesh(new THREE.SphereGeometry(rad, 10, 8),
+      new THREE.MeshBasicMaterial({ color: opt.col || (fromEnemy ? 0xff9a7a : 0xfff6da) }));
+    grp.add(core);
+    var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: kkGetSoftTex(), color: opt.col || (fromEnemy ? 0xff7a4d : 0xffeeb0), transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending }));
+    glow.scale.set(rad * 7, rad * 7, 1);
+    grp.add(glow);
+    grp.position.set(ex, ey, ez);
+    b3Scene.add(grp);
+    var sp = opt.speed || (fromEnemy ? 21 : 46);
+    b3.shots.push({ mesh: grp, x: ex, y: ey, z: ez, vx: dirx * sp, vy: diry * sp, vz: dirz * sp, enemy: fromEnemy, dmg: opt.dmg || 9, life: 2.6 });
   }
   function b3PlayerFire(){
-    if(!b3.running || b3.over || b3.fireCd > 0) return;
-    b3.fireCd = 0.22;
+    if(!b3.running || b3.over || b3.fireCd > 0 || b3.reloading > 0 || b3.swapT > 0) return;
+    var w = B3_WEAPONS[b3.wep];
+    if(b3.mag[b3.wep] <= 0){ b3Snd("click"); b3Reload(); b3.fireCd = 0.3; return; }
+    b3.mag[b3.wep]--;
+    b3.fired++;
+    b3.fireCd = w.cd;
     b3GunKick = 1;
+    if(b3Muzzle){ b3Muzzle.material.opacity = 0.95; b3Muzzle.material.rotation = Math.random() * 3; }
+    if(b3MuzzleLight) b3MuzzleLight.intensity = b3.wep === 0 ? 14 : 8;
+    b3Snd(b3.wep === 0 ? "mag" : "blast");
     var cp = Math.cos(b3.pitch), fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
-    b3Fire(false, b3.px + fx * 0.8, 1.35 + b3.py, b3.pz + fz * 0.8, fx, fy, fz);
+    var sx = fx + (Math.random() - 0.5) * w.spread * 2, sy = fy + (Math.random() - 0.5) * w.spread * 2, sz = fz + (Math.random() - 0.5) * w.spread * 2;
+    var il = 1 / (Math.sqrt(sx * sx + sy * sy + sz * sz) || 1);
+    b3Fire(false, b3.px + fx * 0.8, 1.35 + b3.py, b3.pz + fz * 0.8, sx * il, sy * il, sz * il,
+      { dmg: w.dmg, speed: w.speed, rad: w.bolt, col: w.col });
+    if(b3.mag[b3.wep] === 0) b3Reload();
   }
-  function b3SplatPlayer(){
-    if(b3.invuln > 0 || b3.over) return;
+  function b3Reload(){
+    if(b3.reloading > 0 || b3.swapT > 0) return;
+    var w = B3_WEAPONS[b3.wep];
+    if(b3.mag[b3.wep] >= w.magSize || b3.reserve[b3.wep] <= 0) return;
+    b3.reloading = w.reloadT;
+    b3Snd("reload");
+  }
+  function b3FinishReload(){
+    var w = B3_WEAPONS[b3.wep];
+    var take = Math.min(w.magSize - b3.mag[b3.wep], b3.reserve[b3.wep]);
+    b3.mag[b3.wep] += take; b3.reserve[b3.wep] -= take;
+  }
+  function b3SwapWeapon(){
+    if(!b3.running || b3.over || b3.swapT > 0 || b3.reloading > 0) return;
+    b3.swapT = 0.34;
+    b3Snd("click");
+  }
+  function b3ThrowNade(){
+    if(!b3.running || b3.over || b3.nades <= 0 || b3.nadeCd > 0) return;
+    b3.nades--; b3.nadeCd = 0.55;
+    var m = new THREE.Mesh(new THREE.SphereGeometry(0.21, 12, 10), std(0xb5793b, 0.65));
+    m.castShadow = true;
+    var cp = Math.cos(b3.pitch), fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
+    var sx = b3.px + fx * 0.7, sy = 1.5 + b3.py, sz = b3.pz + fz * 0.7;
+    m.position.set(sx, sy, sz);
+    b3Scene.add(m);
+    b3.shots.push({ mesh: m, nade: true, x: sx, y: sy, z: sz,
+      vx: fx * 15 + b3.vx * 0.5, vy: fy * 15 + 4.2, vz: fz * 15 + b3.vz * 0.5, fuse: 1.15, life: 3 });
+    b3Snd("click");
+  }
+  function b3Explode(x, y, z){
+    b3Snd("boom");
+    kkBurst(b3Fx, x, y, z, 42, 0xffa63c, 9, 6, 0.8);
+    kkBurst(b3Fx, x, y, z, 20, 0xfff3cf, 6, 5, 0.6);
+    if(b3MuzzleLight){ b3MuzzleLight.intensity = 26; }
+    var pdx = b3.px - x, pdz = b3.pz - z, pd = Math.sqrt(pdx * pdx + pdz * pdz);
+    if(pd < 7) b3.shake = Math.max(b3.shake, 0.34 * (1 - pd / 7) + 0.08);
+    b3.enemies.forEach(function(e){
+      if(e.respawn > 0) return;
+      var dx = e.x - x, dz = e.z - z, d = Math.sqrt(dx * dx + dz * dz);
+      if(d < 4.6) b3HitEnemy(e, 130 * (1 - d / 5.2), true);
+    });
+    var pdmg = 0;
+    if(pd < 4.2 && Math.abs((1 + b3.py) - y) < 3.4) pdmg = 55 * (1 - pd / 4.6);
+    if(pdmg > 4) b3DamagePlayer(pdmg, Math.atan2(-pdx, -pdz));
+  }
+  function b3HitEnemy(e, dmg, isBoom){
+    if(e.respawn > 0 || b3.over) return;
+    b3.hits++;
+    b3.hitmarkT = 0.12; b3.hitmarkKill = false;
+    b3Snd("hit");
+    e.flare = 1;
+    if(e.shield > 0){
+      e.shield -= dmg;
+      kkBurst(b3Fx, e.x, 1 + e.y, e.z, 5, 0x6fd2ff, 3, 2.5, 0.3);
+      if(e.shield <= 0){
+        e.shield = 0;
+        b3Snd("break");
+        kkBurst(b3Fx, e.x, 1 + e.y, e.z, 16, 0x6fd2ff, 6, 4, 0.5);
+        b3SetMsg("Shield down — finish that spud!");
+      }
+    }else{
+      e.health -= dmg;
+      kkBurst(b3Fx, e.x, 1 + e.y, e.z, 5, 0xfff3cf, 3, 2.5, 0.3);
+    }
+    if(e.health <= 0) b3SplatEnemy(e);
+  }
+  function b3SplatEnemy(e){
+    e.respawn = 1.6; e.mesh.visible = false;
+    b3Snd("splat");
+    kkBurst(b3Fx, e.x, 1 + e.y, e.z, 30, 0xfff3cf, 7, 6, 0.8);
+    kkBurst(b3Fx, e.x, 1 + e.y, e.z, 12, 0xb5793b, 5, 5, 0.7);
+    b3.hitmarkT = 0.22; b3.hitmarkKill = true;
+    b3.freezeT = Math.max(b3.freezeT, 0.045);
+    var sp = b3SpawnPoint(true);
+    e.x = sp.x; e.z = sp.z; e.y = 0; e.vy = 0;
+    e.shield = 45; e.health = 55; e.flare = 0;
+    b3.splats++;
+    $("b3Splats").textContent = b3.splats + " / 5";
+    if(b3.nades < 4) b3.nades++;
+    if(b3.time - b3.lastSplatT < 4.5) b3.streak++; else b3.streak = 1;
+    b3.lastSplatT = b3.time;
+    if(b3.streak > b3.bestStreak) b3.bestStreak = b3.streak;
+    if(b3.splats >= 5){
+      b3EndMatch(true);
+    }else{
+      if(b3.streak === 2) b3Announce("DOUBLE SPLAT!");
+      else if(b3.streak === 3) b3Announce("TRIPLE SPLAT!");
+      else if(b3.streak >= 4) b3Announce("SPLATTING SPREE!");
+      else b3SetMsg("SPLAT! " + b3.splats + " of 5 — keep hunting.");
+    }
+  }
+  function b3DamagePlayer(dmg, srcAngle){
+    if(b3.invuln > 0 || b3.over || !b3.running) return;
+    b3.lastHurt = b3.time;
+    b3.recharging = false;
+    b3.dmgVinT = 0.55;
+    b3.shake = Math.max(b3.shake, 0.13);
+    if(srcAngle != null){
+      var rel = srcAngle - b3.head;
+      b3.dmgDirRot = -rel * 180 / Math.PI;
+      b3.dmgDirT = 0.8;
+    }
+    if(b3.shield > 0){
+      var absorbed = Math.min(b3.shield, dmg);
+      b3.shield -= absorbed; dmg -= absorbed;
+      b3.shieldFxT = 0.4;
+      if(b3.shield <= 0){ b3Snd("break"); b3Announce("SHIELD DOWN!"); }
+      else b3Snd("hurt");
+    }else{
+      b3Snd("hurt");
+    }
+    if(dmg > 0){
+      b3.health -= dmg;
+      if(b3.health <= 0){ b3.health = 0; b3KillPlayer(); }
+    }
+  }
+  function b3KillPlayer(){
     b3.down++;
     $("b3Down").textContent = b3.down;
-    b3.px = b3Spawn.x; b3.pz = b3Spawn.z; b3.head = b3Spawn.head; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.invuln = 1.6;
+    b3Snd("splat");
+    b3.dmgVinT = 1;
+    b3.px = b3Spawn.x; b3.pz = b3Spawn.z; b3.head = b3Spawn.head; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0;
+    b3.shield = 100; b3.health = 100; b3.lastHurt = b3.time; b3.invuln = 1.6;
+    b3.streak = 0;
     if(b3.down >= 5){
-      b3.over = true;
-      b3SetMsg("The Spudtans take Tate-lo 3D, " + b3.down + "–" + b3.splats + ". Rematch?");
-      $("b3Start").textContent = "Play Again";
+      b3EndMatch(false);
     }else{
-      b3SetMsg("Splatted! Back at the gate — " + b3.down + " of 5.");
+      b3SetMsg("Splatted! Back at your base — " + b3.down + " of 5.");
+    }
+  }
+  function b3EndMatch(won){
+    if(b3.over) return;
+    b3.over = true;
+    $("b3Start").textContent = "Play Again";
+    if(won){
+      b3SetMsg("🏆 You win Tate-lo 3D, " + b3.splats + "–" + b3.down + " in " + b3.time.toFixed(1) + " s!");
+      b3Snd("win");
+    }else{
+      b3SetMsg("The Spudtans take Tate-lo 3D, " + b3.down + "–" + b3.splats + ". Rematch?");
+      b3Snd("lose");
+    }
+    setTimeout(function(){
+      if(!b3.over || b3.cardShown) return;
+      b3.cardShown = true;
+      var acc = b3.fired > 0 ? Math.round(100 * b3.hits / b3.fired) : 0;
+      $("b3CardTitle").textContent = won ? "VICTORY!" : "DEFEAT";
+      $("b3CardTitle").style.color = won ? "#ffd94d" : "#ff7a6b";
+      $("b3CardScore").textContent = "Splats " + b3.splats + " – " + b3.down + " Splatted";
+      $("b3CardStats").innerHTML =
+        "Time <b>" + b3.time.toFixed(1) + " s</b> &nbsp;·&nbsp; Accuracy <b>" + acc + "%</b> (" + b3.hits + "/" + b3.fired + ")<br>" +
+        "Best streak <b>" + b3.bestStreak + "</b> &nbsp;·&nbsp; Arena <b>" + B3_MAPS[b3MapIdx].name + "</b>";
+      $("b3Card").style.display = "flex";
+    }, 650);
+  }
+  function b3Hud(){
+    var sf = $("b3ShieldFill"), hf = $("b3HealthFill");
+    if(sf){ sf.style.width = Math.max(0, b3.shield) + "%"; sf.style.background = b3.shield > 25 ? "#57c8ff" : "#ff9a3c"; }
+    if(hf){ hf.style.width = Math.max(0, b3.health) + "%"; hf.style.background = b3.health > 50 ? "#7dd069" : b3.health > 25 ? "#ffd94d" : "#ff5a4d"; }
+    var wn = $("b3WepName"); if(wn) wn.textContent = B3_WEAPONS[b3.wep].name;
+    var at = $("b3AmmoTxt"); if(at) at.textContent = b3.reloading > 0 ? "···" : String(b3.mag[b3.wep]);
+    var rt = $("b3ReserveTxt"); if(rt) rt.textContent = " / " + b3.reserve[b3.wep];
+    var nt = $("b3NadeTxt"); if(nt) nt.textContent = "TATER TOTS × " + b3.nades;
+    var nb = $("b3NadeBadge"); if(nb) nb.textContent = "×" + b3.nades;
+    var hm = $("b3Hitmark");
+    if(hm){
+      hm.style.opacity = b3.hitmarkT > 0 ? String(Math.min(1, b3.hitmarkT * 7)) : "0";
+      if(b3.hitmarkT > 0){
+        var col = b3.hitmarkKill ? "#ff4a3c" : "#ffffff";
+        for(var ci = 0; ci < hm.children.length; ci++) hm.children[ci].style.background = col;
+      }
+    }
+    var vin = $("b3Vin");
+    if(vin){
+      var v = b3.dmgVinT * 0.95;
+      if(b3.health <= 30 && b3.shield <= 0 && b3.running && !b3.over) v = Math.max(v, 0.34 + 0.16 * Math.sin(b3.time * 6));
+      vin.style.opacity = String(Math.max(0, Math.min(1, v)));
+    }
+    var sg = $("b3ShieldGlow");
+    if(sg) sg.style.opacity = String(Math.max(0, Math.min(0.9, b3.shieldFxT * 1.4 + (b3.recharging && b3.shield < 100 ? 0.22 : 0))));
+    var dd = $("b3DmgDir");
+    if(dd){
+      dd.style.opacity = b3.dmgDirT > 0 ? String(Math.min(1, b3.dmgDirT * 1.4)) : "0";
+      dd.style.transform = "rotate(" + b3.dmgDirRot.toFixed(1) + "deg)";
     }
   }
   function b3Step(dt){
@@ -4571,9 +4964,34 @@
     $("b3Time").textContent = b3.time.toFixed(1) + " s";
     if(b3.fireCd > 0) b3.fireCd -= dt;
     if(b3.invuln > 0) b3.invuln -= dt;
+    if(b3.nadeCd > 0) b3.nadeCd -= dt;
+    if(b3.hitmarkT > 0) b3.hitmarkT -= dt;
+    if(b3.dmgVinT > 0) b3.dmgVinT -= dt;
+    if(b3.dmgDirT > 0) b3.dmgDirT -= dt;
+    if(b3.shieldFxT > 0) b3.shieldFxT -= dt;
+    if(b3.shake > 0) b3.shake = Math.max(0, b3.shake - dt * 1.5);
+    // Shield recharge: 4.5 s out of the fire, then a fast top-up.
+    if(b3.shield < 100 && b3.time - b3.lastHurt > 4.5){
+      if(!b3.recharging){ b3.recharging = true; b3Snd("recharge"); }
+      b3.shield = Math.min(100, b3.shield + 34 * dt);
+    }
+    // Reload and weapon-swap timers; the swap flips guns mid-dip.
+    if(b3.reloading > 0){ b3.reloading -= dt; if(b3.reloading <= 0) b3FinishReload(); }
+    if(b3.swapT > 0){
+      var prevSwap = b3.swapT;
+      b3.swapT -= dt;
+      if(prevSwap > 0.17 && b3.swapT <= 0.17){
+        b3.wep = 1 - b3.wep;
+        b3Guns.forEach(function(g, gi){ g.visible = gi === b3.wep; });
+      }
+      if(b3.swapT < 0) b3.swapT = 0;
+    }
     b3PollPad();
     if(b3Pad.startEdge && (b3.over || !b3.running)) b3Start();
     if(b3Pad.jumpEdge) b3.jumpQ = true;
+    if(b3Pad.swapEdge) b3SwapWeapon();
+    if(b3Pad.nadeEdge) b3ThrowNade();
+    if(b3Pad.reloadEdge) b3Reload();
     // ---- Halo movement: velocity-smoothed strafing, floaty jump ----
     var turn = (b3.keys.tl ? 1 : 0) - (b3.keys.tr ? 1 : 0);
     b3.head += turn * 2.4 * dt;
@@ -4591,6 +5009,7 @@
     var acc = b3.grounded ? 11 : 3.6; // Halo: planted on the ground, loose in the air
     var k = 1 - Math.exp(-acc * dt);
     b3.vx += (tvx - b3.vx) * k; b3.vz += (tvz - b3.vz) * k;
+    var wasGrounded = b3.grounded;
     var nx = b3.px + b3.vx * dt, nz = b3.pz + b3.vz * dt;
     if(!b3Blocked(nx, b3.pz)) b3.px = nx; else b3.vx = 0;
     if(!b3Blocked(b3.px, nz)) b3.pz = nz; else b3.vz = 0;
@@ -4602,107 +5021,208 @@
       b3.vy -= 15.2 * dt;
       if(b3.py <= 0){ b3.py = 0; b3.vy = 0; b3.grounded = true; }
     }
-    if(b3.keys.fire || b3Touch.fire || b3Pad.fire) b3PlayerFire();
-    // Enemies: wander, close in, strafe a little, fire back
+    if(b3.grounded && !wasGrounded) b3.landDip = 1;
+    if(b3.keys.fire || b3Touch.fire || b3Touch.fireBtn || b3Pad.fire) b3PlayerFire();
+    // Enemies: hold a range band for their role, strafe across the
+    // player's view, hop, and fire bursts that get truer as you score.
+    var ramp = Math.min(1, b3.splats * 0.09);
     b3.enemies.forEach(function(e){
-      if(e.respawn > 0){ e.respawn -= dt; e.mesh.visible = e.respawn <= 0; return; }
+      if(e.respawn > 0){
+        e.respawn -= dt;
+        if(e.respawn <= 0) e.mesh.visible = true;
+        return;
+      }
       var dx = b3.px - e.x, dz = b3.pz - e.z;
       var dist = Math.sqrt(dx * dx + dz * dz) || 1;
-      e.wanderT -= dt;
-      if(e.wanderT <= 0){ e.wanderT = 1 + Math.random() * 1.6; e.head = Math.atan2(dx, dz) + (Math.random() - 0.5) * 1.4; }
-      if(dist > 7){
-        var mx = Math.sin(e.head) * 3.4 * dt, mz = Math.cos(e.head) * 3.4 * dt;
-        if(!b3Blocked(e.x + mx, e.z)) e.x += mx;
-        if(!b3Blocked(e.x, e.z + mz)) e.z += mz;
+      var ux = dx / dist, uz = dz / dist;
+      e.strafeT -= dt;
+      if(e.strafeT <= 0){ e.strafeT = 1 + Math.random() * 1.6; e.strafeDir = -e.strafeDir; if(Math.random() < 0.3) e.strafeDir = 0; }
+      e.hopT -= dt;
+      if(e.hopT <= 0){ e.hopT = 2.2 + Math.random() * 3.2; if(e.grounded){ e.vy = 6.4; e.grounded = false; } }
+      var adv = 0;
+      if(dist > e.range + 2.5) adv = 1; else if(dist < e.range - 3) adv = -0.7;
+      var mxv = (ux * adv + -uz * e.strafeDir * 0.85) * e.speed;
+      var mzv = (uz * adv + ux * e.strafeDir * 0.85) * e.speed;
+      var ex2 = e.x + mxv * dt, ez2 = e.z + mzv * dt;
+      if(!b3Blocked(ex2, e.z)) e.x = ex2; else e.strafeDir = -e.strafeDir;
+      if(!b3Blocked(e.x, ez2)) e.z = ez2;
+      if(!e.grounded || e.y > 0){
+        e.y += e.vy * dt;
+        e.vy -= 15.2 * dt;
+        if(e.y <= 0){ e.y = 0; e.vy = 0; e.grounded = true; }
       }
-      e.mesh.position.set(e.x, 0, e.z);
+      e.mesh.position.set(e.x, e.y, e.z);
       e.mesh.rotation.y = Math.atan2(dx, dz);
-      e.fireCd -= dt;
-      if(e.fireCd <= 0 && dist < 34){
-        e.fireCd = 1.6 + Math.random() * 1.1;
-        var aimY = (1.15 + b3.py) - 1.15;
-        var d3 = Math.sqrt(dist * dist + aimY * aimY) || 1;
-        b3Fire(true, e.x, 1.15, e.z, dx / d3, aimY / d3, dz / d3);
+      if(e.flare > 0) e.flare = Math.max(0, e.flare - dt * 5);
+      e.bubble.material.opacity = e.shield > 0 ? e.flare * 0.5 : e.flare * 0.22;
+      e.bubble.material.color.setHex(e.shield > 0 ? 0x6fd2ff : 0xffa63c);
+      if(e.bodyMat && e.bodyMat.emissive) e.bodyMat.emissive.setRGB(e.flare * 0.45, e.flare * 0.1, e.flare * 0.08);
+      if(e.burstPause > 0){ e.burstPause -= dt; }
+      else{
+        e.fireCd -= dt;
+        if(e.fireCd <= 0 && dist < 38){
+          if(e.burstLeft <= 0) e.burstLeft = e.role === "snipe" ? 1 : 3 + (Math.random() * 3 | 0);
+          e.burstLeft--;
+          e.fireCd = e.role === "snipe" ? 0.9 : e.role === "rush" ? 0.34 : 0.42;
+          if(e.burstLeft <= 0) e.burstPause = (1.5 + Math.random() * 1.1) * (1 - ramp * 0.35);
+          var lead = 0.45;
+          var tx = b3.px + b3.vx * dist / e.boltSpd * lead - e.x;
+          var tz = b3.pz + b3.vz * dist / e.boltSpd * lead - e.z;
+          var ty = (1.15 + b3.py) - (1.15 + e.y);
+          var err = (0.085 - ramp * 0.045) * (e.role === "snipe" ? 0.55 : 1);
+          tx += (Math.random() - 0.5) * err * dist * 2;
+          tz += (Math.random() - 0.5) * err * dist * 2;
+          ty += (Math.random() - 0.5) * err * dist;
+          var d3 = Math.sqrt(tx * tx + ty * ty + tz * tz) || 1;
+          b3Snd("eshot");
+          b3Fire(true, e.x, 1.15 + e.y, e.z, tx / d3, ty / d3, tz / d3,
+            { dmg: e.dmg, speed: e.boltSpd, rad: e.role === "snipe" ? 0.24 : 0.16, col: e.role === "snipe" ? 0xffb27a : 0xff9a7a });
+        }
       }
     });
-    // Shots (full 3D now — bolts fly where you aim, pitch included)
+    // Shots and Tater Tots (full 3D — bolts fly where you aim)
     for(var i = b3.shots.length - 1; i >= 0; i--){
       var s = b3.shots[i];
+      if(s.nade){
+        s.vy -= 13.5 * dt;
+        s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt;
+        if(s.y < 0.21){ s.y = 0.21; s.vy = Math.abs(s.vy) * 0.42; s.vx *= 0.7; s.vz *= 0.7; if(Math.abs(s.vy) < 1.2) s.vy = 0; }
+        if(Math.abs(s.x) > b3Bounds.x){ s.x = (s.x > 0 ? 1 : -1) * b3Bounds.x; s.vx *= -0.5; }
+        if(Math.abs(s.z) > b3Bounds.z){ s.z = (s.z > 0 ? 1 : -1) * b3Bounds.z; s.vz *= -0.5; }
+        s.mesh.position.set(s.x, s.y, s.z);
+        s.mesh.rotation.x += dt * 6; s.mesh.rotation.z += dt * 4;
+        s.fuse -= dt; s.life -= dt;
+        if(s.fuse <= 0 || s.life <= 0){
+          b3Explode(s.x, Math.max(0.5, s.y), s.z);
+          b3Scene.remove(s.mesh); b3.shots.splice(i, 1);
+        }
+        continue;
+      }
       s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt; s.life -= dt;
       s.mesh.position.set(s.x, s.y, s.z);
       var dead = s.life <= 0 || Math.abs(s.x) > b3Bounds.x + 3 || Math.abs(s.z) > b3Bounds.z + 3 || s.y < 0.05 || s.y > 40;
+      var hitWall = false;
       if(!dead){
         for(var ci = 0; ci < b3.crates.length; ci++){
           var c = b3.crates[ci], cdx = s.x - c.x, cdz = s.z - c.z;
-          if(c.w){ if(Math.abs(cdx) < c.w && Math.abs(cdz) < c.d && s.y < 6.4){ dead = true; break; } }
-          else if(cdx * cdx + cdz * cdz < c.r * c.r && s.y < 3.4){ dead = true; break; }
+          if(c.w){ if(Math.abs(cdx) < c.w && Math.abs(cdz) < c.d && s.y < 6.4){ dead = true; hitWall = true; break; } }
+          else if(cdx * cdx + cdz * cdz < c.r * c.r && s.y < 3.4){ dead = true; hitWall = true; break; }
         }
       }
+      if(hitWall) kkBurst(b3Fx, s.x, s.y, s.z, 4, 0xffd9a0, 2.5, 2, 0.25);
       if(!dead && s.enemy){
         var hx = s.x - b3.px, hz = s.z - b3.pz;
-        if(hx * hx + hz * hz < 1.0 && s.y > b3.py - 0.2 && s.y < b3.py + 1.9){ b3SplatPlayer(); dead = true; }
+        if(hx * hx + hz * hz < 1.0 && s.y > b3.py - 0.2 && s.y < b3.py + 1.9){
+          b3DamagePlayer(s.dmg, Math.atan2(s.x - b3.px, s.z - b3.pz));
+          dead = true;
+        }
       }
       if(!dead && !s.enemy){
         for(var ei = 0; ei < b3.enemies.length; ei++){
           var en = b3.enemies[ei];
           if(en.respawn > 0) continue;
-          var ex2 = s.x - en.x, ez2 = s.z - en.z;
-          if(ex2 * ex2 + ez2 * ez2 < 1.25 && s.y > -0.2 && s.y < 2.5){
-            en.respawn = 1.4; en.mesh.visible = false;
-            var sp = b3SpawnPoint(true);
-            en.x = sp.x; en.z = sp.z;
-            b3.splats++;
-            $("b3Splats").textContent = b3.splats + " / 5";
-            if(b3.splats >= 5){
-              b3.over = true;
-              b3SetMsg("🏆 You win Tate-lo 3D, " + b3.splats + "–" + b3.down + " in " + b3.time.toFixed(1) + " s!");
-              $("b3Start").textContent = "Play Again";
-            }else{
-              b3SetMsg("SPLAT! " + b3.splats + " of 5 — keep hunting.");
-            }
+          var exx = s.x - en.x, ezz = s.z - en.z;
+          if(exx * exx + ezz * ezz < 1.25 && s.y > en.y - 0.2 && s.y < en.y + 2.5){
+            b3HitEnemy(en, s.dmg, false);
             dead = true; break;
           }
         }
       }
       if(dead){ b3Scene.remove(s.mesh); b3.shots.splice(i, 1); }
     }
+    // Sour-cream packs: bob, spin, patch you up when you're hurt.
+    b3.packs.forEach(function(p){
+      if(!p.active){
+        p.respawnT -= dt;
+        if(p.respawnT <= 0){ p.active = true; p.mesh.visible = true; }
+        return;
+      }
+      p.mesh.rotation.y += dt * 1.8;
+      p.mesh.position.y = 0.85 + Math.sin(b3.time * 2.2 + p.x) * 0.12;
+      var pdx = b3.px - p.x, pdz = b3.pz - p.z;
+      if(pdx * pdx + pdz * pdz < 2.9 && b3.health < 100){
+        b3.health = Math.min(100, b3.health + 50);
+        p.active = false; p.mesh.visible = false; p.respawnT = 18;
+        b3Snd("pickup");
+        kkBurst(b3Fx, p.x, 1, p.z, 12, 0x7dd069, 3.5, 3.5, 0.5);
+        b3SetMsg("Sour-cream pack: +50 health.");
+      }
+    });
+    if(b3Fx) kkUpdateParticles(b3Fx, dt);
+    b3Hud();
   }
   function b3Frame(){
     if(!b3.ok) return;
     var cp = Math.cos(b3.pitch);
     var fx = Math.sin(b3.head) * cp, fz = Math.cos(b3.head) * cp, fy = Math.sin(b3.pitch);
-    b3Cam.position.set(b3.px, 1.62 + b3.py, b3.pz);
-    b3Cam.lookAt(b3.px + fx, 1.62 + b3.py + fy, b3.pz + fz);
+    var shx = b3.shake > 0 ? (Math.random() - 0.5) * b3.shake * 0.13 : 0;
+    var shy = b3.shake > 0 ? (Math.random() - 0.5) * b3.shake * 0.13 : 0;
+    if(b3.landDip > 0) b3.landDip = Math.max(0, b3.landDip - 0.07);
+    var dip = -b3.landDip * 0.085;
+    b3Cam.position.set(b3.px + shx, 1.62 + b3.py + dip + shy, b3.pz);
+    b3Cam.lookAt(b3.px + fx + shx * 2, 1.62 + b3.py + fy + dip + shy * 2, b3.pz + fz);
     if(b3Gun){
       if(b3GunKick > 0) b3GunKick = Math.max(0, b3GunKick - 0.09);
       var bob = (b3.grounded && (Math.abs(b3.vx) + Math.abs(b3.vz)) > 1) ? Math.sin(b3.time * 9) * 0.008 : 0;
-      b3Gun.position.set(0.26, -0.24 + bob, -0.55 + b3GunKick * 0.07);
+      var dipY = 0, dipR = 0;
+      if(b3.reloading > 0){
+        var rp = 1 - b3.reloading / B3_WEAPONS[b3.wep].reloadT;
+        var rsw = Math.sin(Math.min(1, Math.max(0, rp)) * Math.PI);
+        dipY = -0.17 * rsw; dipR = 0.55 * rsw;
+      }
+      if(b3.swapT > 0){
+        var sd = 1 - Math.abs(b3.swapT - 0.17) / 0.17;
+        dipY = Math.min(dipY, -0.3 * sd);
+      }
+      b3Gun.position.set(0.26, -0.24 + bob + dipY, -0.55 + b3GunKick * 0.07);
+      b3Gun.rotation.x = dipR;
+      if(b3Muzzle && b3Muzzle.material.opacity > 0) b3Muzzle.material.opacity *= 0.5;
+      if(b3MuzzleLight && b3MuzzleLight.intensity > 0) b3MuzzleLight.intensity *= 0.45;
+      if(b3Guns[1] && b3Guns[1].userData.cell) b3Guns[1].userData.cell.material.emissiveIntensity = 0.35 + 1.3 * (b3.mag[1] / B3_WEAPONS[1].magSize);
     }
-    b3Renderer.render(b3Scene, b3Cam);
+    if(b3Composer){
+      try{ b3Composer.render(); }
+      catch(e){ b3Composer = null; b3Renderer.render(b3Scene, b3Cam); }
+    }
+    else b3Renderer.render(b3Scene, b3Cam);
   }
   function b3Loop(ts){
     if(!b3.running) return;
     try{
       var dt = Math.min(0.05, Math.max(0, ((ts - b3Last) / 1000) || 0.016));
       b3Last = ts;
-      if(!b3.over) b3Step(dt);
+      if(b3.freezeT > 0){ b3.freezeT -= dt; } // hit-stop on a splat
+      else if(!b3.over) b3Step(dt);
       b3Frame();
     }catch(err){}
     b3Raf = requestAnimationFrame(b3Loop);
   }
   function b3Start(){
     if(!b3Init()) return;
+    b3Audio();
     b3Resize();
-    b3.splats = 0; b3.down = 0; b3.time = 0; b3.over = false;
+    b3.splats = 0; b3.down = 0; b3.time = 0; b3.over = false; b3.cardShown = false;
+    var card = $("b3Card"); if(card) card.style.display = "none";
+    b3.shield = 100; b3.health = 100; b3.lastHurt = -99; b3.recharging = false;
+    b3.wep = 0; b3.mag = [B3_WEAPONS[0].magSize, B3_WEAPONS[1].magSize]; b3.reserve = [64, 200];
+    b3.reloading = 0; b3.swapT = 0; b3.nades = 2; b3.nadeCd = 0;
+    b3.streak = 0; b3.bestStreak = 0; b3.lastSplatT = -99;
+    b3.fired = 0; b3.hits = 0; b3.hitmarkT = 0; b3.shake = 0; b3.freezeT = 0;
+    b3.dmgVinT = 0; b3.dmgDirT = 0; b3.shieldFxT = 0; b3.landDip = 0; b3.fireCd = 0;
+    b3Guns.forEach(function(g, gi){ g.visible = gi === 0; });
+    b3.packs.forEach(function(p){ p.active = true; p.mesh.visible = true; p.respawnT = 0; });
     b3.px = b3Spawn.x; b3.pz = b3Spawn.z; b3.head = b3Spawn.head; b3.pitch = 0; b3.py = 0; b3.vy = 0; b3.vx = 0; b3.vz = 0; b3.grounded = true; b3.invuln = 0;
     b3.shots.forEach(function(s){ b3Scene.remove(s.mesh); });
     b3.shots = [];
     b3.enemies.forEach(function(e){
       var sp = b3SpawnPoint(true);
-      e.x = sp.x; e.z = sp.z; e.respawn = 0; e.mesh.visible = true;
+      e.x = sp.x; e.z = sp.z; e.y = 0; e.vy = 0; e.grounded = true; e.respawn = 0; e.mesh.visible = true;
       e.mesh.position.set(e.x, 0, e.z);
       e.fireCd = 1.5 + Math.random() * 1.5;
+      e.shield = 45; e.health = 55; e.flare = 0; e.burstLeft = 0; e.burstPause = 0.8 + Math.random();
+      if(e.bubble) e.bubble.material.opacity = 0;
     });
+    b3Hud();
     $("b3Splats").textContent = "0 / 5";
     $("b3Down").textContent = "0";
     $("b3Time").textContent = "0.0 s";
@@ -4716,6 +5236,17 @@
   $("b3Start").addEventListener("click", b3Start);
   var b3MapSelEl = $("b3MapSel");
   if(b3MapSelEl) b3MapSelEl.addEventListener("change", function(){ b3SetMap(parseInt(this.value, 10) || 0); });
+  /* On-screen combat buttons (touch + mouse): FIRE holds to shoot,
+     JUMP / TOT / SWAP are taps. They live outside b3Mount so they
+     never turn into aim drags. */
+  holdBtn($("b3BtnFire"), function(){ b3Audio(); b3Touch.fireBtn = true; }, function(){ b3Touch.fireBtn = false; });
+  holdBtn($("b3BtnJump"), function(){ b3Audio(); if(b3.running && !b3.over) b3.jumpQ = true; });
+  holdBtn($("b3BtnNade"), function(){ b3Audio(); b3ThrowNade(); });
+  holdBtn($("b3BtnSwap"), function(){ b3Audio(); b3SwapWeapon(); });
+  var b3AgainBtn = $("b3Again");
+  if(b3AgainBtn) b3AgainBtn.addEventListener("click", b3Start);
+  var b3WatchBtn = $("b3Watch");
+  if(b3WatchBtn) b3WatchBtn.addEventListener("click", function(){ var c = $("b3Card"); if(c) c.style.display = "none"; });
   /* Two-thumb controls: the left half of the view is a floating move
      stick; the right half aims (drag), fires (hold still) and jumps
      (double-tap). Mouse works the same way for desktop testing. */
@@ -4803,7 +5334,7 @@
   }
   window.addEventListener("gamepadconnected", function(e){
     var el = $("b3PadStatus");
-    if(el) el.textContent = "Controller connected (" + String(e.gamepad.id || "gamepad").slice(0, 42) + ") — left stick moves, right stick aims, RT fires, A jumps, Start begins the match.";
+    if(el) el.textContent = "Controller connected (" + String(e.gamepad.id || "gamepad").slice(0, 42) + ") — left stick moves, right stick aims, RT fires, A jumps, Y swaps weapon, LB throws a Tot, B reloads, Start begins the match.";
   });
   window.addEventListener("gamepaddisconnected", function(){
     var el = $("b3PadStatus");
@@ -4819,6 +5350,9 @@
     else if(e.key === "ArrowLeft") b3.keys.tl = true;
     else if(e.key === "ArrowRight") b3.keys.tr = true;
     else if(e.key === "f" || e.key === "F") b3.keys.fire = true;
+    else if(e.key === "q" || e.key === "Q"){ if(b3.running && !b3.over) b3SwapWeapon(); }
+    else if(e.key === "r" || e.key === "R"){ if(b3.running && !b3.over) b3Reload(); }
+    else if(e.key === "g" || e.key === "G"){ if(b3.running && !b3.over) b3ThrowNade(); }
     else if(e.key === " "){ if(b3.running && !b3.over){ b3.jumpQ = true; e.preventDefault(); } }
   });
   document.addEventListener("keyup", function(e){
